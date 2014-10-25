@@ -5,6 +5,8 @@
 # Authors: Bacou, Melanie <mel@mbacou.com>
 #####################################################################################
 
+data(sysdata, envir=environment())
+
 #' Subset, and/or aggregate HarvestChoice 5-arc-minute layers
 #'
 #' Workhorse method to subset and/or aggregate HarvestChoice layers.
