@@ -11,7 +11,7 @@ Port of HarvestChoice Data Services to OpenCPU Public Server https://harvestchoi
 
 HTTP GET and POST requests can be tested at http://public.opencpu.org/ocpu/test/.
 
-Javscript client code is also available.
+Javascript client code is also available.
 
 #+BEGIN_SRC javascript
 //JavaScript client code
