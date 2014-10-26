@@ -5,6 +5,7 @@
 # Authors: Bacou, Melanie <mel@mbacou.com>
 #####################################################################################
 
+assignInNamespace("cedta.override", c("gWidgetsWWW","FastRWeb","opencpu"), "data.table")
 data(sysdata, envir=environment())
 
 #' Subset, and/or aggregate HarvestChoice 5-arc-minute layers
