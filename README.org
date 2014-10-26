@@ -1,0 +1,10 @@
+#+TITLE: HCAPI3
+#+AUTHOR: Melanie Bacou
+#+EMAIL: mel@mbacou.com
+#+DATE: {{{modification-time(%Y-%m-%d)}}}
+
+#+OPTIONS: H:2 num:1 toc:2 \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+LaTeX_CLASS: mel-article
+#+STARTUP: indent showstars
+
+Port of HarvestChoice Data Services to OpenCPU Public Server https://public.opencpu.org/
