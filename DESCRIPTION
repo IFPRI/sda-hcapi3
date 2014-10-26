@@ -1,0 +1,25 @@
+Package: hcapi3
+Version: 2.0
+Title: HarvestChoice data services
+Author: Melanie Bacou <mel@mbacou.com>
+Maintainer: Melanie Bacou <mel@mbacou.com>
+Depends:
+    R (>= 2.14.0)
+Imports:
+    data.table,
+    sp,
+    rgeos,
+    rgdal,
+    raster
+Suggests:
+    classInt,
+    RColorBrewer
+Description: Fast aggregation of large data (e.g. 100GB in RAM), fast ordered
+    joins, fast add/modify/delete of columns by group using no copies at all,
+    list columns and a fast file reader (fread). Offers a natural and flexible
+    syntax, for faster development.
+License: GPL (>= 2)
+URL: http://harvestchoice.org/
+BugReports: http://harvestchoice.org/
+MailingList: support@harvestchoice.org
+Packaged: 2014-02-27 11:20:02 UTC; mbacou
