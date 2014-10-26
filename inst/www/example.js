@@ -1,19 +1,16 @@
+//base OpenCPU API url
+//ocpu.seturl("//harvestchoice.ocpu.io/hcapi3/R")
 
-
-  function loadplot(){
-    var layer = "whea_h";
-
-    //request plot using OpenCPU library
-    var req = $("#plotdiv").rplot("plotwrapper", {
-      var : layer,
-      width : 640,
-      height : 640
-    }).fail(function(){
-      alert("Failed to plot layer: ")
+//call R function: stocks::smoothplot(ticker=ticker)
+$("#submitbutton").click(function(){
+    var layer = $("#layer").val();
+    var req = $("#plotdiv").rplot("genPlot", {
+        var : layer
     });
-  }
 
-
-  //init
-  loadplot();
+    //optional
+    req.fail(function(){
+        alert("R returned an error: " + req.responseText);
+    });
+});
 

@@ -19,8 +19,8 @@ Javascript client code is also available.
 //JavaScript client code
 var layer = $("#layer").val();
 var req = $("#plotdiv").rplot("genPlot", {
-    var : layer,
-    width : 640,
-    height : 640
+    var : layer
 })
 #+END_SRC
+
+See Javascript example at http://jsfiddle.net/mbacou/2uztvbm4/.
