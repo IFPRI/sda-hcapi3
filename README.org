@@ -23,4 +23,4 @@ var req = $("#plotdiv").rplot("genPlot", {
 })
 #+END_SRC
 
-See Javascript example at http://jsfiddle.net/mbacou/2uztvbm4/.
+See Javascript example at https://harvestchoice.ocpu.io/hcapi3/www/.

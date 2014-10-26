@@ -6,11 +6,15 @@
 <!-- OCPU lib and depends -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="http://public.opencpu.org/js/archive/opencpu-0.4.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"></script>
 
 <!-- Example application -->
 <script type="text/javascript" src="example.js"></script>
 
 <style type="text/css">
+body{
+    margin: 10px;
+}
 #plotdiv {
     width: 480px;
     height: 480px;
@@ -22,13 +26,27 @@
 
 <h1>Example App using HCAPI3</h1>
 
-<p><strong>Layer Code</strong><br />
-    <input type="text" value="whea_p" id="layer"/>
-    </p>
-    <p>
-<button id="submitbutton" type="button">Test It</button>
+<p><strong>Layer Code</strong>
+    <br />
+    <input type="text" value="whea_p" id="layer" />
 </p>
-
+<p><strong>Aggregate by</strong>
+    <br />
+    <input type="text" value="ISO3" id="by" />
+</p>
+<p>
+    <button id="submitbutton" type="button">Plot Layer</button>
+    <button id="aggbutton" type="button">Aggregate</button>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Group</th>
+            <th>Indicator</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 <div id="plotdiv"></div>
 
 
