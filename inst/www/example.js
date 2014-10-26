@@ -9,11 +9,11 @@
       width : 640,
       height : 640
     }).fail(function(){
-      alert("Failed to plot stock: " + req.responseText)
+      alert("Failed to plot layer: ")
     });
   }
 
 
   //init
-  loadtree();
+  loadplot();
 
