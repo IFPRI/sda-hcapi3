@@ -5,8 +5,20 @@
 # Authors: Bacou, Melanie <mel@mbacou.com>
 #####################################################################################
 
-assignInNamespace("cedta.override", c("gWidgetsWWW","FastRWeb","opencpu"), "data.table")
-#data(sysdata, envir=environment())
+# Require `dt` and `vi` in (moved to OpenCPU .Renviron)
+# .onLoad <- function(libname, pkgname) {
+#   if ( is.null(getOption("hcapi3.dataPath")) | is.null(getOption("hcapi3.metaPath")) ) {
+#     cat('Please define the paths to HarvestChoice data snapshots using
+# options(hcapi3.dataPath="", hcapi3.metaPath="")
+# before loading this package.')
+#   }
+#   else {
+#     # Load data into .hcapi
+#     #assign("dt", readRDS(getOption("hcapi3.dataPath")), envir=globalenv())
+#     load(getOption("hcapi3.metaPath"), envir=globalenv())
+#   }
+#
+# }
 
 #' Subset, and/or aggregate HarvestChoice 5-arc-minute layers
 #'
@@ -41,9 +53,9 @@ getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
     if ( length(bynum)>0 ) {
       # Classify using `classBreaks`
       byclass <- sapply(bynum, function(i) {
-            b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-            paste0(i, "=cut(", i, ", c(", paste0(b, collapse=", "), "), ordered_result=T)")
-          })
+        b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
+        paste0(i, "=cut(", i, ", c(", paste0(b, collapse=", "), "), ordered_result=T)")
+      })
 
       by <- c(vi[by][type=="class", varCode], byclass)
       by <- by[!is.na(by)]
@@ -62,8 +74,8 @@ getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
     }
 
     data <- eval(parse(text=paste0("dt[order(", by, ")",
-                ifelse(iso3!="SSA", "ISO3==iso3", ""),
-                ", list(", agg, "), by=list(", by, ")]")))
+                                   ifelse(iso3!="SSA", "ISO3==iso3", ""),
+                                   ", list(", agg, "), by=list(", by, ")]")))
   }
 
   # Rounding (ugly but fast)
@@ -83,7 +95,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
 #' @return character, path to generated ZIP file
 #' @export
 makeZip <- function(var, iso3="SSA", by=NULL,
-    format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")) {
+                    format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")) {
 
   require(data.table)
   require(foreign)
@@ -114,57 +126,57 @@ makeZip <- function(var, iso3="SSA", by=NULL,
 
       # Convert to spatial
       d <- SpatialPixelsDataFrame(d[, list(X, Y)], d,
-          tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
+                                  tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
     }
 
     switch (format,
-        # RData raster
-        rdata = save(raster(d, layer=var), file=paste0(fPath, ".rdata"), compress=T),
+            # RData raster
+            rdata = save(raster(d, layer=var), file=paste0(fPath, ".rdata"), compress=T),
 
-        # GeoTIFF
-        tif = writeGDAL(d[, var], paste0(fPath, ".tif"), driver="GTiff",
-            mvFlag=-9999, type=ct, catNames=list(cl), colorTables=list(cc), setStatistics=T,
-            options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")),
+            # GeoTIFF
+            tif = writeGDAL(d[, var], paste0(fPath, ".tif"), driver="GTiff",
+                            mvFlag=-9999, type=ct, catNames=list(cl), colorTables=list(cc), setStatistics=T,
+                            options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")),
 
-        # ESRI ASCII
-        asc = writeGDAL(d[, var], paste0(fPath, ".asc"), driver="AAIGrid",
-            mvFlag=-9999, type=ct, catNames=list(cl), colorTables=list(cc), setStatistics=T,
-            options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")),
+            # ESRI ASCII
+            asc = writeGDAL(d[, var], paste0(fPath, ".asc"), driver="AAIGrid",
+                            mvFlag=-9999, type=ct, catNames=list(cl), colorTables=list(cc), setStatistics=T,
+                            options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")),
 
-        # ESRI Shapefile
-        shp = {
-          d <- getLayer(var, iso3, by, collapse=F)
-          d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
-              proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
-          writeOGR(d, dirname(fPath), basename(fPath), driver="ESRI Shapefile") },
+            # ESRI Shapefile
+            shp = {
+              d <- getLayer(var, iso3, by, collapse=F)
+              d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
+                                          proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
+              writeOGR(d, dirname(fPath), basename(fPath), driver="ESRI Shapefile") },
 
-        # GeoJSON
-        geojson = {
-          d <- getLayer(var, iso3, by, collapse=F)
-          d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
-              proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
-          writeOGR(d, paste0(fPath, ".geojson"), var[1], driver="GeoJSON") },
+            # GeoJSON
+            geojson = {
+              d <- getLayer(var, iso3, by, collapse=F)
+              d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
+                                          proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
+              writeOGR(d, paste0(fPath, ".geojson"), var[1], driver="GeoJSON") },
 
-        # Stata (note var.labels still don't seem to work)
-        dta = {
-          d <- getLayer(var, iso3, by)
-          setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
-          setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R.")
-          setattr(d, "time.stamp", Sys.Date())
-          write.dta(d, paste0(fPath, ".dta"), version=10L) },
+            # Stata (note var.labels still don't seem to work)
+            dta = {
+              d <- getLayer(var, iso3, by)
+              setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
+              setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R.")
+              setattr(d, "time.stamp", Sys.Date())
+              write.dta(d, paste0(fPath, ".dta"), version=10L) },
 
-        # RDS
-        rds = {
-          d <- getLayer(var, iso3, by)
-          attr(d, "var.labels") <- vi[names(d)][, varLabel]
-          attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R."
-          attr(d, "time.stamp") <- as.character(as.Date(Sys.Date()))
-          saveRDS(d, file=paste0(fPath, ".rds"), compress=T) },
+            # RDS
+            rds = {
+              d <- getLayer(var, iso3, by)
+              attr(d, "var.labels") <- vi[names(d)][, varLabel]
+              attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R."
+              attr(d, "time.stamp") <- as.character(as.Date(Sys.Date()))
+              saveRDS(d, file=paste0(fPath, ".rds"), compress=T) },
 
-        # CSV (default)
-        csv = {
-          d <- getLayer(var, iso3, by)
-          write.csv(d, paste0(fPath, ".csv"), row.names=F, na="") }
+            # CSV (default)
+            csv = {
+              d <- getLayer(var, iso3, by)
+              write.csv(d, paste0(fPath, ".csv"), row.names=F, na="") }
     )
 
     f <- list.files(dirname(fPath), paste0(basename(fPath), ".*"), full.names=T)
@@ -187,19 +199,19 @@ genCitation <- function(var) {
   require(stringr)
 
   meta <- vi[var][, list(
-          Code=varCode,
-          Label=varLabel,
-          Details=str_wrap(paste(varTitle, varDesc, sep=". "), 78),
-          Unit=unit,
-          Type=type,
-          Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
-          Category=cat1,
-          `Sub-category`=cat2,
-          Item=cat3,
-          Source=str_wrap(ifelse(is.na(sources), sourceMini, sources), 79),
-          Contact=owner,
-          Version=version,
-          Citation=str_wrap(citation, 77))]
+    Code=varCode,
+    Label=varLabel,
+    Details=str_wrap(paste(varTitle, varDesc, sep=". "), 78),
+    Unit=unit,
+    Type=type,
+    Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
+    Category=cat1,
+    `Sub-category`=cat2,
+    Item=cat3,
+    Source=str_wrap(ifelse(is.na(sources), sourceMini, sources), 79),
+    Contact=owner,
+    Version=version,
+    Citation=str_wrap(citation, 77))]
 
   meta <- split(meta, meta$Code)
   meta <- sapply(meta, function(x) paste(names(x), x, sep=":\t", collapse="\n"))
@@ -244,7 +256,7 @@ genPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
   if ( vi[var][, type=="class"] ) r[[var]] <- as.integer(factor(r[[var]], levels=cl, ordered=T))-1L
 
   r <- SpatialPixelsDataFrame(r[, list(X, Y)], data.frame(layer=r[[var]]),
-      tolerance=0.00564023, proj4string=CRS("+init=epsg:4326"))
+                              tolerance=0.00564023, proj4string=CRS("+init=epsg:4326"))
   r <- raster(r)
 
   # Plot with HC symbology
@@ -283,41 +295,44 @@ genPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
   par(bty="n", family="Helvetica-Narrow", cex.axis=.8, cex.sub=.9, font.main=1, adj=0)
 
   switch (format,
-      { # Plot with axes and legend (default)
-        plot(r, col=colorRampPalette(cc)(length(cv)), main=NULL,
-            axis.args=args, legend.width=1.5, legend.mar=7)
+  default = {
+    # Plot with axes and legend (default)
+    plot(r, col=colorRampPalette(cc)(length(cv)), main=NULL,
+         axis.args=args, legend.width=1.5, legend.mar=7)
 
-        # Add gridlines
-        axis(1, tck=1, lty=3, lwd=.5, col="gray")
-        axis(2, tck=1, lty=3, lwd=.5, col="gray")
+    # Add gridlines
+    axis(1, tck=1, lty=3, lwd=.5, col="gray")
+    axis(2, tck=1, lty=3, lwd=.5, col="gray")
 
-        # Add annotations
-        title(main=str_wrap(paste(vi[var][, varTitle], names(iso)[iso==iso3], sep=", "), width=74))
-        title(sub=str_wrap(paste(vi[var][, sources],
-                    "\u00a9 HarvestChoice/IFPRI, 2014.", sep=" "), 74), line=6) },
+    # Add annotations
+    title(main=str_wrap(paste(vi[var][, varTitle], names(iso)[iso==iso3], sep=", "), width=74))
+    title(sub=str_wrap(paste(vi[var][, sources],
+                             "\u00a9 HarvestChoice/IFPRI, 2014.", sep=" "), 74), line=6) },
 
-      print = {
-        # Remove axes
-        plot(r, breaks=cv, col=cc, axes=F, main=NULL, axis.args=args,
-            legend.width=1.1, legend.height=1)
+  print = {
+    # Remove axes
+    plot(r, breaks=cv, col=cc, axes=F, main=NULL, axis.args=args,
+         legend.width=1.1, legend.height=1)
 
-        # Add annotations
-        title(main=paste(str_wrap(vi[var][, varTitle], 70), names(iso)[iso==iso3], sep=", "),
-            line=3)
-        title(sub=str_wrap(paste(vi[var][, sources], "\u00a9 HarvestChoice/IFPRI, 2014.", sep=" "), 74),
-            line=5) },
+    # Add annotations
+    title(main=paste(str_wrap(vi[var][, varTitle], 70), names(iso)[iso==iso3], sep=", "),
+          line=3)
+    title(sub=str_wrap(paste(vi[var][, sources], "\u00a9 HarvestChoice/IFPRI, 2014.", sep=" "), 74),
+          line=5) },
 
-      thumbnail = {
-        # Remove axes and legend
-        image(r, breaks=cv, col=cc[-length(cc)], xlim=c(-20,60), ylim=c(-38, 30), xaxs="i", yaxs="i",
-            asp=1, axes=F, main=NULL) }
-  )
+  thumbnail = {
+    # Remove axes and legend
+    image(r, breaks=cv, col=cc[-length(cc)], xlim=c(-20,60), ylim=c(-38, 30), xaxs="i", yaxs="i",
+          asp=1, axes=F, main=NULL) }
+    )
 
   # Always add country boundaries
+  data(g0)
   plot(g0, col=NA, border="dimgray", lwd=.1, add=T)
 
   if ( iso3!="SSA") {
     # Also add province boundaries
+    data(g1)
     plot(g1[g1$ADM0_NAME==names(iso)[iso==iso3],], col=NA, border="gray", lwd=.1, add=T)
   }
 }
@@ -337,11 +352,11 @@ genPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
 #' @return character, path to generated ZIP file
 #' @export
 writePlot <- function(var, iso3="SSA", format="default",
-    width=switch(format, 640, "print"=5, "thumbnail"=180),
-    height=switch(format, 640, "print"=5, "thumbnail"=200),
-    units=switch(format, "px", "print"="in", "thumbnail"="px"),
-    res=switch(units, "in"=200, "px"=72),
-    cache=TRUE, ...) {
+                      width=switch(format, 640, "print"=5, "thumbnail"=180),
+                      height=switch(format, 640, "print"=5, "thumbnail"=200),
+                      units=switch(format, "px", "print"="in", "thumbnail"="px"),
+                      res=switch(units, "in"=200, "px"=72),
+                      cache=TRUE, ...) {
 
   width <- as.integer(width)
   height <- as.integer(height)
@@ -356,10 +371,10 @@ writePlot <- function(var, iso3="SSA", format="default",
           pointsize=round(ifelse(units=="in", (width*11)/(640/72), (width/res)*11/(640/72))))
 
       switch(format,
-          # Optimize plot margin sizes
-          "default" = par(mar=c(7.1,3.1,4.1,1.1), oma=c(0,0,0,6)),
-          "print" = par(mar=c(6.1,3.1,6.1,1.1), oma=c(0,0,2,6), xaxs="i", yaxs="i"),
-          "thumbnail" = par(mar=c(0,0,0,0), oma=c(0,0,0,0)))
+             # Optimize plot margin sizes
+             "default" = par(mar=c(7.1,3.1,4.1,1.1), oma=c(0,0,0,6)),
+             "print" = par(mar=c(6.1,3.1,6.1,1.1), oma=c(0,0,2,6), xaxs="i", yaxs="i"),
+             "thumbnail" = par(mar=c(0,0,0,0), oma=c(0,0,0,0)))
 
       genPlot(i, iso3, format=format, ...)
       dev.off()
@@ -388,7 +403,7 @@ genStats <- function(var, iso3="SSA", by=NULL) {
     b <- (max(p$counts)-min(p$counts))/20
 
     hist(d[[i]], n=30, xlab=NA, ylim=c(-b, max(p$counts)), col="azure3",
-        main=paste(vi[varCode==i, varTitle], names(iso)[iso==iso3], sep=" - "))
+         main=paste(vi[varCode==i, varTitle], names(iso)[iso==iso3], sep=" - "))
     boxplot(d[[i]], horizontal=T, at=-b, border="blue", boxwex=b*2, axes=F, outline=F, add=T)
     legend(x="topright", legend=paste(c("N", names(t)), c(dim(d)[1], t), sep=":   "), bg="white")
   }
@@ -409,8 +424,8 @@ getGroups <- function(group, format="data.table") {
 
   if ( !missing(group) ) {
     out <- out[tolower(Category) %like% tolower(group) |
-            tolower(Subcategory) %like% tolower(group) |
-            tolower(Item) %like% tolower(group)]
+                 tolower(Subcategory) %like% tolower(group) |
+                 tolower(Item) %like% tolower(group)]
   }
 
   if ( format=="json" ) {
@@ -436,31 +451,31 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
   require(data.table)
 
   out <- vi[, list(
-          Label=varLabel,
-          Code=varCode,
-          Unit=unit,
-          Type=type,
-          Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
-          Category=cat1,
-          Subcategory=cat2,
-          Item=cat3,
-          Source=ifelse(is.na(sources), sourceMini, sources),
-          Contact=owner,
-          Details=paste(varTitle, varDesc, sep=". "),
-          Citation=citation,
-          Version=version,
-          `In Table`=tbName,
-          Formula=aggFun,
-          isRaster=genRaster,
-          dTopic,
-          dCrop,
-          dKeywords,
-          classBreaks,
-          classLabels,
-          classColors,
-          Website=ifelse(genRaster, paste0("http://harvestchoice.org/data/", tolower(varCode)), NA),
-          WMS=ifelse(genRaster, paste0("http://dev.harvestchoice.org:6080/arcgis/services/", mxdName, "/MapServer/WMSServer"), NA),
-          `Downloaded on`=as.character(as.Date(Sys.Date())))]
+    Label=varLabel,
+    Code=varCode,
+    Unit=unit,
+    Type=type,
+    Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
+    Category=cat1,
+    Subcategory=cat2,
+    Item=cat3,
+    Source=ifelse(is.na(sources), sourceMini, sources),
+    Contact=owner,
+    Details=paste(varTitle, varDesc, sep=". "),
+    Citation=citation,
+    Version=version,
+    `In Table`=tbName,
+    Formula=aggFun,
+    isRaster=genRaster,
+    dTopic,
+    dCrop,
+    dKeywords,
+    classBreaks,
+    classLabels,
+    classColors,
+    Website=ifelse(genRaster, paste0("http://harvestchoice.org/data/", tolower(varCode)), NA),
+    WMS=ifelse(genRaster, paste0("http://dev.harvestchoice.org:6080/arcgis/services/", mxdName, "/MapServer/WMSServer"), NA),
+    `Downloaded on`=as.character(as.Date(Sys.Date())))]
 
   # Optional filters
   if ( !missing(var) ) out <- out[Code %in% var]
@@ -468,8 +483,8 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
   if ( raster==T ) out <- out[isRaster==T]
   if ( !missing(group) ) {
     out <- out[tolower(Category) %like% tolower(group) |
-            tolower(Subcategory) %like% tolower(group) |
-            tolower(Item) %like% tolower(group)]
+                 tolower(Subcategory) %like% tolower(group) |
+                 tolower(Item) %like% tolower(group)]
   }
 
   if ( css=="carto" ) {
@@ -538,13 +553,13 @@ genCartoCSS <- function(var, pal="BuGn", legend=TRUE, ...) {
 
   # Raster symbology
   out <- paste0("#", tolower(var), "tif",
-      " { raster-scaling: bilinear;
+                " { raster-scaling: bilinear;
           raster-colorizer-default-mode: linear;
           raster-colorizer-default-color: transparent;
           raster-colorizer-stops:
           stop(-9999, transparent, linear)",
-      paste0("stop(", cv, ", ", cc, ")", collapse=" "),
-      " }")
+                paste0("stop(", cv, ", ", cc, ")", collapse=" "),
+                " }")
 
   out <- gsub("\n", "", out, fixed=T)
   return(out)
@@ -566,9 +581,9 @@ rankSimilar <- function(x, var, by=0, iso3="SSA") {
   setkey(vi, varCode)
 
   by <- switch(by,
-      `1`="ADM1_CODE_ALT",
-      `2`="ADM2_CODE_ALT",
-      `0`="CELL5M")
+               `1`="ADM1_CODE_ALT",
+               `2`="ADM2_CODE_ALT",
+               `0`="CELL5M")
 
   # Get values for reference unit
   out <- getLayer(var, iso3, by)
