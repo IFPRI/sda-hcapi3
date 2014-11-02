@@ -10,6 +10,8 @@
 Port of HarvestChoice Data Services to OpenCPU Public Server https://harvestchoice.ocpu.io/hcapi3.
 
 Documentation for each method can be accessed using =/man/<method>=, for example at https://harvestchoice.ocpu.io/hcapi3/man/getLayer
+also in PDF at
+https://harvestchoice.ocpu.io/hcapi3/man/getLayer/pdf
 
 HTTP GET and POST requests can be tested at http://public.opencpu.org/ocpu/test/.
 
@@ -18,9 +20,24 @@ Javascript client code is also available.
 #+BEGIN_SRC javascript
 //JavaScript client code
 var layer = $("#layer").val();
-var req = $("#plotdiv").rplot("genPlot", {
-    var : layer
-})
+var req = $("#plotdiv").rplot("genPlot", { var : layer })
 #+END_SRC
 
-See Javascript example at https://harvestchoice.ocpu.io/hcapi3/www/.
+Or directly through,
+
+#+BEGIN_SRC sh
+$ curl https://harvestchoice.ocpu.io/hcapi3/R/makeZip -d "var='whea_h'&iso3='GHA'&by='ADM
+2_NAME_ALT'&format='dta'"
+/ocpu/tmp/x0a3355977c/R/.val
+/ocpu/tmp/x0a3355977c/messages
+/ocpu/tmp/x0a3355977c/stdout
+/ocpu/tmp/x0a3355977c/source
+/ocpu/tmp/x0a3355977c/console
+/ocpu/tmp/x0a3355977c/info
+/ocpu/tmp/x0a3355977c/files/DESCRIPTION
+/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.zip
+
+$ wget https://harvestchoice.ocpu.io/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.zip
+#+END_SRC
+
+
