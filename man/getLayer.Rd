@@ -15,7 +15,7 @@ getLayer(var, iso3 = "SSA", by = NULL, collapse = TRUE)
 \item{collapse}{if FALSE always return all pixel values (useful for plotting)}
 }
 \value{
-a data.table of \code{varCode} aggregated by \code{by}
+a data.table of \code{var} indicators aggregated by \code{by}
 }
 \description{
 Workhorse method to subset and/or aggregate HarvestChoice layers.

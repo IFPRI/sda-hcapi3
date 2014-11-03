@@ -14,7 +14,7 @@
 #' @param iso3 optional country or regional filter (3-letter code)
 #' @param by optional character array of variables to group by
 #' @param collapse if FALSE always return all pixel values (useful for plotting)
-#' @return a data.table of \code{varCode} aggregated by \code{by}
+#' @return a data.table of \code{var} indicators aggregated by \code{by}
 #' @export
 getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
 
@@ -214,7 +214,8 @@ genReadme <- function(var) {
 
   readme <- gsub("{date}", Sys.Date(), readme, fixed=T)
   readme <- gsub("{meta}", meta, readme, fixed=T)
-  writeLines(readme, "README")
+  fPath <- "./README"
+  writeLines(readme, fPath)
   return(fPath)
 }
 
@@ -238,6 +239,7 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
   require(data.table)
 
   # Get HC symbology
+  var <- var[1]
   setkey(vi, varCode)
   cv <- as.integer(unlist(strsplit(vi[var][, classBreaks], "|", fixed=T)))
   cl <- as.character(unlist(strsplit(vi[var][, classLabels], "|", fixed=T)))
@@ -322,12 +324,10 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
   )
 
   # Always add country boundaries
-  data(g0)
   plot(g0, col=NA, border="dimgray", lwd=.1, add=T)
 
   if ( iso3!="SSA") {
     # Also add province boundaries
-    data(g1)
     plot(g1[g1$ADM0_NAME==names(iso)[iso==iso3],], col=NA, border="gray", lwd=.1, add=T)
   }
 }
@@ -410,26 +410,24 @@ genStats <- function(var, iso3="SSA", by=NULL) {
 #' Return list of HarvestChoice variable categories
 #'
 #' @param group optional category filter
-#' @param format one of "data.table" (default), "json", or "html" for a human-readable table
 #' @return a data.table of variable categories
 #' @export
-getGroups <- function(group, format="data.table") {
+getGroups <- function(group) {
 
   require(hcdata)
   require(data.table)
 
-  out <- vi[, .N, keyby=list(Category=cat1, Subcategory=cat2, Item=cat3)]
+  out <- vi[, list(Title=unique(varTitle)), keyby=list(Category=cat1, Subcategory=cat2, Item=cat3, Code=varCode)]
 
   if ( !missing(group) ) {
     out <- out[tolower(Category) %like% tolower(group) |
         tolower(Subcategory) %like% tolower(group) |
-        tolower(Item) %like% tolower(group)]
+        tolower(Item) %like% tolower(group) |
+        tolower(Code) %like% tolower(group)]
   }
 
-  if ( format=="json" ) {
-    out <- split(out, out$Category)
-    out <- lapply(out, function(x) split(x, x$Subcategory))
-  }
+  out <- split(out, out$Category)
+  out <- lapply(out, function(x) split(x, x$Subcategory))
   return(out)
 }
 

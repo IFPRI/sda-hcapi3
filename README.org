@@ -18,9 +18,39 @@ HTTP GET and POST requests can be tested at http://198.105.216.164/ocpu/.
 Javascript client code is also available.
 
 #+BEGIN_SRC javascript
+//set page to communicate to with "hcapi3" package on server below
+ocpu.seturl("//198.105.216.164/ocpu/library/hcapi3/R")
+
 //JavaScript client code
 var layer = $("#layer").val();
-var req = $("#plotdiv").rplot("genPlot", { var : layer })
+var req = $("#plotdiv").rplot("getPlot", { var : layer })
+
+//optional: add custom callbacks
+req.fail(function(){
+    alert("R returned an error: " + req.responseText);
+});
+
+//toy example
+var req = ocpu.call("getLayer", {
+   var: ["maiz_h", "maiz_y"], by: ["wealth", "AEZ16_CLAS"], iso3: "GHA"},
+
+   function(session){
+
+    //read the session properties (just for fun)
+    $("#key").text(session.getKey());
+    $("#location").text(session.getLoc());
+
+    //retrieve session console (stdout) async
+    session.getConsole(function(outtxt){
+        $("#output").text(outtxt);
+    });
+
+    //retrieve the returned object async
+    session.getObject(function(data){
+        //data is the object returned by the R function
+        alert("Array of length " + data.length + ".\nFirst few values:" + data.slice(0,3));
+    });
+})
 #+END_SRC
 
 Or directly through,

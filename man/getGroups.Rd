@@ -3,12 +3,10 @@
 \alias{getGroups}
 \title{Return list of HarvestChoice variable categories}
 \usage{
-getGroups(group, format = "data.table")
+getGroups(group)
 }
 \arguments{
 \item{group}{optional category filter}
-
-\item{format}{one of "data.table" (default), "json", or "html" for a human-readable table}
 }
 \value{
 a data.table of variable categories

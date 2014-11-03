@@ -6,6 +6,7 @@
 
 # R data files from past sessions
 .RData
+Rplots.pdf
 
 # RStudio files
 .Rproj.user/

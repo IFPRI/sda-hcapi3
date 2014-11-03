@@ -14,7 +14,7 @@ Suggests:
     raster,
     rgdal,
     rgeos
-LazyData: no
+LazyData: yes
 Description: Methods to access, aggregate, and plot HarvestChoice 5-arc-minute spatial
     layers for sub-Saharan Africa.
 License: GPL (>= 2)
