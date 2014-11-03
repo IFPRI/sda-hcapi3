@@ -18,19 +18,24 @@ HTTP GET and POST requests can be tested at http://198.105.216.164/ocpu/.
 Javascript client code is also available.
 
 #+BEGIN_SRC javascript
-//set page to communicate to with "hcapi3" package on server below
+
+// OpenCPU requires jquery
+<script src="js/jquery.js"></script>
+<script src="js/opencpu.js"></script>
+
+// Set page to communicate with "hcapi3" package on server
 ocpu.seturl("//198.105.216.164/ocpu/library/hcapi3/R")
 
-//JavaScript client code
+// JavaScript client code
 var layer = $("#layer").val();
 var req = $("#plotdiv").rplot("getPlot", { var : layer })
 
-//optional: add custom callbacks
+// Optional: add custom callbacks
 req.fail(function(){
     alert("R returned an error: " + req.responseText);
 });
 
-//toy example
+// Toy example
 var req = ocpu.call("getLayer", {
    var: ["maiz_h", "maiz_y"], by: ["wealth", "AEZ16_CLAS"], iso3: "GHA"},
 
