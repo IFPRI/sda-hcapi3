@@ -7,13 +7,13 @@
 #+LaTeX_CLASS: mel-article
 #+STARTUP: indent showstars
 
-Port of HarvestChoice Data Services to OpenCPU Public Server https://harvestchoice.ocpu.io/hcapi3.
+Port of HarvestChoice Data Services to OpenCPU Server http://198.105.216.164/ocpu/hcapi3.
 
-Documentation for each method can be accessed using =/man/<method>=, for example at https://harvestchoice.ocpu.io/hcapi3/man/getLayer
-also in PDF at
-https://harvestchoice.ocpu.io/hcapi3/man/getLayer/pdf
+Documentation for each method can be accessed using =/man/<method>=, for example at http://198.105.216.164/ocpu/library/hcapi3/man/getLayer
+also in PDF format at
+http://198.105.216.164/ocpu/library/hcapi3/man/getLayer/pdf
 
-HTTP GET and POST requests can be tested at http://public.opencpu.org/ocpu/test/.
+HTTP GET and POST requests can be tested at http://198.105.216.164/ocpu/.
 
 Javascript client code is also available.
 
@@ -26,7 +26,7 @@ var req = $("#plotdiv").rplot("genPlot", { var : layer })
 Or directly through,
 
 #+BEGIN_SRC sh
-$ curl https://harvestchoice.ocpu.io/hcapi3/R/makeZip -d "var='whea_h'&iso3='GHA'&by='ADM
+$ curl https://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "var='whea_h'&iso3='GHA'&by='ADM
 2_NAME_ALT'&format='dta'"
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
@@ -35,9 +35,9 @@ $ curl https://harvestchoice.ocpu.io/hcapi3/R/makeZip -d "var='whea_h'&iso3='GHA
 /ocpu/tmp/x0a3355977c/console
 /ocpu/tmp/x0a3355977c/info
 /ocpu/tmp/x0a3355977c/files/DESCRIPTION
-/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.zip
+/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
 
-$ wget https://harvestchoice.ocpu.io/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.zip
+$ wget https://198.105.216.164/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
 #+END_SRC
 
 

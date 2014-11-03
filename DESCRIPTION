@@ -6,14 +6,14 @@ Maintainer: Melanie Bacou <mel@mbacou.com>
 Depends:
     R (>= 2.14.0)
 Imports:
-    data.table,
-    sp,
-    rgeos,
-    rgdal,
-    raster
+    hcdata,
+    data.table
 Suggests:
     classInt,
-    RColorBrewer
+    RColorBrewer,
+    raster,
+    rgdal,
+    rgeos
 LazyData: no
 Description: Methods to access, aggregate, and plot HarvestChoice 5-arc-minute spatial
     layers for sub-Saharan Africa.
