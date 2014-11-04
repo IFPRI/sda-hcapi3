@@ -105,6 +105,183 @@ whea_h-GHAtif.tif            [ <=>                                 ]  17.31K  --
 real    0m0.255s
 user    0m0.000s
 sys     0m0.030s
+
+// Example #3 simply get some variable codes
+$ curl http://198.105.216.164/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        {
+    "Agroecology": {
+        "Pests and Diseases": [
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "IR_EI",
+                "Title": "Stemrust Prevalence in Irrigated Wheat"
+            },
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "IR_EI_CLAS",
+                "Title": "Stemrust Prevalence in Irrigated Wheat (Low-Med-High)"
+            },
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "IR_GI",
+                "Title": "Stemrust Prevalence in Irrigated Wheat"
+            },
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "IR_GI_CLAS",
+                "Title": "Stemrust Prevalence in Irrigated Wheat (Low-Med-High)"
+            },
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "RF_EI",
+                "Title": "Stemrust Prevalence in Rainfed Wheat"
+            },
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "RF_EI_CLAS",
+                "Title": "Stemrust Prevalence in Rainfed Wheat (Low-Med-High)"
+            },
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "RF_GI",
+                "Title": "Stemrust Prevalence in Rainfed Wheat"
+            },
+            {
+                "Category": "Agroecology",
+                "Subcategory": "Pests and Diseases",
+                "Item": "Wheat Stemrust",
+                "Code": "RF_GI_CLAS",
+                "Title": "Stemrust Prevalence in Rainfed Wheat (Low-Med-High)"
+            }
+        ]
+    },
+    "Farming Systems": {
+        "Harvested Area": [
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Harvested Area",
+                "Item": "Wheat",
+                "Code": "whea_h",
+                "Title": "Wheat Harvested Area (ha, 2005)"
+            },
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Harvested Area",
+                "Item": "Wheat",
+                "Code": "whea_i_h",
+                "Title": "Wheat Irrigated Harvested Area (ha, 2005)"
+            },
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Harvested Area",
+                "Item": "Wheat",
+                "Code": "whea_r_h",
+                "Title": "Wheat Rainfed Harvested Area (ha, 2005)"
+            }
+        ],
+        "Production": [
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Production",
+                "Item": "Wheat",
+                "Code": "whea_i_p",
+                "Title": "Wheat Irrigated Production (mt, 2005)"
+            },
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Production",
+                "Item": "Wheat",
+                "Code": "whea_p",
+                "Title": "Wheat Production (mt, 2005)"
+            },
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Production",
+                "Item": "Wheat",
+                "Code": "whea_r_p",
+                "Title": "Wheat Rainfed Production (mt, 2005)"
+            }
+        ],
+        "Value of Production": [
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Value of Production",
+                "Item": "Wheat",
+                "Code": "whea_v",
+                "Title": "Wheat Value Production (Int$, 2005)"
+            }
+        ],
+        "Yield": [
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Yield",
+                "Item": "Wheat",
+                "Code": "whea_i_y",
+                "Title": "Wheat Irrigated Yield (kg/ha, 2005)"
+            },
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Yield",
+                "Item": "Wheat",
+                "Code": "whea_r_y",
+                "Title": "Wheat Rainfed Yield (kg/ha, 2005)"
+            },
+            {
+                "Category": "Farming Systems",
+                "Subcategory": "Yield",
+                "Item": "Wheat",
+                "Code": "whea_y",
+                "Title": "Wheat Yield (kg/ha, 2005)"
+            }
+        ]
+    }
+}
+
+// Example #4 and additional metadata
+$ curl http://198.105.216.164/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
+[
+    {
+        "Label": "Wheat area '05",
+        "Code": "whea_h",
+        "Unit": "ha",
+        "Type": "continuous",
+        "Period": "2000",
+        "Category": "Farming Systems",
+        "Subcategory": "Harvested Area",
+        "Item": "Wheat",
+        "Source": "You, L., Z. Guo, J. Koo, K. Sebastian, and U. Wood-Sichra. Spatial Production Allocation Model (SPAM) 2005 Version 1.",
+        "Contact": "u.wood-sichra@cgiar.org",
+        "Details": "Wheat Harvested Area (ha, 2005). Spatially disaggregated production statistics of circa 2000 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.",
+        "Citation": "HarvestChoice, 2014. \"Wheat Harvested Area (ha, 2005)\", International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/whea_h",
+        "Version": "SChEF r2.0",
+        "In Table": "cell5m_spam2005v1_harvestarea",
+        "Formula": "",
+        "isRaster": true,
+        "dTopic": "Production",
+        "dCrop": "Wheat",
+        "dKeywords": "Crop, Crop Area, Wheat Area, Wheat Production, Sub-Saharan Africa",
+        "classBreaks": "0|79|260|495|812|1360|2590",
+        "classLabels": "none|under 80|80 - 260|260 - 495|495 - 812|812 - 1360|over 1360",
+        "classColors": "#ffffffff|#EDF8E9|#C7E9C0|#A1D99B|#74C476|#31A354|#006D2C",
+        "Website": "http://harvestchoice.org/data/whea_h",
+        "WMS": "http://dev.harvestchoice.org:6080/arcgis/services/spam05_cell5m_h/MapServer/WMSServer",
+        "Downloaded on": "2014-11-03"
+    }
+]
+
 #+END_SRC
 
 
