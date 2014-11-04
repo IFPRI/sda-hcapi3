@@ -124,14 +124,15 @@ genFile <- function(var, iso3="SSA", by=NULL,
       fPath <- paste0(fPath, ".tif")
       writeGDAL(d[, var], fPath, driver="GTiff",
         mvFlag=-9999, type=ct, setStatistics=T,
-        catNames=list(cl), colorTables=list(cc),
+        #catNames=list(cl), colorTables=list(cc),
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     # ESRI ASCII
     asc = {
       fPath <- paste0(fPath, ".asc")
       writeGDAL(d[, var], fPath, driver="AAIGrid",
-        mvFlag=-9999, type=ct, catNames=list(cl), colorTables=list(cc), setStatistics=T,
+        mvFlag=-9999, type=ct, setStatistics=T,
+        #catNames=list(cl), colorTables=list(cc),
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     # ESRI Shapefile
@@ -176,7 +177,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
 
   #f <- list.files(dirname(fPath), paste0(basename(fPath), ".*"), full.names=T)
   #f <- c(f, genReadme(names(d)))
-  #zip(paste0(fPath, ".zip"), f, flags="-9Xjm")
+  #zip(paste0(fPath, ".zip"), f, flags="-9Xjm", zip="zip")
   genReadme(names(d))
   return(fPath)
 }

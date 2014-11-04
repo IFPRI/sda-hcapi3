@@ -58,10 +58,11 @@ var req = ocpu.call("getLayer", {
 })
 #+END_SRC
 
-Or directly through,
+Or in the console,
 
 #+BEGIN_SRC sh
-$ curl -X POST http://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "{var: 'whea_h', iso3: 'GHA', by: 'ADM2_NAME_ALT', format: 'dta'}"
+// Example #1 (takes 2 calls to generate and download file)
+$ curl http://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "{var: 'whea_h', iso3: 'GHA', by: 'ADM2_NAME_ALT', format: 'dta'}" -X POST
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
 /ocpu/tmp/x0a3355977c/stdout
@@ -71,7 +72,39 @@ $ curl -X POST http://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "{var: 'w
 /ocpu/tmp/x0a3355977c/files/DESCRIPTION
 /ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
 
-$ wget https://198.105.216.164/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
+$ wget http://198.105.216.164/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
+
+// Example #2 with timings
+$ time curl http://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "var='whea_h'&iso3='GHA'&format='tif'" -X POST
+/ocpu/tmp/x079f3481fd/R/.val
+/ocpu/tmp/x079f3481fd/messages
+/ocpu/tmp/x079f3481fd/stdout
+/ocpu/tmp/x079f3481fd/source
+/ocpu/tmp/x079f3481fd/console
+/ocpu/tmp/x079f3481fd/info
+/ocpu/tmp/x079f3481fd/files/DESCRIPTION
+/ocpu/tmp/x079f3481fd/files/README
+/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tfw
+/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
+
+real    0m6.974s
+user    0m0.000s
+sys     0m0.015s
+
+$ time wget http://198.105.216.164/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
+--2014-11-03 23:27:16--  http://198.105.216.164/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
+Connecting to 198.105.216.164:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [image/tiff]
+Saving to: ‘whea_h-GHAtif.tif’
+
+whea_h-GHAtif.tif            [ <=>                                 ]  17.31K  --.-KB/s   in 0.06s
+
+2014-11-03 23:27:17 (291 KB/s) - ‘whea_h-GHAtif.tif’ saved [17728]
+
+real    0m0.255s
+user    0m0.000s
+sys     0m0.030s
 #+END_SRC
 
 
