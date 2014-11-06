@@ -4,7 +4,7 @@
 \title{Convert CELL5M layers to multiple formats and package for download}
 \usage{
 genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
-  "shp", "dta", "asc", "rds", "rdata"))
+  "shp", "dta", "asc", "rds", "rdata"), ...)
 }
 \arguments{
 \item{var}{character array of CELL5M variable names}

@@ -9,17 +9,23 @@
 #'
 #' Workhorse method to subset and/or aggregate HarvestChoice layers.
 #' This method also aggregates classified variables by continuous variables.
+#' e.g. \code{getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))}.
+#' It does so by returning the dominant class of a classified variable within each \code{by}
+#' class, and by automatically classifying any continuous variable passed to \code{by}
+#' using value breaks specified as part of each variable metadata.
+#' The formula used to aggregate classified variables by choosing the dominant class is
+#' \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
+#' frequency of each class, ranks them by decreasing frequency, and retains the top one.
 #'
-#' @param var character array of variable names
+#' @param var character array of variable names (all types are accepted)
 #' @param iso3 optional country or regional filter (3-letter code)
-#' @param by optional character array of variables to group by
-#' @param collapse if FALSE always return all pixel values (useful for plotting)
+#' @param by optional character array of variables to group by (all types are accepted)
+#' @param collapse if FALSE always return all pixel values (useful for plotting and spatial formats)
 #' @return a data.table of \code{var} indicators aggregated by \code{by}
 #' @export
+#' @import hcdata
+#' @import data.table
 getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
-
-  require(hcdata)
-  require(data.table)
 
   # Don't duplicate variables
   setkey(vi, varCode)
@@ -31,12 +37,12 @@ getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
   setkey(data, ADM0_NAME, ADM1_NAME_ALT, ADM2_NAME_ALT)
   if ( iso3 != "SSA") data <- data[ISO3==iso3]
 
-  if ( length(by)>0 ) {
+  if(length(by)>0) {
     # If `by` include continuous variables, then auto-classify before grouping
     # Beware that aggregation formulas typically require additional variables from `dt`
     bynum <- vi[by][!type=="class", varCode]
 
-    if ( length(bynum)>0 ) {
+    if(length(bynum)>0) {
       # Classify using `classBreaks`
       byclass <- sapply(bynum, function(i) {
         b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
@@ -54,19 +60,20 @@ getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
     agg <- paste(var, agg, sep="=")
     agg <- paste(agg, collapse=", ")
 
-    if ( collapse==F ) {
+    if(collapse==F) {
       # Aggregate but don't collapse (for plotting and raster formats)
       agg <- paste0("CELL5M, X, Y, ",  paste0(agg, collapse=", "))
     }
 
-    data <- eval(parse(text=paste0("dt[",
-      ifelse(iso3=="SSA", ", ", "ISO3==iso3, "),
-      "list(", agg, "), keyby=list(", by, ")]")))
+    data <- eval(parse(text=paste0(
+      ifelse(iso3=="SSA", "dt", "dt[ISO3==iso3]"),
+      "[order(", by, ", na.last=T)",
+      ", list(", agg, "), by=list(", by, ")]")))
   }
 
   # Rounding (ugly but fast)
   var <- names(data)[sapply(data, is.numeric)]
-  for (i in var) eval(parse(text=paste0("data[, ", i, " := round(", i, ", ", vi[i][, dec], ")]")))
+  for(i in var) eval(parse(text=paste0("data[, ", i, " := round(", i, ", ", vi[i][, dec], ")]")))
   return(data)
 }
 
@@ -80,29 +87,30 @@ getLayer <- function(var, iso3="SSA", by=NULL, collapse=TRUE) {
 #' @param ... any argument passed to getLayer()
 #' @return character, path to generated data file
 #' @export
+#' @import hcdata
+#' @import data.table
+#' @import raster
+#' @importFrom rgdal writeOGR
+#' @importFrom rgdal writeGDAL
+#' @importFrom foreign write.dta
 genFile <- function(var, iso3="SSA", by=NULL,
-  format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")) {
-
-  require(hcdata)
-  require(data.table)
-  require(foreign)
-  require(rgdal)
-  require(rgeos)
-  require(raster)
+  format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata"), ...) {
 
   setkey(vi, varCode)
   fPath <- paste0(var[1], "-", paste0(by, collapse="-"), iso3, format)
 
-  if ( format %in% c("asc", "tif", "rdata") ) {
+  if(format %in% c("asc", "tif", "rdata")) {
     # Raster formats take more work
     # Process only the first layer (not all formats support multibands)
+    require(raster)
+
     var <- var[1]
     d <- getLayer(var, iso3, by, collapse=F)
     cl <- as.character(unlist(vi[var][, strsplit(classLabels, "|", fixed=T)]))
     cc <- as.character(unlist(vi[var][, strsplit(classColors, "|", fixed=T)]))
     ct <- "Float32"
 
-    if ( vi[var][, type] == "class" )  {
+    if(vi[var][, type] == "class")  {
       # If categorical raster, then convert to 0-based integer and add labels
       d[[var]] <- as.integer(factor(d[[var]], levels=cl, ordered=T))-1L
       ct <- "Int16"
@@ -113,7 +121,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
       tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
   }
 
-  switch (format,
+  switch(format,
     # RData raster
     rdata = {
       fPath <- paste0(fPath, ".RData")
@@ -153,7 +161,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
     # Stata (note var.labels still don't seem to work)
     dta = {
       fPath <- paste0(fPath, ".dta")
-      d <- getLayer(var, iso3, by)
+      d <- getLayer(var, iso3, by, ...)
       setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
       setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R.")
       setattr(d, "time.stamp", Sys.Date())
@@ -162,16 +170,15 @@ genFile <- function(var, iso3="SSA", by=NULL,
     # RDS
     rds = {
       fPath <- paste0(fPath, ".rds")
-      d <- getLayer(var, iso3, by)
+      d <- getLayer(var, iso3, by, ...)
       attr(d, "var.labels") <- vi[names(d)][, varLabel]
       attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R."
       attr(d, "time.stamp") <- as.character(as.Date(Sys.Date()))
       saveRDS(d, file=fPath, compress=T) },
 
     # CSV (default)
-    csv = {
-      fPath <- paste0(fPath, ".csv")
-      d <- getLayer(var, iso3, by)
+    { fPath <- paste0(fPath, ".csv")
+      d <- getLayer(var, iso3, by, ...)
       write.csv(d, fPath, row.names=F, na="") }
   )
 
@@ -188,11 +195,10 @@ genFile <- function(var, iso3="SSA", by=NULL,
 #' @param var character array of CELL5M variable names
 #' @return character, path to generated README file
 #' @export
+#' @import hcdata
+#' @import data.table
+#' @import stringr
 genReadme <- function(var) {
-
-  require(hcdata)
-  require(data.table)
-  require(stringr)
 
   meta <- vi[var][, list(
     Code=varCode,
@@ -230,14 +236,12 @@ genReadme <- function(var) {
 #' @param legend one of c("default", "auto") uses HarvestChoice legend breaks or R default
 #' @return plot
 #' @export
+#' @import hcdata
+#' @import data.table
+#' @import RColorBrewer
+#' @import stringr
+#' @import raster
 getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ...) {
-
-  require(hcdata)
-  require(RColorBrewer)
-  require(raster)
-  require(sp)
-  require(stringr)
-  require(data.table)
 
   # Get HC symbology
   var <- var[1]
@@ -251,16 +255,16 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
 
   # Convert categorical rasters to 0-based integer
   # Note: cv was created 0-based to match ESRI ASCII format
-  if ( vi[var][, type=="class"] ) r[[var]] <- as.integer(factor(r[[var]], levels=cl, ordered=T))-1L
+  if(vi[var][, type=="class"]) r[[var]] <- as.integer(factor(r[[var]], levels=cl, ordered=T))-1L
 
   r <- SpatialPixelsDataFrame(r[, list(X, Y)], data.frame(layer=r[[var]]),
     tolerance=0.00564023, proj4string=CRS("+init=epsg:4326"))
   r <- raster(r)
 
   # Plot with HC symbology
-  if ( !missing(pal) ) cc <- colorRampPalette(brewer.pal(9, pal))(length(cc))
+  if(!missing(pal)) cc <- colorRampPalette(brewer.pal(9, pal))(length(cc))
 
-  if ( vi[var][, type=="class"]) {
+  if(vi[var][, type=="class"]) {
     # Categorical variable
     args <- list(at=cv+.5, labels=cl, col="black", col.axis="black")
 
@@ -271,7 +275,7 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
       cv <- unique(getValues(r))
       args <- NULL
 
-    } else if ( legend=="auto" ) {
+    } else if(legend=="auto") {
       # Use default raster breaks
       require(classInt)
       cv <- classIntervals(getValues(r), style="quantile")$brks
@@ -286,13 +290,13 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
       args <- list(at=cv, labels=cl, col="black", col.axis="black")
     }
 
-    if ( cc[1]=="#ffffffff" ) cc <- cc[-1]
+    if(cc[1]=="#ffffffff") cc <- cc[-1]
   }
 
   # Global graphic parameters
   par(bty="n", family="Helvetica-Narrow", cex.axis=.8, cex.sub=.9, font.main=1, adj=0)
 
-  switch (format,
+  switch(format,
     default = {
       # Plot with axes and legend (default)
       plot(r, col=colorRampPalette(cc)(length(cv)), main=NULL,
@@ -327,7 +331,7 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
   # Always add country boundaries
   plot(g0, col=NA, border="dimgray", lwd=.1, add=T)
 
-  if ( iso3!="SSA") {
+  if(iso3!="SSA") {
     # Also add province boundaries
     plot(g1[g1$ADM0_NAME==names(iso)[iso==iso3],], col=NA, border="gray", lwd=.1, add=T)
   }
@@ -358,10 +362,10 @@ genPlot <- function(var, iso3="SSA", format="default",
   height <- as.integer(height)
   res <- as.integer(res)
 
-  for ( i in var ) {
+  for(i in var) {
     fPath <- paste0(format, "-", width, "x", height, units, res, i, iso3, ".png")
 
-    if ( !file.exists(fPath) | cache!=TRUE ) {
+    if(!file.exists(fPath) | cache!=TRUE) {
       # File does not exist on disk, so create
       png(fPath, width=width, height=height, res=res, units=units,
         pointsize=round(ifelse(units=="in", (width*11)/(640/72), (width/res)*11/(640/72))))
@@ -388,15 +392,14 @@ genPlot <- function(var, iso3="SSA", format="default",
 #' @param iso3 optional country or region filter (3-letter code)
 #' @return plot
 #' @export
+#' @import hcdata
+#' @import data.table
 genStats <- function(var, iso3="SSA", by=NULL) {
-
-  require(hcdata)
 
   d <- getLayer(var, iso3, by)
 
-  for ( i in var ) {
+  for(i in var) {
     t <- summary(d[[i]])
-
     p <- hist(d[[i]], plot=F)
     b <- (max(p$counts)-min(p$counts))/20
 
@@ -413,14 +416,13 @@ genStats <- function(var, iso3="SSA", by=NULL) {
 #' @param group optional category filter
 #' @return a data.table of variable categories
 #' @export
+#' @import hcdata
+#' @import data.table
 getGroups <- function(group) {
-
-  require(hcdata)
-  require(data.table)
 
   out <- vi[, list(Title=unique(varTitle)), keyby=list(Category=cat1, Subcategory=cat2, Item=cat3, Code=varCode)]
 
-  if ( !missing(group) ) {
+  if(!missing(group)) {
     out <- out[tolower(Category) %like% tolower(group) |
         tolower(Subcategory) %like% tolower(group) |
         tolower(Item) %like% tolower(group) |
@@ -443,10 +445,9 @@ getGroups <- function(group) {
 #' @param css include Carto CSS rules
 #' @return a data.table of variable metadata
 #' @export
+#' @import hcdata
+#' @import data.table
 getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json") {
-
-  require(hcdata)
-  require(data.table)
 
   out <- vi[, list(
     Label=varLabel,
@@ -476,16 +477,16 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
     `Downloaded on`=as.character(as.Date(Sys.Date())))]
 
   # Optional filters
-  if ( !missing(var) ) out <- out[Code %in% var]
-  if ( !missing(version) ) out <- out[Version==paste0("SChEF r", version)]
-  if ( raster==T ) out <- out[isRaster==T]
-  if ( !missing(group) ) {
+  if(!missing(var)) out <- out[Code %in% var]
+  if(!missing(version)) out <- out[Version==paste0("SChEF r", version)]
+  if(raster==T) out <- out[isRaster==T]
+  if(!missing(group)) {
     out <- out[tolower(Category) %like% tolower(group) |
         tolower(Subcategory) %like% tolower(group) |
         tolower(Item) %like% tolower(group)]
   }
 
-  if ( css=="carto" ) {
+  if(css=="carto") {
     # Add CartoCSS
     out[, `:=` (classBreaks=NULL, classLabels=NULL, classColors=NULL)]
     out <- out[isRaster==T]
@@ -496,7 +497,7 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
 
   setkey(out, Category, Subcategory, Item)
 
-  if ( by.group ) {
+  if(by.group) {
     # Group by category
     setkey(out, Category, Subcategory, Item, Label, Code)
     out <- split(out, out$Category)
@@ -517,11 +518,10 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
 #' @param ... any argument passed to getLayer(), e.g. by=FS_2012, iso3=GHA
 #' @return character, CartoCSS snippet for requested variable
 #' @export
+#' @import hcdata
+#' @import data.table
+#' @import RColorBrewer
 getCartoCSS <- function(var, pal="BuGn", legend=TRUE, ...) {
-
-  require(hcdata)
-  require(data.table)
-  require(RColorBrewer)
 
   setkey(vi, varCode)
   var <- var[1]
@@ -533,10 +533,10 @@ getCartoCSS <- function(var, pal="BuGn", legend=TRUE, ...) {
   if ( vi[var][, type]=="continuous" ) cv <- c(cv, ceiling(max(d[[var]], na.rm=T)))
   cl <- unlist(vi[var][, strsplit(classLabels, "|", fixed=T)])
 
-  if ( is.na(cv) | legend==F ) {
+  if(is.na(cv) | legend==F) {
     # Symbology is missing or use default symbology
 
-    if ( vi[var][, type]=="class" ) {
+    if(vi[var][, type]=="class") {
       # Categorical raster
       cl <- levels(factor(d[[var]]))
       cv <- 1:length(cl)-1
@@ -574,10 +574,10 @@ getCartoCSS <- function(var, pal="BuGn", legend=TRUE, ...) {
 #' @param iso3 optional country or region filter (3-letter code)
 #' @return a data.table of regions, districts, or pixels ranked by similarity to \code{x}
 #' @export
+#' @import data.table
+#' @import hcdata
 getSimilar <- function(x, var, by=0, iso3="SSA") {
 
-  require(hcdata)
-  require(data.table)
   setkey(vi, varCode)
 
   by <- switch(by,
@@ -596,7 +596,7 @@ getSimilar <- function(x, var, by=0, iso3="SSA") {
   # Convert any classified variable to dummy, first
   facVar <- vi[var][type=="class", varCode]
 
-  if (length(facVar)>0) {
+  if(length(facVar)>0) {
     numVar <- names(out)
     numVar <- numVar[numVar!=facVar]
     facOut <- out[, lapply(facVar, function(i) .SD[[i]]==ref[[i]]), .SDcols=facVar]
