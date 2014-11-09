@@ -4,17 +4,16 @@ Title: HarvestChoice Data Services
 Author: Melanie Bacou <mel@mbacou.com>
 Maintainer: Melanie Bacou <mel@mbacou.com>
 Depends:
-    R (>= 2.14.0),
-    hcdata,
-    rgdal
+    R (>= 2.14.0)
 Imports:
-    data.table,
-    raster
+    data.table
 Suggests:
+    raster,
     classInt,
     stringr,
     RColorBrewer,
-    foreign
+    foreign,
+    rgdal
 LazyData: yes
 Description: Methods to access, aggregate, and plot HarvestChoice 5-arc-minute spatial
     layers for sub-Saharan Africa.

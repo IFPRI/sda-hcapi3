@@ -10,9 +10,9 @@ getSimilar(x, var, by = 0, iso3 = "SSA")
 
 \item{var}{character array of HarvestChoice variable codes}
 
-\item{iso3}{optional country or region filter (3-letter code)}
+\item{by}{reference geography, 1 for regions, 2 for districts, 0 for pixel)}
 
-\item{level}{reference geography, 1 for regions, 2 for districts, 0 for pixel)}
+\item{iso3}{optional country or region filter (3-letter code)}
 }
 \value{
 a data.table of regions, districts, or pixels ranked by similarity to \code{x}

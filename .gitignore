@@ -6,6 +6,7 @@
 
 # R data files from past sessions
 .RData
+R/sysdata.rda
 Rplots.pdf
 
 # RStudio files
