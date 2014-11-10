@@ -3,8 +3,8 @@
 \alias{genFile}
 \title{Convert CELL5M layers to multiple formats and package for download}
 \usage{
-genFile(var, iso3, by, format = c("csv", "geojson", "tif", "shp", "dta",
-  "asc", "rds", "rdata"), ...)
+genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
+  "shp", "dta", "asc", "rds", "rdata"), ...)
 }
 \arguments{
 \item{format}{output format c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")}

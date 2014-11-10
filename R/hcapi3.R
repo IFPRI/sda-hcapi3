@@ -227,11 +227,11 @@ getPixelID <- function(wkt) {
 #' @param ... any argument passed to getLayer(), e.g. \code{var}, \code{iso3}, \code{by}, and \code{geom}
 #' @return character, path to generated data file
 #' @export
-genFile <- function(var, iso3, by,
+genFile <- function(var, iso3="SSA", by=NULL,
   format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata"), ...) {
 
   setkey(vi, varCode)
-  fPath <- paste0(var[1], "-", paste0(by, collapse="-"), iso3, format)
+  fPath <- paste0(var[1], ".", paste0(by, collapse="-"), ".", iso3, ".", format)
 
   if (format %in% c("asc", "tif", "rdata")) {
     # Raster formats take more work
@@ -258,12 +258,10 @@ genFile <- function(var, iso3, by,
   switch(format,
     # RData raster
     rdata = {
-      fPath <- paste0(fPath, ".RData")
       save(raster(d, layer=var), file=fPath, compress=T) },
 
     # GeoTIFF
     tif = {
-      fPath <- paste0(fPath, ".tif")
       writeGDAL(d[, var], fPath, driver="GTiff",
         mvFlag=-9999, type=ct, setStatistics=T,
         #catNames=list(cl), colorTables=list(cc),
@@ -271,7 +269,6 @@ genFile <- function(var, iso3, by,
 
     # ESRI ASCII
     asc = {
-      fPath <- paste0(fPath, ".asc")
       writeGDAL(d[, var], fPath, driver="AAIGrid",
         mvFlag=-9999, type=ct, setStatistics=T,
         #catNames=list(cl), colorTables=list(cc),
@@ -286,7 +283,6 @@ genFile <- function(var, iso3, by,
 
     # GeoJSON
     geojson = {
-      fPath <- paste0(fPath, ".geojson")
       d <- getLayer(var, iso3, by, collapse=F)
       d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
         proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
@@ -294,7 +290,6 @@ genFile <- function(var, iso3, by,
 
     # Stata (note var.labels still don't seem to work)
     dta = {
-      fPath <- paste0(fPath, ".dta")
       d <- getLayer(var, iso3, by, ...)
       setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
       setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R.")
@@ -303,7 +298,6 @@ genFile <- function(var, iso3, by,
 
     # RDS
     rds = {
-      fPath <- paste0(fPath, ".rds")
       d <- getLayer(var, iso3, by, ...)
       attr(d, "var.labels") <- vi[names(d)][, varLabel]
       attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R."
@@ -311,8 +305,7 @@ genFile <- function(var, iso3, by,
       saveRDS(d, file=fPath, compress=T) },
 
     # CSV (default)
-    { fPath <- paste0(fPath, ".csv")
-      d <- getLayer(var, iso3, by, ...)
+    { d <- getLayer(var, iso3, by, ...)
       write.csv(d, fPath, row.names=F, na="") }
   )
 
