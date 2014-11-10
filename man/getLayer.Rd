@@ -3,7 +3,7 @@
 \alias{getLayer}
 \title{Subset, and/or aggregate HarvestChoice 5-arc-minute layers}
 \usage{
-getLayer(var, iso3 = "SSA", by = NULL, collapse = TRUE)
+getLayer(var, iso3 = "SSA", by = NULL, wkt = NULL, collapse = TRUE)
 }
 \arguments{
 \item{var}{character array of variable names (all types are accepted)}
@@ -11,6 +11,8 @@ getLayer(var, iso3 = "SSA", by = NULL, collapse = TRUE)
 \item{iso3}{optional country or regional filter (3-letter code)}
 
 \item{by}{optional character array of variables to group by (all types are accepted)}
+
+\item{wkt}{optional WKT representation of a spatial object (points or polygons) to summarize over}
 
 \item{collapse}{if FALSE always return all pixel values (useful for plotting and spatial formats)}
 }
@@ -27,5 +29,6 @@ using value breaks specified as part of each variable metadata.
 The formula used to aggregate classified variables by choosing the dominant class is
 \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
 frequency of each class, ranks them by decreasing frequency, and retains the top one.
+Layers can also be summarized over a spatial area (passed as WKT point, multipoints, or polygons).
 }
 

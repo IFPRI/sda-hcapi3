@@ -4,16 +4,21 @@ Title: HarvestChoice Data Services
 Author: Melanie Bacou <mel@mbacou.com>
 Maintainer: Melanie Bacou <mel@mbacou.com>
 Depends:
-    R (>= 2.14.0)
-Imports:
+    R (>= 2.14.0),
     data.table
+Imports:
+    RSclient,
+    RSQLite,
+    DBI,
+    stringr
 Suggests:
     raster,
+    sp,
     classInt,
-    stringr,
     RColorBrewer,
     foreign,
-    rgdal
+    rgdal,
+    rgeos
 LazyData: yes
 Description: Methods to access, aggregate, and plot HarvestChoice 5-arc-minute spatial
     layers for sub-Saharan Africa.
@@ -21,4 +26,4 @@ License: GPL (>= 2)
 URL: http://harvestchoice.org/
 BugReports: http://harvestchoice.org/
 MailingList: support@harvestchoice.org
-Packaged: 2014-02-27 11:20:02 UTC; mbacou
+Packaged: 2014-11-09 11:20:02 UTC; mbacou

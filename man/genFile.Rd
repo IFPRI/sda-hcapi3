@@ -3,24 +3,19 @@
 \alias{genFile}
 \title{Convert CELL5M layers to multiple formats and package for download}
 \usage{
-genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
-  "shp", "dta", "asc", "rds", "rdata"), ...)
+genFile(var, iso3, by, format = c("csv", "geojson", "tif", "shp", "dta",
+  "asc", "rds", "rdata"), ...)
 }
 \arguments{
-\item{var}{character array of CELL5M variable names}
+\item{format}{output format c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")}
 
-\item{iso3}{optional country or regional filter (3-letter code)}
-
-\item{by}{optional character array of CELL5M variable to group by}
-
-\item{format}{output format c("csv", "geojson", "tif", "dta", "asc", "rds", "RData")}
-
-\item{...}{any argument passed to getLayer()}
+\item{...}{any argument passed to getLayer(), e.g. \code{var}, \code{iso3}, \code{by}, and \code{geom}}
 }
 \value{
 character, path to generated data file
 }
 \description{
-Convert CELL5M layers to multiple formats and package for download
+Package any result from \code{getLayer()} into the user-specified data format.
+Also creates an accompanying README file with metadata and citation details.
 }
 
