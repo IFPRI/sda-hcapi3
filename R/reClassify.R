@@ -15,7 +15,7 @@
 #' @examples
 #' # Return average wealth index and poverty rates for areas of low/med/high rural
 #' # population density and low/high market access (over 5hrs travel time)
-#' reClassify(var=c("wealth","TPOV_P200"), by=list(PD05_RUR=c(60, 100), TT_20K=5))
+#' reClassify(var=c("wealth","TPOV_P200"), by=list(PD05_RUR=c(60, 100), TT_20K=c(0,5)))
 #'
 #' @export
 reClassify <- function(var, by, ...) {
