@@ -9,7 +9,7 @@
 
 Port of HarvestChoice Data Services to OpenCPU Server http://198.105.216.164/ocpu/library/hcapi3.
 
-## Updates
+** Updates
 
 *2014.11.11 update*: added a new argument =wkt= to =getLayer= method to support point/polygon summaries.
 
@@ -72,7 +72,7 @@ user    0m0.000s
 sys     0m0.030s
 #+END_SRC
 
-## Overview
+** Overview
 
 Documentation for each method can be accessed using =/man/<method>=, for example at http://198.105.216.164/ocpu/library/hcapi3/man/getLayer
 also in PDF format at
