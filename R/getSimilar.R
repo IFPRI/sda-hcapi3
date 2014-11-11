@@ -1,10 +1,17 @@
-#' Rank regions, districts, or pixels by similarity to a reference unit for a set of indicators
+#' Rank spatial units by similarity
 #'
-#' @param x region (ADM1_CODE), district (ADM2_CODE), or pixel code (CELL5M)
-#' @param var character array of HarvestChoice variable codes
-#' @param by reference geography, 1 for regions, 2 for districts, 0 for pixel)
+#' Rank regions, districts, or pixels by similarity to a reference unit across a set of indicators
+#'
+#' @param x single integer code for the reference geography, either a region code (ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against
+#' @param var character array of HarvestChoice variable codes used in the ranking
+#' @param by single integer indicating the reference geography, 0-gridcell, 1-region, 2-district)
 #' @param iso3 optional country or region filter (3-letter code)
-#' @return a data.table of regions, districts, or pixels ranked by similarity to \code{x}
+#' @return a data.table of regions, districts, or pixels ranked by similarity to reference geography \code{x}
+#' @examples
+#' # Rank all districts in Ghana by similarity to district 16657 (Kpando) using the
+#' # length of growing period (LGP_AVG), irrigated cropland (GMIA_V5), and cassava
+#' # value of production (cass_v) as benchmarks.
+#' getSimilar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 #' @export
 getSimilar <- function(x, var, by=0, iso3="SSA") {
 

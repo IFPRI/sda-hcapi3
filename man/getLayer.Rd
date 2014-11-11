@@ -14,18 +14,18 @@ getLayer(var, iso3 = "SSA", by = NULL, wkt = NULL, collapse = TRUE)
 
 \item{wkt}{optional WKT representation of a spatial object (points or polygons) to summarize over}
 
-\item{collapse}{if FALSE always return all pixel values (useful for plotting and spatial formats)}
+\item{collapse}{if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)}
 }
 \value{
-a data.table of \code{var} indicators aggregated by \code{by}
+a data.table of \code{var} indicators aggregated by \code{by} domains
 }
 \description{
 Workhorse method to subset and/or aggregate HarvestChoice layers.
-This method also aggregates classified variables by continuous variables.
+This method also aggregates classified variables by continuous variables.\\
 e.g. \code{getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))}.
 It does so by returning the dominant class of a classified variable within each \code{by}
 class, and by automatically classifying any continuous variable passed to \code{by}
-using value breaks specified as part of each variable metadata.
+using default value breaks as specified in the variable metadata.
 The formula used to aggregate classified variables by choosing the dominant class is
 \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
 frequency of each class, ranks them by decreasing frequency, and retains the top one.

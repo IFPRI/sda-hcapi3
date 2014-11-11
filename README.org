@@ -13,6 +13,39 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://198.105.216.1
 
 *2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://198.105.216.164/ocpu/library/hcapi3/man/reClassify.
 
+#+BEGIN_SRC sh
+// Sample request
+$ time curl http://198.105.216.164/ocpu/library/hcapi3/R/getLayer/json \
+ -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
+ -X POST -H "Content-Type:application/json"
+[
+    {
+        "TT_20K": "(0,5]",
+        "whea_h": 111336,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "whea_h": 26446,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "PD05_RUR": "(60,100]",
+        "TT_20K": "(0,5]",
+        "whea_h": 14437,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "PD05_RUR": "(60,100]",
+        "whea_h": 6201,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    }
+]
+
+real    0m1.100s
+user    0m0.015s
+sys     0m0.015s
+#+END_SRC
+
 *2014.11.10*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict (logged bug [[https://github.com/rstats-db/RSQLite/issues/60#issuecomment-62497666][#issuecomment-62497666]]).
 
 *2014.11.10*: added a new argument =wkt= to =getLayer()= method to support point/polygon summaries.

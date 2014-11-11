@@ -1,11 +1,11 @@
 #' Subset, and/or aggregate HarvestChoice 5-arc-minute layers
 #'
 #' Workhorse method to subset and/or aggregate HarvestChoice layers.
-#' This method also aggregates classified variables by continuous variables.
+#' This method also aggregates classified variables by continuous variables.\\
 #' e.g. \code{getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))}.
 #' It does so by returning the dominant class of a classified variable within each \code{by}
 #' class, and by automatically classifying any continuous variable passed to \code{by}
-#' using value breaks specified as part of each variable metadata.
+#' using default value breaks as specified in the variable metadata.
 #' The formula used to aggregate classified variables by choosing the dominant class is
 #' \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
 #' frequency of each class, ranks them by decreasing frequency, and retains the top one.
@@ -15,8 +15,8 @@
 #' @param iso3 optional country or regional filter (3-letter code)
 #' @param by optional character array of variables to group by (all types are accepted)
 #' @param wkt optional WKT representation of a spatial object (points or polygons) to summarize over
-#' @param collapse if FALSE always return all pixel values (useful for plotting and spatial formats)
-#' @return a data.table of \code{var} indicators aggregated by \code{by}
+#' @param collapse if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)
+#' @return a data.table of \code{var} indicators aggregated by \code{by} domains
 #' @export
 getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
 
@@ -24,31 +24,13 @@ getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
 
   if (length(wkt)>0) {
     # Convert WKT to CELL5M IDs, void any iso3 filter
+    # Note this takes an additional roundtrip to Rserve, could be optimized
     wkt <- getPixelID(wkt)
     if(length(wkt)>0) iso3 <- "SSA"
     if(class(wkt)=="SpatialPoints") collapse <- FALSE
   }
 
   if (length(by)>0) {
-    # Aggregate
-    vars <- unique(c(g, var, by))
-
-    # If `by` include continuous variables, then auto-classify before grouping
-    # Beware that aggregation formulas typically require additional variables from `dt`
-    bynum <- vi[by][!type=="class", varCode]
-
-    if (length(bynum)>0) {
-      # Classify using `classBreaks`
-      byclass <- sapply(bynum, function(i) {
-        b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-        paste0(i, "=cut(", i, ", c(", paste0(b, collapse=", "), "), ordered_result=T)")
-      })
-
-      by <- c(vi[by][type=="class", varCode], byclass)
-      by <- by[!is.na(by)]
-      by <- paste(by, collapse=", ")
-    }
-
     # Construct generic aggregation formula
     setkey(vi, varCode)
     agg <- vi[var][, aggFunR]
@@ -60,34 +42,76 @@ getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
       agg <- paste0("CELL5M, X, Y, ",  paste0(agg, collapse=", "))
     }
 
-    data <- paste0("dt",
-      if(length(wkt)>0) "[CELL5M %in% wkt]",
-      if(iso3!="SSA") paste0("[ISO3==", iso3, "]"),
-      "[order(", by, ", na.last=T)",
-      ", list(", agg, "), by=list(", by, ")]")
+    # Construct `by` statement
+    switch(class(by),
 
-    # Eval in Rserve socket
+      `character` = {
+        # Simple array of variable codes
+        # If `by` include continuous variables, then auto-classify before grouping
+        bynum <- vi[by][!type=="class", varCode]
+        byclass <- setdiff(by, bynum)
+        fltr <- as.character(NA)
+
+        if (length(bynum)>0) {
+          # Classify using `classBreaks`
+          bynum <- sapply(bynum, function(i) {
+            b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
+            paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "), ordered_result=T)")
+          })
+        }
+
+        bynum <- c(byclass, bynum)
+        bynum <- bynum[!is.na(bynum)]
+        bynum <- paste(bynum, collapse=", ")
+      },
+
+      `list` = {
+        # Complex list with custom breaks and/or filters
+        # e.g. list(AEZ5_CLAS=c("abc", "xyz"), TT_20K=c(2, 5))
+        # Filter
+        bynum <- vi[names(by)][!type=="class", varCode]
+        fltr <- setdiff(names(by), bynum)
+        fltr <- sapply(fltr, function(i) paste0(i,
+          " %in% c('", paste0(by[[i]], collapse="', '"), "')"))
+        fltr <- paste0(fltr, collapse=" & ")
+
+        # Classify
+        bynum <- sapply(bynum, function(i) paste0(i,
+          "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "), ordered_result=T)"))
+        bynum <- paste(bynum, collapse=", ")
+        by <- names(by)
+      })
+
+    # Put it together
+    data <- paste0("dt",
+      ifelse(length(wkt)>0, paste0("[CELL5M %in% ", wkt, "]"), ""),
+      ifelse(iso3!="SSA", paste0("[ISO3=='", iso3, "']"), ""),
+      ifelse(!is.na(fltr), paste0("[", fltr, "]"), ""),
+      "[, list(", agg, "), by=list(", bynum, ")]")
+
+    # Eval through Rserve socket (instead of DB connection)
     rc <- RS.connect(proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
+    #setkeyv(data, by)
 
   } else {
-    # No aggregation. Don't duplicate variables
+    # No aggregation. Don't duplicate any variable
     vars <- c(g, var, by)
     vars <- unique(vars)
     vars <- vars[!is.na(vars)]
 
-    data <- parse(text=paste0("dt[, list(", paste0(vars, collapse=", "), ")]"))
+    # Put it together
+    data <- paste0("dt",
+      ifelse(length(wkt)>0, paste0("[CELL5M %in% ", wkt, "]"), ""),
+      ifelse(iso3!="SSA", paste0("[ISO3=='", iso3, "']"), ""),
+      "[, list(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve socket
     rc <- RS.connect(proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
-
-    data <- data[!is.na(X)]
     setkey(data, ADM0_NAME, ADM1_NAME_ALT, ADM2_NAME_ALT)
-    if (length(wkt)>0) data <- data[CELL5M %in% wkt]
-    if (iso3!="SSA") data <- data[ISO3==iso3]
   }
 
   # Rounding (ugly but fast)
@@ -97,7 +121,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
 }
 
 
-#' Subset, and/or aggregate HarvestChoice 5-arc-minute layers (SQLite version)
+#' Subset, and/or aggregate HarvestChoice 5-arc-minute layers (SQLite version, now deprecated)
 #'
 #' Workhorse method to subset and/or aggregate HarvestChoice layers.
 #' This method also aggregates classified variables by continuous variables.
@@ -203,7 +227,7 @@ getPixelID <- function(wkt) {
 
   # Eval in Rserve socket
   rc <- RS.connect(proxy.wait=F)
-  d <- RS.eval(rc, dt[order(X,Y), list(X,Y,CELL5M)])
+  d <- RS.eval(rc, dt[, list(X,Y,CELL5M)])
   RS.close(rc)
 
   d <- SpatialPixelsDataFrame(d[, list(X, Y)], data.frame(CELL5M=d$CELL5M),
@@ -305,8 +329,8 @@ genFile <- function(var, iso3="SSA", by=NULL,
       saveRDS(d, file=fPath, compress=T) },
 
     # CSV (default)
-    { d <- getLayer(var, iso3, by, ...)
-      write.csv(d, fPath, row.names=F, na="") }
+{ d <- getLayer(var, iso3, by, ...)
+  write.csv(d, fPath, row.names=F, na="") }
   )
 
   f <- list.files(dirname(fPath), paste0(basename(fPath), ".*"), full.names=T)
