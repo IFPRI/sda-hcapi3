@@ -13,7 +13,7 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://198.105.216.1
 
 *2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://198.105.216.164/ocpu/library/hcapi3/man/reClassify.
 
-*2014.11.10*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict.
+*2014.11.10*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict (logged bug [[https://github.com/rstats-db/RSQLite/issues/60#issuecomment-62497666][#issuecomment-62497666]]).
 
 *2014.11.10*: added a new argument =wkt= to =getLayer()= method to support point/polygon summaries.
 
