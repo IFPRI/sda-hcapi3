@@ -7,13 +7,15 @@
 #+LaTeX_CLASS: mel-article
 #+STARTUP: indent showstars
 
-Port of HarvestChoice Data Services to OpenCPU Server http://198.105.216.164/ocpu/library/hcapi3.
+Port of HarvestChoice Data Services to an OpenCPU server at http://198.105.216.164/ocpu/library/hcapi3.
 
 ** Updates
 
-*2014.11.11*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict.
+*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://198.105.216.164/ocpu/library/hcapi3/man/reClassify.
 
-*2014.11.11*: added a new argument =wkt= to =getLayer= method to support point/polygon summaries.
+*2014.11.10*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict.
+
+*2014.11.10*: added a new argument =wkt= to =getLayer()= method to support point/polygon summaries.
 
 #+BEGIN_SRC sh
 // Sample request with a few points
