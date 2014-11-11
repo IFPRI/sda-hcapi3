@@ -11,7 +11,7 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://198.105.216.1
 
 ** Updates
 
-*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://198.105.216.164/ocpu/library/hcapi3/man/reClassify.
+*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://198.105.216.164/ocpu/library/hcapi3/man/reClassify/pdf.
 
 #+BEGIN_SRC sh
 // Sample request
