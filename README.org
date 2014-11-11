@@ -11,7 +11,9 @@ Port of HarvestChoice Data Services to OpenCPU Server http://198.105.216.164/ocp
 
 ** Updates
 
-*2014.11.11 update*: added a new argument =wkt= to =getLayer= method to support point/polygon summaries.
+*2014.11.11*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict.
+
+*2014.11.11*: added a new argument =wkt= to =getLayer= method to support point/polygon summaries.
 
 #+BEGIN_SRC sh
 // Sample request with a few points
