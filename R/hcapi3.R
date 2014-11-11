@@ -77,7 +77,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
     vars <- unique(vars)
     vars <- vars[!is.na(vars)]
 
-    data <- parse(text=paste0("dt[, .SD, .SDcols=c(", paste0(vars, collapse=", "), ")]"))
+    data <- parse(text=paste0("dt[, list(", paste0(vars, collapse=", "), ")]"))
 
     # Eval in Rserve socket
     rc <- RS.connect(proxy.wait=F)

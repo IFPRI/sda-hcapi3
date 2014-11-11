@@ -9,6 +9,71 @@
 
 Port of HarvestChoice Data Services to OpenCPU Server http://198.105.216.164/ocpu/library/hcapi3.
 
+## Updates
+
+*2014.11.11 update*: added a new argument =wkt= to =getLayer= method to support point/polygon summaries.
+
+#+BEGIN_SRC sh
+// Sample request with a few points
+$ time curl http://198.105.216.164/ocpu/library/hcapi3/R/getLayer/json \
+ -d '{"var" : ["whea_h", "AEZ16_CLAS"], "wkt" : "MULTIPOINT((35.69319860636820607 -3.91388197570256979), (35.47695932281013853 -4.34541210453119486), (36.61014339398586515 -6.19304393571206635), (36.47436786329777902 -5.51879978940470828))"}' \
+ -X POST -H "Content-Type:application/json"
+
+[
+    {
+        "CELL5M": 4987879,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Dodoma",
+        "ADM2_NAME_ALT": "Kongwa",
+        "X": 36.625,
+        "Y": -6.2083,
+        "whea_h": 0,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "CELL5M": 4866908,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Manyara",
+        "ADM2_NAME_ALT": "Babati",
+        "X": 35.7083,
+        "Y": -3.875,
+        "whea_h": 0,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "CELL5M": 4892825,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Manyara",
+        "ADM2_NAME_ALT": "Hanang",
+        "X": 35.4583,
+        "Y": -4.375,
+        "whea_h": 148,
+        "AEZ16_CLAS": "Tropic - cool / subhumid"
+    },
+    {
+        "CELL5M": 4953317,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Manyara",
+        "ADM2_NAME_ALT": "Kiteto",
+        "X": 36.4583,
+        "Y": -5.5417,
+        "whea_h": 0,
+        "AEZ16_CLAS": "Tropic - cool / semiarid"
+    }
+]
+
+
+real    0m2.660s
+user    0m0.000s
+sys     0m0.030s
+#+END_SRC
+
+## Overview
+
 Documentation for each method can be accessed using =/man/<method>=, for example at http://198.105.216.164/ocpu/library/hcapi3/man/getLayer
 also in PDF format at
 http://198.105.216.164/ocpu/library/hcapi3/man/getLayer/pdf

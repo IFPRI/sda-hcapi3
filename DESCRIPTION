@@ -8,8 +8,6 @@ Depends:
     data.table
 Imports:
     RSclient,
-    RSQLite,
-    DBI,
     stringr
 Suggests:
     raster,
