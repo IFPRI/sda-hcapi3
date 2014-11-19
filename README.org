@@ -15,7 +15,7 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 #+BEGIN_SRC sh
 // Sample request
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/reClassify/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
  -X POST -H "Content-Type:application/json"
 [
@@ -48,11 +48,11 @@ sys     0m0.015s
 
 *2014.11.10*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict (logged bug [[https://github.com/rstats-db/RSQLite/issues/60#issuecomment-62497666][#issuecomment-62497666]]).
 
-*2014.11.10*: added a new argument =wkt= to =getLayer()= method to support point/polygon summaries.
+*2014.11.10*: added a new method =getLayerWKT()= to support point/polygon summaries.
 
 #+BEGIN_SRC sh
 // Sample request with a few points
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayerWKT/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "wkt" : "MULTIPOINT((35.69319860636820607 -3.91388197570256979), (35.47695932281013853 -4.34541210453119486), (36.61014339398586515 -6.19304393571206635), (36.47436786329777902 -5.51879978940470828))"}' \
  -X POST -H "Content-Type:application/json"
 
@@ -111,7 +111,7 @@ sys     0m0.030s
 
 ** Overview
 
-Documentation for each method can be accessed using =/man/<method>=, for example at http://198.105.216.164/ocpu/library/hcapi3/man/getLayer
+Documentation for each method can be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
 also in PDF format at
 http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/pdf
 
