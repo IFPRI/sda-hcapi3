@@ -7,15 +7,15 @@
 #+LaTeX_CLASS: mel-article
 #+STARTUP: indent showstars
 
-Port of HarvestChoice Data Services to an OpenCPU server at http://198.105.216.164/ocpu/library/hcapi3.
+Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvestchoice.org/ocpu/library/hcapi3.
 
 ** Updates
 
-*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://198.105.216.164/ocpu/library/hcapi3/man/reClassify/pdf.
+*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
 
 #+BEGIN_SRC sh
 // Sample request
-$ time curl http://198.105.216.164/ocpu/library/hcapi3/R/getLayer/json \
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
  -X POST -H "Content-Type:application/json"
 [
@@ -52,7 +52,7 @@ sys     0m0.015s
 
 #+BEGIN_SRC sh
 // Sample request with a few points
-$ time curl http://198.105.216.164/ocpu/library/hcapi3/R/getLayer/json \
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "wkt" : "MULTIPOINT((35.69319860636820607 -3.91388197570256979), (35.47695932281013853 -4.34541210453119486), (36.61014339398586515 -6.19304393571206635), (36.47436786329777902 -5.51879978940470828))"}' \
  -X POST -H "Content-Type:application/json"
 
@@ -113,9 +113,9 @@ sys     0m0.030s
 
 Documentation for each method can be accessed using =/man/<method>=, for example at http://198.105.216.164/ocpu/library/hcapi3/man/getLayer
 also in PDF format at
-http://198.105.216.164/ocpu/library/hcapi3/man/getLayer/pdf
+http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/pdf
 
-HTTP GET and POST requests can be tested at http://198.105.216.164/ocpu/.
+HTTP GET and POST requests can be tested at http://hcapi.harvestchoice.org/ocpu/.
 
 Javascript client code is also available.
 
@@ -126,7 +126,7 @@ Javascript client code is also available.
 <script src="js/opencpu.js"></script>
 
 // Set page to communicate with "hcapi3" package on server
-ocpu.seturl("//198.105.216.164/ocpu/library/hcapi3/R")
+ocpu.seturl("//hcapi.harvestchoice.org/ocpu/library/hcapi3/R")
 
 // JavaScript client code
 var layer = $("#layer").val();
@@ -164,7 +164,7 @@ Or in the console,
 
 #+BEGIN_SRC sh
 // Example #1 (takes 2 calls to generate and download file)
-$ curl http://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "{var: 'whea_h', iso3: 'GHA', by: 'ADM2_NAME_ALT', format: 'dta'}" -X POST
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d "{var: 'whea_h', iso3: 'GHA', by: 'ADM2_NAME_ALT', format: 'dta'}" -X POST
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
 /ocpu/tmp/x0a3355977c/stdout
@@ -174,10 +174,10 @@ $ curl http://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "{var: 'whea_h', 
 /ocpu/tmp/x0a3355977c/files/DESCRIPTION
 /ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
 
-$ wget http://198.105.216.164/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
 
 // Example #2 with timings
-$ time curl http://198.105.216.164/ocpu/library/hcapi3/R/genFile -d "var='whea_h'&iso3='GHA'&format='tif'" -X POST
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d "var='whea_h'&iso3='GHA'&format='tif'" -X POST
 /ocpu/tmp/x079f3481fd/R/.val
 /ocpu/tmp/x079f3481fd/messages
 /ocpu/tmp/x079f3481fd/stdout
@@ -193,9 +193,9 @@ real    0m6.974s
 user    0m0.000s
 sys     0m0.015s
 
-$ time wget http://198.105.216.164/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
---2014-11-03 23:27:16--  http://198.105.216.164/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
-Connecting to 198.105.216.164:80... connected.
+$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
+--2014-11-03 23:27:16--  http://hcapi.harvestchoice.org/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
+Connecting to hcapi.harvestchoice.org:80... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: unspecified [image/tiff]
 Saving to: ‘whea_h-GHAtif.tif’
@@ -209,7 +209,7 @@ user    0m0.000s
 sys     0m0.030s
 
 // Example #3 simply get some variable codes
-$ curl http://198.105.216.164/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        {
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        {
     "Agroecology": {
         "Pests and Diseases": [
             {
@@ -353,7 +353,7 @@ $ curl http://198.105.216.164/ocpu/library/hcapi3/R/getGroups/json -d "group='wh
 }
 
 // Example #4 and additional metadata
-$ curl http://198.105.216.164/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
 [
     {
         "Label": "Wheat area '05",

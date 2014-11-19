@@ -10,7 +10,7 @@ getSimilar(x, var, by = 0, iso3 = "SSA")
 
 \item{var}{character array of HarvestChoice variable codes used in the ranking}
 
-\item{by}{single integer indicating the reference geography, 0-gridcell, 1-region, 2-district)}
+\item{by}{single integer indicating the type of reference geography (0-gridcell, 1-region, 2-district)}
 
 \item{iso3}{optional country or region filter (3-letter code)}
 }
@@ -18,12 +18,18 @@ getSimilar(x, var, by = 0, iso3 = "SSA")
 a data.table of regions, districts, or pixels ranked by similarity to reference geography \code{x}
 }
 \description{
-Rank regions, districts, or pixels by similarity to a reference unit across a set of indicators
+Rank regions, districts, or pixels by similarity to a reference unit across a set of
+indicators. To generate a distance score, we center and scale all numeric variables
+and convert classified variables to 0 or 1 (1 if same as reference unit, 0 otherwise).
+For each variable we compute the absolute percent deviation between each unit and the
+reference unit, and we then sum the deviations across all variables to generate an
+aggregate distance score. The lower the score, the more similar the unit for the
+selected indicators.
 }
 \examples{
-# Rank all districts in Ghana by similarity to district 16657 (Kpando) using the
-# length of growing period (LGP_AVG), irrigated cropland (GMIA_V5), and cassava
-# value of production (cass_v) as benchmarks.
+# Rank all districts in Ghana by similarity to district 16657 (Kpando)
+# using the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
+# and cassava value of production (cass_v) as benchmarks.
 getSimilar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 }
 

@@ -1,4 +1,4 @@
-#' Subset, and/or aggregate HarvestChoice 5-arc-minute layers
+#' Subset, and/or summarize HarvestChoice 5-arc-minute layers
 #'
 #' Workhorse method to subset and/or aggregate HarvestChoice layers.
 #' This method also aggregates classified variables by continuous variables.\\
@@ -14,21 +14,14 @@
 #' @param var character array of variable names (all types are accepted)
 #' @param iso3 optional country or regional filter (3-letter code)
 #' @param by optional character array of variables to group by (all types are accepted)
-#' @param wkt optional WKT representation of a spatial object (points or polygons) to summarize over
+#' @param ids optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)
 #' @param collapse if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)
 #' @return a data.table of \code{var} indicators aggregated by \code{by} domains
 #' @export
-getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
+getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
 
   setkey(vi, varCode)
-
-  if (length(wkt)>0) {
-    # Convert WKT to CELL5M IDs, void any iso3 filter
-    # Note this takes an additional roundtrip to Rserve, could be optimized
-    wkt <- getPixelID(wkt)
-    if(length(wkt)>0) iso3 <- "SSA"
-    if(class(wkt)=="SpatialPoints") collapse <- FALSE
-  }
+  if (length(ids)>0) iso3 <- "SSA"
 
   if (length(by)>0) {
     # Construct generic aggregation formula
@@ -78,15 +71,15 @@ getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
         # Classify
         bynum <- sapply(bynum, function(i) paste0(i,
           "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "), ordered_result=T)"))
-        bynum <- paste(bynum, collapse=", ")
+        bynum <- paste0(bynum, collapse=", ")
         by <- names(by)
       })
 
     # Put it together
     data <- paste0("dt",
-      ifelse(length(wkt)>0, paste0("[CELL5M %in% ", wkt, "]"), ""),
-      ifelse(iso3!="SSA", paste0("[ISO3=='", iso3, "']"), ""),
-      ifelse(!is.na(fltr), paste0("[", fltr, "]"), ""),
+      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
+      if(!is.na(fltr)) paste0("[", fltr, "]"),
       "[, list(", agg, "), by=list(", bynum, ")]")
 
     # Eval through Rserve socket (instead of DB connection)
@@ -103,8 +96,8 @@ getLayer <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
 
     # Put it together
     data <- paste0("dt",
-      ifelse(length(wkt)>0, paste0("[CELL5M %in% ", wkt, "]"), ""),
-      ifelse(iso3!="SSA", paste0("[ISO3=='", iso3, "']"), ""),
+      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
       "[, list(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve socket
@@ -213,33 +206,6 @@ getLayerSQL <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
   return(data)
 }
 
-
-#' Convert WKT objects to gridcell IDs
-#'
-#' This function intersects any WKT with HarvestChoice 5-arc-minute grid and returns
-#' a list of intersected gridcell IDs (CELL5M codes) typically to pass on as an argument
-#' to \code{getLayer()}, e.g. \code{getLayer(var="whea_h", limit=getPixelID(""))}
-#'
-#' @param wkt WKT representation of a spatial object (points, multipoints, or polygons)
-#' @return integer array of gridcell IDs (CELL5M codes)
-#' @export
-getPixelID <- function(wkt) {
-
-  # Eval in Rserve socket
-  rc <- RS.connect(proxy.wait=F)
-  d <- RS.eval(rc, dt[, list(X,Y,CELL5M)])
-  RS.close(rc)
-
-  d <- SpatialPixelsDataFrame(d[, list(X, Y)], data.frame(CELL5M=d$CELL5M),
-    tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
-  d <- raster(d)
-
-  wkt <- readWKT(wkt, p4s=CRS("+init=epsg:4326"))
-  out <- extract(d, wkt, small=T)
-  out <- out[!is.na(out)]
-  out <- unique(out)
-  return(out)
-}
 
 
 #' Convert CELL5M layers to multiple formats and package for download
