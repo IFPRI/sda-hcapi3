@@ -4,7 +4,7 @@
 \title{Convert CELL5M layers to multiple formats and archive for download}
 \usage{
 genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
-  "shp", "dta", "asc", "rds", "rdata"), ...)
+  "shp", "dta", "asc", "rds"), ...)
 }
 \arguments{
 \item{var}{character array of variable codes passed to getLayer(var, ...)}

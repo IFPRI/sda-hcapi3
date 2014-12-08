@@ -12,22 +12,20 @@
 #' @return character, path to generated ZIP file
 #' @export
 genFile <- function(var, iso3="SSA", by=NULL,
-  format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata"), ...) {
+  format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds"), ...) {
 
   setkey(vi, varCode)
   # Construct temporary data file name
   fPath <- paste(paste(var[1], by[1], iso3[1], sep="-"), format[1], sep=".")
 
-  if ( format %in% c("asc", "tif", "rdata", "shp", "geojson") ) {
-    # Call getLayer() and don't collapse by `by` for spatial formats
+  if ( format %in% c("asc", "tif", "shp", "geojson") ) {
+    # Call getLayer() and don't collapse for spatial formats
     d <- getLayer(var, iso3, by, collapse=F, ...)
   } else {
     d <- getLayer(var, iso3, by, ...)
   }
 
-  if ( format %in% c("asc", "tif", "rdata") ) {
-    # Raster formats require yet more work
-    require(raster)
+  if ( format %in% c("asc", "tif") ) {
     # Process only the first layer (not all raster formats support multibands)
     var <- var[1]
     cl <- as.character(unlist(vi[var][, strsplit(classLabels, "|", fixed=T)]))
@@ -37,7 +35,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
     if (vi[var][, type] == "class")  {
       # If categorical raster, then convert to 0-based integer and add labels
       d[[var]] <- as.integer(factor(d[[var]], levels=cl, ordered=T))-1L
-      ct <- "Int16"
+      ct <- "Byte"
     }
 
     d <- SpatialPixelsDataFrame(d[, list(X, Y)], d,
@@ -45,22 +43,19 @@ genFile <- function(var, iso3="SSA", by=NULL,
   }
 
   switch(format,
-    # RData raster
-    rdata = {
-      save(raster(d, layer=var), file=fPath, compress=T) },
 
     # GeoTIFF
     tif = {
       writeGDAL(d[, var], fPath, driver="GTiff",
         mvFlag=-9999, type=ct, setStatistics=T,
-        if (vi[var][, type] == "class") catNames=list(cl), colorTables=list(cc),
+        catNames=list(cl), colorTables=list(cc),
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     # ESRI ASCII
     asc = {
       writeGDAL(d[, var], fPath, driver="AAIGrid",
         mvFlag=-9999, type=ct, setStatistics=T,
-        if (vi[var][, type] == "class") catNames=list(cl), colorTables=list(cc),
+        catNames=list(cl), colorTables=list(cc),
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     # ESRI Shapefile
