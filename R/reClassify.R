@@ -21,6 +21,6 @@
 #'
 #' @export
 reClassify <- function(var, by, ...) {
-  out <- getLayer(var=var, by=by, wkt=NULL, ...)
+  out <- getLayer(var=var, by=by, ids=NULL, ...)
   return(out)
 }

@@ -16,8 +16,8 @@ getLayerWKT(var, wkt, ...)
 a data.table of \code{var} indicators summarized across \code{wkt} geometry
 }
 \description{
-This function intersects any WKT with HarvestChoice 5-arc-minute grid and returns
-a list of intersected gridcell IDs (CELL5M codes) typically to pass on as an argument
-to \code{getLayer()}.
+This function intersects any spatial object (WKT point, multipoints, or polygons)
+with HarvestChoice 5-arc-minute grid and returns a list of intersected gridcell IDs
+(CELL5M codes) to pass along as argument to \code{getLayer()}.
 }
 

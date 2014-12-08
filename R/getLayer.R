@@ -9,7 +9,7 @@
 #' The formula used to aggregate classified variables by choosing the dominant class is
 #' \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
 #' frequency of each class, ranks them by decreasing frequency, and retains the top one.
-#' Layers can also be summarized over a spatial area (passed as WKT point, multipoints, or polygons).
+#' Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
 #'
 #' @param var character array of variable names (all types are accepted)
 #' @param iso3 optional country or regional filter (3-letter code)
@@ -38,51 +38,51 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
     # Construct `by` statement
     switch(class(by),
 
-      `character` = {
-        # Simple array of variable codes
-        # If `by` include continuous variables, then auto-classify before grouping
-        bynum <- vi[by][!type=="class", varCode]
-        byclass <- setdiff(by, bynum)
-        fltr <- as.character(NA)
+        `character` = {
+          # Simple array of variable codes
+          # If `by` include continuous variables, then auto-classify before grouping
+          bynum <- vi[by][!type=="class", varCode]
+          byclass <- setdiff(by, bynum)
+          fltr <- as.character(NA)
 
-        if (length(bynum)>0) {
-          # Classify using `classBreaks`
-          bynum <- sapply(bynum, function(i) {
-            b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-            paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "), ordered_result=T)")
-          })
-        }
+          if (length(bynum)>0) {
+            # Classify using `classBreaks`
+            bynum <- sapply(bynum, function(i) {
+                  b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
+                  paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "), ordered_result=T)")
+                })
+          }
 
-        bynum <- c(byclass, bynum)
-        bynum <- bynum[!is.na(bynum)]
-        bynum <- paste(bynum, collapse=", ")
-      },
+          bynum <- c(byclass, bynum)
+          bynum <- bynum[!is.na(bynum)]
+          bynum <- paste(bynum, collapse=", ")
+        },
 
-      `list` = {
-        # Complex list with custom breaks and/or filters
-        # e.g. list(AEZ5_CLAS=c("abc", "xyz"), TT_20K=c(2, 5))
-        # Filter
-        bynum <- vi[names(by)][!type=="class", varCode]
-        fltr <- setdiff(names(by), bynum)
-        fltr <- sapply(fltr, function(i) paste0(i,
-          " %in% c('", paste0(by[[i]], collapse="', '"), "')"))
-        fltr <- paste0(fltr, collapse=" & ")
+        `list` = {
+          # Complex list with custom breaks and/or filters
+          # e.g. list(AEZ5_CLAS=c("abc", "xyz"), TT_20K=c(2, 5))
+          # Filter
+          bynum <- vi[names(by)][!type=="class", varCode]
+          fltr <- setdiff(names(by), bynum)
+          fltr <- sapply(fltr, function(i) paste0(i,
+                    " %in% c('", paste0(by[[i]], collapse="', '"), "')"))
+          fltr <- paste0(fltr, collapse=" & ")
 
-        # Classify
-        bynum <- sapply(bynum, function(i) paste0(i,
-          "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "), ordered_result=T)"))
-        bynum <- paste0(bynum, collapse=", ")
-        by <- names(by)
-      })
+          # Classify
+          bynum <- sapply(bynum, function(i) paste0(i,
+                    "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "), ordered_result=T)"))
+          bynum <- paste0(bynum, collapse=", ")
+          by <- names(by)
+        })
 
     # Put it together
     data <- paste0("dt",
-      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
-      if(!is.na(fltr)) paste0("[", fltr, "]"),
-      "[, list(", agg, "), by=list(", bynum, ")]")
+        if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+        if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
+        if(!is.na(fltr)) paste0("[", fltr, "]"),
+        "[, list(", agg, "), by=list(", bynum, ")]")
 
-    # Eval through Rserve socket (instead of DB connection)
+    # Eval in Rserve (through socket instead of DB connection)
     rc <- RS.connect(proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
@@ -96,11 +96,11 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
 
     # Put it together
     data <- paste0("dt",
-      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
-      "[, list(", paste0(vars, collapse=", "), ")]")
+        if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+        if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
+        "[, list(", paste0(vars, collapse=", "), ")]")
 
-    # Eval in Rserve socket
+    # Eval in Rserve
     rc <- RS.connect(proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
@@ -160,9 +160,9 @@ getLayerSQL <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
     if (length(bynum)>0) {
       # Classify using `classBreaks`
       byclass <- sapply(bynum, function(i) {
-        b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-        paste0(i, "=cut(", i, ", c(", paste0(b, collapse=", "), "), ordered_result=T)")
-      })
+            b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
+            paste0(i, "=cut(", i, ", c(", paste0(b, collapse=", "), "), ordered_result=T)")
+          })
 
       by <- c(vi[by][type=="class", varCode], byclass)
       by <- by[!is.na(by)]
@@ -181,10 +181,10 @@ getLayerSQL <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
     }
 
     data <- eval(parse(text=paste0("data",
-      if(length(wkt)>0) "[CELL5M %in% wkt]",
-      if(iso3!="SSA") "[ISO3==iso3]",
-      "[order(", by, ", na.last=T)",
-      ", list(", agg, "), by=list(", by, ")]")))
+                if(length(wkt)>0) "[CELL5M %in% wkt]",
+                if(iso3!="SSA") "[ISO3==iso3]",
+                "[order(", by, ", na.last=T)",
+                ", list(", agg, "), by=list(", by, ")]")))
 
   } else {
     # No aggregation. Don't duplicate variables
@@ -205,106 +205,3 @@ getLayerSQL <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
   dbDisconnect(hc.conn)
   return(data)
 }
-
-
-
-#' Convert CELL5M layers to multiple formats and package for download
-#'
-#' Package any result from \code{getLayer()} into the user-specified data format.
-#' Also creates an accompanying README file with metadata and citation details.
-#'
-#' @param format output format c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")
-#' @param ... any argument passed to getLayer(), e.g. \code{var}, \code{iso3}, \code{by}, and \code{geom}
-#' @return character, path to generated data file
-#' @export
-genFile <- function(var, iso3="SSA", by=NULL,
-  format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata"), ...) {
-
-  setkey(vi, varCode)
-  fPath <- paste0(var[1], ".", paste0(by, collapse="-"), ".", iso3, ".", format)
-
-  if (format %in% c("asc", "tif", "rdata")) {
-    # Raster formats take more work
-    # Process only the first layer (not all formats support multibands)
-    require(raster)
-
-    var <- var[1]
-    d <- getLayer(var, collapse=F, ...)
-    cl <- as.character(unlist(vi[var][, strsplit(classLabels, "|", fixed=T)]))
-    cc <- as.character(unlist(vi[var][, strsplit(classColors, "|", fixed=T)]))
-    ct <- "Float32"
-
-    if (vi[var][, type] == "class")  {
-      # If categorical raster, then convert to 0-based integer and add labels
-      d[[var]] <- as.integer(factor(d[[var]], levels=cl, ordered=T))-1L
-      ct <- "Int16"
-    }
-
-    # Convert to spatial
-    d <- SpatialPixelsDataFrame(d[, list(X, Y)], d,
-      tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
-  }
-
-  switch(format,
-    # RData raster
-    rdata = {
-      save(raster(d, layer=var), file=fPath, compress=T) },
-
-    # GeoTIFF
-    tif = {
-      writeGDAL(d[, var], fPath, driver="GTiff",
-        mvFlag=-9999, type=ct, setStatistics=T,
-        #catNames=list(cl), colorTables=list(cc),
-        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
-
-    # ESRI ASCII
-    asc = {
-      writeGDAL(d[, var], fPath, driver="AAIGrid",
-        mvFlag=-9999, type=ct, setStatistics=T,
-        #catNames=list(cl), colorTables=list(cc),
-        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
-
-    # ESRI Shapefile
-    shp = {
-      d <- getLayer(var, iso3, by, collapse=F)
-      d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
-        proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
-      writeOGR(d, dirname(fPath), basename(fPath), driver="ESRI Shapefile") },
-
-    # GeoJSON
-    geojson = {
-      d <- getLayer(var, iso3, by, collapse=F)
-      d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
-        proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
-      writeOGR(d, fPath, var[1], driver="GeoJSON") },
-
-    # Stata (note var.labels still don't seem to work)
-    dta = {
-      d <- getLayer(var, iso3, by, ...)
-      setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
-      setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R.")
-      setattr(d, "time.stamp", Sys.Date())
-      write.dta(d, fPath, version=10L) },
-
-    # RDS
-    rds = {
-      d <- getLayer(var, iso3, by, ...)
-      attr(d, "var.labels") <- vi[names(d)][, varLabel]
-      attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R."
-      attr(d, "time.stamp") <- as.character(as.Date(Sys.Date()))
-      saveRDS(d, file=fPath, compress=T) },
-
-    # CSV (default)
-{ d <- getLayer(var, iso3, by, ...)
-  write.csv(d, fPath, row.names=F, na="") }
-  )
-
-  f <- list.files(dirname(fPath), paste0(basename(fPath), ".*"), full.names=T)
-  f <- c(f, genReadme(names(d)))
-  fPath <- paste0(fPath, ".zip")
-  zip(fPath, f, flags="-9Xjm", zip="zip")
-  #genReadme(names(d))
-  return(fPath)
-}
-
-

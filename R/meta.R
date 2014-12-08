@@ -9,15 +9,16 @@ genReadme <- function(var) {
     Code=varCode,
     Label=varLabel,
     Details=str_wrap(paste(varTitle, varDesc, sep=". "), 78),
-    Unit=unit,
     Type=type,
+    Unit=unit,
+    Version=version,    
+    `Aggregation Formula`=aggFunR,
     Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
     Category=cat1,
     `Sub-category`=cat2,
     Item=cat3,
     Source=str_wrap(ifelse(is.na(sources), sourceMini, sources), 79),
     Contact=owner,
-    Version=version,
     Citation=str_wrap(citation, 77))]
 
   meta <- split(meta, meta$Code)

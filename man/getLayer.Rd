@@ -29,6 +29,6 @@ using default value breaks as specified in the variable metadata.
 The formula used to aggregate classified variables by choosing the dominant class is
 \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
 frequency of each class, ranks them by decreasing frequency, and retains the top one.
-Layers can also be summarized over a spatial area (passed as WKT point, multipoints, or polygons).
+Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
 }
 
