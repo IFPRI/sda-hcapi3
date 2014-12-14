@@ -9,113 +9,6 @@
 
 Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvestchoice.org/ocpu/library/hcapi3.
 
-** Updates
-
-*2014.12.14*: lazy-loaded datasets now automatically update on package rebuild. Package may now be installed and loaded on remote clients. To install, use:
-
-#+BEGIN_SRC sh
-$ wget https://github.com/harvestchoice/hcapi3/blob/master/hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
-$ R CMD INSTALL hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
-#+END_SRC
-
-*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
-
-#+BEGIN_SRC sh
-// Sample request
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/reClassify/json \
- -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
- -X POST -H "Content-Type:application/json"
-[
-    {
-        "TT_20K": "(0,5]",
-        "whea_h": 111336,
-        "AEZ16_CLAS": "Tropic - warm / semiarid"
-    },
-    {
-        "whea_h": 26446,
-        "AEZ16_CLAS": "Tropic - warm / semiarid"
-    },
-    {
-        "PD05_RUR": "(60,100]",
-        "TT_20K": "(0,5]",
-        "whea_h": 14437,
-        "AEZ16_CLAS": "Tropic - warm / semiarid"
-    },
-    {
-        "PD05_RUR": "(60,100]",
-        "whea_h": 6201,
-        "AEZ16_CLAS": "Tropic - warm / semiarid"
-    }
-]
-
-real    0m1.100s
-user    0m0.015s
-sys     0m0.015s
-#+END_SRC
-
-*2014.11.10*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict (logged bug [[https://github.com/rstats-db/RSQLite/issues/60#issuecomment-62497666][#issuecomment-62497666]]).
-
-*2014.11.10*: added a new method =getLayerWKT()= to support point/polygon summaries.
-
-#+BEGIN_SRC sh
-// Sample request with a few points
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayerWKT/json \
- -d '{"var" : ["whea_h", "AEZ16_CLAS"], "wkt" : "MULTIPOINT((35.69319860636820607 -3.91388197570256979), (35.47695932281013853 -4.34541210453119486), (36.61014339398586515 -6.19304393571206635), (36.47436786329777902 -5.51879978940470828))"}' \
- -X POST -H "Content-Type:application/json"
-
-[
-    {
-        "CELL5M": 4987879,
-        "ISO3": "TZA",
-        "ADM0_NAME": "United Republic of Tanzania",
-        "ADM1_NAME_ALT": "Dodoma",
-        "ADM2_NAME_ALT": "Kongwa",
-        "X": 36.625,
-        "Y": -6.2083,
-        "whea_h": 0,
-        "AEZ16_CLAS": "Tropic - warm / semiarid"
-    },
-    {
-        "CELL5M": 4866908,
-        "ISO3": "TZA",
-        "ADM0_NAME": "United Republic of Tanzania",
-        "ADM1_NAME_ALT": "Manyara",
-        "ADM2_NAME_ALT": "Babati",
-        "X": 35.7083,
-        "Y": -3.875,
-        "whea_h": 0,
-        "AEZ16_CLAS": "Tropic - warm / semiarid"
-    },
-    {
-        "CELL5M": 4892825,
-        "ISO3": "TZA",
-        "ADM0_NAME": "United Republic of Tanzania",
-        "ADM1_NAME_ALT": "Manyara",
-        "ADM2_NAME_ALT": "Hanang",
-        "X": 35.4583,
-        "Y": -4.375,
-        "whea_h": 148,
-        "AEZ16_CLAS": "Tropic - cool / subhumid"
-    },
-    {
-        "CELL5M": 4953317,
-        "ISO3": "TZA",
-        "ADM0_NAME": "United Republic of Tanzania",
-        "ADM1_NAME_ALT": "Manyara",
-        "ADM2_NAME_ALT": "Kiteto",
-        "X": 36.4583,
-        "Y": -5.5417,
-        "whea_h": 0,
-        "AEZ16_CLAS": "Tropic - cool / semiarid"
-    }
-]
-
-
-real    0m2.660s
-user    0m0.000s
-sys     0m0.030s
-#+END_SRC
-
 ** Overview
 
 Documentation for each method can be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
@@ -391,6 +284,113 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var
     }
 ]
 
+#+END_SRC
+
+** Updates
+
+*2014.12.14*: lazy-loaded datasets now automatically update on package rebuild. Package may now be installed and loaded on remote clients. To install, use:
+
+#+BEGIN_SRC sh
+$ wget https://github.com/harvestchoice/hcapi3/blob/master/hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
+$ R CMD INSTALL hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
+#+END_SRC
+
+*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
+
+#+BEGIN_SRC sh
+// Sample request
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/reClassify/json \
+ -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
+ -X POST -H "Content-Type:application/json"
+[
+    {
+        "TT_20K": "(0,5]",
+        "whea_h": 111336,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "whea_h": 26446,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "PD05_RUR": "(60,100]",
+        "TT_20K": "(0,5]",
+        "whea_h": 14437,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "PD05_RUR": "(60,100]",
+        "whea_h": 6201,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    }
+]
+
+real    0m1.100s
+user    0m0.015s
+sys     0m0.015s
+#+END_SRC
+
+*2014.11.10*: changed data storage from sqlite database to persistent Rserve session (faster). rApache and RSQLite seemed to have a library conflict (logged bug [[https://github.com/rstats-db/RSQLite/issues/60#issuecomment-62497666][#issuecomment-62497666]]).
+
+*2014.11.10*: added a new method =getLayerWKT()= to support point/polygon summaries.
+
+#+BEGIN_SRC sh
+// Sample request with a few points
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayerWKT/json \
+ -d '{"var" : ["whea_h", "AEZ16_CLAS"], "wkt" : "MULTIPOINT((35.69319860636820607 -3.91388197570256979), (35.47695932281013853 -4.34541210453119486), (36.61014339398586515 -6.19304393571206635), (36.47436786329777902 -5.51879978940470828))"}' \
+ -X POST -H "Content-Type:application/json"
+
+[
+    {
+        "CELL5M": 4987879,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Dodoma",
+        "ADM2_NAME_ALT": "Kongwa",
+        "X": 36.625,
+        "Y": -6.2083,
+        "whea_h": 0,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "CELL5M": 4866908,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Manyara",
+        "ADM2_NAME_ALT": "Babati",
+        "X": 35.7083,
+        "Y": -3.875,
+        "whea_h": 0,
+        "AEZ16_CLAS": "Tropic - warm / semiarid"
+    },
+    {
+        "CELL5M": 4892825,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Manyara",
+        "ADM2_NAME_ALT": "Hanang",
+        "X": 35.4583,
+        "Y": -4.375,
+        "whea_h": 148,
+        "AEZ16_CLAS": "Tropic - cool / subhumid"
+    },
+    {
+        "CELL5M": 4953317,
+        "ISO3": "TZA",
+        "ADM0_NAME": "United Republic of Tanzania",
+        "ADM1_NAME_ALT": "Manyara",
+        "ADM2_NAME_ALT": "Kiteto",
+        "X": 36.4583,
+        "Y": -5.5417,
+        "whea_h": 0,
+        "AEZ16_CLAS": "Tropic - cool / semiarid"
+    }
+]
+
+
+real    0m2.660s
+user    0m0.000s
+sys     0m0.030s
 #+END_SRC
 
 
