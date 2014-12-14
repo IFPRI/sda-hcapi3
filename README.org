@@ -11,7 +11,12 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 ** Updates
 
-*2014.12.14*: lazy-loaded datasets now automatically update on package rebuild.
+*2014.12.14*: lazy-loaded datasets now automatically update on package rebuild. Package may now be installed and loaded on remote clients. To install, use:
+
+#+BEGIN_SRC sh
+$ wget https://github.com/harvestchoice/hcapi3/blob/master/hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz?raw=true
+$ R CMD INSTALL hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
+#+END_SRC
 
 *2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
 
