@@ -5,7 +5,7 @@
 #' @docType data
 #' @keywords datasets
 #' @name vi
-#' @usage data(vi)
+#' @usage vi.R
 #' @format A data.table object
 NULL
 
@@ -16,6 +16,6 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name lookup
-#' @usage data(lookup)
+#' @usage lookup.R
 #' @format arrays
 NULL

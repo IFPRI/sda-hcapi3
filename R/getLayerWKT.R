@@ -12,7 +12,7 @@
 getLayerWKT <- function(var, wkt, ...) {
 
   # Eval in Rserve socket
-  rc <- RS.connect(proxy.wait=F)
+  rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
   d <- RS.eval(rc, dt[, list(X,Y,CELL5M)])
   RS.close(rc)
 

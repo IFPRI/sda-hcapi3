@@ -83,7 +83,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
         "[, list(", agg, "), by=list(", bynum, ")]")
 
     # Eval in Rserve (through socket instead of DB connection)
-    rc <- RS.connect(proxy.wait=F)
+    rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
     #setkeyv(data, by)
@@ -101,7 +101,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
         "[, list(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve
-    rc <- RS.connect(proxy.wait=F)
+    rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
     setkey(data, ADM0_NAME, ADM1_NAME_ALT, ADM2_NAME_ALT)

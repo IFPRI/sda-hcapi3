@@ -96,14 +96,14 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
   )
 
   # Always add country boundaries
-  rc <- RS.connect(proxy.wait=F)
+  rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
   g0 <- RS.eval(rc, g0)
   RS.close(rc)
   plot(g0, col=NA, border="dimgray", lwd=.1, add=T)
 
   if (iso3!="SSA") {
     # Also add province boundaries
-    rc <- RS.connect(proxy.wait=F)
+    rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
     g1 <- RS.eval(rc, g1)
     RS.close(rc)
     plot(g1[g1$ADM0_NAME==names(iso)[iso==iso3],], col=NA, border="gray", lwd=.1, add=T)
