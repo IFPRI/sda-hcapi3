@@ -11,6 +11,8 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 ** Updates
 
+*2014.12.14*: lazy-loaded datasets now automatically update on package rebuild.
+
 *2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
 
 #+BEGIN_SRC sh

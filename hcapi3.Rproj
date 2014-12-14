@@ -16,6 +16,6 @@ StripTrailingWhitespace: Yes
 
 BuildType: Package
 PackageInstallArgs: --no-multiarch --with-keep.source -l /usr/lib/opencpu/library
-PackageBuildArgs: -l /usr/lib/opencpu/library
-PackageBuildBinaryArgs: -l /usr/lib/opencpu/library --build pkg
+PackageBuildArgs: -l ./
+PackageBuildBinaryArgs: -l ./ --build pkg
 PackageRoxygenize: rd
