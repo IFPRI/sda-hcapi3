@@ -64,7 +64,7 @@ Or in the console,
 
 #+BEGIN_SRC sh
 // Example #1 (takes 2 calls to generate and download file)
-$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d "{var: 'whea_h', iso3: 'GHA', by: 'ADM2_NAME_ALT', format: 'dta'}" -X POST
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": "whea_h", "iso3" : "GHA", "by" : "ADM2_NAME_ALT", "format" : "dta"}' -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
 /ocpu/tmp/x0a3355977c/stdout
