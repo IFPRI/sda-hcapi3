@@ -7,7 +7,7 @@
 #+LaTeX_CLASS: mel-article
 #+STARTUP: indent showstars
 
-Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvestchoice.org/ocpu/library/hcapi3.
+Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvestchoice.org/ocpu/library/hcapi3. More about HarvestChoice datasets for sub-Saharan Africa at http://harvestchoice.org/data/.
 
 ** Overview
 
