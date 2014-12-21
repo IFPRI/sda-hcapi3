@@ -7,7 +7,7 @@
 #' @param var character array of variable codes passed to getLayer(var, ...)
 #' @param iso3 passed to getLayer()
 #' @param by passed to getLayer()
-#' @param format output format c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")
+#' @param format output format c("json", csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")
 #' @param ... any other optional argument passed to getLayer(), e.g. \code{geom}, \code{collapse}.
 #' @return character, path to generated ZIP file
 #' @export
@@ -73,14 +73,14 @@ genFile <- function(var, iso3="SSA", by=NULL,
     # Stata (note var.labels still don't seem to work)
     dta = {
       setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
-      setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R.")
+      setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://hcapi.harvestchoice.org/. Contact <info@harvestchoice.org>.")
       setattr(d, "time.stamp", Sys.Date())
       write.dta(d, fPath, version=10L) },
 
     # RDS
     rds = {
       attr(d, "var.labels") <- vi[names(d)][, varLabel]
-      attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://api.harvestchoice.org/. Contact <info@harvestchoice.org>. Written by R."
+      attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://hcapi.harvestchoice.org/. Contact <info@harvestchoice.org>."
       attr(d, "time.stamp") <- as.character(as.Date(Sys.Date()))
       saveRDS(d, file=fPath, compress=T) },
 

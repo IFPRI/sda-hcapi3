@@ -14,7 +14,7 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
 
 \item{by}{passed to getLayer()}
 
-\item{format}{output format c("csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")}
+\item{format}{output format c("json", csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")}
 
 \item{...}{any other optional argument passed to getLayer(), e.g. \code{geom}, \code{collapse}.}
 }

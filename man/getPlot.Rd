@@ -17,6 +17,8 @@ getPlot(var, iso3 = "SSA", pal, format = "default", legend = "default",
 \item{format}{one of c("default", "print", "thumbnail") control legend and axes}
 
 \item{legend}{one of c("default", "auto") uses HarvestChoice legend breaks or R default}
+
+\item{...}{any argument passed to getLayer()}
 }
 \value{
 plot

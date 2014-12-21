@@ -4,7 +4,8 @@
 \alias{getLayer}
 \title{Subset, and/or summarize HarvestChoice 5-arc-minute layers}
 \usage{
-getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE)
+getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
+  as.class = "data.table")
 }
 \arguments{
 \item{var}{character array of variable names (all types are accepted)}
@@ -16,9 +17,11 @@ getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE)
 \item{ids}{optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)}
 
 \item{collapse}{if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)}
+
+\item{as.class}{\code{c("data.table", "list")} by default returns a simple data.table. If \code{as.class="list"} returns a well-constructed list with variable metadata}
 }
 \value{
-a data.table of \code{var} indicators aggregated by \code{by} domains
+a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
 }
 \description{
 Workhorse method to subset and/or aggregate HarvestChoice layers.

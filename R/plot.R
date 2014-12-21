@@ -5,6 +5,7 @@
 #' @param pal optional Brewer color palette used for plotting
 #' @param format one of c("default", "print", "thumbnail") control legend and axes
 #' @param legend one of c("default", "auto") uses HarvestChoice legend breaks or R default
+#' @param ... any argument passed to getLayer()
 #' @return plot
 #' @export
 getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ...) {
@@ -61,7 +62,7 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
   }
 
   # Global graphic parameters
-  par(bty="n", family="Helvetica-Narrow", cex.axis=.8, cex.sub=.9, font.main=1, adj=0)
+  par(bty="n", family="Helvetica-Narrow", cex.axis=.7, cex.sub=.8, cex.main=.9, font.main=1, adj=0)
 
   switch(format,
     default = {

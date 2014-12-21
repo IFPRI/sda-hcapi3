@@ -13,57 +13,81 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 Documentation for each method can be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
 also in PDF format at
-http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/pdf
+http://hcapi.harvestchoice.org/ocpuq/library/hcapi3/man/getLayer/pdf
 
-HTTP GET and POST requests can be tested at http://hcapi.harvestchoice.org/ocpu/.
-
-Javascript client code is also available.
-
-#+BEGIN_SRC javascript
-
-// OpenCPU requires jquery
-<script src="js/jquery.js"></script>
-<script src="js/opencpu.js"></script>
-
-// Set page to communicate with "hcapi3" package on server
-ocpu.seturl("//hcapi.harvestchoice.org/ocpu/library/hcapi3/R")
-
-// JavaScript client code
-var layer = $("#layer").val();
-var req = $("#plotdiv").rplot("getPlot", { var : layer })
-
-// Optional: add custom callbacks
-req.fail(function(){
-    alert("R returned an error: " + req.responseText);
-});
-
-// Toy example
-var req = ocpu.call("getLayer", {
-   var: ["maiz_h", "maiz_y"], by: ["wealth", "AEZ16_CLAS"], iso3: "GHA"},
-
-   function(session){
-
-    //read the session properties (just for fun)
-    $("#key").text(session.getKey());
-    $("#location").text(session.getLoc());
-
-    //retrieve session console (stdout) async
-    session.getConsole(function(outtxt){
-        $("#output").text(outtxt);
-    });
-
-    //retrieve the returned object async
-    session.getObject(function(data){
-        //data is the object returned by the R function
-        alert("Array of length " + data.length + ".\nFirst few values:" + data.slice(0,3));
-    });
-})
-#+END_SRC
-
-Or in the console,
+HTTP GET and POST requests can be tested at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following syntax.
 
 #+BEGIN_SRC sh
-// Example #1 (takes 2 calls to generate and download file)
+// Simple data request with aggregation at district level (Ethiopia)
+$  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT", "as.class" : "list"}' -X POST -H "Content-Type:application/json"
+{
+    "ColumnList": [
+        {
+            "ColumnCode": "ADM2_NAME_ALT",
+            "ColumnName": "Adm-2 Name (GAUL, 2008 mod.)",
+            "ColumnUnit": "class",
+            "ColumnDesc": "Second-level administrative boundaries based on GAUL 2008 (release 2009).",
+            "ColumnSource": "Food and Agriculture Organization of the United Nations. FAO GEONETWORK. Global Administrative Unit Layers (GAUL) (GeoLayer). (Latest update: 18 Feb 2014) Accessed (20 Feb 2014). URI: http://data.fao.org/ref/f7e7adb0-88fd-11da-a88f-000d939bc5d8.html?version=1.0"
+        },
+        {
+            "ColumnCode": "whea_h",
+            "ColumnName": "Wheat area '05",
+            "ColumnUnit": "ha",
+            "ColumnDesc": "Spatially disaggregated production statistics of circa 2000 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.",
+            "ColumnSource": "You, L., Z. Guo, J. Koo, K. Sebastian, and U. Wood-Sichra. Spatial Production Allocation Model (SPAM) 2005 Version 1."
+        },
+        {
+            "ColumnCode": "bmi",
+            "ColumnName": "BMI",
+            "ColumnUnit": "index",
+            "ColumnDesc": "BMI (not adjusted for pregnancy)",
+            "ColumnSource": "MEASURE Demographic and Health Surveys (multiple surveys), 2005-2012"
+        }
+    ],
+    "ValueList": [
+        [
+            "North Western Tigray",
+            " 13003",
+            "19.0"
+        ],
+        [
+            "Central Tigray",
+            " 27858",
+            "19.0"
+        ],
+        [
+            "Eastern Tigray",
+            " 18586",
+            "19.0"
+        ],
+        [
+            "Afar Zone 2",
+            "     8",
+            "18.8"
+        ],
+        [ truncated...
+        ]
+    ]
+}
+
+// Same request returning a simple json array (no metadata)
+$  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT"}' -X POST -H "Content-Type:application/json"
+[
+    {
+        "ADM2_NAME_ALT": "North Western Tigray",
+        "whea_h": 13003,
+        "bmi": 19
+    },
+    {
+        "ADM2_NAME_ALT": "Central Tigray",
+        "whea_h": 27858,
+        "bmi": 19
+    },
+    { truncated... 
+    }
+]
+
+// Request a STATA file (takes 2 calls to generate and then download ZIP file)
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": "whea_h", "iso3" : "GHA", "by" : "ADM2_NAME_ALT", "format" : "dta"}' -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
@@ -72,43 +96,43 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": 
 /ocpu/tmp/x0a3355977c/console
 /ocpu/tmp/x0a3355977c/info
 /ocpu/tmp/x0a3355977c/files/DESCRIPTION
-/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
+/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALT-GHA.dta.zip
 
-$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALTGHAdta.dta
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALT-GHA.dta.zip
 
-// Example #2 with timings
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d "var='whea_h'&iso3='GHA'&format='tif'" -X POST
-/ocpu/tmp/x079f3481fd/R/.val
-/ocpu/tmp/x079f3481fd/messages
-/ocpu/tmp/x079f3481fd/stdout
-/ocpu/tmp/x079f3481fd/source
-/ocpu/tmp/x079f3481fd/console
-/ocpu/tmp/x079f3481fd/info
-/ocpu/tmp/x079f3481fd/files/DESCRIPTION
-/ocpu/tmp/x079f3481fd/files/README
-/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tfw
-/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
 
-real    0m6.974s
-user    0m0.000s
-sys     0m0.015s
+// Request a GeoTIFF file
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' -X POST -H "Content-Type:application/json"
+/ocpu/tmp/x00c295c697/R/.val
+/ocpu/tmp/x00c295c697/stdout
+/ocpu/tmp/x00c295c697/source
+/ocpu/tmp/x00c295c697/console
+/ocpu/tmp/x00c295c697/info
+/ocpu/tmp/x00c295c697/files/DESCRIPTION
+/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
 
-$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
---2014-11-03 23:27:16--  http://hcapi.harvestchoice.org/ocpu/tmp/x079f3481fd/files/whea_h-GHAtif.tif
-Connecting to hcapi.harvestchoice.org:80... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [image/tiff]
-Saving to: ‘whea_h-GHAtif.tif’
-
-whea_h-GHAtif.tif            [ <=>                                 ]  17.31K  --.-KB/s   in 0.06s
-
-2014-11-03 23:27:17 (291 KB/s) - ‘whea_h-GHAtif.tif’ saved [17728]
-
-real    0m0.255s
-user    0m0.000s
+real    0m0.983s
+user    0m0.015s
 sys     0m0.030s
 
-// Example #3 simply get some variable codes
+$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
+--2014-12-20 18:57:09--  http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
+Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
+Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/zip]
+Saving to: ‘whea_h--ETH.tiff.zip’
+
+whea_h--ETH.tiff.zip      [  <=>                     ]  79.59K   200KB/s   in 0.4s
+
+2014-12-20 18:57:09 (200 KB/s) - ‘whea_h--ETH.tiff.zip’ saved [81498]
+
+real    0m1.007s
+user    0m0.015s
+sys     0m0.062s
+
+
+// Return variable metadata only (variable codes by category)
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        {
     "Agroecology": {
         "Pests and Diseases": [
@@ -252,7 +276,7 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "g
     }
 }
 
-// Example #4 and additional metadata
+// Return full variable metadata
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
 [
     {
@@ -391,6 +415,49 @@ $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayerWKT/jso
 real    0m2.660s
 user    0m0.000s
 sys     0m0.030s
+#+END_SRC
+
+Javascript client code is also available.
+
+#+BEGIN_SRC javascript
+
+// OpenCPU requires jquery
+<script src="js/jquery.js"></script>
+<script src="js/opencpu.js"></script>
+
+// Set page to communicate with "hcapi3" package on server
+ocpu.seturl("//hcapi.harvestchoice.org/ocpu/library/hcapi3/R")
+
+// JavaScript client code
+var layer = $("#layer").val();
+var req = $("#plotdiv").rplot("getPlot", { var : layer })
+
+// Optional: add custom callbacks
+req.fail(function(){
+    alert("R returned an error: " + req.responseText);
+});
+
+// Toy example
+var req = ocpu.call("getLayer", {
+   var: ["maiz_h", "maiz_y"], by: ["wealth", "AEZ16_CLAS"], iso3: "GHA"},
+
+   function(session){
+
+    //read the session properties (just for fun)
+    $("#key").text(session.getKey());
+    $("#location").text(session.getLoc());
+
+    //retrieve session console (stdout) async
+    session.getConsole(function(outtxt){
+        $("#output").text(outtxt);
+    });
+
+    //retrieve the returned object async
+    session.getObject(function(data){
+        //data is the object returned by the R function
+        alert("Array of length " + data.length + ".\nFirst few values:" + data.slice(0,3));
+    });
+})
 #+END_SRC
 
 

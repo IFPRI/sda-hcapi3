@@ -16,11 +16,13 @@
 #' @param by optional character array of variables to group by (all types are accepted)
 #' @param ids optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)
 #' @param collapse if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)
-#' @return a data.table of \code{var} indicators aggregated by \code{by} domains
+#' @param as.class \code{c("data.table", "list")} by default returns a simple data.table. If \code{as.class="list"} returns a well-constructed list with variable metadata
+#' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
 #' @export
-getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
+getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class="data.table") {
 
   setkey(vi, varCode)
+  # If pixel ids are passed ignore any country filter
   if (length(ids)>0) iso3 <- "SSA"
 
   if (length(by)>0) {
@@ -38,49 +40,49 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
     # Construct `by` statement
     switch(class(by),
 
-        `character` = {
-          # Simple array of variable codes
-          # If `by` include continuous variables, then auto-classify before grouping
-          bynum <- vi[by][!type=="class", varCode]
-          byclass <- setdiff(by, bynum)
-          fltr <- as.character(NA)
+      `character` = {
+        # Simple array of variable codes
+        # If `by` include continuous variables, then auto-classify before grouping
+        bynum <- vi[by][!type=="class", varCode]
+        byclass <- setdiff(by, bynum)
+        fltr <- as.character(NA)
 
-          if (length(bynum)>0) {
-            # Classify using `classBreaks`
-            bynum <- sapply(bynum, function(i) {
-                  b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-                  paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "), ordered_result=T)")
-                })
-          }
+        if (length(bynum)>0) {
+          # Classify using `classBreaks`
+          bynum <- sapply(bynum, function(i) {
+            b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
+            paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "), ordered_result=T)")
+          })
+        }
 
-          bynum <- c(byclass, bynum)
-          bynum <- bynum[!is.na(bynum)]
-          bynum <- paste(bynum, collapse=", ")
-        },
+        bynum <- c(byclass, bynum)
+        bynum <- bynum[!is.na(bynum)]
+        bynum <- paste(bynum, collapse=", ")
+      },
 
-        `list` = {
-          # Complex list with custom breaks and/or filters
-          # e.g. list(AEZ5_CLAS=c("abc", "xyz"), TT_20K=c(2, 5))
-          # Filter
-          bynum <- vi[names(by)][!type=="class", varCode]
-          fltr <- setdiff(names(by), bynum)
-          fltr <- sapply(fltr, function(i) paste0(i,
-                    " %in% c('", paste0(by[[i]], collapse="', '"), "')"))
-          fltr <- paste0(fltr, collapse=" & ")
+      `list` = {
+        # Complex list with custom breaks and/or filters
+        # e.g. list(AEZ5_CLAS=c("abc", "xyz"), TT_20K=c(2, 5))
+        # Filter
+        bynum <- vi[names(by)][!type=="class", varCode]
+        fltr <- setdiff(names(by), bynum)
+        fltr <- sapply(fltr, function(i) paste0(i,
+          " %in% c('", paste0(by[[i]], collapse="', '"), "')"))
+        fltr <- paste0(fltr, collapse=" & ")
 
-          # Classify
-          bynum <- sapply(bynum, function(i) paste0(i,
-                    "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "), ordered_result=T)"))
-          bynum <- paste0(bynum, collapse=", ")
-          by <- names(by)
-        })
+        # Classify
+        bynum <- sapply(bynum, function(i) paste0(i,
+          "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "), ordered_result=T)"))
+        bynum <- paste0(bynum, collapse=", ")
+        by <- names(by)
+      })
 
     # Put it together
     data <- paste0("dt",
-        if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-        if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
-        if(!is.na(fltr)) paste0("[", fltr, "]"),
-        "[, list(", agg, "), by=list(", bynum, ")]")
+      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
+      if(!is.na(fltr)) paste0("[", fltr, "]"),
+      "[, list(", agg, "), by=list(", bynum, ")]")
 
     # Eval in Rserve (through socket instead of DB connection)
     rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
@@ -96,9 +98,9 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
 
     # Put it together
     data <- paste0("dt",
-        if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-        if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
-        "[, list(", paste0(vars, collapse=", "), ")]")
+      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
+      "[, list(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve
     rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
@@ -110,6 +112,18 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE) {
   # Rounding (ugly but fast)
   var <- names(data)[sapply(data, is.numeric)]
   for(i in var) eval(parse(text=paste0("data[, ", i, " := round(", i, ", ", vi[i][, dec], ")]")))
+
+  if (as.class=="json") {
+    # Return json with metadata
+    d.names <- vi[names(data)][, list(
+      ColumnCode=varCode,
+      ColumnName=varLabel,
+      ColumnUnit=unit,
+      ColumnDesc=varDesc,
+      ColumnSource=sources)]
+    data <- list(ColumnList=d.names, ValueList=as.matrix(data))
+  }
+
   return(data)
 }
 
@@ -160,9 +174,9 @@ getLayerSQL <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
     if (length(bynum)>0) {
       # Classify using `classBreaks`
       byclass <- sapply(bynum, function(i) {
-            b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-            paste0(i, "=cut(", i, ", c(", paste0(b, collapse=", "), "), ordered_result=T)")
-          })
+        b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
+        paste0(i, "=cut(", i, ", c(", paste0(b, collapse=", "), "), ordered_result=T)")
+      })
 
       by <- c(vi[by][type=="class", varCode], byclass)
       by <- by[!is.na(by)]
@@ -181,10 +195,10 @@ getLayerSQL <- function(var, iso3="SSA", by=NULL, wkt=NULL, collapse=TRUE) {
     }
 
     data <- eval(parse(text=paste0("data",
-                if(length(wkt)>0) "[CELL5M %in% wkt]",
-                if(iso3!="SSA") "[ISO3==iso3]",
-                "[order(", by, ", na.last=T)",
-                ", list(", agg, "), by=list(", by, ")]")))
+      if(length(wkt)>0) "[CELL5M %in% wkt]",
+      if(iso3!="SSA") "[ISO3==iso3]",
+      "[order(", by, ", na.last=T)",
+      ", list(", agg, "), by=list(", by, ")]")))
 
   } else {
     # No aggregation. Don't duplicate variables
