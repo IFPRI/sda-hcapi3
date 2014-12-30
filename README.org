@@ -11,11 +11,11 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 ** Overview
 
-Documentation for each method can be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
-also in PDF format at
+The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info. Documentation for each available method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
+also in PDF format using =/man/<method>/pdf= at
 http://hcapi.harvestchoice.org/ocpuq/library/hcapi3/man/getLayer/pdf.
 
-HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following syntax.
+HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H "Content-Type:application/json"= flag or more directly as URL argument using =-d "param1='value1'&param2='value2'"= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
 
 #+BEGIN_SRC sh
 // Simple data request with aggregation at district level (Ethiopia)
@@ -73,7 +73,7 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
 #+END_SRC
 
 #+BEGIN_SRC sh
-// HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU
+// HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU. This is only useful on large data responses, otherwise entails a little extra overhead.
 $  time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json --compress -d '{"var": ["whea_h", "bmi"], "iso3": "GHA", "by": "ADM1_NAME_ALT"}' -X POST -H "Content-Type:application/json"
 
 [
