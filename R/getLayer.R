@@ -113,7 +113,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
   var <- names(data)[sapply(data, is.numeric)]
   for(i in var) eval(parse(text=paste0("data[, ", i, " := round(", i, ", ", vi[i][, dec], ")]")))
 
-  if (as.class=="json") {
+  if (as.class=="list") {
     # Return json with metadata
     d.names <- vi[names(data)][, list(
       ColumnCode=varCode,

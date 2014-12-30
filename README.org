@@ -13,9 +13,9 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 Documentation for each method can be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
 also in PDF format at
-http://hcapi.harvestchoice.org/ocpuq/library/hcapi3/man/getLayer/pdf
+http://hcapi.harvestchoice.org/ocpuq/library/hcapi3/man/getLayer/pdf.
 
-HTTP GET and POST requests can be tested at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following syntax.
+HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following syntax.
 
 #+BEGIN_SRC sh
 // Simple data request with aggregation at district level (Ethiopia)
@@ -70,6 +70,76 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
     ]
 }
 
+#+END_SRC
+
+#+BEGIN_SRC sh
+// HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU
+$  time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json --compress -d '{"var": ["whea_h", "bmi"], "iso3": "GHA", "by": "ADM1_NAME_ALT"}' -X POST -H "Content-Type:application/json"
+
+[
+    {
+        "ADM1_NAME_ALT": "Upper East",
+        "whea_h": 0,
+        "bmi": 20.7
+    },
+    {
+        "ADM1_NAME_ALT": "Upper West",
+        "whea_h": 0,
+        "bmi": 21.1
+    },
+    {
+        "ADM1_NAME_ALT": "Northern",
+        "whea_h": 0,
+        "bmi": 20.9
+    },
+    {
+        "ADM1_NAME_ALT": "Brong Ahafo",
+        "whea_h": 0,
+        "bmi": 21.3
+    },
+    {
+        "ADM1_NAME_ALT": "Volta",
+        "whea_h": 0,
+        "bmi": 21.9
+    },
+    {
+        "ADM1_NAME_ALT": "Ashanti",
+        "whea_h": 0,
+        "bmi": 22.2
+    },
+    {
+        "ADM1_NAME_ALT": "Eastern",
+        "whea_h": 0,
+        "bmi": 23.1
+    },
+    {
+        "ADM1_NAME_ALT": "Western",
+        "whea_h": 0,
+        "bmi": 22.6
+    },
+    {
+        "ADM1_NAME_ALT": "Central",
+        "whea_h": 0,
+        "bmi": 22.9
+    },
+    {
+        "ADM1_NAME_ALT": "Greater Accra",
+        "whea_h": 0,
+        "bmi": 22.8
+    },
+    {
+        "ADM1_NAME_ALT": "buffer gridcell",
+        "whea_h": 0
+    }
+]
+
+real    0m0.913s
+user    0m0.000s
+sys     0m0.031s
+
+#+END_SRC
+
+#+BEGIN_SRC sh
 // Same request returning a simple json array (no metadata)
 $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT"}' -X POST -H "Content-Type:application/json"
 [
@@ -83,10 +153,13 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
         "whea_h": 27858,
         "bmi": 19
     },
-    { truncated... 
+    { truncated...
     }
 ]
 
+#+END_SRC
+
+#+BEGIN_SRC sh
 // Request a STATA file (takes 2 calls to generate and then download ZIP file)
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": "whea_h", "iso3" : "GHA", "by" : "ADM2_NAME_ALT", "format" : "dta"}' -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x0a3355977c/R/.val
@@ -100,7 +173,9 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": 
 
 $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALT-GHA.dta.zip
 
+#+END_SRC
 
+#+BEGIN_SRC sh
 // Request a GeoTIFF file
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x00c295c697/R/.val
@@ -131,7 +206,9 @@ real    0m1.007s
 user    0m0.015s
 sys     0m0.062s
 
+#+END_SRC
 
+#+BEGIN_SRC sh
 // Return variable metadata only (variable codes by category)
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        {
     "Agroecology": {
@@ -276,6 +353,9 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "g
     }
 }
 
+#+END_SRC
+
+#+BEGIN_SRC sh
 // Return full variable metadata
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
 [
@@ -311,6 +391,8 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var
 #+END_SRC
 
 ** Updates
+
+*2014.12.18*: added a new argument `as.class=c("data.table", "list")` to getLayer() to allow control on the structure of the generated JSON response.
 
 *2014.12.14*: lazy-loaded datasets now automatically update on package rebuild. Package may now be installed and loaded on remote clients. To install, use:
 
