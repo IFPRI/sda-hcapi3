@@ -392,7 +392,7 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var
 
 ** Updates
 
-*2015.01.22*: allow filtering variables across multiple country ISO3 codes =getLayer(var="bmi", iso3=c("GHA", "NGA"))=.
+*2015.01.22*: allow filtering variables across multiple country ISO3 codes =getLayer(var="bmi", iso3=c("GHA", "NGA"))= .
 
 *2014.12.18*: added a new argument =as.class=c("data.table", "list")= to getLayer() to allow control on the structure of the generated JSON response.
 
