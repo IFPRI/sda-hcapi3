@@ -196,11 +196,11 @@ Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
 Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: unspecified [application/zip]
-Saving to: ‘whea_h--ETH.tiff.zip’
+Saving to: "whea_h--ETH.tiff.zip"
 
 whea_h--ETH.tiff.zip      [  <=>                     ]  79.59K   200KB/s   in 0.4s
 
-2014-12-20 18:57:09 (200 KB/s) - ‘whea_h--ETH.tiff.zip’ saved [81498]
+2014-12-20 18:57:09 (200 KB/s) - "whea_h--ETH.tiff.zip" saved [81498]
 
 real    0m1.007s
 user    0m0.015s
@@ -392,9 +392,9 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var
 
 ** Updates
 
-*2015.01.22*: allow filtering variables across multiple country ISO3 codes =getLayer(var="bmi", iso3=c("GHA", "NGA"))=.
+*2015.01.22*: allow filtering variables across multiple country ISO3 codes =getLayer(var="bmi", iso3=c("GHA", "NGA")))= .
 
-*2014.12.18*: added a new argument =as.class=c("data.table", "list")= to getLayer() to allow control on the structure of the generated JSON response.
+*2014.12.18*: added a new argument =as.class=c("data.table", "list")= to =getLayer()= to allow control on the structure of the generated JSON response.
 
 *2014.12.14*: lazy-loaded datasets now automatically update on package rebuild. Package may now be installed and loaded on remote clients. To install, use:
 
