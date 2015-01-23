@@ -10,7 +10,7 @@ getPlot(var, iso3 = "SSA", pal, format = "default", legend = "default",
 \arguments{
 \item{var}{variable to plot (character of length 1)}
 
-\item{iso3}{optional ISO3 country code to filter on}
+\item{iso3}{optional array of ISO3 country or region code to filter by}
 
 \item{pal}{optional Brewer color palette used for plotting}
 

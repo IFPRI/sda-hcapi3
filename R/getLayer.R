@@ -12,7 +12,7 @@
 #' Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
 #'
 #' @param var character array of variable names (all types are accepted)
-#' @param iso3 optional country or regional filter (3-letter code)
+#' @param iso3 optional array of country or regional codes to filter by (3-letter code)
 #' @param by optional character array of variables to group by (all types are accepted)
 #' @param ids optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)
 #' @param collapse if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)
@@ -24,6 +24,8 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
   setkey(vi, varCode)
   # If pixel ids are passed ignore any country filter
   if (length(ids)>0) iso3 <- "SSA"
+  # If "SSA" in iso3 then limit to SSA
+  if ("SSA" %in% iso3) iso3 <- "SSA"
 
   if (length(by)>0) {
     # Construct generic aggregation formula
@@ -80,7 +82,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
     # Put it together
     data <- paste0("dt",
       if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
+      if(iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
       if(!is.na(fltr)) paste0("[", fltr, "]"),
       "[, list(", agg, "), by=list(", bynum, ")]")
 
@@ -99,7 +101,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
     # Put it together
     data <- paste0("dt",
       if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if(iso3!="SSA") paste0("[ISO3=='", iso3, "']"),
+      if(iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
       "[, list(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve

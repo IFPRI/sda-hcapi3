@@ -1,7 +1,7 @@
 #' Generate single raster plot of HarvestChoice layer
 #'
 #' @param var variable to plot (character of length 1)
-#' @param iso3 optional ISO3 country code to filter on
+#' @param iso3 optional array of ISO3 country or region code to filter by
 #' @param pal optional Brewer color palette used for plotting
 #' @param format one of c("default", "print", "thumbnail") control legend and axes
 #' @param legend one of c("default", "auto") uses HarvestChoice legend breaks or R default
@@ -12,6 +12,7 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
 
   # Get HC symbology
   var <- var[1]
+  iso3 <- iso3[1]
   setkey(vi, varCode)
   cv <- as.integer(unlist(strsplit(vi[var][, classBreaks], "|", fixed=T)))
   cl <- as.character(unlist(strsplit(vi[var][, classLabels], "|", fixed=T)))
