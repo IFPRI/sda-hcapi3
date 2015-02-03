@@ -1,0 +1,382 @@
+---
+title: "For Scientists and Application Developers: HarvestChoice Data Services (API)"
+author: Melanie Bacou, Maria Comanescu
+date: February 2, 2015
+output:
+  html_document:
+    toc: true
+    toc_depth: 1
+    theme: readable
+    highlight: zenburn
+    
+---
+
+In 2014 HarvestChoice released a new version of its data API[^1] under the title of [HarvestChoice Data Service v3.0](http://harvestchoice.org/tools/harvestchoice-data-services). We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and [HarvestChoice Data API](http://harvestchoice.org/tools/hcapi). The latter provides backend methods required to run two of our flagship reporting and visualization applications, [MAPPR](http://apps.harvestchoice.org/mappr/) and [TABLR](http://apps.harvestchoice.org/tablr/). We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into *HC Data Services*.
+
+Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice's wealth of socio-economic, infrastructure, agricultural, climate, and soil datasets into 3rd-party tools and models. 
+
+# About HarvestChoice Data Services
+
+This API implements a RESTful[^2] interface allowing users to query, summarize, plot, and download any subset of HarvestChoice's 700 spatially-explicit indicators for sub-Saharan Africa. We describe here some of the methods readily available to developers and researchers to programmatically interact with the API.
+
+Because the API uses standard REST protocol and HTTP verbs (GET, POST), requests may be sent through any URL transfer utility (e.g. cURL on both Windows and Linux), or using any programming language that implements HTTP requests (including statistical languages such as STATA, R, and SAS). The logic consists in calling a specific method and passing any number of required or optional parameters. In the examples below we use the command line tool `cURL` in Windows (available in Windows 7 and 8).
+
+The API's main endpoint is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3. There are a couple of useful methods exposing the API documentation. These are explained here.
+
+## Using Methods and Parameters
+
+The API exposes a list of available methods at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/ (the result of which is shown in [Figure 1](#fig1) below). In turn each method is further documented at `/man/{method}` e.g. http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/ ([Figure 2](#fig2)).
+
+``` {.bash}
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info
+```
+
+``` {#fig1}
+		Information on package 'hcapi3'
+
+Description:
+
+Package:       hcapi3
+Version:       3.0
+Title:         HarvestChoice Data Services
+Author:        Melanie Bacou <mel@mbacou.com>
+Maintainer:    Melanie Bacou <mel@mbacou.com>
+Depends:       R (>= 2.14.0), data.table
+Imports:       RSclient, stringr
+Suggests:      raster, sp, classInt, RColorBrewer, foreign, rgdal,
+               rgeos
+LazyData:      yes
+Description:   Methods to access, aggregate, and plot HarvestChoice
+               5-arc-minute spatial layers for sub-Saharan Africa.
+License:       GPL (>= 2)
+URL:           http://harvestchoice.org/
+BugReports:    http://harvestchoice.org/
+MailingList:   support@harvestchoice.org
+Packaged:      2014-11-09 11:20:02 UTC; mbacou
+Built:         R 3.1.2; ; 2015-01-23 05:01:54 UTC; unix
+
+Index:
+
+genFile                 Convert CELL5M layers to multiple formats and
+                        archive for download
+genPlot                 Write layer plot to PNG
+genReadme               Generate HarvestChoice data use terms,
+                        citation, and variable metadata
+genStats                Generate histogram and boxplot of HarvestChoice
+                        layer(s)
+getCartoCSS             Generate CartoCSS snippet to symbolize raster
+                        tiles
+getGroups               Return list of HarvestChoice variable
+                        categories
+getLayer                Subset, and/or summarize HarvestChoice
+                        5-arc-minute layers
+getLayerWKT             Summarize HarvestChoice 5-arc-minute layers
+                        over WKT geometri(es)
+getMeta                 Return HarvestChoice variable metadata
+getPlot                 Generate single raster plot of HarvestChoice
+                        layer
+getSimilar              Rank spatial units by similarity
+lookup                  HarvestChoice Lookup Lists
+reClassify              Create custom domains for spatial targeting
+vi                      HarvestChoice CELL5M Variable Inventory
+```
+
+The main data query method is `/getLayer/`, and the main data download method is
+`/genFile/`. `/getGroups/` and `/getMeta/` will return indicator metadata. Other
+methods are useful to conduct specific analyses. Detailed documentation may be
+retrieved as shown below (use `cURL` in terminal, or just click
+<http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer> to see this same information in your browser.
+
+
+``` {.bash}
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
+```
+
+``` {#fig2}
+getLayer                package:hcapi3                 R Documentation
+
+Subset, and/or summarize HarvestChoice 5-arc-minute layers
+
+Description:
+
+     Workhorse method to subset and/or aggregate HarvestChoice layers.
+     This method also aggregates classified variables by continuous
+     variables.\ e.g. getLayer(var=c("whea_h", "AEZ16_CLAS"),
+     by=c("ADM2_NAME_ALT", "bmi")). It does so by returning the
+     dominant class of a classified variable within each by class, and
+     by automatically classifying any continuous variable passed to by
+     using default value breaks as specified in the variable metadata.
+     The formula used to aggregate classified variables by choosing the
+     dominant class is names(sort(table({varCode}), decreasing=T)[1]).
+     This formula computes the frequency of each class, ranks them by
+     decreasing frequency, and retains the top one. Layers can also be
+     summarized over a spatial area (passed as an integer array of
+     CELL5M ids).
+
+Usage:
+
+     getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
+       as.class = "data.table")
+     
+Arguments:
+
+     var: character array of variable names (all types are accepted)
+
+    iso3: optional array of country or regional codes to filter by
+          (3-letter code)
+
+      by: optional character array of variables to group by (all types
+          are accepted)
+
+     ids: optional gridcell ids to return (if collapse=F) or summarize
+          by (if collapse=T)
+
+collapse: if FALSE always return all pixel values (useful for plotting
+          and to convert to spatial formats)
+
+as.class: c("data.table", "list") by default returns a simple
+          data.table. If as.class="list" returns a well-constructed
+          list with variable metadata
+
+Value:
+
+     a data.table (or json array) of var indicators aggregated by by
+     domains
+```
+
+The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. `/getLayer/` is one of the API's main methods allowing users to query and summarize specific indicators. The documentation above shows that `/getLayer/` takes at minimum one parameter `var` indicating which indicator to query (e.g. `var='PD05_TOT'` to return 2005 total population density). Other optional parameters include `iso3` limiting the results to one (or multiple) countri(es) (e.g. `iso3=['GHA', 'NGA']` for Ghana and Nigeria), and `by` summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones `by='AEZ8_CLAS'`).
+
+You can test this query by manually forming the following `cURL` request. This returns a dataset as a JSON array.
+
+``` {#code2 .bash}
+# Simle request returning a dataset in JSON format
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json/ -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'" -X POST
+```
+
+``` {.json}
+[
+    {
+        "AEZ8_CLAS": "Sub-Humid",
+        "PD05_TOT": 80.9
+    },
+    {
+        "AEZ8_CLAS": "Humid",
+        "PD05_TOT": 104.8
+    },
+    {
+        "AEZ8_CLAS": "Semi-Arid",
+        "PD05_TOT": 280
+    },
+    {
+        "PD05_TOT": 26.3
+    }
+]
+```
+
+For users of STATA or R the same dataset may be returned in a native format by using the `/genFile/` method and appending a `format=` parameter at the end of the request.
+
+``` {#code3 .bash}
+# Request Ghana 2005 population density summarized across AEZ in STATA .dta format
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='dta'" -X POST
+```
+
+```
+/ocpu/tmp/x068d23bba7/R/.val
+/ocpu/tmp/x068d23bba7/stdout
+/ocpu/tmp/x068d23bba7/source
+/ocpu/tmp/x068d23bba7/console
+/ocpu/tmp/x068d23bba7/info
+/ocpu/tmp/x068d23bba7/files/DESCRIPTION
+/ocpu/tmp/x068d23bba7/files/PD05_TOT-AEZ8_CLAS-GHA.dta.zip
+```
+
+```{.bash}
+# Same request returning a file in RData format
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='rdata'" -X POST
+```
+
+```
+/ocpu/tmp/x0f480ac2eb/R/.val
+/ocpu/tmp/x0f480ac2eb/stdout
+/ocpu/tmp/x0f480ac2eb/source
+/ocpu/tmp/x0f480ac2eb/console
+/ocpu/tmp/x0f480ac2eb/info
+/ocpu/tmp/x0f480ac2eb/files/DESCRIPTION
+/ocpu/tmp/x0f480ac2eb/files/PD05_TOT-AEZ8_CLAS-GHA.rdata.zip
+```
+
+Other possible formats include `csv` and raster formats `tif` and `asc` for GeoTiff and ESRI ASCII Raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to manually request that ZIP file. You can do so at the command line using `wget`.
+
+``` {.bash}
+# Ghana wheat production in CSV format aggregated over districts
+# Step 1: generate ZIP file
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip/ -d "var='whea_p'&iso3='GHA'&by=['ADM2_CODE_ALT','ADM2_NAME_ALT']&format='csv'" -X POST
+```
+
+```
+/ocpu/tmp/x08540461d4/R/.val
+/ocpu/tmp/x08540461d4/stdout
+/ocpu/tmp/x08540461d4/source
+/ocpu/tmp/x08540461d4/console
+/ocpu/tmp/x08540461d4/info
+/ocpu/tmp/x08540461d4/files/DESCRIPTION
+/ocpu/tmp/x08540461d4/files/PD05_TOT-AEZ8_CLAS-GHA.csv.zip
+```
+
+``` {.bash}
+# Step 2: download ZIP file
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x08540461d4/files/PD05_TOT-AEZ8_CLAS-GHA.csv.zip
+```
+
+```
+--2015-02-03 04:10:38--
+Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
+Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/zip]
+Saving to: 'PD05_TOT-AEZ8_CLAS-GHA.csv.zip'
+
+PD05_TOT-AEZ8_CLAS-GH     [ <=>                      ]   2.38K  --.-KB/s   in 0s
+
+2015-02-03 04:10:38 (24.0 MB/s) - 'PD05_TOT-AEZ8_CLAS-GHA.csv.zip' saved [2432]
+```
+
+
+# About the Data
+
+All of the API methods require passing indicator codes as parameters. These codes uniquely identify an indicator and may be accessed using two of the metadata query methods `/getGroups/` and `/getMeta/`. `/getGroups/` returns a list of indicators in any category matching a `group=` keyword. `/getMeta/` returns complete metadata records for selected indicators. Sample requests are shown here. The `Code` element is the indicator code to pass into other API methods.
+
+``` {.bash}
+# Return list of indicators in any category matching 'demo'
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json/ -d "group='demo'" -X POST
+```
+
+``` {.json}
+{
+    "Demographics": {
+        "Health and Nutrition": [
+            {
+                "Category": "Demographics",
+                "Subcategory": "Health and Nutrition",
+                "Item": "Anthropometrics",
+                "Code": "mother_age",
+                "Title": "Median Mother's Age (years)"
+            },
+            {
+                "Category": "Demographics",
+                "Subcategory": "Health and Nutrition",
+                "Item": "Anthropometrics",
+                "Code": "mother_age_rur",
+                "Title": "Median Mother's Age - Rural (years)"
+            },
+            {
+                "Category": "Demographics",
+                "Subcategory": "Health and Nutrition",
+                "Item": "Anthropometrics",
+                "Code": "mother_age_urb",
+                "Title": "Mother's age (years) - urban"
+            },
+            {
+                "Category": "Demographics",
+                "Subcategory": "Health and Nutrition",
+                "Item": "Anthropometrics",
+                "Code": "mother_height_cms",
+                "Title": "Median Mother's Height (cm)"
+            },
+                
+                [...truncated...]
+```
+
+``` {.bash}
+# Retrieve text documentation for /getMeta/ method
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getMeta/text
+```
+
+```{#fig3}
+getMeta                 package:hcapi3                 R Documentation
+
+Return HarvestChoice variable metadata
+
+Description:
+
+     Return HarvestChoice variable metadata
+
+Usage:
+
+     getMeta(var, group, version, raster = FALSE, by.group = FALSE,
+       css = "json")
+
+Arguments:
+
+     var: character array of HarvestChoice variable codes
+
+   group: optional category filter
+
+ version: optional version filter
+
+  raster: return only raster variables
+
+by.group: group variables by category
+
+     css: include Carto CSS rules
+
+Value:
+
+     a data.table of variable metadata
+```
+
+``` {.bash}
+# Return metadata records for all indicators under the 'Health and Nutrition' category
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json/ -d "group='Health and Nutrition'" -X POST
+```
+
+``` {.json}
+
+    {
+        "Label": "DHS Wealth Index (urban)",
+        "Code": "wealth_urb",
+        "Unit": "percent",
+        "Type": "continuous",
+        "Period": "2005 - 2012",
+        "Category": "Demographics",
+        "Subcategory": "Health and Nutrition",
+        "Item": "Wealth Index",
+        "Source": "MEASURE Demographic and Health Surveys (multiple surveys), 2005-2012",
+        "Contact": "m.bacou@cgiar.org",
+        "Details": "DHS Wealth Index (urban). ",
+        "Citation": "HarvestChoice, 2014. \"DHS Wealth Index (urban)\", International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/wealth_urb",
+        "Version": "SChEF r2.2",
+        "In Table": "cell5m_dhs",
+        "Formula": "SUM(wealth_urb*weight_urb)/SUM(weight_urb)",
+        "isRaster": true,
+        "dTopic": "Income and Poverty",
+        "dCrop": "",
+        "dKeywords": "",
+        "classBreaks": "1|2|3|4",
+        "classLabels": "under 1|1-2|2-3|3-4|4-5",
+        "classColors": "#D7191C|#FDAE61|#FFFFBF|#ABDDA4|#2B83BA",
+        "Website": "http://harvestchoice.org/data/wealth_urb",
+        "WMS": "http://dev.harvestchoice.org:6080/arcgis/services/cell5m_dhs/MapServer/WMSServer",
+        "Downloaded on": "2015-02-03"
+    }
+    [...truncated...]
+```
+
+Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv (`vi` stands for Variable Inventory).
+
+# Advanced Methods
+
+
+
+
+# Source Code Repository
+
+
+
+
+***
+
+[^1]: Application Programming Interface, see http://en.wikipedia.org/wiki/Application_programming_interface
+
+
+[^2]: Representational State Transfer, see http://en.wikipedia.org/wiki/Representational_state_transfer
