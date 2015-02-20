@@ -18,8 +18,11 @@ http://hcapi.harvestchoice.org/ocpuq/library/hcapi3/man/getLayer/pdf.
 HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H "Content-Type:application/json"= flag or more directly as URL argument using =-d "param1='value1'&param2='value2'"= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
 
 #+BEGIN_SRC sh
-// Simple data request with aggregation at district level (Ethiopia)
+# Simple data request with aggregation at district level (Ethiopia)
 $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT", "as.class" : "list"}' -X POST -H "Content-Type:application/json"
+#+END_SRC
+
+#+BEGIN_SRC json
 {
     "ColumnList": [
         {
@@ -75,7 +78,9 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
 #+BEGIN_SRC sh
 // HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU. This is only useful on large data responses, otherwise entails a little extra overhead.
 $  time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json --compress -d '{"var": ["whea_h", "bmi"], "iso3": "GHA", "by": "ADM1_NAME_ALT"}' -X POST -H "Content-Type:application/json"
+#+END_SRC
 
+#+BEGIN_SRC json
 [
     {
         "ADM1_NAME_ALT": "Upper East",
@@ -142,6 +147,9 @@ sys     0m0.031s
 #+BEGIN_SRC sh
 // Same request returning a simple json array (no metadata)
 $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT"}' -X POST -H "Content-Type:application/json"
+#+END_SRC
+
+#+BEGIN_SRC json
 [
     {
         "ADM2_NAME_ALT": "North Western Tigray",
@@ -210,7 +218,11 @@ sys     0m0.062s
 
 #+BEGIN_SRC sh
 // Return variable metadata only (variable codes by category)
-$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        {
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        
+#+END_SRC
+
+#+BEGIN_SRC json
+{
     "Agroecology": {
         "Pests and Diseases": [
             {
@@ -358,6 +370,9 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "g
 #+BEGIN_SRC sh
 // Return full variable metadata
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
+#+END_SRC
+
+#+BEGIN_SRC json
 [
     {
         "Label": "Wheat area '05",
@@ -410,6 +425,9 @@ $ R CMD INSTALL hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/reClassify/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
  -X POST -H "Content-Type:application/json"
+#+END_SRC
+
+#+BEGIN_SRC json
 [
     {
         "TT_20K": "(0,5]",
@@ -447,7 +465,9 @@ sys     0m0.015s
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayerWKT/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "wkt" : "MULTIPOINT((35.69319860636820607 -3.91388197570256979), (35.47695932281013853 -4.34541210453119486), (36.61014339398586515 -6.19304393571206635), (36.47436786329777902 -5.51879978940470828))"}' \
  -X POST -H "Content-Type:application/json"
+#+END_SRC
 
+#+BEGIN_SRC json
 [
     {
         "CELL5M": 4987879,
