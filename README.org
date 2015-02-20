@@ -13,7 +13,7 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info. Documentation for each API method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
 also in PDF format using =/man/<method>/pdf= at
-http://hcapi.harvestchoice.org/ocpuq/library/hcapi3/man/getLayer/pdf.
+http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/pdf.
 
 HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d param1=value1&param2=value2= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
 
