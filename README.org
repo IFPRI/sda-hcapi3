@@ -78,7 +78,8 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
 #+END_SRC
 
 #+BEGIN_SRC sh
-# HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU. This is only useful on large data responses, otherwise entails a little extra overhead.
+# HC API also supports json gzip compression with '--compress' argument.
+# This is only useful on large data responses, otherwise entails a little extra overhead.
 $  time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json --compress \
 -d '{"var": ["whea_h", "bmi"], "iso3": "GHA", "by": "ADM1_NAME_ALT"}' \
 -X POST -H "Content-Type:application/json"
