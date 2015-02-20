@@ -19,7 +19,9 @@ HTTP GET and POST requests may be tested interactively at http://hcapi.harvestch
 
 #+BEGIN_SRC sh
 # Simple data request with aggregation at district level (Ethiopia)
-$  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT", "as.class" : "list"}' -X POST -H "Content-Type:application/json"
+$  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+-d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT", "as.class" : "list"}' \
+-X POST -H "Content-Type:application/json"
 #+END_SRC
 
 #+BEGIN_SRC json
@@ -77,7 +79,9 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
 
 #+BEGIN_SRC sh
 # HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU. This is only useful on large data responses, otherwise entails a little extra overhead.
-$  time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json --compress -d '{"var": ["whea_h", "bmi"], "iso3": "GHA", "by": "ADM1_NAME_ALT"}' -X POST -H "Content-Type:application/json"
+$  time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json --compress \
+-d '{"var": ["whea_h", "bmi"], "iso3": "GHA", "by": "ADM1_NAME_ALT"}' \
+-X POST -H "Content-Type:application/json"
 #+END_SRC
 
 #+BEGIN_SRC json
@@ -146,7 +150,9 @@ sys     0m0.031s
 
 #+BEGIN_SRC sh
 # Same request returning a simple json array (no metadata)
-$  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT"}' -X POST -H "Content-Type:application/json"
+$  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+-d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT"}' \
+-X POST -H "Content-Type:application/json"
 #+END_SRC
 
 #+BEGIN_SRC json
@@ -169,7 +175,9 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
 
 #+BEGIN_SRC sh
 # Request a STATA file (takes 2 calls to generate and then download ZIP file)
-$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": "whea_h", "iso3" : "GHA", "by" : "ADM2_NAME_ALT", "format" : "dta"}' -X POST -H "Content-Type:application/json"
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+-d '{"var": "whea_h", "iso3" : "GHA", "by" : "ADM2_NAME_ALT", "format" : "dta"}' \
+-X POST -H "Content-Type:application/json"
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
 /ocpu/tmp/x0a3355977c/stdout
@@ -185,7 +193,10 @@ $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAM
 
 #+BEGIN_SRC sh
 # Request a GeoTIFF file
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' -X POST -H "Content-Type:application/json"
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+-d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' \
+-X POST -H "Content-Type:application/json"
+
 /ocpu/tmp/x00c295c697/R/.val
 /ocpu/tmp/x00c295c697/stdout
 /ocpu/tmp/x00c295c697/source
@@ -199,6 +210,7 @@ user    0m0.015s
 sys     0m0.030s
 
 $ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
+
 --2014-12-20 18:57:09--  http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
 Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80... connected.
@@ -218,7 +230,8 @@ sys     0m0.062s
 
 #+BEGIN_SRC sh
 # Return variable metadata only (variable codes by category)
-$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json \
+-d "group='whea'" -X POST        
 #+END_SRC
 
 #+BEGIN_SRC json
@@ -369,7 +382,8 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "g
 
 #+BEGIN_SRC sh
 # Return full variable metadata
-$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json \
+-d "var='whea_h'" -X POST
 #+END_SRC
 
 #+BEGIN_SRC json
@@ -410,13 +424,6 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var
 *2015.01.22*: allow filtering variables across multiple country ISO3 codes.
 
 *2014.12.18*: added a new argument =as.class=c("data.table", "list")= to =getLayer()= to allow control on the structure of the generated JSON response.
-
-*2014.12.14*: lazy-loaded datasets now automatically update on package rebuild. Package may now be installed and loaded on remote clients. To install, use:
-
-#+BEGIN_SRC sh
-$ wget https://github.com/harvestchoice/hcapi3/blob/master/hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
-$ R CMD INSTALL hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
-#+END_SRC
 
 *2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
 
