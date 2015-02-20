@@ -11,11 +11,11 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 ** Overview
 
-The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info. Documentation for each available method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
+The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info. Documentation for each API method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
 also in PDF format using =/man/<method>/pdf= at
 http://hcapi.harvestchoice.org/ocpuq/library/hcapi3/man/getLayer/pdf.
 
-HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H "Content-Type:application/json"= flag or more directly as URL argument using =-d "param1='value1'&param2='value2'"= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
+HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d param1=value1&param2=value2= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
 
 #+BEGIN_SRC sh
 # Simple data request with aggregation at district level (Ethiopia)
@@ -76,7 +76,7 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
 #+END_SRC
 
 #+BEGIN_SRC sh
-// HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU. This is only useful on large data responses, otherwise entails a little extra overhead.
+# HC API also supports json gzip compression with '--compress' argument thanks to OpenCPU. This is only useful on large data responses, otherwise entails a little extra overhead.
 $  time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json --compress -d '{"var": ["whea_h", "bmi"], "iso3": "GHA", "by": "ADM1_NAME_ALT"}' -X POST -H "Content-Type:application/json"
 #+END_SRC
 
@@ -145,7 +145,7 @@ sys     0m0.031s
 #+END_SRC
 
 #+BEGIN_SRC sh
-// Same request returning a simple json array (no metadata)
+# Same request returning a simple json array (no metadata)
 $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT"}' -X POST -H "Content-Type:application/json"
 #+END_SRC
 
@@ -168,7 +168,7 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json -d '{
 #+END_SRC
 
 #+BEGIN_SRC sh
-// Request a STATA file (takes 2 calls to generate and then download ZIP file)
+# Request a STATA file (takes 2 calls to generate and then download ZIP file)
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": "whea_h", "iso3" : "GHA", "by" : "ADM2_NAME_ALT", "format" : "dta"}' -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
@@ -184,7 +184,7 @@ $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAM
 #+END_SRC
 
 #+BEGIN_SRC sh
-// Request a GeoTIFF file
+# Request a GeoTIFF file
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x00c295c697/R/.val
 /ocpu/tmp/x00c295c697/stdout
@@ -217,7 +217,7 @@ sys     0m0.062s
 #+END_SRC
 
 #+BEGIN_SRC sh
-// Return variable metadata only (variable codes by category)
+# Return variable metadata only (variable codes by category)
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "group='whea'" -X POST        
 #+END_SRC
 
@@ -368,7 +368,7 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json -d "g
 #+END_SRC
 
 #+BEGIN_SRC sh
-// Return full variable metadata
+# Return full variable metadata
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json -d "var='whea_h'" -X POST
 #+END_SRC
 
@@ -421,7 +421,7 @@ $ R CMD INSTALL hcapi3_3.0_R_x86_64-redhat-linux-gnu.tar.gz
 *2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
 
 #+BEGIN_SRC sh
-// Sample request
+# Sample request
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/reClassify/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
  -X POST -H "Content-Type:application/json"
@@ -461,7 +461,7 @@ sys     0m0.015s
 *2014.11.10*: added a new method =getLayerWKT()= to support point/polygon summaries.
 
 #+BEGIN_SRC sh
-// Sample request with a few points
+# Sample request with a few points
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayerWKT/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "wkt" : "MULTIPOINT((35.69319860636820607 -3.91388197570256979), (35.47695932281013853 -4.34541210453119486), (36.61014339398586515 -6.19304393571206635), (36.47436786329777902 -5.51879978940470828))"}' \
  -X POST -H "Content-Type:application/json"
