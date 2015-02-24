@@ -177,30 +177,30 @@ $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAM
 
 #+BEGIN_SRC sh
 // Request a GeoTIFF file
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' -X POST -H "Content-Type:application/json"
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tif"}' -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x00c295c697/R/.val
 /ocpu/tmp/x00c295c697/stdout
 /ocpu/tmp/x00c295c697/source
 /ocpu/tmp/x00c295c697/console
 /ocpu/tmp/x00c295c697/info
 /ocpu/tmp/x00c295c697/files/DESCRIPTION
-/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
+/ocpu/tmp/x00c295c697/files/whea_h--ETH.tif.zip
 
 real    0m0.983s
 user    0m0.015s
 sys     0m0.030s
 
-$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
---2014-12-20 18:57:09--  http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
+$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tif.zip
+--2014-12-20 18:57:09--  http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tif.zip
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
 Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: unspecified [application/zip]
-Saving to: "whea_h--ETH.tiff.zip"
+Saving to: "whea_h--ETH.tif.zip"
 
-whea_h--ETH.tiff.zip      [  <=>                     ]  79.59K   200KB/s   in 0.4s
+whea_h--ETH.tif.zip      [  <=>                     ]  79.59K   200KB/s   in 0.4s
 
-2014-12-20 18:57:09 (200 KB/s) - "whea_h--ETH.tiff.zip" saved [81498]
+2014-12-20 18:57:09 (200 KB/s) - "whea_h--ETH.tif.zip" saved [81498]
 
 real    0m1.007s
 user    0m0.015s
