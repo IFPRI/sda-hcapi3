@@ -234,7 +234,7 @@ sys     0m0.062s
 
 #+BEGIN_SRC sh
 # Return variable metadata only (variable codes by category). Will perform a fuzzy
-# search across all variable metadata matching =cat= argument (e.g. cat='wheat').
+# search across all variable metadata matching `cat` argument (e.g. cat='wheat').
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 -d "cat='whea'" -X POST
 #+END_SRC
