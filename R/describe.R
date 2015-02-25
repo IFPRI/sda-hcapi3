@@ -115,7 +115,7 @@ category <- function(cat) {
 
   out <- vi[, list(Title=unique(varTitle)), keyby=list(Category=cat1, Subcategory=cat2, Item=cat3, Code=varCode)]
 
-  if (!missing(group)) {
+  if (!missing(cat)) {
     out <- out[tolower(Category) %like% tolower(cat) |
         tolower(Subcategory) %like% tolower(cat) |
         tolower(Item) %like% tolower(cat) |
