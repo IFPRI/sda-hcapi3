@@ -386,9 +386,14 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 #+END_SRC
 
 #+BEGIN_SRC sh
-# Return full variable metadata
+# Return full variable metadata for any series of data layers or for any data layer(s)
+#  matching `cat` argument (e.g. cat='population').
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
--d "var='whea_h'" -X POST
+-d "var=['whea_h', 'PD05_RUR']" -X POST
+
+# or
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+-d "cat='population'" -X POST
 #+END_SRC
 
 #+BEGIN_SRC json
