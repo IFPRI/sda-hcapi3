@@ -199,7 +199,7 @@ $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/maiz_y-ADM1_NAM
 #+BEGIN_SRC sh
 # Request a GeoTIFF file
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
--d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' \
+-d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tif"}' \
 -X POST -H "Content-Type:application/json"
 
 /ocpu/tmp/x00c295c697/R/.val
@@ -214,7 +214,7 @@ real    0m0.983s
 user    0m0.015s
 sys     0m0.030s
 
-$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
+$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tif.zip
 
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
 Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80... connected.

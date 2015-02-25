@@ -1,6 +1,14 @@
 Package: hcapi3
 Version: 3.0
 Title: HarvestChoice Data Services
+Authors@R: c(
+    person("Melanie", "Bacou", "Maintainer", role=c("aut", "cre"), email="mel@mbacou.com"),
+	  person("Maria", "Comanescu", "Developer", role="ctb", email="m.comanescu@cgiar.org"),
+	  person("Ulrike", "Wood Sichra", "Data Contributor", role="ctb", email="u.wood-sichra@cgiar.org"),
+	  person("Jawoo", "Koo", "Data Contributor", role="ctb", email="j.koo@cgiar.org"),
+	  person("Carlo", "Azzarri", "Data Contributor", role="ctb", email="c.azzarri@cgiar.org"),
+	  person("Joseph", "Green", "Data Contributor", role="ctb", email="josephgreen@gmail.com"),
+	  person("Zhe", "Guo", "Data Contributor", role="ctb", email="z.guo@cgiar.org"))
 Author: Melanie Bacou <mel@mbacou.com>
 Maintainer: Melanie Bacou <mel@mbacou.com>
 Depends:
@@ -18,10 +26,10 @@ Suggests:
     rgdal,
     rgeos
 LazyData: yes
-Description: Methods to access, aggregate, and plot HarvestChoice 5-arc-minute spatial
-    layers for sub-Saharan Africa.
-License: GPL (>= 2)
+Description: Methods to retrieve, summarize, aggregate, and plot HarvestChoice
+    5-arc-minute spatial layers for sub-Saharan Africa.
+License: GPL (>= 3)
 URL: http://harvestchoice.org/
 BugReports: http://harvestchoice.org/
 MailingList: support@harvestchoice.org
-Packaged: 2014-11-09 11:20:02 UTC; mbacou
+Packaged: 2015-02-09 11:20:02 UTC; mbacou
