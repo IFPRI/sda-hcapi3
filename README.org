@@ -190,23 +190,18 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 /ocpu/tmp/x0a3355977c/console
 /ocpu/tmp/x0a3355977c/info
 /ocpu/tmp/x0a3355977c/files/DESCRIPTION
-/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALT-GHA.dta.zip
+/ocpu/tmp/x0a3355977c/files/maiz_y-ADM1_NAME_ALT-GHA.dta.zip
 
-$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/whea_h-ADM2_NAME_ALT-GHA.dta.zip
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0a3355977c/files/maiz_y-ADM1_NAME_ALT-GHA.dta.zip
 
 #+END_SRC
 
 #+BEGIN_SRC sh
-<<<<<<< HEAD
-// Request a GeoTIFF file
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tif"}' -X POST -H "Content-Type:application/json"
-=======
 # Request a GeoTIFF file
 $ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "format": "tiff"}' \
 -X POST -H "Content-Type:application/json"
 
->>>>>>> a685771b63bf2b178408cc2cc2a2ce922639961c
 /ocpu/tmp/x00c295c697/R/.val
 /ocpu/tmp/x00c295c697/stdout
 /ocpu/tmp/x00c295c697/source
@@ -219,14 +214,8 @@ real    0m0.983s
 user    0m0.015s
 sys     0m0.030s
 
-<<<<<<< HEAD
-$ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tif.zip
---2014-12-20 18:57:09--  http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tif.zip
-=======
 $ time wget http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
 
---2014-12-20 18:57:09--  http://hcapi.harvestchoice.org/ocpu/tmp/x00c295c697/files/whea_h--ETH.tiff.zip
->>>>>>> a685771b63bf2b178408cc2cc2a2ce922639961c
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
 Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80... connected.
 HTTP request sent, awaiting response... 200 OK
@@ -245,8 +234,8 @@ sys     0m0.062s
 
 #+BEGIN_SRC sh
 # Return variable metadata only (variable codes by category)
-$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json \
--d "group='whea'" -X POST
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+-d "cat='whea'" -X POST
 #+END_SRC
 
 #+BEGIN_SRC json
