@@ -20,7 +20,7 @@
 #'            by=list(PD05_RUR=c(60, 100), TT_20K=c(0,5)))
 #'
 #' @export
-reClassify <- function(var, by, ...) {
+classify <- function(var, by, ...) {
   out <- getLayer(var=var, by=by, ids=NULL, ...)
   return(out)
 }

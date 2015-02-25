@@ -15,10 +15,11 @@ The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcap
 also in PDF format using =/man/<method>/pdf= at
 http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/pdf.
 
-HTTP GET and POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d param1=value1&param2=value2= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
+HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d param1=value1&param2=value2= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
 
 #+BEGIN_SRC sh
 # Simple data request with aggregation at district level (Ethiopia)
+# returning a JSON data array
 $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
 -d '{"var": ["whea_h", "bmi"], "iso3": "ETH", "by": "ADM2_NAME_ALT", "as.class" : "list"}' \
 -X POST -H "Content-Type:application/json"
@@ -149,6 +150,7 @@ sys     0m0.031s
 
 #+END_SRC
 
+
 #+BEGIN_SRC sh
 # Same request returning a simple json array (no metadata)
 $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
@@ -175,9 +177,11 @@ $  curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
 #+END_SRC
 
 #+BEGIN_SRC sh
-# Request a STATA file (takes 2 calls to generate and then download ZIP file)
+# Request a STATA file of mean maize yield and dominant agro-eco zone by region for
+# Ghana and Mali. Note that 2 requests are required to 1) generate and then 2)
+# download ZIP file.
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
--d '{"var": "whea_h", "iso3" : "GHA", "by" : "ADM2_NAME_ALT", "format" : "dta"}' \
+-d '{"var": ["maiz_y", "AEZ8_CLAS"], "iso3" : ["GHA", "MLI"], "by" : "ADM1_NAME_ALT", "format" : "dta"}' \
 -X POST -H "Content-Type:application/json"
 /ocpu/tmp/x0a3355977c/R/.val
 /ocpu/tmp/x0a3355977c/messages
@@ -393,7 +397,7 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json \
 
 #+BEGIN_SRC sh
 # Return full variable metadata
-$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json \
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
 -d "var='whea_h'" -X POST
 #+END_SRC
 
@@ -436,11 +440,11 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getMeta/json \
 
 *2014.12.18*: added a new argument =as.class=c("data.table", "list")= to =getLayer()= to allow control on the structure of the generated JSON response.
 
-*2014.11.11*: added a new method =reClassify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/reClassify/pdf.
+*2014.11.11*: added a new method =classify()= for "on-the-fly" domain classification (aka. Spatial Targeting Tool) documented at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/classify/pdf.
 
 #+BEGIN_SRC sh
 # Sample request
-$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/reClassify/json \
+$ time curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \
  -d '{"var" : ["whea_h", "AEZ16_CLAS"], "by" : {"AEZ16_CLAS": "Tropic - warm / semiarid", "PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
  -X POST -H "Content-Type:application/json"
 #+END_SRC

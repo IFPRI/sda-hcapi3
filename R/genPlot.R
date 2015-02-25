@@ -167,7 +167,7 @@ genPlot <- function(var, iso3="SSA", format="default",
 #' @param iso3 optional country or region filter (3-letter code)
 #' @return plot
 #' @export
-genStats <- function(var, iso3="SSA", by=NULL) {
+stats <- function(var, iso3="SSA", by=NULL) {
 
   d <- getLayer(var, iso3, by)
 

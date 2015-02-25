@@ -2,19 +2,19 @@
 % Please edit documentation in R/genFile.R
 \name{genFile}
 \alias{genFile}
-\title{Convert CELL5M layers to multiple formats and archive for download}
+\title{Convert CELL5M layers to raster and/or tabular formats and create archive for download}
 \usage{
 genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
   "shp", "dta", "asc", "rds"), ...)
 }
 \arguments{
-\item{var}{character array of variable codes passed to getLayer(var, ...)}
+\item{var}{character array of variable codes, passed to getLayer(var, ...)}
 
-\item{iso3}{passed to getLayer()}
+\item{iso3}{character array of ISO3 country or region codes, passed to getLayer()}
 
-\item{by}{passed to getLayer()}
+\item{by}{character array of variable codes to summarize by, passed to getLayer()}
 
-\item{format}{output format c("json", csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")}
+\item{format}{output format c("json", "csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")}
 
 \item{...}{any other optional argument passed to getLayer(), e.g. \code{geom}, \code{collapse}.}
 }
@@ -22,7 +22,7 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
 character, path to generated ZIP file
 }
 \description{
-Package any result from \code{getLayer()} into the user-specified data format.
-Also creates an accompanying README file with metadata and citation details.
+Package any result from \code{getLayer()} into the user-specified tabular or raster
+format. Also includes a README file with metadata and citation details.
 }
 

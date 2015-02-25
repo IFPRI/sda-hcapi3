@@ -19,7 +19,7 @@
 #' # and cassava value of production (cass_v) as benchmarks.
 #' getSimilar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 #' @export
-getSimilar <- function(x, var, by=0, iso3="SSA") {
+similar <- function(x, var, by=0, iso3="SSA") {
 
   setkey(vi, varCode)
 

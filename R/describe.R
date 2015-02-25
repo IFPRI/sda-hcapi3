@@ -1,71 +1,15 @@
-#' Generate HarvestChoice data use terms, citation, and variable metadata
-#'
-#' @param var character array of CELL5M variable names
-#' @return character, path to generated README file
-#' @export
-genReadme <- function(var) {
-
-  meta <- vi[var][, list(
-    Code=varCode,
-    Label=varLabel,
-    Details=str_wrap(paste(varTitle, varDesc, sep=". "), 78),
-    Type=type,
-    Unit=unit,
-    Version=version,    
-    `Aggregation Formula`=aggFunR,
-    Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
-    Category=cat1,
-    `Sub-category`=cat2,
-    Item=cat3,
-    Source=str_wrap(ifelse(is.na(sources), sourceMini, sources), 79),
-    Contact=owner,
-    Citation=str_wrap(citation, 77))]
-
-  meta <- split(meta, meta$Code)
-  meta <- sapply(meta, function(x) paste(names(x), x, sep=":\t", collapse="\n"))
-  meta <- paste(meta, collapse=paste0("\n", str_dup("-", 86), "\n"))
-
-  readme <- gsub("{date}", Sys.Date(), readme, fixed=T)
-  readme <- gsub("{meta}", meta, readme, fixed=T)
-  fPath <- "./README"
-  writeLines(readme, fPath)
-  return(fPath)
-}
-
-
-#' Return list of HarvestChoice variable categories
-#'
-#' @param group optional category filter
-#' @return a data.table of variable categories
-#' @export
-getGroups <- function(group) {
-
-  out <- vi[, list(Title=unique(varTitle)), keyby=list(Category=cat1, Subcategory=cat2, Item=cat3, Code=varCode)]
-
-  if (!missing(group)) {
-    out <- out[tolower(Category) %like% tolower(group) |
-        tolower(Subcategory) %like% tolower(group) |
-        tolower(Item) %like% tolower(group) |
-        tolower(Code) %like% tolower(group)]
-  }
-
-  out <- split(out, out$Category)
-  out <- lapply(out, function(x) split(x, x$Subcategory))
-  return(out)
-}
-
 
 #' Return HarvestChoice variable metadata
 #'
 #' @param var character array of HarvestChoice variables
-#' @param group optional category filter
+#' @param cat optional category filter
 #' @param version optional version filter
 #' @param raster return only raster variables
 #' @param by.group group variables by category
 #' @param css include Carto CSS rules
 #' @return a data.table of variable metadata
 #' @export
-getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json") {
+describe <- function(var, cat, version, raster=FALSE, by.category=FALSE, css="json") {
 
   out <- vi[, list(
     Label=varLabel,
@@ -98,10 +42,10 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
   if (!missing(var)) out <- out[Code %in% var]
   if (!missing(version)) out <- out[Version==paste0("SChEF r", version)]
   if (raster==T) out <- out[isRaster==T]
-  if (!missing(group)) {
-    out <- out[tolower(Category) %like% tolower(group) |
-        tolower(Subcategory) %like% tolower(group) |
-        tolower(Item) %like% tolower(group)]
+  if (!missing(cat)) {
+    out <- out[tolower(Category) %like% tolower(cat) |
+        tolower(Subcategory) %like% tolower(cat) |
+        tolower(Item) %like% tolower(cat)]
   }
 
   if (css=="carto") {
@@ -115,7 +59,7 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
 
   setkey(out, Category, Subcategory, Item)
 
-  if (by.group) {
+  if (by.category) {
     # Group by category
     setkey(out, Category, Subcategory, Item, Label, Code)
     out <- split(out, out$Category)
@@ -125,6 +69,64 @@ getMeta <- function(var, group, version, raster=FALSE, by.group=FALSE, css="json
 
   return(out)
 }
+
+
+#' Generate HarvestChoice data use terms, citation, and variable metadata
+#'
+#' @param var character array of CELL5M variable names
+#' @return character, path to generated README file
+#' @export
+genReadme <- function(var) {
+
+  meta <- vi[var][, list(
+    Code=varCode,
+    Label=varLabel,
+    Details=str_wrap(paste(varTitle, varDesc, sep=". "), 78),
+    Type=type,
+    Unit=unit,
+    Version=version,
+    `Aggregation Formula`=aggFunR,
+    Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
+    Category=cat1,
+    `Sub-category`=cat2,
+    Item=cat3,
+    Source=str_wrap(ifelse(is.na(sources), sourceMini, sources), 79),
+    Contact=owner,
+    Citation=str_wrap(citation, 77))]
+
+  meta <- split(meta, meta$Code)
+  meta <- sapply(meta, function(x) paste(names(x), x, sep=":\t", collapse="\n"))
+  meta <- paste(meta, collapse=paste0("\n", str_dup("-", 86), "\n"))
+
+  readme <- gsub("{date}", Sys.Date(), readme, fixed=T)
+  readme <- gsub("{meta}", meta, readme, fixed=T)
+  fPath <- "./README"
+  writeLines(readme, fPath)
+  return(fPath)
+}
+
+
+#' Return list of HarvestChoice variable categories
+#'
+#' @param cat optional category filter
+#' @return a data.table of variable categories
+#' @export
+category <- function(cat) {
+
+  out <- vi[, list(Title=unique(varTitle)), keyby=list(Category=cat1, Subcategory=cat2, Item=cat3, Code=varCode)]
+
+  if (!missing(group)) {
+    out <- out[tolower(Category) %like% tolower(cat) |
+        tolower(Subcategory) %like% tolower(cat) |
+        tolower(Item) %like% tolower(cat) |
+        tolower(Code) %like% tolower(cat)]
+  }
+
+  out <- split(out, out$Category)
+  out <- lapply(out, function(x) split(x, x$Subcategory))
+  return(out)
+}
+
 
 
 #' Generate CartoCSS snippet to symbolize raster tiles

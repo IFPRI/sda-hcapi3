@@ -87,7 +87,9 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
       "[, list(", agg, "), by=list(", bynum, ")]")
 
     # Eval in Rserve (through socket instead of DB connection)
-    rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
+    # Uncomment to connect from remote host
+    # rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
+    rc <- RS.connect(port=getOption("hcapi3.port"), proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
     #setkeyv(data, by)
