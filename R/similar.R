@@ -17,7 +17,7 @@
 #' # Rank all districts in Ghana by similarity to district 16657 (Kpando)
 #' # using the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
 #' # and cassava value of production (cass_v) as benchmarks.
-#' getSimilar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
+#' similar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 #' @export
 similar <- function(x, var, by=0, iso3="SSA") {
 
