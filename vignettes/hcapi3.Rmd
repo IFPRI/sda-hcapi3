@@ -1,5 +1,6 @@
+
 ---
-title: "An Introduction to HarvestChoice Data API v3""
+title: "An Introduction to HarvestChoice Data API v3"
 author: "Melanie Bacou"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
