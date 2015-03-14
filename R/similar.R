@@ -18,6 +18,11 @@
 #' # using the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
 #' # and cassava value of production (cass_v) as benchmarks.
 #' similar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
+#' Using cUrl at the command line,
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
+#' -d '{"x" : 16657, "var" : ["LGP_AVG", "GMIA_V5", "cass_v"], "by" : 2, "iso3" : "GHA"}' \
+#' -X POST -H "Content-Type:application/json"
+#'
 #' @export
 similar <- function(x, var, by=0, iso3="SSA") {
 
