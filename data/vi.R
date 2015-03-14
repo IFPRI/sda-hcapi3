@@ -1,1 +1,1 @@
-load("/home/projects/cell5m/rdb/vi.rda")
+load("/home/projects/cell5m/rdb/latest/vi.rda")
