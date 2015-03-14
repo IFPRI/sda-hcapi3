@@ -18,4 +18,4 @@ BuildType: Package
 PackageInstallArgs: --no-multiarch --with-keep.source -l /usr/lib/opencpu/library
 PackageBuildArgs: -l ./
 PackageBuildBinaryArgs: -l ./ --build pkg
-PackageRoxygenize: rd
+PackageRoxygenize: rd,vignette

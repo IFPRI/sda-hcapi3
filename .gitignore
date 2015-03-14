@@ -3,12 +3,11 @@
 
 # Example code in package build process
 *-Ex.R
-
 # R data files from past sessions
 .RData
 R/sysdata.rda
 Rplots.pdf
-
 # RStudio files
 .Rproj.user/
 .Rproj.user
+inst/doc

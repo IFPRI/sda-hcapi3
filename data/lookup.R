@@ -1,1 +1,1 @@
-load("/home/projects/cell5m/rdb/2014.11/lookup.RData")
+load("/home/projects/cell5m/rdb/lookup.RData")
