@@ -27,6 +27,6 @@ _Layers_: PN12_TOT, PD12_TOT
     CLOSED: <2015.04.09 Fri>
 _Layers_: TT10_20K, TT10_50K, TT10_100K, TT10_250K
 
-*** <2015.04.09 Fri> Yield variability
+*** Yield variability
     CLOSED: <2015.04.09 Fri>
 _Layers_: yield_h_cv, yield_l_cv
