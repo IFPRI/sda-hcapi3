@@ -17,4 +17,4 @@ New estimates broken out by gender and by residence (urban/rural)
 
 *** <2015.04.09 Fri> SPAM 2005 v2.0
 
-*** <2015.04.09> LandScan 2012 population count and density
+*** <2015.04.09 Fri> LandScan 2012 population count and density
