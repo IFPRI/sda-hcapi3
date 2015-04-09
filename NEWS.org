@@ -18,3 +18,10 @@ New estimates broken out by gender and by residence (urban/rural)
 *** <2015.04.09 Fri> SPAM 2005 v2.0
 
 *** <2015.04.09 Fri> LandScan 2012 population count and density
+_Layers_: PN12_TOT, PD12_TOT
+
+*** <2015.04.09 Fri> Time-to-market (20K, 50K, 100K, 250K, 500K)
+_Layers_: TT10_20K, TT10_50K, TT10_100K, TT10_250K
+
+*** <2015.04.09 Fri> Yield variability
+_Layers_: yield_h_cv, yield_l_cv
