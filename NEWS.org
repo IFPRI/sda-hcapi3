@@ -9,19 +9,24 @@
 
 ** Planned
 
-*** <2015.04.17 Fri> DHS Mother and Child health and nutrition indicators
+*** TODO DHS Mother and Child health and nutrition indicators
+    SCHEDULED: <2015.04.17 Fri>
 New estimates broken out by gender and by residence (urban/rural)
 
 
 ** Released
 
-*** <2015.04.09 Fri> SPAM 2005 v2.0
+*** DONE SPAM 2005 v2.0
+    CLOSED: <2015.04.09 Fri>
 
-*** <2015.04.09 Fri> LandScan 2012 population count and density
+*** LandScan 2012 population count and density
+    CLOSED: <2015.04.09 Fri>
 _Layers_: PN12_TOT, PD12_TOT
 
-*** <2015.04.09 Fri> Time-to-market (20K, 50K, 100K, 250K, 500K)
+*** Time-to-market (20K, 50K, 100K, 250K, 500K)
+    CLOSED: <2015.04.09 Fri>
 _Layers_: TT10_20K, TT10_50K, TT10_100K, TT10_250K
 
 *** <2015.04.09 Fri> Yield variability
+    CLOSED: <2015.04.09 Fri>
 _Layers_: yield_h_cv, yield_l_cv
