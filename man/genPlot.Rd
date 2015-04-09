@@ -2,7 +2,7 @@
 % Please edit documentation in R/genPlot.R
 \name{genPlot}
 \alias{genPlot}
-\title{Write layer plot to PNG}
+\title{Write map plot(s) to PNG and archive for download}
 \usage{
 genPlot(var, iso3 = "SSA", format = "default", width = switch(format, 640,
   print = 5, thumbnail = 180), height = switch(format, 640, print = 5,
@@ -10,7 +10,7 @@ genPlot(var, iso3 = "SSA", format = "default", width = switch(format, 640,
   "px"), res = switch(units, `in` = 200, px = 72), cache = TRUE, ...)
 }
 \arguments{
-\item{var}{character array of variables to plot}
+\item{var}{character array of variable(s) to plot}
 
 \item{iso3}{optional country or region filter (3-letter code)}
 
@@ -24,7 +24,7 @@ genPlot(var, iso3 = "SSA", format = "default", width = switch(format, 640,
 
 \item{res}{pixel-per-inch passed to png(), used if units="in"}
 
-\item{cache}{if TRUE use image in server cache, if FALSE rebuild image}
+\item{cache}{if TRUE use server cache else rebuild plot(s)}
 
 \item{...}{parameters passed on to genPlot()}
 }
@@ -32,6 +32,6 @@ genPlot(var, iso3 = "SSA", format = "default", width = switch(format, 640,
 character, path to generated ZIP file
 }
 \description{
-Write layer plot to PNG
+Write map plot(s) to PNG and archive for download
 }
 

@@ -26,4 +26,13 @@ a data.table of variable metadata
 \description{
 Return HarvestChoice variable metadata
 }
+\examples{
+# Show complete metadata for all variables under 'Cassava' category
+describe(cat="cassava", raster=T, by.category=T)
+
+# Equivalent cUrl request at the command line
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \\
+-d '{"cat" : "cassava", "raster" : true, "by.category" : true}' \\
+-X POST -H "Content-Type:application/json"
+}
 

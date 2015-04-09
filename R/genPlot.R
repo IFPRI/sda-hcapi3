@@ -7,6 +7,9 @@
 #' @param legend one of c("default", "auto") uses HarvestChoice legend breaks or R default
 #' @param ... any argument passed to getLayer()
 #' @return plot
+#'
+#'
+#'
 #' @export
 getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ...) {
 
@@ -41,13 +44,13 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
     # Continuous variable
     if ( length(by)>0 ) {
       # Use all classified values
-      cv <- unique(getValues(r))
+      cv <- unique(values(r))
       args <- NULL
 
     } else if (legend=="auto") {
       # Use default raster breaks
       require(classInt)
-      cv <- classIntervals(getValues(r), style="quantile")$brks
+      cv <- classIntervals(values(r), style="kmeans")$brks
       cv <- unique(cv)
       args <- NULL
 
@@ -113,16 +116,16 @@ getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ..
 }
 
 
-#' Write layer plot to PNG
+#' Write map plot(s) to PNG and archive for download
 #'
-#' @param var character array of variables to plot
+#' @param var character array of variable(s) to plot
 #' @param iso3 optional country or region filter (3-letter code)
 #' @param format format argument passed to genPlot()
 #' @param width plot width in units passed to png()
 #' @param height plot height in units passed to png()
 #' @param res pixel-per-inch passed to png(), used if units="in"
 #' @param units one of c("px", "in") passed to png()
-#' @param cache if TRUE use image in server cache, if FALSE rebuild image
+#' @param cache if TRUE use server cache else rebuild plot(s)
 #' @param ... parameters passed on to genPlot()
 #' @return character, path to generated ZIP file
 #' @export
@@ -130,7 +133,7 @@ genPlot <- function(var, iso3="SSA", format="default",
   width=switch(format, 640, "print"=5, "thumbnail"=180),
   height=switch(format, 640, "print"=5, "thumbnail"=200),
   units=switch(format, "px", "print"="in", "thumbnail"="px"),
-  res=switch(units, "in"=200, "px"=72),
+  res=switch(units, "in"=300, "px"=72),
   cache=TRUE, ...) {
 
   width <- as.integer(width)
@@ -142,8 +145,7 @@ genPlot <- function(var, iso3="SSA", format="default",
 
     if (!file.exists(fPath) | cache!=TRUE) {
       # File does not exist on disk, so create
-      png(fPath, width=width, height=height, res=res, units=units,
-        pointsize=round(ifelse(units=="in", (width*11)/(640/72), (width/res)*11/(640/72))))
+      png(fPath, width=width, height=height, res=res, units=units, pointsize=1/res)
 
       switch(format,
         # Optimize plot margin sizes
@@ -156,7 +158,10 @@ genPlot <- function(var, iso3="SSA", format="default",
     }
   }
 
-  fPath <- paste0(format, "-", width, "x", height, units, res, var[1], iso3, ".png")
+  fPath <- paste0(format, "-", width, "x", height, units, res, iso3, ".png")
+  f <- list.files("./", "*.png", full.names=T)
+  fPath <- paste0(fPath, ".zip")
+  zip(fPath, f, flags="-9Xjm", zip="zip")
   return(fPath)
 }
 

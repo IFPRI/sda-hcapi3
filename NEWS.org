@@ -1,0 +1,20 @@
+#+TITLE: HC Data Release Roadmap
+#+AUTHOR: Melanie Bacou
+#+EMAIL: mel@mbacou.com
+#+DATE: {{{modification-time(%Y-%m-%d)}}}
+
+#+OPTIONS: H:2 num:1 toc:2 \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+LaTeX_CLASS: mel-article
+#+STARTUP: indent showstars
+
+** Planned
+
+*** <2015.04.17 Fri> DHS Mother and Child health and nutrition indicators
+New estimates broken out by gender and by residence (urban/rural)
+
+
+** Released
+
+*** <2015.04.09 Fri> SPAM 2005 v2.0
+
+*** <2015.04.09> LandScan 2012 population count and density

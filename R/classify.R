@@ -16,9 +16,14 @@
 #' @examples
 #' # Return average wealth index and poverty rates for areas of medium rural
 #' # population density and low market access (under 5hrs travel time)
-#' reClassify(var=c("wealth","TPOV_P200"),
-#'            by=list(PD05_RUR=c(60, 100), TT_20K=c(0,5)))
+#' classify(var=c("wealth","TPOV_P200"),
+#'     by=list(PD05_RUR=c(60, 100), TT_20K=c(0,5)))
 #'
+#' # Equivalent cUrl request at the command line
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \
+#' -d '{"var" : ["wealth", "TPOV_P200"],
+#'     "by" : {"PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
+#' -X POST -H "Content-Type:application/json"
 #' @export
 classify <- function(var, by, ...) {
   out <- getLayer(var=var, by=by, ids=NULL, ...)

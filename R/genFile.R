@@ -10,6 +10,29 @@
 #' @param format output format c("json", "csv", "geojson", "tif", "shp", "dta", "asc", "rds", "rdata")
 #' @param ... any other optional argument passed to getLayer(), e.g. \code{geom}, \code{collapse}.
 #' @return character, path to generated ZIP file
+#' @examples
+#' Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
+#' in STATA format
+#' genFile("whea_h", iso3=c("NGA", "ETH"), by="AEZ16_CLAS", format="dta")
+#'
+#' Sorghum production returned in ESRI ASCII raster format
+#' genFile("sorg_p", format="asc")
+#'
+#' # Equivalent cUrl requests at the command line
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+#' -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
+#' -X POST -H "Content-Type:application/json"
+#'
+#' # Download generated ZIP file
+#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x0fe45cc2aa/files/whea_h-AEZ16_CLAS-NGA.dta.zip
+#'
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+#' -d '{"var" : "sorg_p", "format" : "asc"}' \
+#' -X POST -H "Content-Type:application/json"
+#'
+#' # Download generated ZIP file
+#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x0760ca93d2/files/sorg_p--SSA.asc.zip
+#'
 #' @export
 genFile <- function(var, iso3="SSA", by=NULL,
   format=c("csv", "geojson", "tif", "shp", "dta", "asc", "rds"), ...) {

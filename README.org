@@ -11,9 +11,9 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 ** Overview
 
-The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info. Documentation for each API method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
-also in PDF format using =/man/<method>/pdf= at
-http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/pdf.
+The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man. Documentation for each API method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
+also in HTML and PDF formats using =/man/<method>/pdf= or
+http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/html.
 
 HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d param1=value1&param2=value2= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
 
@@ -232,6 +232,7 @@ sys     0m0.062s
 
 #+END_SRC
 
+
 #+BEGIN_SRC sh
 # Return variable metadata only (variable codes by category). Will perform a fuzzy
 # search across all variable metadata matching `cat` argument (e.g. cat='wheat').
@@ -428,6 +429,31 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
 ]
 
 #+END_SRC
+
+
+#+BEGIN_SRC sh
+# =/getPlot/= and =/genPlot/= methods will produce graphic maps. Use =/genPlot/= to produce
+# several plots at once and return in a ZIP file
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genPlot \
+-d '{"var": ["whea_h", "bmi_rur"], "iso3": "KEN", "format" : "print"}' \
+-X POST -H "Content-Type:application/json"
+#+END_SRC
+
+#+BEGIN_SRC json
+/ocpu/tmp/x03638d6955/R/.val
+/ocpu/tmp/x03638d6955/stdout
+/ocpu/tmp/x03638d6955/source
+/ocpu/tmp/x03638d6955/console
+/ocpu/tmp/x03638d6955/info
+/ocpu/tmp/x03638d6955/files/default-640x640px72KEN.png.zip
+/ocpu/tmp/x03638d6955/files/DESCRIPTION
+#END_SRC
+
+#+BEGIN_SRC sh
+# Use =wget= to download the generated plot(s)
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x03638d6955/files/default-640x640px72KEN.png.zip
+#END_SRC
+
 
 ** Updates
 
