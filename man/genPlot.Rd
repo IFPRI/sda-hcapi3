@@ -7,7 +7,7 @@
 genPlot(var, iso3 = "SSA", format = "default", width = switch(format, 640,
   print = 5, thumbnail = 180), height = switch(format, 640, print = 5,
   thumbnail = 200), units = switch(format, "px", print = "in", thumbnail =
-  "px"), res = switch(units, `in` = 200, px = 72), cache = TRUE, ...)
+  "px"), res = switch(units, `in` = 300, px = 72), cache = TRUE, ...)
 }
 \arguments{
 \item{var}{character array of variable(s) to plot}
