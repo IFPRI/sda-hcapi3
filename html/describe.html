@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Return HarvestChoice variable metadata</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for describe {hcapi3}"><tr><td>describe {hcapi3}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Return HarvestChoice variable metadata</h2>
+
+<h3>Description</h3>
+
+<p>Return HarvestChoice variable metadata
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+describe(var, cat, version, raster = FALSE, by.category = FALSE,
+  css = "json")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>var</code></td>
+<td>
+<p>character array of HarvestChoice variables</p>
+</td></tr>
+<tr valign="top"><td><code>cat</code></td>
+<td>
+<p>optional category filter</p>
+</td></tr>
+<tr valign="top"><td><code>version</code></td>
+<td>
+<p>optional version filter</p>
+</td></tr>
+<tr valign="top"><td><code>raster</code></td>
+<td>
+<p>return only raster variables</p>
+</td></tr>
+<tr valign="top"><td><code>css</code></td>
+<td>
+<p>include Carto CSS rules</p>
+</td></tr>
+<tr valign="top"><td><code>by.group</code></td>
+<td>
+<p>group variables by category</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a data.table of variable metadata
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+
+# Show complete metadata for all variables under 'Cassava' category
+describe(cat="cassava", raster=T, by.category=T)
+
+# Equivalent cUrl request at the command line
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+-d '{"cat" : "cassava", "raster" : true, "by.category" : true}' \
+-X POST -H "Content-Type:application/json"
+
+
+
+</code></pre>
+
+<hr><div align="center">[Package <em>hcapi3</em> version 3.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

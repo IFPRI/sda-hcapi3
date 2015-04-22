@@ -1,7 +1,7 @@
 Package: hcapi3
 Type: Package
-Version: 3.0
-Date: 2015-2-26
+Version: 3.5
+Date: 2015-4-22
 Title: HarvestChoice Data Services
 Authors@R: c(
     person("Melanie", "Bacou", role=c("aut", "cre"), email="mel@mbacou.com"),
@@ -19,13 +19,13 @@ Author: Melanie Bacou [aut, cre],
     Joseph Green [ctb],
     Zhe Guo [ctb]
 Maintainer: Melanie Bacou <mel@mbacou.com>
-Depends: 
+Depends:
     R (>= 2.14.0),
     data.table
-Imports: 
+Imports:
     RSclient,
     stringr
-Suggests: 
+Suggests:
     raster,
     sp,
     classInt,

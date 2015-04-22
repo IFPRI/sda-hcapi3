@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Convert CELL5M layers to raster and/or tabular formats and...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for genFile {hcapi3}"><tr><td>genFile {hcapi3}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Convert CELL5M layers to raster and/or tabular formats and create archive for download</h2>
+
+<h3>Description</h3>
+
+<p>Package any result from <code>getLayer()</code> into the user-specified tabular or raster
+format. Also includes a README file with metadata and citation details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
+  "shp", "dta", "asc", "rds"), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>var</code></td>
+<td>
+<p>character array of variable codes, passed to getLayer(var, ...)</p>
+</td></tr>
+<tr valign="top"><td><code>iso3</code></td>
+<td>
+<p>character array of ISO3 country or region codes, passed to getLayer()</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>character array of variable codes to summarize by, passed to getLayer()</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p>output format c(&quot;json&quot;, &quot;csv&quot;, &quot;geojson&quot;, &quot;tif&quot;, &quot;shp&quot;, &quot;dta&quot;, &quot;asc&quot;, &quot;rds&quot;, &quot;rdata&quot;)</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>any other optional argument passed to getLayer(), e.g. <code>geom</code>, <code>collapse</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>character, path to generated ZIP file
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+
+Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
+in STATA format
+genFile("whea_h", iso3=c("NGA", "ETH"), by="AEZ16_CLAS", format="dta")
+
+Sorghum production returned in ESRI ASCII raster format
+genFile("sorg_p", format="asc")
+
+# Equivalent cUrl requests at the command line
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+-d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
+-X POST -H "Content-Type:application/json"
+
+# Download generated ZIP file
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x0fe45cc2aa/files/whea_h-AEZ16_CLAS-NGA.dta.zip
+
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+-d '{"var" : "sorg_p", "format" : "asc"}' \
+-X POST -H "Content-Type:application/json"
+
+# Download generated ZIP file
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x0760ca93d2/files/sorg_p--SSA.asc.zip
+
+
+
+</code></pre>
+
+<hr><div align="center">[Package <em>hcapi3</em> version 3.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

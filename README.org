@@ -11,9 +11,8 @@ Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvest
 
 ** Overview
 
-The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man. Documentation for each API method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer
-also in HTML and PDF formats using =/man/<method>/pdf= or
-http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/html.
+The package documentation is at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/html/. Documentation for each API method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/html
+also in PDF formats using =/man/<method>/pdf=.
 
 HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d param1=value1&param2=value2= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
 
@@ -432,8 +431,7 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
 
 
 #+BEGIN_SRC sh
-# =/getPlot/= and =/genPlot/= methods will produce graphic maps. Use =/genPlot/= to produce
-# several plots at once and return in a ZIP file
+# =/genPlot/= method will produce raster plots.
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genPlot \
 -d '{"var": ["whea_h", "bmi_rur"], "iso3": "KEN", "format" : "print"}' \
 -X POST -H "Content-Type:application/json"
@@ -445,17 +443,20 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genPlot \
 /ocpu/tmp/x03638d6955/source
 /ocpu/tmp/x03638d6955/console
 /ocpu/tmp/x03638d6955/info
-/ocpu/tmp/x03638d6955/files/default-640x640px72KEN.png.zip
+/ocpu/tmp/x03638d6955/files/whea_h.SSA.print.png
+/ocpu/tmp/x03638d6955/files/bmi_rur.SSA.print.png
 /ocpu/tmp/x03638d6955/files/DESCRIPTION
 #END_SRC
 
 #+BEGIN_SRC sh
 # Use =wget= to download the generated plot(s)
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x03638d6955/files/default-640x640px72KEN.png.zip
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x03638d6955/files/whea_h.SSA.print.png
 #END_SRC
 
 
 ** Updates
+
+*2015.04.22*: combined =getPlot()= and =genPlot()= into only one =genPlot()= method that can generate multiple plots at once.
 
 *2015.01.22*: allow filtering variables across multiple country ISO3 codes.
 

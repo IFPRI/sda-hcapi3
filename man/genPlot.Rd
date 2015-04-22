@@ -2,36 +2,43 @@
 % Please edit documentation in R/genPlot.R
 \name{genPlot}
 \alias{genPlot}
-\title{Write map plot(s) to PNG and archive for download}
+\title{Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators}
 \usage{
-genPlot(var, iso3 = "SSA", format = "default", width = switch(format, 640,
-  print = 5, thumbnail = 180), height = switch(format, 640, print = 5,
-  thumbnail = 200), units = switch(format, "px", print = "in", thumbnail =
-  "px"), res = switch(units, `in` = 300, px = 72), cache = TRUE, ...)
+genPlot(var, iso3 = "SSA", pal, format = "default", style = "default",
+  width = 640, height = 640, ...)
 }
 \arguments{
-\item{var}{character array of variable(s) to plot}
+\item{var}{character array of variable codes to plot}
 
-\item{iso3}{optional country or region filter (3-letter code)}
+\item{iso3}{optional ISO3 country or region code to filter by}
 
-\item{format}{format argument passed to genPlot()}
+\item{pal}{optional Brewer color palette used for plotting, e.g. "Blues"}
 
-\item{width}{plot width in units passed to png()}
+\item{format}{one of "default", "print", "thumbnail" to control legend and axes}
 
-\item{height}{plot height in units passed to png()}
+\item{style}{one of \code{classIntervals()} style arguments (e.g. "kmeans"), or "default" to use default breaks}
 
-\item{units}{one of c("px", "in") passed to png()}
+\item{width}{plot width in pixel (unless \code{units} is specified)}
 
-\item{res}{pixel-per-inch passed to png(), used if units="in"}
+\item{height}{plot height in pixel (unless \code{units} is specified)}
 
-\item{cache}{if TRUE use server cache else rebuild plot(s)}
-
-\item{...}{parameters passed on to genPlot()}
+\item{...}{any argument passed to \code{png()}, e.g. units, res, pointsize}
 }
 \value{
-character, path to generated ZIP file
+Array of generated file names, one for each plot
 }
 \description{
-Write map plot(s) to PNG and archive for download
+Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators
+}
+\examples{
+# Generate standard raster plot of 2012 population density for sub-Saharan Africa
+genPlot("PD12_TOT")
+
+# Generate 3 raster plots for Ghana with legend and title but not axes
+genPlot(c("AEZ16_CLAS", "whea_h", "soc_d15"), iso3="GHA", format="print")
+
+# Generate 2 raster plots for Nigeria with the specified dimensions
+genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=5,
+units="in", res=200, pointsize=8)
 }
 

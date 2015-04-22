@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Subset, and/or aggregate HarvestChoice 5-arc-minute layers...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for getLayerSQL {hcapi3}"><tr><td>getLayerSQL {hcapi3}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Subset, and/or aggregate HarvestChoice 5-arc-minute layers (SQLite version, now deprecated)</h2>
+
+<h3>Description</h3>
+
+<p>Workhorse method to subset and/or aggregate HarvestChoice layers.
+This method also aggregates classified variables by continuous variables.
+e.g. <code>getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))</code>.
+It does so by returning the dominant class of a classified variable within each <code>by</code>
+class, and by automatically classifying any continuous variable passed to <code>by</code>
+using value breaks specified as part of each variable metadata.
+The formula used to aggregate classified variables by choosing the dominant class is
+<code>names(sort(table({varCode}), decreasing=T)[1])</code>. This formula computes the
+frequency of each class, ranks them by decreasing frequency, and retains the top one.
+Layers can also be summarized over a spatial area (passed as WKT point, multipoints, or polygons).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getLayerSQL(var, iso3 = "SSA", by = NULL, wkt = NULL, collapse = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>var</code></td>
+<td>
+<p>character array of variable names (all types are accepted)</p>
+</td></tr>
+<tr valign="top"><td><code>iso3</code></td>
+<td>
+<p>optional country or regional filter (3-letter code)</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>optional character array of variables to group by (all types are accepted)</p>
+</td></tr>
+<tr valign="top"><td><code>wkt</code></td>
+<td>
+<p>optional WKT representation of a spatial object (points or polygons) to summarize over</p>
+</td></tr>
+<tr valign="top"><td><code>collapse</code></td>
+<td>
+<p>if FALSE always return all pixel values (useful for plotting and spatial formats)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a data.table of <code>var</code> indicators aggregated by <code>by</code>
+</p>
+
+<hr><div align="center">[Package <em>hcapi3</em> version 3.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

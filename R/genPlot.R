@@ -1,190 +1,166 @@
-#' Generate single raster plot of HarvestChoice layer
+#' Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators
 #'
-#' @param var variable to plot (character of length 1)
-#' @param iso3 optional array of ISO3 country or region code to filter by
-#' @param pal optional Brewer color palette used for plotting
-#' @param format one of c("default", "print", "thumbnail") control legend and axes
-#' @param legend one of c("default", "auto") uses HarvestChoice legend breaks or R default
-#' @param ... any argument passed to getLayer()
-#' @return plot
+#' @param var character array of variable codes to plot
+#' @param iso3 optional ISO3 country or region code to filter by
+#' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
+#' @param format one of "default", "print", "thumbnail" to control legend and axes
+#' @param style one of \code{classIntervals()} style arguments (e.g. "kmeans"), or "default" to use default breaks
+#' @param width plot width in pixel (unless \code{units} is specified)
+#' @param height plot height in pixel (unless \code{units} is specified)
+#' @param ... any argument passed to \code{png()}, e.g. units, res, pointsize
+#' @return Array of generated file names, one for each plot
+#' @examples
+#' # Generate standard raster plot of 2012 population density for sub-Saharan Africa
+#' genPlot("PD12_TOT")
 #'
+#' # Generate 3 raster plots for Ghana with legend and title but not axes
+#' genPlot(c("AEZ16_CLAS", "whea_h", "soc_d15"), iso3="GHA", format="print")
 #'
-#'
+#' # Generate 2 raster plots for Nigeria with the specified dimensions
+#' genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=5,
+#' units="in", res=200, pointsize=8)
 #' @export
-getPlot <- function(var, iso3="SSA", pal, format="default", legend="default", ...) {
+genPlot <- function(var, iso3="SSA", pal, format="default", style="default",
+  width=640, height=640, ...) {
 
-  # Get HC symbology
-  var <- var[1]
   iso3 <- iso3[1]
+  fPath <- NA
   setkey(vi, varCode)
-  cv <- as.integer(unlist(strsplit(vi[var][, classBreaks], "|", fixed=T)))
-  cl <- as.character(unlist(strsplit(vi[var][, classLabels], "|", fixed=T)))
-  cc <- tolower(as.character(unlist(strsplit(vi[var][, classColors], "|", fixed=T))))
 
-  # Convert data to spatial
-  r <- getLayer(var, iso3, collapse=FALSE, ...)
-  r <- r[!is.na(Y)]
-
-  # Convert categorical rasters to 0-based integer
-  # Note: cv was created 0-based to match ESRI ASCII format
-  if (vi[var][, type=="class"]) r[[var]] <- as.integer(factor(r[[var]], levels=cl, ordered=T))-1L
-
-  r <- SpatialPixelsDataFrame(r[, list(X, Y)], data.frame(layer=r[[var]]),
-    tolerance=0.00564023, proj4string=CRS("+init=epsg:4326"))
-  r <- raster(r)
-
-  # Plot with HC symbology
-  if (!missing(pal)) cc <- colorRampPalette(brewer.pal(9, pal))(length(cc))
-
-  if (vi[var][, type=="class"]) {
-    # Categorical variable
-    args <- list(at=cv+.5, labels=cl, col="black", col.axis="black")
-
-  } else {
-    # Continuous variable
-    if ( length(by)>0 ) {
-      # Use all classified values
-      cv <- unique(values(r))
-      args <- NULL
-
-    } else if (legend=="auto") {
-      # Use default raster breaks
-      require(classInt)
-      cv <- classIntervals(values(r), style="kmeans")$brks
-      cv <- unique(cv)
-      args <- NULL
-
-    } else {
-      # Use HC breaks
-      cv <- unique(c(0, cv, ceiling(maxValue(r))))
-      cv <- cv[order(cv)]
-      cv <- cv[which(cv <= ceiling(maxValue(r)))]
-      args <- list(at=cv, labels=cl, col="black", col.axis="black")
-    }
-
-    if (cc[1]=="#ffffffff") cc <- cc[-1]
-  }
-
-  # Global graphic parameters
-  par(bty="n", family="Helvetica-Narrow", cex.axis=.7, cex.sub=.8, cex.main=.9, font.main=1, adj=0)
-
-  switch(format,
-    default = {
-      # Plot with axes and legend (default)
-      plot(r, col=colorRampPalette(cc)(length(cv)), main=NULL,
-        axis.args=args, legend.width=1.5, legend.mar=7)
-
-      # Add gridlines
-      axis(1, tck=1, lty=3, lwd=.5, col="gray")
-      axis(2, tck=1, lty=3, lwd=.5, col="gray")
-
-      # Add annotations
-      title(main=str_wrap(paste(vi[var][, varTitle], names(iso)[iso==iso3], sep=", "), width=74))
-      title(sub=str_wrap(paste(vi[var][, sources],
-        "\u00a9 HarvestChoice/IFPRI, 2014.", sep=" "), 74), line=6) },
-
-    print = {
-      # Remove axes
-      plot(r, breaks=cv, col=cc, axes=F, main=NULL, axis.args=args,
-        legend.width=1.1, legend.height=1)
-
-      # Add annotations
-      title(main=paste(str_wrap(vi[var][, varTitle], 70), names(iso)[iso==iso3], sep=", "),
-        line=3)
-      title(sub=str_wrap(paste(vi[var][, sources], "\u00a9 HarvestChoice/IFPRI, 2014.", sep=" "), 74),
-        line=5) },
-
-    thumbnail = {
-      # Remove axes and legend
-      image(r, breaks=cv, col=cc[-length(cc)], xlim=c(-20,60), ylim=c(-38, 30), xaxs="i", yaxs="i",
-        asp=1, axes=F, main=NULL) }
-  )
-
-  # Always add country boundaries
+  # Get GAUL country boundaries
   rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
   g0 <- RS.eval(rc, g0)
-  RS.close(rc)
-  plot(g0, col=NA, border="dimgray", lwd=.1, add=T)
 
-  if (iso3!="SSA") {
-    # Also add province boundaries
-    rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
-    g1 <- RS.eval(rc, g1)
-    RS.close(rc)
-    plot(g1[g1$ADM0_NAME==names(iso)[iso==iso3],], col=NA, border="gray", lwd=.1, add=T)
-  }
-}
+  for (i in var) {
 
+    # Quick validation
+    cat(i, ": ", vi[i][, varLabel], fill=T)
+    if (is.na(vi[i][, varLabel])) next
 
-#' Write map plot(s) to PNG and archive for download
-#'
-#' @param var character array of variable(s) to plot
-#' @param iso3 optional country or region filter (3-letter code)
-#' @param format format argument passed to genPlot()
-#' @param width plot width in units passed to png()
-#' @param height plot height in units passed to png()
-#' @param res pixel-per-inch passed to png(), used if units="in"
-#' @param units one of c("px", "in") passed to png()
-#' @param cache if TRUE use server cache else rebuild plot(s)
-#' @param ... parameters passed on to genPlot()
-#' @return character, path to generated ZIP file
-#' @export
-genPlot <- function(var, iso3="SSA", format="default",
-  width=switch(format, 640, "print"=5, "thumbnail"=180),
-  height=switch(format, 640, "print"=5, "thumbnail"=200),
-  units=switch(format, "px", "print"="in", "thumbnail"="px"),
-  res=switch(units, "in"=300, "px"=72),
-  cache=TRUE, ...) {
+    # Get HC symbology
+    cv <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
+    cl <- as.character(unlist(strsplit(vi[i][, classLabels], "|", fixed=T)))
+    cc <- tolower(as.character(unlist(strsplit(vi[i][, classColors], "|", fixed=T))))
 
-  width <- as.integer(width)
-  height <- as.integer(height)
-  res <- as.integer(res)
+    # Get data
+    r <- getLayer(i, iso3, collapse=F)
+    setnames(r, i, "var")
 
-  for(i in var) {
-    fPath <- paste0(format, "-", width, "x", height, units, res, i, iso3, ".png")
+    switch(vi[i][, type],
+      class = {
+        # Convert categorical rasters to 1-based integer
+        r[, var := as.integer(factor(var, levels=cl, ordered=T))]
+      },
 
-    if (!file.exists(fPath) | cache!=TRUE) {
-      # File does not exist on disk, so create
-      png(fPath, width=width, height=height, res=res, units=units, pointsize=1/res)
+      continuous = {
+        if (style!="default") {
+          # Re-classify using classIntervals()
+          require(classInt)
+          cv <- classIntervals(r$var, style=style)$brks
+        }
 
-      switch(format,
-        # Optimize plot margin sizes
-        "default" = par(mar=c(7.1,3.1,4.1,1.1), oma=c(0,0,0,6)),
-        "print" = par(mar=c(6.1,3.1,6.1,1.1), oma=c(0,0,2,6), xaxs="i", yaxs="i"),
-        "thumbnail" = par(mar=c(0,0,0,0), oma=c(0,0,0,0)))
+        # Classify to 1-based integer using `cv`
+        cv <- sort(unique(c(min(r$var, na.rm=T)-1, cv, max(r$var, na.rm=T)+1)))
+        r[, var := cut(var, cv)]
+        cl <- levels(r$var)
+        cl <- sapply(strsplit(cl, ",", cl, fixed=T), `[`, 2)
+        cl <- as.numeric(gsub("]", "", cl, fixed=T))
+        cl <- prettyNum(cl, big.mark=",")
+        r[, var := as.integer(var)]
 
-      getPlot(i, iso3, format=format, ...)
-      dev.off()
+        # Plot with HC symbology
+        if (!missing(pal)) {
+          cc <- colorRampPalette(brewer.pal(9, pal))(length(cl))
+        } else {
+          cc <- colorRampPalette(cc)(length(cl))
+        }
+      })
+
+    # Convert to spatial
+    r <- SpatialPixelsDataFrame(r[, list(X, Y)], data.frame(layer=r$var),
+      tolerance=0.00564023, proj4string=CRS("+init=epsg:4326"))
+    r <- raster(r)
+
+    # Crop to SSA (the grid was buffered)
+    if (iso3=="SSA") r <- crop(r, g0)
+
+    # Open plot device
+    j <- c(i, if(iso3!="SSA") iso3, if(format!="default") format, "png")
+    j <- paste(j, collapse=".")
+
+    png(j, width=width, height=height, ...)
+
+    # Global graphic parameters
+    par(family="Helvetica-Narrow", bty="n", cex.axis=.6, col.axis="grey50", fg="grey50")
+
+    switch(format,
+      default = {
+
+        # Set margins
+        par(mar=c(6,3,4,1), oma=c(0,0,0,7))
+
+        # Plot with axes (default)
+        plot(r, legend=F, col=cc)
+
+        # Add gridlines
+        axis(1, tck=1, lty=3, lwd=.5, col="grey80")
+        axis(2, tck=1, lty=3, lwd=.5, col="grey80")
+
+        # Add legend
+        plot(r, legend.only=T, legend.width=1.5, col=cc,
+          axis.args=list(at=1:length(cl), labels=cl, col.axis="grey10"))
+
+        # Add annotations
+        title(col.main="grey10", adj=0, font.main=1, line=1,
+          main=str_wrap(paste0(
+            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==iso3]), 50))
+        title(cex.sub=ifelse(width<10, .7, .8), col.sub="grey10", adj=0, line=5, font.sub=1,
+          sub=str_wrap(paste0("Source: ", vi[i][, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90))
+      },
+
+      print = {
+        # Set margins
+        par(mar=c(6,1,3,1), oma=c(0,0,0,7), xaxs="i", yaxs="i")
+
+        # Remove axes
+        plot(r, legend=F, col=cc, axes=F)
+
+        # Add legend
+        plot(r, legend.only=T, legend.width=1.5, col=cc,
+          axis.args=list(at=1:length(cl), labels=cl, col.axis="grey10"))
+
+        # Add annotations
+        title(col.main="grey10", adj=0, font.main=1, line=0,
+          main=str_wrap(paste0(
+            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==iso3]), 50))
+        title(cex.sub=ifelse(width<10, .7, .8), col.sub="grey10", adj=0, line=2, font.sub=1,
+          sub=str_wrap(paste0("Source: ", vi[i][, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90))
+      },
+
+      thumbnail = {
+        # Set margins
+        par(mar=c(0,0,0,0), oma=c(0,0,0,0), xpd=T, xaxs="i", yaxs="i")
+
+        # Remove axes and legend (need to use image() instead of plot())
+        image(r, col=cc, asp=1, axes=F)
+      }
+    )
+
+    # Always add country boundaries
+    plot(g0, col=NA, border="gray50", lwd=.1, add=T)
+
+    if (iso3!="SSA") {
+      # Also add province boundaries
+      g1 <- RS.eval(rc, g1)
+      plot(g1[g1$ADM0_NAME==names(iso)[iso==iso3],], col=NA, border="gray", lwd=.1, add=T)
     }
+
+    dev.off()
+    fPath <- c(fPath, j)
   }
 
-  fPath <- paste0(format, "-", width, "x", height, units, res, iso3, ".png")
-  f <- list.files("./", "*.png", full.names=T)
-  fPath <- paste0(fPath, ".zip")
-  zip(fPath, f, flags="-9Xjm", zip="zip")
-  return(fPath)
+  # Close connection
+  RS.close(rc)
+  return(fPath[-1])
 }
 
-
-#' Generate histogram and boxplot of HarvestChoice layer(s)
-#'
-#' @param var character array of variables to summarize
-#' @param iso3 optional country or region filter (3-letter code)
-#' @return plot
-#' @export
-stats <- function(var, iso3="SSA", by=NULL) {
-
-  d <- getLayer(var, iso3, by)
-
-  for(i in var) {
-    t <- summary(d[[i]])
-    p <- hist(d[[i]], plot=F)
-    b <- (max(p$counts)-min(p$counts))/20
-
-    hist(d[[i]], n=30, xlab=NA, ylim=c(-b, max(p$counts)), col="azure3",
-      main=paste(vi[varCode==i, varTitle], names(iso)[iso==iso3], sep=" - "))
-    boxplot(d[[i]], horizontal=T, at=-b, border="blue", boxwex=b*2, axes=F, outline=F, add=T)
-    legend(x="topright", legend=paste(c("N", names(t)), c(dim(d)[1], t), sep=":   "), bg="white")
-  }
-
-}

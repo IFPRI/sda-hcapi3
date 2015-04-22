@@ -10,7 +10,6 @@ export(getLayer)
 export(getLayerSQL)
 export(getLayerWKT)
 export(describe)
-export(getPlot)
 export(similar)
 
 import(RSclient)
