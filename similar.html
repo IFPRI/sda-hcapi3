@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>similar. hcapi3 3.5</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">hcapi3 3.5</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Rank spatial units by similarity</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>similar(x, var, by&nbsp;=&nbsp;0, iso3&nbsp;=&nbsp;"SSA")</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>single integer code for the reference geography, either a region code (ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against</dd>
+      <dt>var</dt>
+      <dd>character array of HarvestChoice variable codes used in the ranking</dd>
+      <dt>by</dt>
+      <dd>single integer indicating the type of reference geography (0-gridcell, 1-region, 2-district)</dd>
+      <dt>iso3</dt>
+      <dd>optional country or region filter (3-letter code)</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+a data.table of regions, districts, or pixels ranked by similarity to reference geography <code>x</code>
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Rank regions, districts, or pixels by similarity to a reference unit across a set of
+indicators. To generate a distance score, we center and scale all numeric variables
+and convert classified variables to 0 or 1 (1 if same as reference unit, 0 otherwise).
+For each variable we compute the absolute percent deviation between each unit and the
+reference unit, and we then sum the deviations across all variables to generate an
+aggregate distance score. The lower the score, the more similar the unit for the
+selected indicators.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Rank all districts in Ghana by similarity to district 16657 (Kpando)
+# using the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
+# and cassava value of production (cass_v) as benchmarks.
+similar(16657, c(&quot;LGP_AVG&quot;, &quot;GMIA_V5&quot;, &quot;cass_v&quot;), by=2, iso3=&quot;GHA&quot;)
+</div>
+<div class='output'>     ADM2_CODE_ALT LGP_AVG GMIA_V5   cass_v Score
+  1:         16657     278       0  3021856 0.000
+  2:         16575     287       0  3172796 0.216
+  3:         16595     265      28  3176379 0.334
+  4:         16651     273       0  5486071 0.391
+  5:         16652     271      97  5449375 0.532
+ ---                                             
+106:         16636     181    3008  3471751 5.319
+107:         16658     230       0 41057948 5.399
+108:         16644     169    3096        0 5.969
+109:         16618     283    4633 17700273 6.602
+110:         16628     178     153 45721318 7.237
+</div>
+<div class='input'>
+# Equivalent cUrl request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
+# -d &#39;{&quot;x&quot; : 16657, &quot;var&quot; : [&quot;LGP_AVG&quot;, &quot;GMIA_V5&quot;, &quot;cass_v&quot;], &quot;by&quot; : 2, &quot;iso3&quot; : &quot;GHA&quot;}&#39; \
+# -X POST -H &quot;Content-Type:application/json&quot;
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>similar</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
