@@ -102,7 +102,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-102  3287    0  3287    0     0  57717      0 --:--:-- --:--:-- --:--:--  110k
+102  3287    0  3287    0     0  39495      0 --:--:-- --:--:-- --:--:--  106k
 ## 
 ##      Information on package 'hcapi3'
 ## 
@@ -182,7 +182,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-104  2289    0  2289    0     0  39093      0 --:--:-- --:--:-- --:--:-- 57225
+104  2289    0  2289    0     0  43043      0 --:--:-- --:--:-- --:--:-- 65400
 ## getLayer                package:hcapi3                 R Documentation
 ## 
 ## Subset, and/or summarize HarvestChoice 5-arc-minute layers
@@ -253,9 +253,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   2184 --:--:-- --:--:-- --:--:--  2184
-124   209    0   209    0    40    518     99 --:--:-- --:--:-- --:--:--   438
-124   209    0   209    0    40    518     99 --:--:-- --:--:-- --:--:--   438
+  0     0    0     0    0    40      0   2192 --:--:-- --:--:-- --:--:--  2192
+124   209    0   209    0    40    499     95 --:--:-- --:--:-- --:--:--   422
 ## [
 ##   {
 ##     &quot;AEZ8_CLAS&quot;: &quot;Sub-Humid&quot;,
@@ -282,15 +281,16 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0    467 --:--:-- --:--:-- --:--:--   467
-148   243    0   243    0    53    467    102 --:--:-- --:--:-- --:--:--   467
-## /ocpu/tmp/x03098ae799/R/.val
-## /ocpu/tmp/x03098ae799/stdout
-## /ocpu/tmp/x03098ae799/source
-## /ocpu/tmp/x03098ae799/console
-## /ocpu/tmp/x03098ae799/info
-## /ocpu/tmp/x03098ae799/files/DESCRIPTION
-## /ocpu/tmp/x03098ae799/files/PD05_TOT-AEZ8_CLAS-GHA.dta.zip</code></pre>
+  0     0    0     0    0    53      0   2956 --:--:-- --:--:-- --:--:--  2956
+148   243    0   243    0    53    606    132 --:--:-- --:--:-- --:--:--   496
+148   243    0   243    0    53    606    132 --:--:-- --:--:-- --:--:--   496
+## /ocpu/tmp/x0f480f87b7/R/.val
+## /ocpu/tmp/x0f480f87b7/stdout
+## /ocpu/tmp/x0f480f87b7/source
+## /ocpu/tmp/x0f480f87b7/console
+## /ocpu/tmp/x0f480f87b7/info
+## /ocpu/tmp/x0f480f87b7/files/DESCRIPTION
+## /ocpu/tmp/x0f480f87b7/files/PD05_TOT-AEZ8_CLAS-GHA.dta.zip</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3><span class="header-section-number">2.1.5</span> Example #5: same request returning a file in RData format</h3>
@@ -299,16 +299,15 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   2895 --:--:-- --:--:-- --:--:--  2895
-148   243    0   243    0    53    569    124 --:--:-- --:--:-- --:--:--   464
-148   243    0   243    0    53    569    124 --:--:-- --:--:-- --:--:--   464
-## /ocpu/tmp/x00e81ffce4/R/.val
-## /ocpu/tmp/x00e81ffce4/stdout
-## /ocpu/tmp/x00e81ffce4/source
-## /ocpu/tmp/x00e81ffce4/console
-## /ocpu/tmp/x00e81ffce4/info
-## /ocpu/tmp/x00e81ffce4/files/DESCRIPTION
-## /ocpu/tmp/x00e81ffce4/files/PD05_TOT-AEZ8_CLAS-GHA.rda.zip</code></pre>
+  0     0    0     0    0    53      0   2963 --:--:-- --:--:-- --:--:--  2963
+148   243    0   243    0    53    565    123 --:--:-- --:--:-- --:--:--   461
+## /ocpu/tmp/x0a0a6ba833/R/.val
+## /ocpu/tmp/x0a0a6ba833/stdout
+## /ocpu/tmp/x0a0a6ba833/source
+## /ocpu/tmp/x0a0a6ba833/console
+## /ocpu/tmp/x0a0a6ba833/info
+## /ocpu/tmp/x0a0a6ba833/files/DESCRIPTION
+## /ocpu/tmp/x0a0a6ba833/files/PD05_TOT-AEZ8_CLAS-GHA.rda.zip</code></pre>
 <p>Other possible formats include <code>csv</code> and raster formats <code>tif</code> and <code>asc</code> for GeoTiff and ESRI ASCII Raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to manually request that ZIP file. You can do so at the command line using <code>wget</code>.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -319,8 +318,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   3994 --:--:-- --:--:-- --:--:--  3994
-  0    55    0    55    0    73    392    521 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0    73      0   4102 --:--:-- --:--:-- --:--:--  4102
+  0    55    0    55    0    73    346    459 --:--:-- --:--:-- --:--:--     0
+  0    55    0    55    0    73    346    459 --:--:-- --:--:-- --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code># Step 2: download ZIP file
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x08540461d4/files/PD05_TOT-AEZ8_CLAS-GHA.csv.zip</code></pre>
@@ -347,8 +347,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    15      0    833 --:--:-- --:--:-- --:--:--   833
-128   113    0   113    0    15    845    112 --:--:-- --:--:-- --:--:--   852
+  0     0    0     0    0    15      0    835 --:--:-- --:--:-- --:--:--   835
+128   113    0   113    0    15    838    111 --:--:-- --:--:-- --:--:--   844
 ## object 'getGroups' not found
 ## 
 ## In call:
@@ -361,7 +361,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-108   980    0   980    0     0  17943      0 --:--:-- --:--:-- --:--:-- 27222
+108   980    0   980    0     0  21113      0 --:--:-- --:--:-- --:--:-- 35000
 ## describe                package:hcapi3                 R Documentation
 ## 
 ## Return HarvestChoice variable metadata
@@ -411,8 +411,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    28      0   1532 --:--:-- --:--:-- --:--:--  1532
-  0   100    0   100    0    28    580    162 --:--:-- --:--:-- --:--:--   467
+  0     0    0     0    0    28      0   1564 --:--:-- --:--:-- --:--:--  1564
+  0   100    0   100    0    28    511    143 --:--:-- --:--:-- --:--:--   406
 ## unused argument (group = &quot;Health and Nutrition&quot;)
 ## 
 ## In call:
