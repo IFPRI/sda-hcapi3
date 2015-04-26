@@ -42,6 +42,7 @@ p <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=
 units="in", res=200, pointsize=8)
 
 # Print these plots
+require(png)
 for (i in p) image(readPNG(p, native=T))
 }
 
