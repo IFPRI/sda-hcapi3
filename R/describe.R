@@ -84,7 +84,7 @@ describe <- function(var, cat, version, raster=FALSE, by.category=FALSE, css="js
 #' @return character, path to generated README file
 #' @examples
 #' # README for soil organic carbon concentration
-#' f <- genReadme("sod_d5")
+#' f <- genReadme("soc_d5")
 #' print(readLines(f))
 #'
 #' @export

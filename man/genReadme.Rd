@@ -17,7 +17,7 @@ Generate HarvestChoice data use terms, citation, and variable metadata
 }
 \examples{
 # README for soil organic carbon concentration
-f <- genReadme("sod_d5")
+f <- genReadme("soc_d5")
 print(readLines(f))
 }
 
