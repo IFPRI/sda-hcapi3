@@ -4,7 +4,7 @@
 \alias{describe}
 \title{Return HarvestChoice variable metadata}
 \usage{
-describe(var, cat, version, raster = FALSE, by.category = FALSE,
+describe(var, cat, version, raster = FALSE, as.class = "data.table",
   css = "json")
 }
 \arguments{
@@ -16,19 +16,19 @@ describe(var, cat, version, raster = FALSE, by.category = FALSE,
 
 \item{raster}{return only raster variables}
 
-\item{css}{include Carto CSS rules}
+\item{as.class}{simple "data.table" or if "list" group variables by category}
 
-\item{by.group}{group variables by category}
+\item{css}{include Carto CSS rules}
 }
 \value{
-a data.table of variable metadata
+a data.table or list of variable metadata
 }
 \description{
 Return HarvestChoice variable metadata
 }
 \examples{
 # Show complete metadata for all variables under 'Cassava' category
-describe(cat="cassava", raster=T, by.category=T)
+describe(cat="cassava", raster=T, by.category=F)
 
 # Equivalent cUrl request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \\

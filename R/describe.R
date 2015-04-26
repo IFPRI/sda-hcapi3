@@ -5,19 +5,19 @@
 #' @param cat optional category filter
 #' @param version optional version filter
 #' @param raster return only raster variables
-#' @param by.group group variables by category
+#' @param as.class simple "data.table" or if "list" group variables by category
 #' @param css include Carto CSS rules
-#' @return a data.table of variable metadata
+#' @return a data.table or list of variable metadata
 #' @examples
 #' # Show complete metadata for all variables under 'Cassava' category
-#' describe(cat="cassava", raster=T, by.category=T)
+#' describe(cat="cassava", raster=T, by.category=F)
 #'
 #' # Equivalent cUrl request at the command line
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
 #' # -d '{"cat" : "cassava", "raster" : true, "by.category" : true}' \
 #' # -X POST -H "Content-Type:application/json"
 #' @export
-describe <- function(var, cat, version, raster=FALSE, by.category=FALSE, css="json") {
+describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css="json") {
 
   out <- vi[, list(
     Label=varLabel,
@@ -121,21 +121,25 @@ genReadme <- function(var) {
 #' Return list of HarvestChoice variable categories
 #'
 #' @param cat optional category filter
-#' @return a data.table of variable categories
+#' @param as.class "data.table" simple data table or "list" group by category
+#' @return a data.table or list of variable categories
+#' @examples
+#' category("Demographics")
 #' @export
-category <- function(cat) {
+category <- function(cat, as.class="data.table") {
 
-  out <- vi[, list(Title=unique(varTitle)), keyby=list(Category=cat1, Subcategory=cat2, Item=cat3, Code=varCode)]
+  out <- vi[published==T, .N, keyby=list(Category=cat1, Subcategory=cat2, Item=cat3)]
 
   if (!missing(cat)) {
     out <- out[tolower(Category) %like% tolower(cat) |
         tolower(Subcategory) %like% tolower(cat) |
-        tolower(Item) %like% tolower(cat) |
-        tolower(Code) %like% tolower(cat)]
+        tolower(Item) %like% tolower(cat)]
   }
 
-  out <- split(out, out$Category)
-  out <- lapply(out, function(x) split(x, x$Subcategory))
+  if (as.class=="list") {
+    out <- split(out, out$Category)
+    out <- lapply(out, function(x) split(x, x$Subcategory))
+  }
   return(out)
 }
 

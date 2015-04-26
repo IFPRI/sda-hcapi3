@@ -4,15 +4,20 @@
 \alias{category}
 \title{Return list of HarvestChoice variable categories}
 \usage{
-category(cat)
+category(cat, as.class = "data.table")
 }
 \arguments{
 \item{cat}{optional category filter}
+
+\item{as.class}{"data.table" simple data table or "list" group by category}
 }
 \value{
-a data.table of variable categories
+a data.table or list of variable categories
 }
 \description{
 Return list of HarvestChoice variable categories
+}
+\examples{
+category("Demographics")
 }
 
