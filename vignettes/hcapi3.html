@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Melanie Bacou" />
+
+<meta name="date" content="2015-04-26" />
+
+<title>An Introduction to HarvestChoice Data API v3</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20800px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%2020px%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%200%3B%0A%20%20padding%3A%204px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20margin%3A%20auto%3B%0A%20%20min%2Dwidth%3A%2040%25%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%5Bsummary%3D%22R%20argblock%22%5D%20%7B%0A%20%20width%3A%20100%25%3B%0A%20%20border%3A%20none%3B%0A%7D%0Atable%3Anot%28%5Bclass%5D%29%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%3Anot%28%5Bclass%5D%29%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%3Anot%28%5Bclass%5D%29%2C%20table%3Anot%28%5Bclass%5D%29%20th%2C%20table%3Anot%28%5Bclass%5D%29%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%3Anot%28%5Bclass%5D%29%20tr%2Eodd%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%2013px%3B%0A%20%20padding%2Dbottom%3A%201px%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f5f5f5%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%7D%0Apre%20%7B%0A%20%20overflow%2Dx%3A%20auto%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200%2010px%200%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20white%3B%0A%20%20border%3A%20%23f5f5f5%201px%20solid%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20code%20%7B%0A%20%20color%3A%20%23444%3B%0A%20%20background%2Dcolor%3A%20white%3B%0A%7D%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20monospace%3B%0A%20%20font%2Dsize%3A%2090%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%204px%3B%0A%20%20color%3A%20%23d14%3B%0A%20%20border%3A%201px%20solid%20%23e1e1e8%3B%0A%20%20white%2Dspace%3A%20inherit%3B%0A%7D%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Atable%20%3E%20caption%2C%20div%2Efigure%20p%2Ecaption%20%7B%0A%20%20font%2Dstyle%3A%20italic%3B%0A%7D%0Atable%20%3E%20caption%20span%2C%20div%2Efigure%20p%2Ecaption%20span%20%7B%0A%20%20font%2Dstyle%3A%20normal%3B%0A%20%20font%2Dweight%3A%20bold%3B%0A%7D%0Ap%20%7B%0A%20%20margin%3A%200%200%2010px%3B%0A%7D%0Atable%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20margin%3A%20auto%20auto%2010px%20auto%3B%0A%7D%0A%0Aimg%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%20%20max%2Dwidth%3A%20100%25%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f5f5f5%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f5f5f5%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f5f5f5%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0Adiv%2Er%2Dhelp%2Dpage%20%7B%0A%20%20background%2Dcolor%3A%20%23f9f9f9%3B%0A%20%20border%2Dbottom%3A%20%23ddd%201px%20solid%3B%0A%20%20margin%2Dbottom%3A%2010px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Adiv%2Er%2Dhelp%2Dpage%3Ahover%20%7B%0A%20%20background%2Dcolor%3A%20%23f4f4f4%3B%0A%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">An Introduction to HarvestChoice Data API v3</h1>
+<h4 class="author"><em>Melanie Bacou</em></h4>
+<h4 class="date"><em>2015-04-26</em></h4>
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#data-apis---what-for"><span class="toc-section-number">1</span> Data APIs - What for?</a></li>
+<li><a href="#using-harvestchoice-data-services"><span class="toc-section-number">2</span> Using HarvestChoice Data Services</a><ul>
+<li><a href="#using-methods-and-parameters"><span class="toc-section-number">2.1</span> Using Methods and Parameters</a><ul>
+<li><a href="#example-1-list-api-available-methods"><span class="toc-section-number">2.1.1</span> Example #1: list API available methods</a></li>
+<li><a href="#example-2-method-documentation"><span class="toc-section-number">2.1.2</span> Example #2: method documentation</a></li>
+<li><a href="#example-3-simple-request-returning-a-dataset-in-json-format"><span class="toc-section-number">2.1.3</span> Example #3: simple request returning a dataset in JSON format</a></li>
+<li><a href="#example-4-request-ghana-2005-population-density-summarized-across-aez-in-stata-.dta-format"><span class="toc-section-number">2.1.4</span> Example #4: request Ghana 2005 population density summarized across AEZ in STATA .dta format</a></li>
+<li><a href="#example-5-same-request-returning-a-file-in-rdata-format"><span class="toc-section-number">2.1.5</span> Example #5: same request returning a file in RData format</a></li>
+<li><a href="#example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts"><span class="toc-section-number">2.1.6</span> Example #6: Ghana wheat production in CSV format aggregated over districts</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#about-the-data"><span class="toc-section-number">3</span> About the Data</a><ul>
+<li><a href="#example-7-return-list-of-indicators-in-any-category-matching-demo"><span class="toc-section-number">3.0.1</span> Example #7: return list of indicators in any category matching ‘demo’</a></li>
+<li><a href="#example-8-retrieve-text-documentation-for-describe-method"><span class="toc-section-number">3.0.2</span> Example #8: retrieve text documentation for /describe/ method</a></li>
+<li><a href="#example-9-return-metadata-records-for-all-indicators-under-the-health-and-nutrition-category"><span class="toc-section-number">3.0.3</span> Example #9: return metadata records for all indicators under the ‘Health and Nutrition’ category</a></li>
+</ul></li>
+<li><a href="#advanced-methods"><span class="toc-section-number">4</span> Advanced Methods</a></li>
+<li><a href="#source-code-repository"><span class="toc-section-number">5</span> Source Code Repository</a></li>
+</ul>
+</div>
+
+<p>In 2014 HarvestChoice released a new version of its data API<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> under the title <a href="http://harvestchoice.org/tools/harvestchoice-data-services">HarvestChoice Data Service v3.0</a>. We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and <a href="http://harvestchoice.org/tools/hcapi">HarvestChoice Data API</a>. The latter provides backend methods required to run two of our flagship reporting and visualization applications, <a href="http://apps.harvestchoice.org/mappr/">MAPPR</a> and <a href="http://apps.harvestchoice.org/tablr/">TABLR</a>. We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into <em>HC Data Services</em>.</p>
+<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice’s wealth of socio-economic, infrastructure, agricultural, climate, and soil datasets into 3rd-party tools and models.</p>
+<div id="data-apis---what-for" class="section level1">
+<h1><span class="header-section-number">1</span> Data APIs - What for?</h1>
+<p>Forthcomming</p>
+</div>
+<div id="using-harvestchoice-data-services" class="section level1">
+<h1><span class="header-section-number">2</span> Using HarvestChoice Data Services</h1>
+<p>This API implements a RESTful<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> interface allowing users to query, summarize, plot, and download any subset of HarvestChoice’s 700 spatially-explicit indicators for sub-Saharan Africa. We describe here some of the methods available to developers and researchers to programmatically interact with the API.</p>
+<p>Because the API uses standard REST protocol and HTTP verbs (GET, POST), requests may be sent through any URL transfer utility (e.g. cURL on both Windows and Linux), or using any programming language that implements HTTP requests (including statistical languages such as STATA, R, and SAS). The logic consists in calling a specific method and passing any number of required or optional arguments or parameters. In the examples below we use the command line tool <code>cURL</code> in Windows (available in Windows 7 and 8).</p>
+<p>The API’s main endpoint is at <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3"><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/</a></a>. There are a couple of useful methods exposing the API documentation. These are explained here.</p>
+<div id="using-methods-and-parameters" class="section level2">
+<h2><span class="header-section-number">2.1</span> Using Methods and Parameters</h2>
+<p>The API exposes a list of available methods at<br /><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/"><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/</a></a><br />(the result of which is shown in [#fig1] below). In turn each method is further documented at <code>/man/{method}</code> e.g.<br /><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/"><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/</a></a> ([#fig2]).</p>
+<div id="example-1-list-api-available-methods" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Example #1: list API available methods</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># List of API methods</span>
+<span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+102  3287    0  3287    0     0  41330      0 --:--:-- --:--:-- --:--:--  168k
+## 
+##      Information on package 'hcapi3'
+## 
+## Description:
+## 
+## Package:           hcapi3
+## Type:              Package
+## Version:           3.5
+## Date:              2015-4-22
+## Title:             HarvestChoice Data Services
+## Authors@R:         c( person(&quot;Melanie&quot;, &quot;Bacou&quot;, role=c(&quot;aut&quot;, &quot;cre&quot;),
+##                    email=&quot;mel@mbacou.com&quot;), person(&quot;Maria&quot;,
+##                    &quot;Comanescu&quot;, role=&quot;ctb&quot;,
+##                    email=&quot;m.comanescu@cgiar.org&quot;), person(&quot;Ulrike&quot;,
+##                    &quot;Wood-Sichra&quot;, role=&quot;ctb&quot;,
+##                    email=&quot;u.wood-sichra@cgiar.org&quot;), person(&quot;Jawoo&quot;,
+##                    &quot;Koo&quot;, role=&quot;ctb&quot;, email=&quot;j.koo@cgiar.org&quot;),
+##                    person(&quot;Carlo&quot;, &quot;Azzarri&quot;, role=&quot;ctb&quot;,
+##                    email=&quot;c.azzarri@cgiar.org&quot;), person(&quot;Joseph&quot;,
+##                    &quot;Green&quot;, role=&quot;ctb&quot;, email=&quot;josephgreen@gmail.com&quot;),
+##                    person(&quot;Zhe&quot;, &quot;Guo&quot;, role=&quot;ctb&quot;,
+##                    email=&quot;z.guo@cgiar.org&quot;))
+## Author:            Melanie Bacou [aut, cre], Maria Comanescu [ctb],
+##                    Ulrike Wood-Sichra [ctb], Jawoo Koo [ctb], Carlo
+##                    azzarri [ctb], Joseph Green [ctb], Zhe Guo [ctb]
+## Maintainer:        Melanie Bacou &lt;mel@mbacou.com&gt;
+## Depends:           R (&gt;= 2.14.0), data.table
+## Imports:           RSclient, stringr
+## Suggests:          raster, sp, classInt, RColorBrewer, foreign, rgdal,
+##                    rgeos, knitr
+## LazyData:          yes
+## Description:       Methods to retrieve, summarize, aggregate, and plot
+##                    HarvestChoice 5-arc-minute spatial layers for
+##                    sub-Saharan Africa.
+## License:           GPL (&gt;= 3)
+## URL:               http://harvestchoice.org/,
+##                    https://github.com/harvestchoice/hc-api3
+## BugReports:        http://harvestchoice.org/
+## MailingList:       support@harvestchoice.org
+## Packaged:          2015-02-26 11:20:02 UTC; mbacou
+## VignetteBuilder:   knitr
+## Built:             R 3.1.3; ; 2015-04-26 09:27:17 UTC; unix
+## 
+## Index:
+## 
+## category                Return list of HarvestChoice variable
+##                         categories
+## classify                Create custom domains for spatial targeting
+## describe                Return HarvestChoice variable metadata
+## genFile                 Convert CELL5M layers to raster and/or tabular
+##                         formats and create archive for download
+## genPlot                 Generate Raster Plot of HarvestChoice
+##                         5-Arc-Minute Spatial Indicators
+## genReadme               Generate HarvestChoice data use terms,
+##                         citation, and variable metadata
+## getCartoCSS             Generate CartoCSS snippet to symbolize raster
+##                         tiles
+## getLayer                Subset, and/or summarize HarvestChoice
+##                         5-arc-minute layers
+## getLayerSQL             Subset, and/or aggregate HarvestChoice
+##                         5-arc-minute layers (SQLite version, now
+##                         deprecated)
+## getLayerWKT             Summarize HarvestChoice 5-arc-minute layers
+##                         over WKT geometri(es)
+## lookup                  HarvestChoice Lookup Lists
+## similar                 Rank spatial units by similarity
+## stats                   Generate histogram and boxplot of HarvestChoice
+##                         layer(s)
+## vi                      HarvestChoice CELL5M Variable Inventory</code></pre>
+<p>The main data query method is <code>/getLayer/</code>, and the main data download method is <code>/genFile/</code>. <code>/getGroups/</code> and <code>/getMeta/</code> will return indicator metadata. Other methods are useful to conduct specific analyses. Detailed documentation may be retrieved as shown below (use <code>cURL</code> in terminal, or just click <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer</a> to see this same information in your browser.</p>
+</div>
+<div id="example-2-method-documentation" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Example #2: method documentation</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Sample Method Documentation</span>
+<span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/text</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+103  1863    0  1863    0     0  11919      0 --:--:-- --:--:-- --:--:-- 54794
+## getLayer                package:hcapi3                 R Documentation
+## 
+## Subset, and/or summarize HarvestChoice 5-arc-minute layers
+## 
+## Description:
+## 
+##      Workhorse method to subset and/or aggregate HarvestChoice layers.
+##      This method also aggregates classified variables by continuous
+##      variables.\ e.g. getLayer(var=c(&quot;whea_h&quot;, &quot;AEZ16_CLAS&quot;),
+##      by=c(&quot;ADM2_NAME_ALT&quot;, &quot;bmi&quot;)). It does so by returning the
+##      dominant class of a classified variable within each by class, and
+##      by automatically classifying any continuous variable passed to by
+##      using default value breaks as specified in the variable metadata.
+##      The formula used to aggregate classified variables by choosing the
+##      dominant class is names(sort(table({varCode}), decreasing=T)[1]).
+##      This formula computes the frequency of each class, ranks them by
+##      decreasing frequency, and retains the top one. Layers can also be
+##      summarized over a spatial area (passed as an integer array of
+##      CELL5M ids).
+## 
+## Usage:
+## 
+##      getLayer(var, iso3 = &quot;SSA&quot;, by = NULL, ids = NULL, collapse = TRUE,
+##        as.class = &quot;data.table&quot;)
+##      
+## Arguments:
+## 
+##      var: character array of variable names (all types are accepted)
+## 
+##     iso3: optional array of country or regional codes to filter by
+##           (3-letter code)
+## 
+##       by: optional character array of variables to group by (all types
+##           are accepted)
+## 
+##      ids: optional gridcell ids to return (if collapse=F) or summarize
+##           by (if collapse=T)
+## 
+## collapse: if FALSE always return all pixel values (useful for plotting
+##           and to convert to spatial formats)
+## 
+## as.class: c(&quot;data.table&quot;, &quot;list&quot;) by default returns a simple
+##           data.table. If as.class=&quot;list&quot; returns a well-constructed
+##           list with variable metadata
+## 
+## Value:
+## 
+##      a data.table (or json array) of var indicators aggregated by by
+##      domains</code></pre>
+<p>The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. <code>/getLayer/</code> is one of the API’s main methods allowing users to query and summarize specific indicators. The documentation above shows that <code>/getLayer/</code> takes at minimum one parameter <code>var</code> indicating which indicator to query (e.g. <code>var='PD05_TOT'</code> to return 2005 total population density). Other optional parameters include <code>iso3</code> limiting the results to one (or multiple) countri(es) (e.g. <code>iso3=['GHA', 'NGA']</code> for Ghana and Nigeria), and <code>by</code> summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones <code>by='AEZ8_CLAS'</code>).</p>
+<p>You can test this query by manually forming the following <code>cURL</code> request. This returns a dataset as a JSON array.</p>
+</div>
+<div id="example-3-simple-request-returning-a-dataset-in-json-format" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Example #3: simple request returning a dataset in JSON format</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+-d <span class="st">&quot;var='PD05_TOT'&amp;iso3='GHA'&amp;by='AEZ8_CLAS'&quot;</span> -X POST</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0    40      0    882 --:--:-- --:--:-- --:--:--   882
+124   209    0   209    0    40    450     86 --:--:-- --:--:-- --:--:--   404
+## [
+##   {
+##     &quot;AEZ8_CLAS&quot;: &quot;Sub-Humid&quot;,
+##     &quot;PD05_TOT&quot;: 80.9
+##   },
+##   {
+##     &quot;AEZ8_CLAS&quot;: &quot;Humid&quot;,
+##     &quot;PD05_TOT&quot;: 104.8
+##   },
+##   {
+##     &quot;AEZ8_CLAS&quot;: &quot;Semi-Arid&quot;,
+##     &quot;PD05_TOT&quot;: 280
+##   },
+##   {
+##     &quot;PD05_TOT&quot;: 26.3
+##   }
+## ]</code></pre>
+<p>For users of STATA or R the same dataset may be returned in a native format by using the <code>/genFile/</code> method and appending a <code>format=</code> parameter at the end of the request.</p>
+</div>
+<div id="example-4-request-ghana-2005-population-density-summarized-across-aez-in-stata-.dta-format" class="section level3">
+<h3><span class="header-section-number">2.1.4</span> Example #4: request Ghana 2005 population density summarized across AEZ in STATA .dta format</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ \
+-d <span class="st">&quot;var='PD05_TOT'&amp;iso3='GHA'&amp;by='AEZ8_CLAS'&amp;format='dta'&quot;</span> -X POST</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0    53      0   2886 --:--:-- --:--:-- --:--:--  2886
+148   243    0   243    0    53    534    116 --:--:-- --:--:-- --:--:--   434
+148   243    0   243    0    53    534    116 --:--:-- --:--:-- --:--:--   434
+## /ocpu/tmp/x00f0145bcf/R/.val
+## /ocpu/tmp/x00f0145bcf/stdout
+## /ocpu/tmp/x00f0145bcf/source
+## /ocpu/tmp/x00f0145bcf/console
+## /ocpu/tmp/x00f0145bcf/info
+## /ocpu/tmp/x00f0145bcf/files/DESCRIPTION
+## /ocpu/tmp/x00f0145bcf/files/PD05_TOT-AEZ8_CLAS-GHA.dta.zip</code></pre>
+</div>
+<div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
+<h3><span class="header-section-number">2.1.5</span> Example #5: same request returning a file in RData format</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ \
+-d <span class="st">&quot;var='PD05_TOT'&amp;iso3='GHA'&amp;by='AEZ8_CLAS'&amp;format='rda'&quot;</span> -X POST</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0    53      0   2896 --:--:-- --:--:-- --:--:--  2896
+148   243    0   243    0    53    543    118 --:--:-- --:--:-- --:--:--   443
+## /ocpu/tmp/x00a16b9250/R/.val
+## /ocpu/tmp/x00a16b9250/stdout
+## /ocpu/tmp/x00a16b9250/source
+## /ocpu/tmp/x00a16b9250/console
+## /ocpu/tmp/x00a16b9250/info
+## /ocpu/tmp/x00a16b9250/files/DESCRIPTION
+## /ocpu/tmp/x00a16b9250/files/PD05_TOT-AEZ8_CLAS-GHA.rda.zip</code></pre>
+<p>Other possible formats include <code>csv</code> and raster formats <code>tif</code> and <code>asc</code> for GeoTiff and ESRI ASCII Raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to manually request that ZIP file. You can do so at the command line using <code>wget</code>.</p>
+</div>
+<div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
+<h3><span class="header-section-number">2.1.6</span> Example #6: Ghana wheat production in CSV format aggregated over districts</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Step 1: generate ZIP file</span>
+<span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip/ \
+-d <span class="st">&quot;var='whea_p'&amp;iso3='GHA'&amp;by=['ADM2_CODE_ALT','ADM2_NAME_ALT']&amp;format='csv'&quot;</span> -X POST</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0    73      0    643 --:--:-- --:--:-- --:--:--   643
+  0    55    0    55    0    73    217    288 --:--:-- --:--:-- --:--:--     0
+## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
+<pre><code># Step 2: download ZIP file
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x08540461d4/files/PD05_TOT-AEZ8_CLAS-GHA.csv.zip</code></pre>
+<pre><code>--2015-02-03 04:10:38--
+Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
+Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80...
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/zip]
+Saving to: 'PD05_TOT-AEZ8_CLAS-GHA.csv.zip'
+
+PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s   in 0s
+
+2015-02-03 04:10:38 (24.0 MB/s) - 'PD05_TOT-AEZ8_CLAS-GHA.csv.zip' saved [2432]</code></pre>
+</div>
+</div>
+</div>
+<div id="about-the-data" class="section level1">
+<h1><span class="header-section-number">3</span> About the Data</h1>
+<p>All of the API methods require passing indicator codes as parameters. These codes uniquely identify an indicator and may be accessed using two of the metadata query methods <code>/getGroups/</code> and <code>/getMeta/</code>. <code>/getGroups/</code> returns a list of indicators in any category matching a <code>group=</code> keyword. <code>/getMeta/</code> returns complete metadata records for selected indicators. Sample requests are shown here. The <code>Code</code> element is the indicator code to pass into other API methods.</p>
+<div id="example-7-return-list-of-indicators-in-any-category-matching-demo" class="section level3">
+<h3><span class="header-section-number">3.0.1</span> Example #7: return list of indicators in any category matching ‘demo’</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json \
+-d <span class="st">&quot;group='climate'&quot;</span> -X POST</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0    15      0    326 --:--:-- --:--:-- --:--:--   326
+128   113    0   113    0    15    632     83 --:--:-- --:--:-- --:--:--   742
+## object 'getGroups' not found
+## 
+## In call:
+## get(reqobject, paste(&quot;package&quot;, reqpackage, sep = &quot;:&quot;), inherits = FALSE)</code></pre>
+</div>
+<div id="example-8-retrieve-text-documentation-for-describe-method" class="section level3">
+<h3><span class="header-section-number">3.0.2</span> Example #8: retrieve text documentation for /describe/ method</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/describe/text</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+108   974    0   974    0     0  21599      0 --:--:-- --:--:-- --:--:-- 37461
+## describe                package:hcapi3                 R Documentation
+## 
+## Return HarvestChoice variable metadata
+## 
+## Description:
+## 
+##      Return HarvestChoice variable metadata
+## 
+## Usage:
+## 
+##      describe(var, cat, version, raster = FALSE, by.category = FALSE,
+##        css = &quot;json&quot;)
+##      
+## Arguments:
+## 
+##      var: character array of HarvestChoice variables
+## 
+##      cat: optional category filter
+## 
+##  version: optional version filter
+## 
+##   raster: return only raster variables
+## 
+##      css: include Carto CSS rules
+## 
+## by.group: group variables by category
+## 
+## Value:
+## 
+##      a data.table of variable metadata
+## 
+## Examples:
+## 
+##      # Show complete metadata for all variables under 'Cassava' category
+##      describe(cat=&quot;cassava&quot;, raster=T, by.category=T)
+##      
+##      # Equivalent cUrl request at the command line
+##      curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+##      -d '{&quot;cat&quot; : &quot;cassava&quot;, &quot;raster&quot; : true, &quot;by.category&quot; : true}' \
+##      -X POST -H &quot;Content-Type:application/json&quot;
+## </code></pre>
+</div>
+<div id="example-9-return-metadata-records-for-all-indicators-under-the-health-and-nutrition-category" class="section level3">
+<h3><span class="header-section-number">3.0.3</span> Example #9: return metadata records for all indicators under the ‘Health and Nutrition’ category</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+-d <span class="st">&quot;group='Health and Nutrition'&quot;</span> -X POST</code></pre>
+<pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+##                                  Dload  Upload   Total   Spent    Left  Speed
+## 
+  0     0    0     0    0    28      0    229 --:--:-- --:--:-- --:--:--   229
+  0   100    0   100    0    28    337     94 --:--:-- --:--:-- --:--:--   413
+## unused argument (group = &quot;Health and Nutrition&quot;)
+## 
+## In call:
+## describe(group = &quot;Health and Nutrition&quot;)</code></pre>
+<p>Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format at<br /><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv"><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv</a></a><br />(<code>vi</code> in the URL stands for Variable Inventory).</p>
+</div>
+</div>
+<div id="advanced-methods" class="section level1">
+<h1><span class="header-section-number">4</span> Advanced Methods</h1>
+</div>
+<div id="source-code-repository" class="section level1">
+<h1><span class="header-section-number">5</span> Source Code Repository</h1>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Application Programming Interface, see <a href="http://en.wikipedia.org/wiki/Application_programming_interface" class="uri">http://en.wikipedia.org/wiki/Application_programming_interface</a><a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Representational State Transfer, see <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" class="uri">http://en.wikipedia.org/wiki/Representational_state_transfer</a><a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+
+<script type="text/javascript">
+window.onload = function() {
+  var i, fig = 1, caps = document.getElementsByClassName('caption');
+  for (i = 0; i < caps.length; i++) {
+    var cap = caps[i];
+    if (cap.parentElement.className !== 'figure' || cap.nodeName !== 'P')
+      continue;
+    cap.innerHTML = '<span>Figure ' + fig + ':</span> ' + cap.innerHTML;
+    fig++;
+  }
+  fig = 1;
+  caps = document.getElementsByTagName('caption');
+  for (i = 0; i < caps.length; i++) {
+    var cap = caps[i];
+    if (cap.parentElement.nodeName !== 'TABLE') continue;
+    cap.innerHTML = '<span>Table ' + fig + ':</span> ' + cap.innerHTML;
+    fig++;
+  }
+}
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

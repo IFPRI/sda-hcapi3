@@ -34,7 +34,7 @@ describe <- function(var, cat, version, raster=FALSE, by.category=FALSE, css="js
     Citation=citation,
     Version=version,
     `In Table`=tbName,
-    Formula=aggFun,
+    Formula=aggFunR,
     isRaster=genRaster,
     dTopic,
     dCrop,
@@ -62,7 +62,6 @@ describe <- function(var, cat, version, raster=FALSE, by.category=FALSE, css="js
     out <- out[isRaster==T]
     mss <- sapply(out$Code, getCartoCSS)
     out[, CartoCSS := mss]
-    out[, GeoTiff := paste0("/v2.0/core/?format=tif&varCode=", Code)]
   }
 
   setkey(out, Category, Subcategory, Item)
