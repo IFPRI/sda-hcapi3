@@ -42,6 +42,6 @@ p <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=
 units="in", res=200, pointsize=8)
 
 # Print these plots
-for (i in p) i <- image(png::readPNG(i)); grid::grid.raster(i)
+for (i in p) grid::grid.raster(png::readPNG(i))
 }
 

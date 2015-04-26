@@ -21,7 +21,7 @@
 #' units="in", res=200, pointsize=8)
 #'
 #' # Print these plots
-#' for (i in p) i <- image(png::readPNG(i)); grid::grid.raster(i)
+#' for (i in p) grid::grid.raster(png::readPNG(i))
 #'
 #' @export
 genPlot <- function(var, iso3="SSA", pal, format="default", style="default",
