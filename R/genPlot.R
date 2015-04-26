@@ -21,8 +21,7 @@
 #' units="in", res=200, pointsize=8)
 #'
 #' # Print these plots
-#' require(png)
-#' for (i in p) image(readPNG(p, native=T))
+#' for (i in p) image(png::readPNG(p, native=T))
 #' @export
 genPlot <- function(var, iso3="SSA", pal, format="default", style="default",
   width=640, height=640, ...) {
