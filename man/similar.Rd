@@ -34,8 +34,8 @@ selected indicators.
 similar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 
 # Equivalent cUrl request at the command line
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \\
--d '{"x" : 16657, "var" : ["LGP_AVG", "GMIA_V5", "cass_v"], "by" : 2, "iso3" : "GHA"}' \\
--X POST -H "Content-Type:application/json"
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \\
+# -d '{"x" : 16657, "var" : ["LGP_AVG", "GMIA_V5", "cass_v"], "by" : 2, "iso3" : "GHA"}' \\
+# -X POST -H "Content-Type:application/json"
 }
 

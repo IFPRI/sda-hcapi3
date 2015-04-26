@@ -3,6 +3,9 @@
 #' @param var character array of variables to summarize
 #' @param iso3 optional country or region filter (3-letter code)
 #' @return plot
+#' @examples
+#' # Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
+#' stats(c("bmi", "cass_y"))
 #' @export
 stats <- function(var, iso3="SSA", by=NULL) {
 

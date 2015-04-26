@@ -35,4 +35,13 @@ The formula used to aggregate classified variables by choosing the dominant clas
 frequency of each class, ranks them by decreasing frequency, and retains the top one.
 Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
 }
+\examples{
+# Mean BMI and cassava yield across districts in Tanzania
+getLayer(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME", "ADM2_NAME"))
+
+# Equivalent request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \\
+# -d "{'var':['bmi','cass_y'], 'iso3':'TZA', 'by':['ADM1_NAME','ADM2_NAME']}" \\
+# -X POST -H "Content-Type:application/json"
+}
 

@@ -17,4 +17,8 @@ plot
 \description{
 Generate histogram and boxplot of HarvestChoice layer(s)
 }
+\examples{
+# Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
+stats(c("bmi", "cass_y"))
+}
 

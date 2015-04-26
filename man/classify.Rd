@@ -33,9 +33,8 @@ classify(var=c("wealth","TPOV_P200"),
     by=list(PD05_RUR=c(60, 100), TT_20K=c(0,5)))
 
 # Equivalent cUrl request at the command line
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \\
--d '{"var" : ["wealth", "TPOV_P200"],
-    "by" : {"PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \\
--X POST -H "Content-Type:application/json"
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \\
+# -d '{"var" : ["wealth", "TPOV_P200"], "by" : {"PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \\
+# -X POST -H "Content-Type:application/json"
 }
 

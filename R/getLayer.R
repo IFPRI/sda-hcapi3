@@ -18,6 +18,14 @@
 #' @param collapse if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)
 #' @param as.class \code{c("data.table", "list")} by default returns a simple data.table. If \code{as.class="list"} returns a well-constructed list with variable metadata
 #' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
+#' @examples
+#' # Mean BMI and cassava yield across districts in Tanzania
+#' getLayer(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME", "ADM2_NAME"))
+#'
+#' # Equivalent request at the command line
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+#' # -d "{'var':['bmi','cass_y'], 'iso3':'TZA', 'by':['ADM1_NAME','ADM2_NAME']}" \
+#' # -X POST -H "Content-Type:application/json"
 #' @export
 getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class="data.table") {
 

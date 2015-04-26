@@ -13,9 +13,9 @@
 #' describe(cat="cassava", raster=T, by.category=T)
 #'
 #' # Equivalent cUrl request at the command line
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
-#' -d '{"cat" : "cassava", "raster" : true, "by.category" : true}' \
-#' -X POST -H "Content-Type:application/json"
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+#' # -d '{"cat" : "cassava", "raster" : true, "by.category" : true}' \
+#' # -X POST -H "Content-Type:application/json"
 #' @export
 describe <- function(var, cat, version, raster=FALSE, by.category=FALSE, css="json") {
 
