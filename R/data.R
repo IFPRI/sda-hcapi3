@@ -7,6 +7,12 @@
 #' @name vi
 #' @usage vi.R
 #' @format A data.table object
+#' @examples
+#' # List of metadata elements
+#' names(vi)
+#'
+#' # Full metadata for cassava yield
+#' vi["cass_y"]
 NULL
 
 #' HarvestChoice Lookup Lists
@@ -18,4 +24,7 @@ NULL
 #' @name lookup
 #' @usage lookup.R
 #' @format arrays
+#' @examples
+#' # Lookup lists
+#' names(lookup)
 NULL

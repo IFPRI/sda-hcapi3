@@ -11,5 +11,12 @@ vi.R
 \description{
 Metadata for HarvestChoice collection of over 700 5-arc-minute rasters for sub-Saharan Africa.
 }
+\examples{
+# List of metadata elements
+names(vi)
+
+# Full metadata for cassava yield
+vi["cass_y"]
+}
 \keyword{datasets}
 

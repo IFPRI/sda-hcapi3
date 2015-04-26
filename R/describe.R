@@ -82,6 +82,11 @@ describe <- function(var, cat, version, raster=FALSE, by.category=FALSE, css="js
 #'
 #' @param var character array of CELL5M variable names
 #' @return character, path to generated README file
+#' @examples
+#' # README for soil organic carbon concentration
+#' f <- genReadme("sod_d5")
+#' print(readLines(f))
+#'
 #' @export
 genReadme <- function(var) {
 

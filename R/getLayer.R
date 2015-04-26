@@ -20,7 +20,7 @@
 #' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
 #' @examples
 #' # Mean BMI and cassava yield across districts in Tanzania
-#' getLayer(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME", "ADM2_NAME"))
+#' getLayer(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
 #'
 #' # Equivalent request at the command line
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
