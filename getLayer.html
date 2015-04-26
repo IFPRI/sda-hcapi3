@@ -85,9 +85,21 @@ Layers can also be summarized over a spatial area (passed as an integer array of
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean BMI and cassava yield across districts in Tanzania
-getLayer(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME&quot;, &quot;ADM2_NAME&quot;))
+getLayer(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
 </div>
-<strong class='error'>Error in RS.eval(rc, dt[ISO3 %in% c(&quot;TZA&quot;)][, list(bmi = sum(bmi * weight, : command failed with status code 0x1: error in R during evaluation</strong>
+<div class='output'>     ADM1_NAME_ALT ADM2_NAME_ALT  bmi cass_y
+  1:        Kagera       Karagwe 21.5    780
+  2:        Kagera  Bukoba Rural 21.5   6430
+  3:          Mara        Tarime 21.6   6681
+  4:        Kagera  Bukoba Urban 21.5   6813
+  5:          Mara  Musoma Rural 21.6   5797
+ ---                                        
+124:        Mtwara  Mtwara urban 21.4   7503
+125:        Mtwara    Tandahimba 20.8   2555
+126:        Mtwara        Masasi 20.9   4128
+127:        Mtwara        Newala 20.9   2117
+128:        Ruvuma  Songea Urban 22.1   5774
+</div>
 <div class='input'>
 # Equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \

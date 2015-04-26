@@ -63,7 +63,92 @@ character, path to generated README file
       <p>Generate HarvestChoice data use terms, citation, and variable metadata</p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># README for soil organic carbon concentration
+f &lt;- genReadme(&quot;sod_d5&quot;)
+print(readLines(f))
+</div>
+<div class='output'> [1] &quot; ====================================================================================&quot;  
+ [2] &quot;                    HARVESTCHOICE USER LICENSE, Version 2008-01&quot;                        
+ [3] &quot;                                   April 16, 2008&quot;                                      
+ [4] &quot; ====================================================================================&quot;  
+ [5] &quot;&quot;                                                                                       
+ [6] &quot;This dataset was obtained from HarvestChoice at http://www.harvestchoice.org/. &quot;        
+ [7] &quot;The data was last generated on 2015-04-26. &quot;                                            
+ [8] &quot; &quot;                                                                                      
+ [9] &quot;USE TERMS FOR ENCLOSED DATA FILES&quot;                                                      
+[10] &quot; &quot;                                                                                      
+[11] &quot;The Data and any Related Materials are the property of HarvestChoice and its &quot;          
+[12] &quot;Contributors and are protected by United States copyright laws and applicable &quot;         
+[13] &quot;international copyright treaties and conventions. HarvestChoice reserves rights for &quot;   
+[14] &quot;the enclosed data file(s) and distributes data under the following license. In order &quot;  
+[15] &quot;to view or use the data, you must accept this license. If you do not accept this &quot;      
+[16] &quot;license, please return all files and do not retain a copy. By keeping the files, you &quot;  
+[17] &quot;have agreed to the following terms.&quot;                                                    
+[18] &quot;&quot;                                                                                       
+[19] &quot;============================= Variable Definitions ================================== &quot; 
+[20] &quot;&quot;                                                                                       
+[21] &quot;Please cite original sources.&quot;                                                          
+[22] &quot;&quot;                                                                                       
+[23] &quot;Code:\tsod_d5&quot;                                                                          
+[24] &quot;Label:\tNA&quot;                                                                             
+[25] &quot;Details:\tNA. NA&quot;                                                                       
+[26] &quot;Type:\tNA&quot;                                                                              
+[27] &quot;Unit:\tNA&quot;                                                                              
+[28] &quot;Version:\tNA&quot;                                                                           
+[29] &quot;Aggregation Formula:\tNA&quot;                                                               
+[30] &quot;Period:\tNA&quot;                                                                            
+[31] &quot;Category:\tNA&quot;                                                                          
+[32] &quot;Sub-category:\tNA&quot;                                                                      
+[33] &quot;Item:\tNA&quot;                                                                              
+[34] &quot;Source:\tNA&quot;                                                                            
+[35] &quot;Contact:\tNA&quot;                                                                           
+[36] &quot;Citation:\tNA&quot;                                                                          
+[37] &quot; &quot;                                                                                      
+[38] &quot;============================== Summary of License ===================================&quot;  
+[39] &quot; &quot;                                                                                      
+[40] &quot;1. Data files are for your own, non-commercial use only.&quot;                               
+[41] &quot;&quot;                                                                                       
+[42] &quot;2. Any and all derived products (e.g., tables, figures, maps) generated using the&quot;      
+[43] &quot;enclosed data must be given due attribution according to the suggested citation&quot;        
+[44] &quot;supplied or, in its absence, refer to the guidelines obtained from&quot;                     
+[45] &quot;http://harvestchoice.org/about/intellect&quot;                                               
+[46] &quot;&quot;                                                                                       
+[47] &quot;3. None of the data may be distributed in digital or print form to third parties,&quot;      
+[48] &quot;including on User&#39;s web sites, without explicit permission from HarvestChoice or&quot;       
+[49] &quot;relevant Contributors to the HarvestChoice web site (contact hallaway@umn.edu).&quot;        
+[50] &quot; &quot;                                                                                      
+[51] &quot;================================== Definitions ======================================&quot;  
+[52] &quot; &quot;                                                                                      
+[53] &quot;Attribution:&quot;                                                                           
+[54] &quot;Attribute downloaded data and derived products using the suggested citation details&quot;    
+[55] &quot;distributed as metadata with the downloaded file. If attribution guidelines are absent&quot; 
+[56] &quot;in the metadata, refer to http://harvestchoice.org/about/intellect/ .&quot;                  
+[57] &quot; &quot;                                                                                      
+[58] &quot;\&quot;Data\&quot; include all databases, tables, graphics, figures, GIS files, bibliographic &quot;   
+[59] &quot;references, and content obtained from HarvestChoice.&quot;                                   
+[60] &quot; &quot;                                                                                      
+[61] &quot;\&quot;Non-commercial use\&quot; means that User may not sell or redistribute data or its &quot;       
+[62] &quot;derivatives for commercial gain; e.g., selling or charging a fee for maps generated &quot;   
+[63] &quot;using these data.&quot;                                                                      
+[64] &quot; &quot;                                                                                      
+[65] &quot;Any of the above conditions can be waived if you get permission from HarvestChoice.&quot;    
+[66] &quot; &quot;                                                                                      
+[67] &quot;THE MATERIAL IS PROVIDED \&quot;AS IS\&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,&quot;  
+[68] &quot;INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A&quot;          
+[69] &quot;PARTICULAR PURPOSE AND NON-INFRINGEMENT.&quot;                                               
+[70] &quot; &quot;                                                                                      
+[71] &quot;IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR&quot; 
+[72] &quot;OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, &quot;   
+[73] &quot;OUT OF OR IN CONNECTION WITH THE MATERIAL OR THE USE OR OTHER DEALINGS IN THE MATERIAL.&quot;
+[74] &quot; &quot;                                                                                      
+[75] &quot;Exclusive Remedy and Limitation of Liability: The entire liability of HarvestChoice &quot;   
+[76] &quot;and User&#39;s exclusive remedy shall be to terminate the Agreement upon User returning &quot;   
+[77] &quot;the Data and Related Materials to HarvestChoice.&quot;                                       
+[78] &quot; &quot;                                                                                      
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>genReadme</li>
