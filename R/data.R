@@ -26,5 +26,6 @@ NULL
 #' @format arrays
 #' @examples
 #' # Lookup lists
-#' names(lookup)
+#' names(iso)
+#'
 NULL

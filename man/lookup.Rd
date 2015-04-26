@@ -13,7 +13,7 @@ Metadata for HarvestChoice collection of over 700 5-arc-minute rasters for sub-S
 }
 \examples{
 # Lookup lists
-names(lookup)
+names(iso)
 }
 \keyword{datasets}
 

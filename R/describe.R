@@ -10,11 +10,11 @@
 #' @return a data.table or list of variable metadata
 #' @examples
 #' # Show complete metadata for all variables under 'Cassava' category
-#' describe(cat="cassava", raster=T, by.category=F)
+#' describe(cat="cassava", raster=T)
 #'
 #' # Equivalent cUrl request at the command line
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
-#' # -d '{"cat" : "cassava", "raster" : true, "by.category" : true}' \
+#' # -d '{"cat" : "cassava", "raster" : true, "as.class" : "list"}' \
 #' # -X POST -H "Content-Type:application/json"
 #' @export
 describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css="json") {
