@@ -23,7 +23,7 @@
 #' genPlot("PD12_TOT")
 #'
 #' # Generate 3 raster plots for Ghana with legend and title but not axes
-#' genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print", legend="kmeans")
+#' genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print", style="kmeans")
 #'
 #' # Generate 3 raster plots for Nigeria with the specified dimensions
 #' p <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
