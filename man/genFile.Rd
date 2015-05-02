@@ -14,16 +14,18 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
 
 \item{by}{character array of variable codes to summarize by, passed to getLayer()}
 
-\item{format}{output format c("csv", "geojson", "tif", "dta", "asc", "grd", "rda")}
+\item{format}{output format c("csv", "json", "tif", "dta", "asc", "grd", "rda")}
 
-\item{...}{any other optional argument passed to getLayer(), e.g. \code{geom}, \code{collapse}.}
+\item{...}{any other optional argument passed to getLayer(), e.g. \code{by}, \code{collapse}.}
 }
 \value{
 character, path to generated ZIP file
 }
 \description{
 Package any result from \code{getLayer()} into the user-specified tabular or raster
-format. Also includes a README file with metadata and citation details.
+format. Also includes a README file with metadata and citation details. Currently
+supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
+(tif), R raster (grd), R Data (rda), and ESRI ASCII raster (asc).
 }
 \examples{
 # Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia

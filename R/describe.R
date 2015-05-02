@@ -1,13 +1,13 @@
 
 #' Return HarvestChoice variable metadata
 #'
-#' @param var character array of HarvestChoice variables
-#' @param cat optional category filter
+#' @param var optional character array of HarvestChoice variable codes
+#' @param cat optional category filter (fuzzy matches)
 #' @param version optional version filter
 #' @param raster return only raster variables
 #' @param as.class simple "data.table" or if "list" group variables by category
 #' @param css include Carto CSS rules
-#' @return a data.table or list of variable metadata
+#' @return a data.table or hierarchical list of variable metadata
 #' @examples
 #' # Show complete metadata for all variables under 'Cassava' category
 #' describe(cat="cassava", raster=T)
@@ -16,6 +16,8 @@
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
 #' # -d '{"cat" : "cassava", "raster" : true, "as.class" : "list"}' \
 #' # -X POST -H "Content-Type:application/json"
+#'
+#' describe(raster=T, version="SChEF r2.3", as.class="list")[1:2]
 #' @export
 describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css="json") {
 
@@ -60,7 +62,7 @@ describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css
     # Add CartoCSS
     out[, `:=` (classBreaks=NULL, classLabels=NULL, classColors=NULL)]
     out <- out[isRaster==T]
-    mss <- sapply(out$Code, getCartoCSS)
+    mss <- sapply(out$Code, genCartoCSS)
     out[, CartoCSS := mss]
   }
 
@@ -78,9 +80,9 @@ describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css
 }
 
 
-#' Generate HarvestChoice data use terms, citation, and variable metadata
+#' Return HarvestChoice data use terms, citation, and variable metadata
 #'
-#' @param var character array of CELL5M variable names
+#' @param var character array of CELL5M variable codes
 #' @return character, path to generated README file
 #' @examples
 #' # README for soil organic carbon concentration
@@ -118,13 +120,15 @@ genReadme <- function(var) {
 }
 
 
-#' Return list of HarvestChoice variable categories
+#' Show HarvestChoice variable categories (3-level deep)
 #'
-#' @param cat optional category filter
-#' @param as.class "data.table" simple data table or "list" group by category
-#' @return a data.table or list of variable categories
+#' @param cat optional fuzzy filter
+#' @param as.class "data.table" simple data table or "list" grouped by category
+#' @return a data.table with \code{N} showing the number of indicators in each category,
+#' or a list of variable categories
 #' @examples
 #' category("Demographics")
+#' category("cassava", as.class="list")
 #' @export
 category <- function(cat, as.class="data.table") {
 
@@ -147,14 +151,16 @@ category <- function(cat, as.class="data.table") {
 
 #' Generate CartoCSS snippet to symbolize raster tiles
 #'
-#' @param var HarvestChoice variable name
+#' @param var HarvestChoice variable code
 #' @param iso3 optional country or region filter (3-letter code)
-#' @param pal optional Brewer color palette used for plotting
+#' @param pal optional Brewer color palette name used for plotting
 #' @param legend if TRUE returns HarvestChoice legend, otherwise returns default legend
-#' @param ... any argument passed to getLayer(), e.g. by=FS_2012, iso3=GHA
-#' @return character, CartoCSS snippet for requested variable
+#' @param ... any argument passed to \code{getLayer()}, e.g. \code{by="FS_2012", iso3="GHA"}
+#' @return character, CartoCSS snippet for variable \code{var}
+#' @examples
+#' genCartoCSS("soc_d5")
 #' @export
-getCartoCSS <- function(var, pal="BuGn", legend=TRUE, ...) {
+genCartoCSS <- function(var, pal="BuGn", legend=TRUE, ...) {
 
   setkey(vi, varCode)
   var <- var[1]

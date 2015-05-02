@@ -9,7 +9,7 @@
 lookup.R
 }
 \description{
-Metadata for HarvestChoice collection of over 700 5-arc-minute rasters for sub-Saharan Africa.
+List of ISO3 country codes and corresponding country/region labels.
 }
 \examples{
 # Lookup lists

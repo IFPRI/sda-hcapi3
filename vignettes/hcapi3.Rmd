@@ -1,5 +1,5 @@
 ---
-title: "An Introduction to HarvestChoice Data API v3"
+title: "An Introduction to HarvestChoice Data Services v3"
 author: "Melanie Bacou"
 date: "`r Sys.Date()`"
 output:
@@ -17,9 +17,13 @@ vignette: >
 ---
 
 
-In 2014 HarvestChoice released a new version of its data API[^1] under the title [HarvestChoice Data Service v3.0](http://harvestchoice.org/tools/harvestchoice-data-services). We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and [HarvestChoice Data API](http://harvestchoice.org/tools/hcapi). The latter provides backend methods required to run two of our flagship reporting and visualization applications, [MAPPR](http://apps.harvestchoice.org/mappr/) and [TABLR](http://apps.harvestchoice.org/tablr/). We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into *HC Data Services*.
+In 2014 HarvestChoice released a new version of its data API[^1] under the title [HarvestChoice Data Services v3.0](http://harvestchoice.org/tools/harvestchoice-data-services). We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and [HarvestChoice Data API](http://harvestchoice.org/tools/hcapi). The latter provides backend methods required to run two of our flagship reporting and visualization applications, [MAPPR](http://apps.harvestchoice.org/mappr/) and [TABLR](http://apps.harvestchoice.org/tablr/). We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into *HC Data Services*.
 
-Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice's wealth of socio-economic, infrastructure, agricultural, climate, and soil datasets into 3rd-party tools and models. 
+Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice's spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of `r Sys.Date()` over 750 indicators are available for sub-Saharan Africa.
+
+# Warning
+
+This R package cannot be installed locally. Instead we provide access to all methods through a RESTful API (credits to (http://github.com/jeroenooms/opencpu)[OpenCPU]). Method names are endpoints and arguments must be converted from R syntax to simple JSON objects, `foo(arg1=c("val1", "val2"))` must be passed to `http://harvestchoice.org/tools/hcapi/R/foo` using `{"arg1" : ["val1", "val2"]}`.
 
 # Data APIs - What for?
 

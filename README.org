@@ -7,13 +7,17 @@
 #+LaTeX_CLASS: mel-article
 #+STARTUP: indent showstars
 
-Port of HarvestChoice Data Services to an OpenCPU server at http://hcapi.harvestchoice.org/ocpu/library/hcapi3. More about HarvestChoice datasets for sub-Saharan Africa at http://harvestchoice.org/data/.
+** HarvestChoice Data Services v3: Access HarvestChoice 10km Spatial Layers for sub-Saharan Africa
+
+Port of HarvestChoice data API to an OpenCPU server at http://hcapi.harvestchoice.org/ocpu/library/hcapi3. More about HarvestChoice spatial datasets for sub-Saharan Africa at http://harvestchoice.org/data/. To view this data in your browser visit [[http://apps.harvestchoice.org/mappr][HarvestChoice MAPPR]].
+
+Currently this R package cannot be installed locally. Instead all data access methods are made available through a REST API (credits to [[http://github.com/jeroenooms/opencpu]][OpenCPU]]). HTTP POST requests may be sent using any REST-compatible client (e.g. cURL). Sample requests using cURL at the command line, in JavaScript, as well as in R and STATA are provided in the package documentation.
 
 ** Overview
 
-The package documentation is at http://harvestchoice.github.io/hc-api3. Documentation for each API method may be accessed using =/man/<method>=, for example at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/html, also in PDF formats using =/man/<method>/pdf=.
+The package documentation is at http://harvestchoice.github.io/hc-api3.
 
-HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d 'param1="value1"&param2="value2"= construct. JavaScript examples are available from [[https://www.opencpu.org/jslib.html][OpenCPU]].
+HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d 'param1="value1"&param2="value2"= construct. See a few examples below.
 
 
 ** Updates

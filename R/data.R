@@ -1,6 +1,7 @@
 #' HarvestChoice CELL5M Variable Inventory
 #'
-#' Metadata for HarvestChoice collection of over 700 5-arc-minute rasters for sub-Saharan Africa.
+#' Metadata elements for HarvestChoice collection of 5-arc-minute rasters for
+#' sub-Saharan Africa.
 #'
 #' @docType data
 #' @keywords datasets
@@ -17,7 +18,7 @@ NULL
 
 #' HarvestChoice Lookup Lists
 #'
-#' Metadata for HarvestChoice collection of over 700 5-arc-minute rasters for sub-Saharan Africa.
+#' List of ISO3 country codes and corresponding country/region labels.
 #'
 #' @docType data
 #' @keywords datasets

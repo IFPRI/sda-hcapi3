@@ -2,7 +2,7 @@
 % Please edit documentation in R/genPlot.R
 \name{genPlot}
 \alias{genPlot}
-\title{Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators}
+\title{Plot HarvestChoice 5-arc-Minute Spatial Indicators}
 \usage{
 genPlot(var, iso3 = "SSA", pal, format = "default", style = "default",
   width = 640, height = 640, ...)
@@ -28,20 +28,23 @@ genPlot(var, iso3 = "SSA", pal, format = "default", style = "default",
 Array of generated file names, one for each plot
 }
 \description{
-Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators
+Method to plot HarvestChoice rasters with mutiple symbology options.
+\figure{img/PD12_TOT.png}{options: width="35\%"}
+\figure{img/AEZ16_CLAS.GHA.print.png}{options: width="35\%"}
+\figure{img/whea_h.GHA.print.png}{options: width="35\%"}
+\figure{img/FS_2012.png}{options: width="35\%"}
+\figure{img/yield_l_cv.png}{options: width="35\%"}
+\figure{img/soc_d15.png}{options: width="35\%"}
 }
 \examples{
 # Generate standard raster plot of 2012 population density for sub-Saharan Africa
 genPlot("PD12_TOT")
 
 # Generate 3 raster plots for Ghana with legend and title but not axes
-genPlot(c("AEZ16_CLAS", "whea_h", "soc_d15"), iso3="GHA", format="print")
+genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print")
 
 # Generate 3 raster plots for Nigeria with the specified dimensions
-p <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=5,
+p <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
 units="in", res=200, pointsize=8)
-
-# Print these plots
-for (i in p) grid::grid.raster(png::readPNG(i))
 }
 

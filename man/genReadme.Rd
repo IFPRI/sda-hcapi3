@@ -2,18 +2,18 @@
 % Please edit documentation in R/describe.R
 \name{genReadme}
 \alias{genReadme}
-\title{Generate HarvestChoice data use terms, citation, and variable metadata}
+\title{Return HarvestChoice data use terms, citation, and variable metadata}
 \usage{
 genReadme(var)
 }
 \arguments{
-\item{var}{character array of CELL5M variable names}
+\item{var}{character array of CELL5M variable codes}
 }
 \value{
 character, path to generated README file
 }
 \description{
-Generate HarvestChoice data use terms, citation, and variable metadata
+Return HarvestChoice data use terms, citation, and variable metadata
 }
 \examples{
 # README for soil organic carbon concentration

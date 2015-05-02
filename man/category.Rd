@@ -2,22 +2,24 @@
 % Please edit documentation in R/describe.R
 \name{category}
 \alias{category}
-\title{Return list of HarvestChoice variable categories}
+\title{Show HarvestChoice variable categories (3-level deep)}
 \usage{
 category(cat, as.class = "data.table")
 }
 \arguments{
-\item{cat}{optional category filter}
+\item{cat}{optional fuzzy filter}
 
-\item{as.class}{"data.table" simple data table or "list" group by category}
+\item{as.class}{"data.table" simple data table or "list" grouped by category}
 }
 \value{
-a data.table or list of variable categories
+a data.table with \code{N} showing the number of indicators in each category,
+or a list of variable categories
 }
 \description{
-Return list of HarvestChoice variable categories
+Show HarvestChoice variable categories (3-level deep)
 }
 \examples{
 category("Demographics")
+category("cassava", as.class="list")
 }
 

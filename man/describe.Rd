@@ -8,9 +8,9 @@ describe(var, cat, version, raster = FALSE, as.class = "data.table",
   css = "json")
 }
 \arguments{
-\item{var}{character array of HarvestChoice variables}
+\item{var}{optional character array of HarvestChoice variable codes}
 
-\item{cat}{optional category filter}
+\item{cat}{optional category filter (fuzzy matches)}
 
 \item{version}{optional version filter}
 
@@ -21,7 +21,7 @@ describe(var, cat, version, raster = FALSE, as.class = "data.table",
 \item{css}{include Carto CSS rules}
 }
 \value{
-a data.table or list of variable metadata
+a data.table or hierarchical list of variable metadata
 }
 \description{
 Return HarvestChoice variable metadata
@@ -34,5 +34,7 @@ describe(cat="cassava", raster=T)
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \\
 # -d '{"cat" : "cassava", "raster" : true, "as.class" : "list"}' \\
 # -X POST -H "Content-Type:application/json"
+
+describe(raster=T, version="SChEF r2.3", as.class="list")[1:2]
 }
 

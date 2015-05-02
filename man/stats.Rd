@@ -2,12 +2,12 @@
 % Please edit documentation in R/stats.R
 \name{stats}
 \alias{stats}
-\title{Generate histogram and boxplot of HarvestChoice layer(s)}
+\title{Generate Histogram and Boxplot of HarvestChoice Indicator(s)}
 \usage{
 stats(var, iso3 = "SSA", by = NULL)
 }
 \arguments{
-\item{var}{character array of variables to summarize}
+\item{var}{character array of variable codes to plot}
 
 \item{iso3}{optional country or region filter (3-letter code)}
 }
@@ -15,7 +15,8 @@ stats(var, iso3 = "SSA", by = NULL)
 plot
 }
 \description{
-Generate histogram and boxplot of HarvestChoice layer(s)
+Display a histogram and univariate statistics for any selected variable(s).
+\figure{img/plot.png}{options: width="35\%"}
 }
 \examples{
 # Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid

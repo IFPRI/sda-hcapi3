@@ -1,11 +1,15 @@
-#' Generate histogram and boxplot of HarvestChoice layer(s)
+#' Generate Histogram and Boxplot of HarvestChoice Indicator(s)
 #'
-#' @param var character array of variables to summarize
+#' Display a histogram and univariate statistics for any selected variable(s).
+#' \figure{img/plot.png}{options: width="35\%"}
+#'
+#' @param var character array of variable codes to plot
 #' @param iso3 optional country or region filter (3-letter code)
 #' @return plot
 #' @examples
 #' # Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
 #' stats(c("bmi", "cass_y"))
+#'
 #' @export
 stats <- function(var, iso3="SSA", by=NULL) {
 

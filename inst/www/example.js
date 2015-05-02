@@ -1,7 +1,7 @@
 //base OpenCPU API url
-//ocpu.seturl("//harvestchoice.ocpu.io/hcapi3/R")
+ocpu.seturl("//harvestchoice.ocpu.io/hcapi3/R")
 
-//call R function: stocks::smoothplot(ticker=ticker)
+//call R function
 $("#submitbutton").click(function () {
     var layer = $("#layer").val();
     var req = $("#plotdiv").rplot("genPlot", {
@@ -14,7 +14,7 @@ $("#submitbutton").click(function () {
     });
 });
 
-//call R function: tvscore::tv(input=data)
+//call R function
 $("#aggbutton").click(function () {
     var layer = $("#layer").val();
     var by = $("#by").val();

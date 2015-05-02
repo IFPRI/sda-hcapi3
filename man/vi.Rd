@@ -9,7 +9,8 @@
 vi.R
 }
 \description{
-Metadata for HarvestChoice collection of over 700 5-arc-minute rasters for sub-Saharan Africa.
+Metadata elements for HarvestChoice collection of 5-arc-minute rasters for
+sub-Saharan Africa.
 }
 \examples{
 # List of metadata elements
