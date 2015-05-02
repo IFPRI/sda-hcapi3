@@ -15,7 +15,7 @@ Currently this R package cannot be installed locally. Instead all data access me
 
 ** Overview
 
-The package documentation is at http://harvestchoice.github.io/hc-api3.
+The package documentation is at http://harvestchoice.github.io/hc-api3. Each method documentation may also be viewed at http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/{method}/html, e.g. http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/html
 
 HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org/ocpu/. To test requests in the console, use the following =curl= syntax. Arguments may be passed as well-structured json array with curl =-H Content-Type:application/json= flag or more directly as URL arguments using =-d 'param1="value1"&param2="value2"= construct. See a few examples below.
 

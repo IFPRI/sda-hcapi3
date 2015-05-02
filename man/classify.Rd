@@ -38,6 +38,6 @@ classify(c("wealth","TPOV_PT200"),
 # -X POST -H "Content-Type:application/json"
 
 # Return average rainfall across Ethiopia's districts for areas above/below 100m elevation
-classify("pre_mean", by=list(ADM2_NAME_ALT, ELEV=c(0, 100, 3000)), iso3="ETH")
+classify("pre_mean", by=list("ADM2_NAME_ALT", ELEV=c(0, 100, 3000)), iso3="ETH")
 }
 

@@ -22,8 +22,8 @@ NULL
 #'
 #' @docType data
 #' @keywords datasets
-#' @name lookup
-#' @usage lookup.R
+#' @name iso
+#' @usage iso.R
 #' @format arrays
 #' @examples
 #' # Lookup lists

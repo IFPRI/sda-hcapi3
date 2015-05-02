@@ -141,7 +141,7 @@ category <- function(cat, as.class="data.table") {
   }
 
   if (as.class=="list") {
-    out <- split(out, out$Category)
+    out <- split(out[, -N], out$Category)
     out <- lapply(out, function(x) split(x, x$Subcategory))
   }
   return(out)
