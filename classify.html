@@ -94,9 +94,11 @@ classify(c(&quot;wealth&quot;,&quot;TPOV_PT200&quot;),
 # -X POST -H &quot;Content-Type:application/json&quot;
 
 # Return average rainfall across Ethiopia&#39;s districts for areas above/below 100m elevation
-classify(&quot;pre_mean&quot;, by=list(ADM2_NAME_ALT, ELEV=c(0, 100, 3000)), iso3=&quot;ETH&quot;)
+classify(&quot;pre_mean&quot;, by=list(&quot;ADM2_NAME_ALT&quot;, ELEV=c(0, 100, 3000)), iso3=&quot;ETH&quot;)
 </div>
-<strong class='error'>Error in getLayer(var = var, by = by, ids = NULL, ...): object &#39;ADM2_NAME_ALT&#39; not found</strong></pre>
+<strong class='error'>Error in parse(text = paste0(&quot;data &lt;- RS.eval(rc, &quot;, data, &quot;)&quot;)): &lt;text&gt;:1:99: unexpected &#39;=&#39;
+1: data &lt;- RS.eval(rc, dt[ISO3 %in% c(&#39;ETH&#39;)][][, list(pre_mean=mean(pre_mean, na.rm=TRUE)), by=list(=
+                                                                                                      ^</strong></pre>
   </div>
   <div class="span4">
     <!-- <ul>
