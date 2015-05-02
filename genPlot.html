@@ -32,16 +32,16 @@
 
     <div class="container">
       <header>
-        
+
       </header>
-      
+
       <h1>Plot HarvestChoice 5-arc-Minute Spatial Indicators</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
     <pre><div>genPlot(var, iso3&nbsp;=&nbsp;"SSA", pal, format&nbsp;=&nbsp;"default", style&nbsp;=&nbsp;"default", width&nbsp;=&nbsp;640, height&nbsp;=&nbsp;640, ...)</div></pre>
-    
+
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
@@ -61,29 +61,29 @@
       <dt>...</dt>
       <dd>any argument passed to <code>png()</code>, e.g. units, res, pointsize</dd>
     </dl>
-    
+
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
 Array of generated file names, one for each plot
 </dl></p>
-  
+
     </div>
 
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Method to plot HarvestChoice rasters with mutiple symbology options.
-img/PD12_TOT.pngoptions: width="35%"
-img/AEZ16_CLAS.GHA.print.pngoptions: width="35%"
-img/whea_h.GHA.print.pngoptions: width="35%"
-img/FS_2012.pngoptions: width="35%"
-img/yield_l_cv.pngoptions: width="35%"
-img/soc_d15.pngoptions: width="35%"</p>
-  
+      <p>Method to plot HarvestChoice rasters with mutiple symbology options.</p>
+<p><img src="img/PD12_TOT.png" width="35%" /></p>
+<p><img src="img/AEZ16_CLAS.GHA.print.png" width="35%" /></p>
+<p><img src="img/whea_h.GHA.print.png" width="35%" /></p>
+<p><img src="img/FS_2012.png" width="35%" /></p>
+<p><img src="img/yield_l_cv.png" width="35%" /></p>
+<p><img src="img/soc_d15.png" width="35%" /></p>
+
     </div>
-    
+
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Generate standard raster plot of 2012 population density for sub-Saharan Africa
 genPlot(&quot;PD12_TOT&quot;)
@@ -104,7 +104,7 @@ genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, for
 </div>
 <div class='output'>whea_h :  Wheat area &#39;05
 </div>
-<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;whea_h.GHA.print.png&quot;    
+<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;whea_h.GHA.print.png&quot;
 </div>
 <div class='input'>
 # Generate 3 raster plots for Nigeria with the specified dimensions
@@ -135,13 +135,13 @@ grid has empty column/rows in dimension 2</strong></pre>
       <li>genPlot</li>
     </ul>
     <ul>
-      
+
     </ul> -->
-      
-        
+
+
   </div>
 </div>
-      
+
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
