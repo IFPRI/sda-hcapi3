@@ -7,11 +7,11 @@
 #+LaTeX_CLASS: mel-article
 #+STARTUP: indent showstars
 
-** HarvestChoice Data Services v3: Access HarvestChoice 10km Spatial Layers for sub-Saharan Africa
+HarvestChoice Data Services v3: Access HarvestChoice 10km Spatial Layers for sub-Saharan Africa.
 
 Port of HarvestChoice data API to an OpenCPU server at http://hcapi.harvestchoice.org/ocpu/library/hcapi3. More about HarvestChoice spatial datasets for sub-Saharan Africa at http://harvestchoice.org/data/. To view this data in your browser visit [[http://apps.harvestchoice.org/mappr][HarvestChoice MAPPR]].
 
-Currently this R package cannot be installed locally. Instead all data access methods are made available through a REST API (credits to [[http://github.com/jeroenooms/opencpu]][OpenCPU]]). HTTP POST requests may be sent using any REST-compatible client (e.g. cURL). Sample requests using cURL at the command line, in JavaScript, as well as in R and STATA are provided in the package documentation.
+Currently this R package cannot be installed locally. Instead all data access methods are made available through a REST API (credits to [[http://github.com/jeroenooms/opencpu][OpenCPU]]). HTTP POST requests may be sent using any REST-compatible client (e.g. cURL). Sample requests using cURL at the command line, in JavaScript, as well as in R and STATA are provided in the package documentation.
 
 ** Overview
 
