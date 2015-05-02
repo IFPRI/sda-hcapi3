@@ -45,9 +45,9 @@
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
-      <dd>character array of HarvestChoice variables</dd>
+      <dd>optional character array of HarvestChoice variable codes</dd>
       <dt>cat</dt>
-      <dd>optional category filter</dd>
+      <dd>optional category filter (fuzzy matches)</dd>
       <dt>version</dt>
       <dd>optional version filter</dd>
       <dt>raster</dt>
@@ -62,7 +62,7 @@
       <h2>Value</h2>
 
       <p><dl>
-a data.table or list of variable metadata
+a data.table or hierarchical list of variable metadata
 </dl></p>
   
     </div>
@@ -76,15 +76,18 @@ a data.table or list of variable metadata
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Show complete metadata for all variables under &#39;Cassava&#39; category
-describe(cat=&quot;cassava&quot;, raster=T, by.category=F)
+describe(cat=&quot;cassava&quot;, raster=T)
 </div>
-<strong class='error'>Error in describe(cat = &quot;cassava&quot;, raster = T, by.category = F): unused argument (by.category = F)</strong>
+<strong class='error'>Error in describe(cat = &quot;cassava&quot;, raster = T): object &#39;by.category&#39; not found</strong>
 <div class='input'>
 # Equivalent cUrl request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
-# -d &#39;{&quot;cat&quot; : &quot;cassava&quot;, &quot;raster&quot; : true, &quot;by.category&quot; : true}&#39; \
+# -d &#39;{&quot;cat&quot; : &quot;cassava&quot;, &quot;raster&quot; : true, &quot;as.class&quot; : &quot;list&quot;}&#39; \
 # -X POST -H &quot;Content-Type:application/json&quot;
-</div></pre>
+
+describe(raster=T, version=&quot;SChEF r2.3&quot;, as.class=&quot;list&quot;)[1:2]
+</div>
+<strong class='error'>Error in describe(raster = T, version = &quot;SChEF r2.3&quot;, as.class = &quot;list&quot;): object &#39;by.category&#39; not found</strong></pre>
   </div>
   <div class="span4">
     <!-- <ul>

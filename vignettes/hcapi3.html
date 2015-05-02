@@ -10,9 +10,9 @@
 
 <meta name="author" content="Melanie Bacou" />
 
-<meta name="date" content="2015-04-26" />
+<meta name="date" content="2015-05-02" />
 
-<title>An Introduction to HarvestChoice Data API v3</title>
+<title>An Introduction to HarvestChoice Data Services v3</title>
 
 
 
@@ -52,58 +52,61 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 
 <div id="header">
-<h1 class="title">An Introduction to HarvestChoice Data API v3</h1>
+<h1 class="title">An Introduction to HarvestChoice Data Services v3</h1>
 <h4 class="author"><em>Melanie Bacou</em></h4>
-<h4 class="date"><em>2015-04-26</em></h4>
+<h4 class="date"><em>2015-05-02</em></h4>
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#data-apis---what-for"><span class="toc-section-number">1</span> Data APIs - What for?</a></li>
-<li><a href="#using-harvestchoice-data-services"><span class="toc-section-number">2</span> Using HarvestChoice Data Services</a><ul>
-<li><a href="#using-methods-and-parameters"><span class="toc-section-number">2.1</span> Using Methods and Parameters</a><ul>
-<li><a href="#example-1-list-api-available-methods"><span class="toc-section-number">2.1.1</span> Example #1: list API available methods</a></li>
-<li><a href="#example-2-method-documentation"><span class="toc-section-number">2.1.2</span> Example #2: method documentation</a></li>
-<li><a href="#example-3-simple-request-returning-a-dataset-in-json-format"><span class="toc-section-number">2.1.3</span> Example #3: simple request returning a dataset in JSON format</a></li>
-<li><a href="#example-4-request-ghana-2005-population-density-summarized-across-aez-in-stata-.dta-format"><span class="toc-section-number">2.1.4</span> Example #4: request Ghana 2005 population density summarized across AEZ in STATA .dta format</a></li>
-<li><a href="#example-5-same-request-returning-a-file-in-rdata-format"><span class="toc-section-number">2.1.5</span> Example #5: same request returning a file in RData format</a></li>
-<li><a href="#example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts"><span class="toc-section-number">2.1.6</span> Example #6: Ghana wheat production in CSV format aggregated over districts</a></li>
+<li><a href="#warning"><span class="toc-section-number">1</span> Warning</a></li>
+<li><a href="#data-apis---what-for"><span class="toc-section-number">2</span> Data APIs - What for?</a></li>
+<li><a href="#using-harvestchoice-data-services"><span class="toc-section-number">3</span> Using HarvestChoice Data Services</a><ul>
+<li><a href="#using-methods-and-parameters"><span class="toc-section-number">3.1</span> Using Methods and Parameters</a><ul>
+<li><a href="#example-1-list-api-available-methods"><span class="toc-section-number">3.1.1</span> Example #1: list API available methods</a></li>
+<li><a href="#example-2-method-documentation"><span class="toc-section-number">3.1.2</span> Example #2: method documentation</a></li>
+<li><a href="#example-3-simple-request-returning-a-dataset-in-json-format"><span class="toc-section-number">3.1.3</span> Example #3: simple request returning a dataset in JSON format</a></li>
+<li><a href="#example-4-request-ghana-2005-population-density-summarized-across-aez-in-stata-.dta-format"><span class="toc-section-number">3.1.4</span> Example #4: request Ghana 2005 population density summarized across AEZ in STATA .dta format</a></li>
+<li><a href="#example-5-same-request-returning-a-file-in-rdata-format"><span class="toc-section-number">3.1.5</span> Example #5: same request returning a file in RData format</a></li>
+<li><a href="#example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts"><span class="toc-section-number">3.1.6</span> Example #6: Ghana wheat production in CSV format aggregated over districts</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#about-the-data"><span class="toc-section-number">3</span> About the Data</a><ul>
-<li><a href="#example-7-return-list-of-indicators-in-any-category-matching-demo"><span class="toc-section-number">3.0.1</span> Example #7: return list of indicators in any category matching ‘demo’</a></li>
-<li><a href="#example-8-retrieve-text-documentation-for-describe-method"><span class="toc-section-number">3.0.2</span> Example #8: retrieve text documentation for /describe/ method</a></li>
-<li><a href="#example-9-return-metadata-records-for-all-indicators-under-the-health-and-nutrition-category"><span class="toc-section-number">3.0.3</span> Example #9: return metadata records for all indicators under the ‘Health and Nutrition’ category</a></li>
+<li><a href="#about-the-data"><span class="toc-section-number">4</span> About the Data</a><ul>
+<li><a href="#example-7-return-list-of-indicators-in-any-category-matching-demo"><span class="toc-section-number">4.0.1</span> Example #7: return list of indicators in any category matching ‘demo’</a></li>
+<li><a href="#example-8-retrieve-text-documentation-for-describe-method"><span class="toc-section-number">4.0.2</span> Example #8: retrieve text documentation for /describe/ method</a></li>
+<li><a href="#example-9-return-metadata-records-for-all-indicators-under-the-health-and-nutrition-category"><span class="toc-section-number">4.0.3</span> Example #9: return metadata records for all indicators under the ‘Health and Nutrition’ category</a></li>
 </ul></li>
-<li><a href="#advanced-methods"><span class="toc-section-number">4</span> Advanced Methods</a></li>
-<li><a href="#source-code-repository"><span class="toc-section-number">5</span> Source Code Repository</a></li>
+<li><a href="#advanced-methods"><span class="toc-section-number">5</span> Advanced Methods</a></li>
+<li><a href="#source-code-repository"><span class="toc-section-number">6</span> Source Code Repository</a></li>
 </ul>
 </div>
 
-<p>In 2014 HarvestChoice released a new version of its data API<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> under the title <a href="http://harvestchoice.org/tools/harvestchoice-data-services">HarvestChoice Data Service v3.0</a>. We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and <a href="http://harvestchoice.org/tools/hcapi">HarvestChoice Data API</a>. The latter provides backend methods required to run two of our flagship reporting and visualization applications, <a href="http://apps.harvestchoice.org/mappr/">MAPPR</a> and <a href="http://apps.harvestchoice.org/tablr/">TABLR</a>. We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into <em>HC Data Services</em>.</p>
-<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice’s wealth of socio-economic, infrastructure, agricultural, climate, and soil datasets into 3rd-party tools and models.</p>
+<p>In 2014 HarvestChoice released a new version of its data API<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> under the title <a href="http://harvestchoice.org/tools/harvestchoice-data-services">HarvestChoice Data Services v3.0</a>. We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and <a href="http://harvestchoice.org/tools/hcapi">HarvestChoice Data API</a>. The latter provides backend methods required to run two of our flagship reporting and visualization applications, <a href="http://apps.harvestchoice.org/mappr/">MAPPR</a> and <a href="http://apps.harvestchoice.org/tablr/">TABLR</a>. We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into <em>HC Data Services</em>.</p>
+<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice’s spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of 2015-05-02 over 750 indicators are available for sub-Saharan Africa.</p>
+<div id="warning" class="section level1">
+<h1><span class="header-section-number">1</span> Warning</h1>
+<p>This R package cannot be installed locally. Instead we provide access to all methods through a RESTful API (credits to (<a href="http://github.com/jeroenooms/opencpu" class="uri">http://github.com/jeroenooms/opencpu</a>)[OpenCPU]). Method names are endpoints and arguments must be converted from R syntax to simple JSON objects, <code>foo(arg1=c(&quot;val1&quot;, &quot;val2&quot;))</code> must be passed to <code>http://harvestchoice.org/tools/hcapi/R/foo</code> using <code>{&quot;arg1&quot; : [&quot;val1&quot;, &quot;val2&quot;]}</code>.</p>
+</div>
 <div id="data-apis---what-for" class="section level1">
-<h1><span class="header-section-number">1</span> Data APIs - What for?</h1>
+<h1><span class="header-section-number">2</span> Data APIs - What for?</h1>
 <p>Forthcomming</p>
 </div>
 <div id="using-harvestchoice-data-services" class="section level1">
-<h1><span class="header-section-number">2</span> Using HarvestChoice Data Services</h1>
+<h1><span class="header-section-number">3</span> Using HarvestChoice Data Services</h1>
 <p>This API implements a RESTful<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> interface allowing users to query, summarize, plot, and download any subset of HarvestChoice’s 700 spatially-explicit indicators for sub-Saharan Africa. We describe here some of the methods available to developers and researchers to programmatically interact with the API.</p>
 <p>Because the API uses standard REST protocol and HTTP verbs (GET, POST), requests may be sent through any URL transfer utility (e.g. cURL on both Windows and Linux), or using any programming language that implements HTTP requests (including statistical languages such as STATA, R, and SAS). The logic consists in calling a specific method and passing any number of required or optional arguments or parameters. In the examples below we use the command line tool <code>cURL</code> in Windows (available in Windows 7 and 8).</p>
 <p>The API’s main endpoint is at <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3"><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/</a></a>. There are a couple of useful methods exposing the API documentation. These are explained here.</p>
 <div id="using-methods-and-parameters" class="section level2">
-<h2><span class="header-section-number">2.1</span> Using Methods and Parameters</h2>
+<h2><span class="header-section-number">3.1</span> Using Methods and Parameters</h2>
 <p>The API exposes a list of available methods at<br /><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/"><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/</a></a><br />(the result of which is shown in [#fig1] below). In turn each method is further documented at <code>/man/{method}</code> e.g.<br /><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/"><a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/</a></a> ([#fig2]).</p>
 <div id="example-1-list-api-available-methods" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Example #1: list API available methods</h3>
+<h3><span class="header-section-number">3.1.1</span> Example #1: list API available methods</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># List of API methods</span>
 <span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-102  3287    0  3287    0     0  81697      0 --:--:-- --:--:-- --:--:--  188k
-## 
 ##      Information on package 'hcapi3'
 ## 
 ## Description:
@@ -111,7 +114,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 ## Package:           hcapi3
 ## Type:              Package
 ## Version:           3.5
-## Date:              2015-4-22
+## Date:              2015-5-01
 ## Title:             HarvestChoice Data Services
 ## Authors@R:         c( person(&quot;Melanie&quot;, &quot;Bacou&quot;, role=c(&quot;aut&quot;, &quot;cre&quot;),
 ##                    email=&quot;mel@mbacou.com&quot;), person(&quot;Maria&quot;,
@@ -136,30 +139,45 @@ code > span.er { color: #ff0000; font-weight: bold; }
 ## LazyData:          yes
 ## Description:       Methods to retrieve, summarize, aggregate, and plot
 ##                    HarvestChoice 5-arc-minute spatial layers for
-##                    sub-Saharan Africa.
+##                    sub-Saharan Africa.  This R package cannot be
+##                    installed locally. Instead we provide access to all
+##                    methods through a RESTful API (credits to
+##                    \url{http://github.com/jeroenooms/opencpu}).  Method
+##                    names are endpoints and arguments must be converted
+##                    from R syntax to simple JSON objects,
+##                    \code{foo(arg1=c(&quot;val1&quot;, &quot;val2&quot;))} must be passed to
+##                    \url{http://harvestchoice.org/tools/hcapi/R/foo}
+##                    using \code{{&quot;arg1&quot; : [&quot;val1&quot;, &quot;val2&quot;]}}.  Through
+##                    transparent data services our aim is to facilitate
+##                    the re-use and integration of HarvestChoice's
+##                    spatially-consistent biophysical and socio-economic
+##                    indicators into 3rd-party tools and models. As of
+##                    today over 750 indicators are available for
+##                    sub-Saharan Africa. More about HarvestChoice at
+##                    \url{http://harvestchoice.org/}.
 ## License:           GPL (&gt;= 3)
 ## URL:               http://harvestchoice.org/,
 ##                    https://github.com/harvestchoice/hc-api3
 ## BugReports:        http://harvestchoice.org/
 ## MailingList:       support@harvestchoice.org
-## Packaged:          2015-02-26 11:20:02 UTC; mbacou
+## Packaged:          2015-05-01 11:20:02 UTC; mbacou
 ## VignetteBuilder:   knitr
-## Built:             R 3.1.3; ; 2015-04-26 12:20:57 UTC; unix
+## Built:             R 3.1.3; ; 2015-05-02 07:05:11 UTC; unix
 ## 
 ## Index:
 ## 
-## category                Return list of HarvestChoice variable
-##                         categories
+## category                Show HarvestChoice variable categories (3-level
+##                         deep)
 ## classify                Create custom domains for spatial targeting
 ## describe                Return HarvestChoice variable metadata
+## genCartoCSS             Generate CartoCSS snippet to symbolize raster
+##                         tiles
 ## genFile                 Convert CELL5M layers to raster and/or tabular
 ##                         formats and create archive for download
-## genPlot                 Generate Raster Plot of HarvestChoice
-##                         5-Arc-Minute Spatial Indicators
-## genReadme               Generate HarvestChoice data use terms,
-##                         citation, and variable metadata
-## getCartoCSS             Generate CartoCSS snippet to symbolize raster
-##                         tiles
+## genPlot                 Plot HarvestChoice 5-arc-Minute Spatial
+##                         Indicators
+## genReadme               Return HarvestChoice data use terms, citation,
+##                         and variable metadata
 ## getLayer                Subset, and/or summarize HarvestChoice
 ##                         5-arc-minute layers
 ## getLayerSQL             Subset, and/or aggregate HarvestChoice
@@ -168,21 +186,23 @@ code > span.er { color: #ff0000; font-weight: bold; }
 ## getLayerWKT             Summarize HarvestChoice 5-arc-minute layers
 ##                         over WKT geometri(es)
 ## lookup                  HarvestChoice Lookup Lists
-## similar                 Rank spatial units by similarity
-## stats                   Generate histogram and boxplot of HarvestChoice
-##                         layer(s)
+## similar                 Ra
+100  4300    0  4300    0     0  62162      0 --:--:-- --:--:-- --:--:--  190k
+## nk spatial units by similarity
+## stats                   Generate Histogram and Boxplot of HarvestChoice
+##                         Indicator(s)
 ## vi                      HarvestChoice CELL5M Variable Inventory</code></pre>
 <p>The main data query method is <code>/getLayer/</code>, and the main data download method is <code>/genFile/</code>. <code>/getGroups/</code> and <code>/getMeta/</code> will return indicator metadata. Other methods are useful to conduct specific analyses. Detailed documentation may be retrieved as shown below (use <code>cURL</code> in terminal, or just click <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer</a> to see this same information in your browser.</p>
 </div>
 <div id="example-2-method-documentation" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Example #2: method documentation</h3>
+<h3><span class="header-section-number">3.1.2</span> Example #2: method documentation</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Sample Method Documentation</span>
 <span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/text</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-104  2297    0  2297    0     0  17662      0 --:--:-- --:--:-- --:--:-- 20693
+104  2297    0  2297    0     0  37298      0 --:--:-- --:--:-- --:--:-- 65628
 ## getLayer                package:hcapi3                 R Documentation
 ## 
 ## Subset, and/or summarize HarvestChoice 5-arc-minute layers
@@ -247,15 +267,15 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>You can test this query by manually forming the following <code>cURL</code> request. This returns a dataset as a JSON array.</p>
 </div>
 <div id="example-3-simple-request-returning-a-dataset-in-json-format" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Example #3: simple request returning a dataset in JSON format</h3>
+<h3><span class="header-section-number">3.1.3</span> Example #3: simple request returning a dataset in JSON format</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
 -d <span class="st">&quot;var='PD05_TOT'&amp;iso3='GHA'&amp;by='AEZ8_CLAS'&quot;</span> -X POST</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   2187 --:--:-- --:--:-- --:--:--  2187
-124   209    0   209    0    40    493     94 --:--:-- --:--:-- --:--:--   416
-124   209    0   209    0    40    493     94 --:--:-- --:--:-- --:--:--   416
+  0     0    0     0    0    40      0   2183 --:--:-- --:--:-- --:--:--  2183
+124   209    0   209    0    40    440     84 --:--:-- --:--:-- --:--:--   370
+124   209    0   209    0    40    440     84 --:--:-- --:--:-- --:--:--   370
 ## [
 ##   {
 ##     &quot;AEZ8_CLAS&quot;: &quot;Sub-Humid&quot;,
@@ -276,51 +296,51 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>For users of STATA or R the same dataset may be returned in a native format by using the <code>/genFile/</code> method and appending a <code>format=</code> parameter at the end of the request.</p>
 </div>
 <div id="example-4-request-ghana-2005-population-density-summarized-across-aez-in-stata-.dta-format" class="section level3">
-<h3><span class="header-section-number">2.1.4</span> Example #4: request Ghana 2005 population density summarized across AEZ in STATA .dta format</h3>
+<h3><span class="header-section-number">3.1.4</span> Example #4: request Ghana 2005 population density summarized across AEZ in STATA .dta format</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ \
 -d <span class="st">&quot;var='PD05_TOT'&amp;iso3='GHA'&amp;by='AEZ8_CLAS'&amp;format='dta'&quot;</span> -X POST</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   2890 --:--:-- --:--:-- --:--:--  2890
-148   243    0   243    0    53    546    119 --:--:-- --:--:-- --:--:--   444
-148   243    0   243    0    53    546    119 --:--:-- --:--:-- --:--:--   444
-## /ocpu/tmp/x0274249097/R/.val
-## /ocpu/tmp/x0274249097/stdout
-## /ocpu/tmp/x0274249097/source
-## /ocpu/tmp/x0274249097/console
-## /ocpu/tmp/x0274249097/info
-## /ocpu/tmp/x0274249097/files/DESCRIPTION
-## /ocpu/tmp/x0274249097/files/PD05_TOT-AEZ8_CLAS-GHA.dta.zip</code></pre>
+  0     0    0     0    0    53      0   2878 --:--:-- --:--:-- --:--:--  2878
+148   243    0   243    0    53    526    114 --:--:-- --:--:-- --:--:--   428
+## /ocpu/tmp/x0b3a93a9ff/R/.val
+## /ocpu/tmp/x0b3a93a9ff/stdout
+## /ocpu/tmp/x0b3a93a9ff/source
+## /ocpu/tmp/x0b3a93a9ff/console
+## /ocpu/tmp/x0b3a93a9ff/info
+## /ocpu/tmp/x0b3a93a9ff/files/DESCRIPTION
+## /ocpu/tmp/x0b3a93a9ff/files/PD05_TOT-AEZ8_CLAS-GHA.dta.zip</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
-<h3><span class="header-section-number">2.1.5</span> Example #5: same request returning a file in RData format</h3>
+<h3><span class="header-section-number">3.1.5</span> Example #5: same request returning a file in RData format</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ \
 -d <span class="st">&quot;var='PD05_TOT'&amp;iso3='GHA'&amp;by='AEZ8_CLAS'&amp;format='rda'&quot;</span> -X POST</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   2903 --:--:-- --:--:-- --:--:--  2903
-148   243    0   243    0    53    530    115 --:--:-- --:--:-- --:--:--   432
-## /ocpu/tmp/x046c4d738c/R/.val
-## /ocpu/tmp/x046c4d738c/stdout
-## /ocpu/tmp/x046c4d738c/source
-## /ocpu/tmp/x046c4d738c/console
-## /ocpu/tmp/x046c4d738c/info
-## /ocpu/tmp/x046c4d738c/files/DESCRIPTION
-## /ocpu/tmp/x046c4d738c/files/PD05_TOT-AEZ8_CLAS-GHA.rda.zip</code></pre>
+  0     0    0     0    0    53      0   2877 --:--:-- --:--:-- --:--:--  2877
+148   243    0   243    0    53    479    104 --:--:-- --:--:-- --:--:--   388
+148   243    0   243    0    53    479    104 --:--:-- --:--:-- --:--:--   388
+## /ocpu/tmp/x0bfe52ef43/R/.val
+## /ocpu/tmp/x0bfe52ef43/stdout
+## /ocpu/tmp/x0bfe52ef43/source
+## /ocpu/tmp/x0bfe52ef43/console
+## /ocpu/tmp/x0bfe52ef43/info
+## /ocpu/tmp/x0bfe52ef43/files/DESCRIPTION
+## /ocpu/tmp/x0bfe52ef43/files/PD05_TOT-AEZ8_CLAS-GHA.rda.zip</code></pre>
 <p>Other possible formats include <code>csv</code> and raster formats <code>tif</code> and <code>asc</code> for GeoTiff and ESRI ASCII Raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to manually request that ZIP file. You can do so at the command line using <code>wget</code>.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
-<h3><span class="header-section-number">2.1.6</span> Example #6: Ghana wheat production in CSV format aggregated over districts</h3>
+<h3><span class="header-section-number">3.1.6</span> Example #6: Ghana wheat production in CSV format aggregated over districts</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Step 1: generate ZIP file</span>
 <span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip/ \
 -d <span class="st">&quot;var='whea_p'&amp;iso3='GHA'&amp;by=['ADM2_CODE_ALT','ADM2_NAME_ALT']&amp;format='csv'&quot;</span> -X POST</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   4056 --:--:-- --:--:-- --:--:--  4056
-  0    55    0    55    0    73    339    451 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0    73      0   3984 --:--:-- --:--:-- --:--:--  3984
+  0    55    0    55    0    73    333    442 --:--:-- --:--:-- --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code># Step 2: download ZIP file
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x08540461d4/files/PD05_TOT-AEZ8_CLAS-GHA.csv.zip</code></pre>
@@ -338,30 +358,30 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 </div>
 </div>
 <div id="about-the-data" class="section level1">
-<h1><span class="header-section-number">3</span> About the Data</h1>
+<h1><span class="header-section-number">4</span> About the Data</h1>
 <p>All of the API methods require passing indicator codes as parameters. These codes uniquely identify an indicator and may be accessed using two of the metadata query methods <code>/getGroups/</code> and <code>/getMeta/</code>. <code>/getGroups/</code> returns a list of indicators in any category matching a <code>group=</code> keyword. <code>/getMeta/</code> returns complete metadata records for selected indicators. Sample requests are shown here. The <code>Code</code> element is the indicator code to pass into other API methods.</p>
 <div id="example-7-return-list-of-indicators-in-any-category-matching-demo" class="section level3">
-<h3><span class="header-section-number">3.0.1</span> Example #7: return list of indicators in any category matching ‘demo’</h3>
+<h3><span class="header-section-number">4.0.1</span> Example #7: return list of indicators in any category matching ‘demo’</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json \
 -d <span class="st">&quot;group='climate'&quot;</span> -X POST</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    15      0    821 --:--:-- --:--:-- --:--:--   821
-128   113    0   113    0    15    753     99 --:--:-- --:--:-- --:--:--   748
+  0     0    0     0    0    15      0    819 --:--:-- --:--:-- --:--:--   819
+128   113    0   113    0    15    707     93 --:--:-- --:--:-- --:--:--   695
 ## object 'getGroups' not found
 ## 
 ## In call:
 ## get(reqobject, paste(&quot;package&quot;, reqpackage, sep = &quot;:&quot;), inherits = FALSE)</code></pre>
 </div>
 <div id="example-8-retrieve-text-documentation-for-describe-method" class="section level3">
-<h3><span class="header-section-number">3.0.2</span> Example #8: retrieve text documentation for /describe/ method</h3>
+<h3><span class="header-section-number">4.0.2</span> Example #8: retrieve text documentation for /describe/ method</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/describe/text</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-102  1025    0  1025    0     0  19553      0 --:--:-- --:--:-- --:--:-- 30147
+102  1126    0  1126    0     0  21549      0 --:--:-- --:--:-- --:--:-- 34121
 ## describe                package:hcapi3                 R Documentation
 ## 
 ## Return HarvestChoice variable metadata
@@ -377,9 +397,9 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##      
 ## Arguments:
 ## 
-##      var: character array of HarvestChoice variables
+##      var: optional character array of HarvestChoice variable codes
 ## 
-##      cat: optional category filter
+##      cat: optional category filter (fuzzy matches)
 ## 
 ##  version: optional version filter
 ## 
@@ -391,29 +411,30 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ## 
 ## Value:
 ## 
-##      a data.table or list of variable metadata
+##      a data.table or hierarchical list of variable metadata
 ## 
 ## Examples:
 ## 
 ##      # Show complete metadata for all variables under 'Cassava' category
-##      describe(cat=&quot;cassava&quot;, raster=T, by.category=F)
+##      describe(cat=&quot;cassava&quot;, raster=T)
 ##      
 ##      # Equivalent cUrl request at the command line
 ##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
-##      # -d '{&quot;cat&quot; : &quot;cassava&quot;, &quot;raster&quot; : true, &quot;by.category&quot; : true}' \
+##      # -d '{&quot;cat&quot; : &quot;cassava&quot;, &quot;raster&quot; : true, &quot;as.class&quot; : &quot;list&quot;}' \
 ##      # -X POST -H &quot;Content-Type:application/json&quot;
+##      
+##      describe(raster=T, version=&quot;SChEF r2.3&quot;, as.class=&quot;list&quot;)[1:2]
 ## </code></pre>
 </div>
 <div id="example-9-return-metadata-records-for-all-indicators-under-the-health-and-nutrition-category" class="section level3">
-<h3><span class="header-section-number">3.0.3</span> Example #9: return metadata records for all indicators under the ‘Health and Nutrition’ category</h3>
+<h3><span class="header-section-number">4.0.3</span> Example #9: return metadata records for all indicators under the ‘Health and Nutrition’ category</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
 -d <span class="st">&quot;group='Health and Nutrition'&quot;</span> -X POST</code></pre>
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    28      0   1535 --:--:-- --:--:-- --:--:--  1535
-  0   100    0   100    0    28    514    144 --:--:-- --:--:-- --:--:--   406
-  0   100    0   100    0    28    514    144 --:--:-- --:--:-- --:--:--   406
+  0     0    0     0    0    28      0   1524 --:--:-- --:--:-- --:--:--  1524
+  0   100    0   100    0    28    571    159 --:--:-- --:--:-- --:--:--   461
 ## unused argument (group = &quot;Health and Nutrition&quot;)
 ## 
 ## In call:
@@ -422,10 +443,10 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 </div>
 </div>
 <div id="advanced-methods" class="section level1">
-<h1><span class="header-section-number">4</span> Advanced Methods</h1>
+<h1><span class="header-section-number">5</span> Advanced Methods</h1>
 </div>
 <div id="source-code-repository" class="section level1">
-<h1><span class="header-section-number">5</span> Source Code Repository</h1>
+<h1><span class="header-section-number">6</span> Source Code Repository</h1>
 </div>
 <div class="footnotes">
 <hr />

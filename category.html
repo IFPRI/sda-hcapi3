@@ -35,7 +35,7 @@
         
       </header>
       
-      <h1>Return list of HarvestChoice variable categories</h1>
+      <h1>Show HarvestChoice variable categories (3-level deep)</h1>
 
 <div class="row">
   <div class="span8">
@@ -45,16 +45,17 @@
     <h2>Arguments</h2>
     <dl>
       <dt>cat</dt>
-      <dd>optional category filter</dd>
+      <dd>optional fuzzy filter</dd>
       <dt>as.class</dt>
-      <dd>"data.table" simple data table or "list" group by category</dd>
+      <dd>"data.table" simple data table or "list" grouped by category</dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-a data.table or list of variable categories
+a data.table with <code>N</code> showing the number of indicators in each category,
+or a list of variable categories
 </dl></p>
   
     </div>
@@ -62,7 +63,7 @@ a data.table or list of variable categories
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Return list of HarvestChoice variable categories</p>
+      <p>Show HarvestChoice variable categories (3-level deep)</p>
   
     </div>
     
@@ -86,6 +87,27 @@ a data.table or list of variable categories
 14: Demographics           Population           Rural  4
 15: Demographics           Population           Total  5
 16: Demographics           Population           Urban  3
+</div>
+<div class='input'>category(&quot;cassava&quot;, as.class=&quot;list&quot;)
+</div>
+<div class='output'>$Agriculture
+$Agriculture$`Harvested Area`
+      Category    Subcategory    Item N
+1: Agriculture Harvested Area Cassava 3
+
+$Agriculture$Production
+      Category Subcategory    Item N
+1: Agriculture  Production Cassava 3
+
+$Agriculture$`Value of Production`
+      Category         Subcategory    Item N
+1: Agriculture Value of Production Cassava 3
+
+$Agriculture$Yield
+      Category Subcategory    Item N
+1: Agriculture       Yield Cassava 3
+
+
 </div></pre>
   </div>
   <div class="span4">

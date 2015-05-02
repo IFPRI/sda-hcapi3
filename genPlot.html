@@ -35,7 +35,7 @@
         
       </header>
       
-      <h1>Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators</h1>
+      <h1>Plot HarvestChoice 5-arc-Minute Spatial Indicators</h1>
 
 <div class="row">
   <div class="span8">
@@ -74,7 +74,13 @@ Array of generated file names, one for each plot
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators</p>
+      <p>Method to plot HarvestChoice rasters with mutiple symbology options.
+img/PD12_TOT.pngoptions: width="35%"
+img/AEZ16_CLAS.GHA.print.pngoptions: width="35%"
+img/whea_h.GHA.print.pngoptions: width="35%"
+img/FS_2012.pngoptions: width="35%"
+img/yield_l_cv.pngoptions: width="35%"
+img/soc_d15.pngoptions: width="35%"</p>
   
     </div>
     
@@ -92,31 +98,37 @@ grid has empty column/rows in dimension 2</strong>
 </div>
 <div class='input'>
 # Generate 3 raster plots for Ghana with legend and title but not axes
-genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;, &quot;soc_d15&quot;), iso3=&quot;GHA&quot;, format=&quot;print&quot;)
+genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, format=&quot;print&quot;)
 </div>
 <div class='output'>AEZ16_CLAS :  AEZ-16
 </div>
 <div class='output'>whea_h :  Wheat area &#39;05
 </div>
-<div class='output'>soc_d15 :  Soil org. carbon (5-15cm)
-</div>
-<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;whea_h.GHA.print.png&quot;     &quot;soc_d15.GHA.print.png&quot;   
+<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;whea_h.GHA.print.png&quot;    
 </div>
 <div class='input'>
 # Generate 3 raster plots for Nigeria with the specified dimensions
-p &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), iso3=&quot;NGA&quot;, width=5, height=5,
+p &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), width=5, height=5,
 units=&quot;in&quot;, res=200, pointsize=8)
 </div>
 <div class='output'>FS_2012 :  Farming System Code
 </div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
 <div class='output'>yield_l_cv :  Maize yield CV (low)
 </div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
 <div class='output'>soc_d15 :  Soil org. carbon (5-15cm)
 </div>
-<div class='input'>
-# Print these plots
-for (i in p) grid::grid.raster(png::readPNG(i))
-</div></pre>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong></pre>
   </div>
   <div class="span4">
     <!-- <ul>

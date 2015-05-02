@@ -45,6 +45,15 @@ Zhe Guo [ctb]">
   <div class="span8">
     Methods to retrieve, summarize, aggregate, and plot HarvestChoice
 5-arc-minute spatial layers for sub-Saharan Africa.
+This R package cannot be installed locally. Instead we provide access to
+all methods through a RESTful API (credits to \url{http://github.com/jeroenooms/opencpu}).
+Method names are endpoints and arguments must be converted from R syntax to simple
+JSON objects, \code{foo(arg1=c("val1", "val2"))} must be passed to
+\url{http://harvestchoice.org/tools/hcapi/R/foo} using \code{{"arg1" : ["val1", "val2"]}}.
+Through transparent data services our aim is to facilitate the re-use and
+integration of HarvestChoice's spatially-consistent biophysical and socio-economic
+indicators into 3rd-party tools and models. As of today over 750 indicators are
+available for sub-Saharan Africa. More about HarvestChoice at \url{http://harvestchoice.org/}.
 
     <h2>Help topics</h2>
 
@@ -54,7 +63,7 @@ Zhe Guo [ctb]">
     <ul class="index">
         
       <li>
-        <code><a href="category.html">category</a></code><br />Return list of HarvestChoice variable categories</li>
+        <code><a href="category.html">category</a></code><br />Show HarvestChoice variable categories (3-level deep)</li>
             
       <li>
         <code><a href="classify.html">classify</a></code><br />Create custom domains for spatial targeting</li>
@@ -63,16 +72,16 @@ Zhe Guo [ctb]">
         <code><a href="describe.html">describe</a></code><br />Return HarvestChoice variable metadata</li>
             
       <li>
+        <code><a href="genCartoCSS.html">genCartoCSS</a></code><br />Generate CartoCSS snippet to symbolize raster tiles</li>
+            
+      <li>
         <code><a href="genFile.html">genFile</a></code><br />Convert CELL5M layers to raster and/or tabular formats and create archive for download</li>
             
       <li>
-        <code><a href="genPlot.html">genPlot</a></code><br />Generate Raster Plot of HarvestChoice 5-Arc-Minute Spatial Indicators</li>
+        <code><a href="genPlot.html">genPlot</a></code><br />Plot HarvestChoice 5-arc-Minute Spatial Indicators</li>
             
       <li>
-        <code><a href="genReadme.html">genReadme</a></code><br />Generate HarvestChoice data use terms, citation, and variable metadata</li>
-            
-      <li>
-        <code><a href="getCartoCSS.html">getCartoCSS</a></code><br />Generate CartoCSS snippet to symbolize raster tiles</li>
+        <code><a href="genReadme.html">genReadme</a></code><br />Return HarvestChoice data use terms, citation, and variable metadata</li>
             
       <li>
         <code><a href="getLayer.html">getLayer</a></code><br />Subset, and/or summarize HarvestChoice 5-arc-minute layers</li>
@@ -90,7 +99,7 @@ Zhe Guo [ctb]">
         <code><a href="similar.html">similar</a></code><br />Rank spatial units by similarity</li>
             
       <li>
-        <code><a href="stats.html">stats</a></code><br />Generate histogram and boxplot of HarvestChoice layer(s)</li>
+        <code><a href="stats.html">stats</a></code><br />Generate Histogram and Boxplot of HarvestChoice Indicator(s)</li>
             
       <li>
         <code><a href="vi.html">vi</a></code><br />HarvestChoice CELL5M Variable Inventory</li>
