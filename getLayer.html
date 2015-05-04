@@ -105,6 +105,61 @@ getLayer(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quo
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
 # -d &quot;{&#39;var&#39;:[&#39;bmi&#39;,&#39;cass_y&#39;], &#39;iso3&#39;:&#39;TZA&#39;, &#39;by&#39;:[&#39;ADM1_NAME&#39;,&#39;ADM2_NAME&#39;]}&quot; \
 # -X POST -H &quot;Content-Type:application/json&quot;
+
+# The method may be expanded to summarize classified (discrete) variables by continuous
+# variables. For example the call below returns the dominant agro-ecological zone and
+# average stunting in children under 5 over Ivory Coast&#39;s provinces by elevation class
+getLayer(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+</div>
+<div class='output'>        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
+ 1:           Savanes      (256,516] Sub-Humid              NaN
+ 2:          Denguele      (256,516] Sub-Humid              NaN
+ 3:          Denguele      (516,862] Sub-Humid              NaN
+ 4:           Savanes             NA Sub-Humid              NaN
+ 5:            Zanzan      (256,516] Sub-Humid              NaN
+ 6:            Zanzan             NA Sub-Humid              NaN
+ 7:            Zanzan      (516,862] Sub-Humid              NaN
+ 8: Vallee Du Bandama      (256,516] Sub-Humid              NaN
+ 9:           Savanes      (516,862] Sub-Humid              NaN
+10:        Worodougou      (256,516] Sub-Humid              NaN
+11:            Bafing      (256,516] Sub-Humid              NaN
+12:            Bafing      (516,862] Sub-Humid              NaN
+13:        Worodougou      (516,862] Sub-Humid              NaN
+14: Vallee Du Bandama             NA Sub-Humid              NaN
+15:        Worodougou             NA Sub-Humid              NaN
+16:      18 Montagnes      (256,516]     Humid              NaN
+17:      18 Montagnes      (516,862] Sub-Humid              NaN
+18:        N&#39;zi Comoe             NA Sub-Humid              NaN
+19:            Bafing             NA Sub-Humid              NaN
+20:      18 Montagnes (862,1.28e+03]     Humid              NaN
+21:    Haut-sassandra      (256,516]     Humid              NaN
+22:          Marahoue             NA     Humid              NaN
+23:    Haut-sassandra             NA     Humid              NaN
+24:      18 Montagnes             NA     Humid              NaN
+25:          Marahoue      (256,516]     Humid              NaN
+26:              Lacs             NA Sub-Humid              NaN
+27:       Moyen Comoe             NA     Humid              NaN
+28:       Moyen Comoe      (256,516]     Humid              NaN
+29:     Moyen-Cavally      (256,516]     Humid              NaN
+30:     Moyen-Cavally             NA     Humid              NaN
+31:        N&#39;zi Comoe      (256,516] Sub-Humid              NaN
+32:          Fromager             NA     Humid              NaN
+33:            Agneby             NA     Humid              NaN
+34:     Bas Sassandra             NA     Humid              NaN
+35:     Bas Sassandra      (256,516]     Humid              NaN
+36:           Lagunes             NA Sub-Humid              NaN
+37:          Fromager      (256,516]     Humid              NaN
+38:       Sud Bandama             NA Sub-Humid              NaN
+39:       Sud Bandama      (256,516]     Humid              NaN
+40:         Sud Comoe             NA     Humid              NaN
+41:   buffer gridcell             NA        NA              NaN
+        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
+</div>
+<div class='input'>
+# An equivalent request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+# -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
+# -X POST -H &quot;Content-Type:application/json&quot;
 </div></pre>
   </div>
   <div class="span4">

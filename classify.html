@@ -93,12 +93,19 @@ classify(c(&quot;wealth&quot;,&quot;TPOV_PT200&quot;),
 # -d &#39;{&quot;var&quot; : [&quot;wealth&quot;, &quot;TPOV_PT200&quot;], &quot;by&quot; : {&quot;PD05_RUR&quot; : [60, 100], &quot;TT_20K&quot; : [0, 5]}}&#39; \
 # -X POST -H &quot;Content-Type:application/json&quot;
 
-# Return average rainfall across Ethiopia&#39;s districts for areas above/below 100m elevation
-classify(&quot;pre_mean&quot;, by=list(&quot;ADM2_NAME_ALT&quot;, ELEV=c(0, 100, 3000)), iso3=&quot;ETH&quot;)
+# Return average rainfall in 2 Ethiopia districts for areas below 600m elevation
+classify(&quot;pre_mean&quot;, by=list(ADM2_NAME_ALT=c(&quot;Bale&quot;, &quot;Hadiya&quot;), ELEVATION=c(0, 600)))
 </div>
-<strong class='error'>Error in parse(text = paste0(&quot;data &lt;- RS.eval(rc, &quot;, data, &quot;)&quot;)): &lt;text&gt;:1:99: unexpected &#39;=&#39;
-1: data &lt;- RS.eval(rc, dt[ISO3 %in% c(&#39;ETH&#39;)][][, list(pre_mean=mean(pre_mean, na.rm=TRUE)), by=list(=
-                                                                                                      ^</strong></pre>
+<div class='output'>   ELEVATION pre_mean
+1:   (0,600]      784
+2:        NA      922
+</div>
+<div class='input'>
+# Equivalent cUrl request at the command line passing a well-formatted JSON object
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \
+# -d &#39;{&quot;var&quot; : &quot;pre_mean&quot;, &quot;by&quot; : {&quot;ADM2_NAME_ALT&quot; : [&quot;Bale&quot;, &quot;Hadidya&quot;], &quot;ELEVATION&quot; : [0, 600]}}&#39; \
+# -X POST -H &quot;Content-Type:application/json&quot;
+</div></pre>
   </div>
   <div class="span4">
     <!-- <ul>

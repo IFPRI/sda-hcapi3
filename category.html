@@ -68,29 +68,64 @@ or a list of variable categories
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>category(&quot;Demographics&quot;)
+    <pre class="examples"><div class='input'># List all HarvestChoice indicators matching category &quot;Demographics&quot;
+category(&quot;demographics&quot;)
 </div>
-<div class='output'>        Category          Subcategory            Item  N
- 1: Demographics Health and Nutrition Anthropometrics 12
- 2: Demographics Health and Nutrition Body-Mass Index 27
- 3: Demographics Health and Nutrition    Child Health  3
- 4: Demographics Health and Nutrition Child Mortality  6
- 5: Demographics Health and Nutrition   Mother Health  6
- 6: Demographics Health and Nutrition        Stunting  9
- 7: Demographics Health and Nutrition Supplementation  6
- 8: Demographics Health and Nutrition     Underweight  9
- 9: Demographics Health and Nutrition         Wasting  9
-10: Demographics Health and Nutrition    Wealth Index  3
-11: Demographics   Income and Poverty           Rural 12
-12: Demographics   Income and Poverty           Total 12
-13: Demographics   Income and Poverty           Urban 12
-14: Demographics           Population           Rural  4
-15: Demographics           Population           Total  5
-16: Demographics           Population           Urban  3
+<div class='output'>         Category          Subcategory            Item               varCode                     varLabel
+  1: Demographics Health and Nutrition Anthropometrics            mother_age         Mother&#39;s age (years)
+  2: Demographics Health and Nutrition Anthropometrics        mother_age_rur Mother&#39;s age (years) - rural
+  3: Demographics Health and Nutrition Anthropometrics        mother_age_urb Mother&#39;s age (years) - urban
+  4: Demographics Health and Nutrition Anthropometrics     mother_height_cms         Mother&#39;s height (cm)
+  5: Demographics Health and Nutrition Anthropometrics mother_height_cms_rur Mother&#39;s height (cm) - rural
+ ---                                                                                                     
+134: Demographics           Population           Total              PN05_TOT               Total Pop. &#39;05
+135: Demographics           Population           Total              PN12_TOT               Total Pop. &#39;12
+136: Demographics           Population           Urban              PD05_URB       Urban Pop. density &#39;05
+137: Demographics           Population           Urban              PN00_URB               Urban Pop. &#39;00
+138: Demographics           Population           Urban              PN05_URB               Urban Pop. &#39;05
 </div>
-<div class='input'>category(&quot;cassava&quot;, as.class=&quot;list&quot;)
+<div class='input'>
+# List all HarvestChoice indicators matching &quot;cassava&quot;, return as a hierarchical list
+category(&quot;cassava&quot;, as.class=&quot;list&quot;)
 </div>
-<strong class='error'>Error in x$Subcategory: $ operator is invalid for atomic vectors</strong></pre>
+<div class='output'>$Agriculture
+$Agriculture$`Harvested Area`
+      Category    Subcategory    Item  varCode              varLabel
+1: Agriculture Harvested Area Cassava   cass_h      Cassava area &#39;05
+2: Agriculture Harvested Area Cassava cass_i_h Irr. cassava area &#39;05
+3: Agriculture Harvested Area Cassava cass_r_h Rfd. cassava area &#39;05
+
+$Agriculture$Production
+      Category Subcategory    Item  varCode               varLabel
+1: Agriculture  Production Cassava cass_i_p Irr. cassava prod. &#39;05
+2: Agriculture  Production Cassava   cass_p      Cassava prod. &#39;05
+3: Agriculture  Production Cassava cass_r_p Rfd. cassava prod. &#39;05
+
+$Agriculture$`Value of Production`
+      Category         Subcategory    Item  varCode                    varLabel
+1: Agriculture Value of Production Cassava cass_i_v Irr. cassava val. prod. &#39;05
+2: Agriculture Value of Production Cassava cass_r_v Rfd. cassava val. prod. &#39;05
+3: Agriculture Value of Production Cassava   cass_v      Cassava val. prod. &#39;05
+
+$Agriculture$Yield
+      Category Subcategory    Item  varCode               varLabel
+1: Agriculture       Yield Cassava cass_i_y Irr. cassava yield &#39;05
+2: Agriculture       Yield Cassava cass_r_y Rfd. cassava yield &#39;05
+3: Agriculture       Yield Cassava   cass_y      Cassava yield &#39;05
+
+
+</div>
+<div class='input'>
+# Equivalent request using cURL at the command line and passing well-formatted JSON
+# objects
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+# -d &#39;{&quot;cat&quot; : &quot;demographics&#39;} \
+# -X POST -H &quot;Content-Type:application/json&quot;
+
+#&#39; # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+# -d &#39;{&quot;cat&quot; :&quot; cassava&quot;, &quot;as.class&quot; : &quot;list&quot;} \
+# -X POST -H &quot;Content-Type:application/json&quot;
+</div></pre>
   </div>
   <div class="span4">
     <!-- <ul>
