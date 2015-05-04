@@ -44,10 +44,11 @@ Zhe Guo [ctb]">
       <div class="row">
   <div class="span8">
     <p>Methods to retrieve, summarize, aggregate, and plot HarvestChoice
-5-arc-minute spatial layers for sub-Saharan Africa. All methods are combined and documented as a R package, but currently this package cannot be installed locally. Instead we provide access to
-all methods through a RESTful API (credits to <a href="http://github.com/jeroenooms/opencpu">OpenCPU</a>). Method names are endpoints and arguments must be converted from R syntax (as shown in this documentation) to simple
-JSON objects.</p>
+5-arc-minute spatial layers for sub-Saharan Africa. All methods are combined and documented in this R package, but currently this package cannot be installed locally. Instead we provide access to
+all methods through a RESTful API (credits to <a href="http://github.com/jeroenooms/opencpu">OpenCPU</a>). Method names are endpoints and arguments must be converted from R syntax (as shown in this documentation) to simple JSON objects.</p>
+
 <pre>foo(arg1=c("val1", "val2"))</pre>
+
 <p>must be passed to endpoint <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/foo">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/foo</a> using,</p>
 
 <pre>{"arg1" : ["val1", "val2"]}</pre>
