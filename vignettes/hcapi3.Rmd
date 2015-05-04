@@ -5,15 +5,16 @@ date: "`r Sys.Date()`"
 output:
   knitr:::html_vignette:
     toc: yes
-    number_sections: yes
+    theme: journal
+    number_sections: no
   html_document:
     toc: yes
-    number_sections: yes
-    theme: cosmo
+    number_sections: no
+    theme: sandstone
     self_contained: yes
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{An Introduction to HarvestChoice Data API v3}
+  %\VignetteIndexEntry{An Introduction to HarvestChoice Data services v3}
 ---
 
 
@@ -23,7 +24,9 @@ Through transparent data services our aim is to facilitate the re-use and integr
 
 # Warning
 
-This R package cannot be installed locally. Instead we provide access to all methods through a RESTful API (credits to (http://github.com/jeroenooms/opencpu)[OpenCPU]). Method names are endpoints and arguments must be converted from R syntax to simple JSON objects, `foo(arg1=c("val1", "val2"))` must be passed to `http://harvestchoice.org/tools/hcapi/R/foo` using `{"arg1" : ["val1", "val2"]}`.
+This R package cannot be installed locally. Instead we provide access to all methods through a RESTful API (credits to (http://github.com/jeroenooms/opencpu)[OpenCPU]). Method names are endpoints and function arguments must be converted from R syntax to simple JSON objects, `foo(arg1=c("val1", "val2"))` must be passed to endpoint `http://harvestchoice.org/tools/hcapi/R/foo` using `{"arg1" : ["val1", "val2"]}`.
+
+The examples below show sample request mechanics using *cURL* at the command line, but the same approach will work in R using `jsonlite::curl()` and in STATA using procedure `??`.
 
 # Data APIs - What for?
 
@@ -33,72 +36,61 @@ Forthcomming
 
 This API implements a RESTful[^2] interface allowing users to query, summarize, plot, and download any subset of HarvestChoice's 700 spatially-explicit indicators for sub-Saharan Africa. We describe here some of the methods available to developers and researchers to programmatically interact with the API.
 
-Because the API uses standard REST protocol and HTTP verbs (GET, POST), requests may be sent through any URL transfer utility (e.g. cURL on both Windows and Linux), or using any programming language that implements HTTP requests (including statistical languages such as STATA, R, and SAS). The logic consists in calling a specific method and passing any number of required or optional arguments or parameters. In the examples below we use the command line tool `cURL` in Windows (available in Windows 7 and 8).
+Because the API uses standard REST protocol and HTTP verbs (GET, POST), requests may be sent through any URL transfer utility (e.g. *cURL* on both Windows and Linux), or using any programming language that implements HTTP requests (including statistical languages such as STATA, R, and SAS). The logic consists in calling a specific method and passing any number of required or optional arguments or parameters. In the examples below we use the command line tool *cURL* in Windows (available in Windows 7 and 8).
 
-The API's main endpoint is at [http://hcapi.harvestchoice.org/ocpu/library/hcapi3/](http://hcapi.harvestchoice.org/ocpu/library/hcapi3). There are a couple of useful methods exposing the API documentation. These are explained here.
+The API's main endpoint is at [http://hcapi.harvestchoice.org/ocpu/library/hcapi3](http://hcapi.harvestchoice.org/ocpu/library/hcapi3). There are a couple of useful methods exposing the API documentation. These are explained here.
 
 
 ## Using Methods and Parameters
 
-The API exposes a list of available methods at\
-[http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/](http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/)\
-(the result of which is shown in [#fig1] below). In turn each method is further documented at `/man/{method}` e.g.\
-[http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/](http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/) ([#fig2]).
+The API exposes a list of available methods at [http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/](http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info/). In turn each method is further documented at `/man/{method}/html` e.g. http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/html ([#fig2]).
 
 
-### Example #1: list API available methods
+### Example #1: list of available API methods
 
 ```{bash}
 # List of API methods
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/info
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R
 ```
 
-
-The main data query method is `/getLayer/`, and the main data download method is
-`/genFile/`. `/getGroups/` and `/getMeta/` will return indicator metadata. Other
-methods are useful to conduct specific analyses. Detailed documentation may be
-retrieved as shown below (use `cURL` in terminal, or just click
-http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer to see this same information in your browser.
+The main data query method is `getLayer()` with a REST endpoint at (http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer)[/R/getLayer], and the main data download method is `genFile()` at (http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile)[/R/genFile]. `category()` and `describe()` may be used to return indicator metadata. Other methods, like `classify()` (summarizing indicators across custom geographic domains) and `similar()` (ranking areas by similarity) are useful to conduct advanced analyses.
 
 
 ### Example #2: method documentation
 
 ```{bash}
-# Sample Method Documentation
+# Sample method documentation
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/text
 ```
 
+The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. `getLayer()` is one of the API's main methods allowing users to query and summarize indicators. The documentation above shows that `getLayer()` takes at minimum one parameter `var` indicating which indicator to query (e.g. `var='PD05_TOT'` to return 2005 population density). Other optional parameters include `iso3` limiting the results to one (or multiple) countri(es) (e.g. `iso3=['GHA', 'NGA']` for Ghana and Nigeria), and `by` summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones `by='AEZ8_CLAS'`).
 
-The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. `/getLayer/` is one of the API's main methods allowing users to query and summarize specific indicators. The documentation above shows that `/getLayer/` takes at minimum one parameter `var` indicating which indicator to query (e.g. `var='PD05_TOT'` to return 2005 total population density). Other optional parameters include `iso3` limiting the results to one (or multiple) countri(es) (e.g. `iso3=['GHA', 'NGA']` for Ghana and Nigeria), and `by` summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones `by='AEZ8_CLAS'`).
+You can test this query by manually forming the following *cURL* request. This returns a JSON array.
 
-You can test this query by manually forming the following `cURL` request. This returns a dataset as a JSON array.
-
-### Example #3: simple request returning a dataset in JSON format
+### Example #3: simple request returning a dataset in JSON
 
 ```{bash}
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'" -X POST
 ```
 
+For users of STATA or R the same dataset may be returned in a native format by using the `genFile()` method instead and appending a `format` parameter at the end of the request.
 
-For users of STATA or R the same dataset may be returned in a native format by using the `/genFile/` method and appending a `format=` parameter at the end of the request.
-
-### Example #4: request Ghana 2005 population density summarized across AEZ in STATA .dta format
+### Example #4: request Ghana 2005 population density (PD05_TOT) summarized across agro-ecological zones (AEZ8_CLAS) in STATA format (dta)
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='dta'" -X POST
 ```
-
 
 ### Example #5: same request returning a file in RData format
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/ \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='rda'" -X POST
 ```
 
-Other possible formats include `csv` and raster formats `tif` and `asc` for GeoTiff and ESRI ASCII Raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to manually request that ZIP file. You can do so at the command line using `wget`.
+Other possible formats include `csv`, `json` for GeoJSON, and raster formats `grd`, `tif` and `asc` for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to manually request that ZIP file. You can do so at the command line using *wget*.
 
 
 ### Example #6: Ghana wheat production in CSV format aggregated over districts
@@ -130,13 +122,13 @@ PD05_TOT-AEZ8_CLAS-GH     [ <=>                      ]   2.38K  --.-KB/s   in 0s
 
 # About the Data
 
-All of the API methods require passing indicator codes as parameters. These codes uniquely identify an indicator and may be accessed using two of the metadata query methods `/getGroups/` and `/getMeta/`. `/getGroups/` returns a list of indicators in any category matching a `group=` keyword. `/getMeta/` returns complete metadata records for selected indicators. Sample requests are shown here. The `Code` element is the indicator code to pass into other API methods.
+All of the API methods require passing indicator codes as parameters. These codes uniquely identify an indicator and may be accessed using two of the metadata query methods `category()` and `describe()`. `category()` returns a list of indicators in any category matching a `cat` keyword. `describe()` returns complete metadata records for selected indicators. Sample requests are shown here. The returned `Code` element is the variable code to pass into other API methods.
 
 ### Example #7: return list of indicators in any category matching 'demo'
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getGroups/json \
--d "group='climate'" -X POST
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+-d "cat='climate'" -X POST
 ```
 
 
@@ -151,12 +143,10 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/describe/text
 
 ```{bash}
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
--d "group='Health and Nutrition'" -X POST
+-d "cat='nutrition'" -X POST
 ```
 
-Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format at\
-[http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv](http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv)\
-(`vi` in the URL stands for Variable Inventory).
+Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format using [http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv](http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv) (`vi` in the URL stands for *Variable Inventory*).
 
 
 # Advanced Methods

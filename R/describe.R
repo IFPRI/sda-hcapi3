@@ -12,12 +12,18 @@
 #' # Show complete metadata for all variables under 'Cassava' category
 #' describe(cat="cassava", raster=T)
 #'
-#' # Equivalent cUrl request at the command line
+#' # Equivalent cURL request at the command line
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
 #' # -d '{"cat" : "cassava", "raster" : true, "as.class" : "list"}' \
 #' # -X POST -H "Content-Type:application/json"
 #'
 #' describe(raster=T, version="SChEF r2.3", as.class="list")[1:2]
+#'
+#' # Equivalent cURL request at the command line
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+#' # -d '{"raster" : true, "version" : "SChEF r2.3", "as.class" : "list"}' \
+#' # -X POST -H "Content-Type:application/json"
+#'
 #' @export
 describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css="json") {
 
@@ -68,7 +74,7 @@ describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css
 
   setkey(out, Category, Subcategory, Item)
 
-  if (by.category) {
+  if (as.class=="list") {
     # Group by category
     setkey(out, Category, Subcategory, Item, Label, Code)
     out <- split(out, out$Category)
@@ -127,12 +133,26 @@ genReadme <- function(var) {
 #' @return a data.table with \code{N} showing the number of indicators in each category,
 #' or a list of variable categories
 #' @examples
-#' category("Demographics")
+#' # List all HarvestChoice indicators matching category "Demographics"
+#' category("demographics")
+#'
+#' # List all HarvestChoice indicators matching "cassava", return as a hierarchical list
 #' category("cassava", as.class="list")
+#'
+#' # Equivalent request using cURL at the command line and passing well-formatted JSON
+#' # objects
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#' # -d '{"cat" : "demographics'} \
+#' # -X POST -H "Content-Type:application/json"
+#'
+#' #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#' # -d '{"cat" :" cassava", "as.class" : "list"} \
+#' # -X POST -H "Content-Type:application/json"
 #' @export
 category <- function(cat, as.class="data.table") {
 
-  out <- vi[published==T, .N, keyby=list(Category=cat1, Subcategory=cat2, Item=cat3)]
+  out <- vi[published==T, list(varCode, varLabel),
+    keyby=list(Category=cat1, Subcategory=cat2, Item=cat3)]
 
   if (!missing(cat)) {
     out <- out[tolower(Category) %like% tolower(cat) |
@@ -141,7 +161,7 @@ category <- function(cat, as.class="data.table") {
   }
 
   if (as.class=="list") {
-    out <- split(out[, -N], out$Category)
+    out <- split(out, out$Category)
     out <- lapply(out, function(x) split(x, x$Subcategory))
   }
   return(out)

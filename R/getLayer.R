@@ -26,6 +26,17 @@
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
 #' # -d "{'var':['bmi','cass_y'], 'iso3':'TZA', 'by':['ADM1_NAME','ADM2_NAME']}" \
 #' # -X POST -H "Content-Type:application/json"
+#'
+#' # The method may be expanded to summarize classified (discrete) variables by continuous
+#' # variables. For example the call below returns the dominant agro-ecological zone and
+#' # average stunting in children under 5 over Ivory Coast's provinces by elevation class
+#' getLayer(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
+#'
+#' # An equivalent request at the command line
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+#' # -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
+#' # -X POST -H "Content-Type:application/json"
+#'
 #' @export
 getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class="data.table") {
 

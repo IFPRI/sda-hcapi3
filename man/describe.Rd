@@ -30,11 +30,16 @@ Return HarvestChoice variable metadata
 # Show complete metadata for all variables under 'Cassava' category
 describe(cat="cassava", raster=T)
 
-# Equivalent cUrl request at the command line
+# Equivalent cURL request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \\
 # -d '{"cat" : "cassava", "raster" : true, "as.class" : "list"}' \\
 # -X POST -H "Content-Type:application/json"
 
 describe(raster=T, version="SChEF r2.3", as.class="list")[1:2]
+
+# Equivalent cURL request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \\
+# -d '{"raster" : true, "version" : "SChEF r2.3", "as.class" : "list"}' \\
+# -X POST -H "Content-Type:application/json"
 }
 

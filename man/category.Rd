@@ -19,7 +19,20 @@ or a list of variable categories
 Show HarvestChoice variable categories (3-level deep)
 }
 \examples{
-category("Demographics")
+# List all HarvestChoice indicators matching category "Demographics"
+category("demographics")
+
+# List all HarvestChoice indicators matching "cassava", return as a hierarchical list
 category("cassava", as.class="list")
+
+# Equivalent request using cURL at the command line and passing well-formatted JSON
+# objects
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \\
+# -d '{"cat" : "demographics'} \\
+# -X POST -H "Content-Type:application/json"
+
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \\
+# -d '{"cat" :" cassava", "as.class" : "list"} \\
+# -X POST -H "Content-Type:application/json"
 }
 

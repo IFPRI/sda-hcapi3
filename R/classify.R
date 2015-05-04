@@ -24,8 +24,13 @@
 #' # -d '{"var" : ["wealth", "TPOV_PT200"], "by" : {"PD05_RUR" : [60, 100], "TT_20K" : [0, 5]}}' \
 #' # -X POST -H "Content-Type:application/json"
 #'
-#' # Return average rainfall across Ethiopia's districts for areas above/below 100m elevation
-#' classify("pre_mean", by=list("ADM2_NAME_ALT", ELEV=c(0, 100, 3000)), iso3="ETH")
+#' # Return average rainfall in 2 Ethiopia districts for areas below 600m elevation
+#' classify("pre_mean", by=list(ADM2_NAME_ALT=c("Bale", "Hadiya"), ELEVATION=c(0, 600)))
+#'
+#' # Equivalent cUrl request at the command line passing a well-formatted JSON object
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \
+#' # -d '{"var" : "pre_mean", "by" : {"ADM2_NAME_ALT" : ["Bale", "Hadidya"], "ELEVATION" : [0, 600]}}' \
+#' # -X POST -H "Content-Type:application/json"
 #' @export
 classify <- function(var, by, ...) {
   out <- getLayer(var=var, by=by, ids=NULL, ...)
