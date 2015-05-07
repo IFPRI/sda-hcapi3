@@ -2,7 +2,7 @@
 % Please edit documentation in R/getLayer.R
 \name{getLayer}
 \alias{getLayer}
-\title{Subset, and/or summarize HarvestChoice 5-arc-minute layers}
+\title{Subset, and/or summarize HarvestChoice 5-arc-minute spatial indicators}
 \usage{
 getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
   as.class = "data.table")
@@ -16,9 +16,11 @@ getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
 
 \item{ids}{optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)}
 
-\item{collapse}{if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)}
+\item{collapse}{if FALSE always return all pixel values (useful for plotting and to
+convert to spatial formats)}
 
-\item{as.class}{\code{c("data.table", "list")} by default returns a simple data.table. If \code{as.class="list"} returns a well-constructed list with variable metadata}
+\item{as.class}{\code{c("data.table", "list")} by default returns a simple data.table.
+If \code{as.class="list"} returns a well-constructed list with variable metadata}
 }
 \value{
 a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains

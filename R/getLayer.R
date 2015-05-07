@@ -1,4 +1,4 @@
-#' Subset, and/or summarize HarvestChoice 5-arc-minute layers
+#' Subset, and/or summarize HarvestChoice 5-arc-minute spatial indicators
 #'
 #' Workhorse method to subset and/or aggregate HarvestChoice layers.
 #' This method also aggregates classified variables by continuous variables.\\
@@ -15,8 +15,10 @@
 #' @param iso3 optional array of country or regional codes to filter by (3-letter code)
 #' @param by optional character array of variables to group by (all types are accepted)
 #' @param ids optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)
-#' @param collapse if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)
-#' @param as.class \code{c("data.table", "list")} by default returns a simple data.table. If \code{as.class="list"} returns a well-constructed list with variable metadata
+#' @param collapse if FALSE always return all pixel values (useful for plotting and to
+#' convert to spatial formats)
+#' @param as.class \code{c("data.table", "list")} by default returns a simple data.table.
+#' If \code{as.class="list"} returns a well-constructed list with variable metadata
 #' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
 #' @examples
 #' # Mean BMI and cassava yield across districts in Tanzania

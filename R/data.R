@@ -1,4 +1,4 @@
-#' HarvestChoice CELL5M Variable Inventory
+#' HarvestChoice inventory of 5-arc-minute spatial indicators
 #'
 #' Metadata elements for HarvestChoice collection of 5-arc-minute rasters for
 #' sub-Saharan Africa.
@@ -16,7 +16,7 @@
 #' vi["cass_y"]
 NULL
 
-#' HarvestChoice Lookup Lists
+#' List of ISO3 country and/or region codes
 #'
 #' List of ISO3 country codes and corresponding country/region labels.
 #'
@@ -25,6 +25,7 @@ NULL
 #' @name iso
 #' @usage iso.R
 #' @format arrays
+#' @note Country boundaries are derived from FAO GAUL 2008 (2009 eds.)
 #' @examples
 #' # Lookup lists
 #' names(iso)

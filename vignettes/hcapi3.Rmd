@@ -1,19 +1,20 @@
 ---
 title: "An Introduction to HarvestChoice Data Services v3"
 author: "Melanie Bacou"
-date: "`r Sys.Date()`"
+date: '`r Sys.Date()`'
 output:
-  knitr:::html_vignette:
-    toc: yes
-    theme: journal
-    number_sections: no
   html_document:
+    fig_caption: yes
+    fig_width: 6
+    theme: united
     toc: yes
+    toc_depth: 2
+  knitr:::html_vignette:
     number_sections: no
-    theme: sandstone
-    self_contained: yes
-vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
+    theme: united
+    toc: yes
+vignette: |
+  %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteIndexEntry{An Introduction to HarvestChoice Data services v3}
 ---
 

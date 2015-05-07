@@ -8,21 +8,21 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
   "dta", "asc", "rda", "grd"), ...)
 }
 \arguments{
-\item{var}{character array of variable codes, passed to getLayer(var, ...)}
+\item{var}{character array of variable codes, passed to \code\link{getLayer}}
 
-\item{iso3}{character array of ISO3 country or region codes, passed to getLayer()}
+\item{iso3}{character array of ISO3 country or region codes, passed to \code\link{getLayer}}
 
-\item{by}{character array of variable codes to summarize by, passed to getLayer()}
+\item{by}{character array of variable codes to summarize by, passed to \code\link{getLayer}}
 
 \item{format}{output format c("csv", "json", "tif", "dta", "asc", "grd", "rda")}
 
-\item{...}{any other optional argument passed to getLayer(), e.g. \code{by}, \code{collapse}.}
+\item{...}{any other optional argument \code\link{getLayer}, e.g. \code{by}, \code{collapse}.}
 }
 \value{
 character, path to generated ZIP file
 }
 \description{
-Package any result from \code{getLayer()} into the user-specified tabular or raster
+Package any result from \code\link{getLayer} into the user-specified tabular or raster
 format. Also includes a README file with metadata and citation details. Currently
 supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
 (tif), R raster (grd), R Data (rda), and ESRI ASCII raster (asc).

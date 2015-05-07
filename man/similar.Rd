@@ -7,16 +7,19 @@
 similar(x, var, by = 0, iso3 = "SSA")
 }
 \arguments{
-\item{x}{single integer code for the reference geography, either a region code (ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against}
+\item{x}{single integer code for the reference geography, either a region code
+(ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against}
 
 \item{var}{character array of HarvestChoice variable codes used in the ranking}
 
-\item{by}{single integer indicating the type of reference geography (0-gridcell, 1-region, 2-district)}
+\item{by}{single integer indicating the type of reference geography (0-gridcell,
+1-region, 2-district)}
 
 \item{iso3}{optional country or region filter (3-letter code)}
 }
 \value{
-a data.table of regions, districts, or pixels ranked by similarity to reference geography \code{x}
+a data.table of regions, districts, or pixels ranked by similarity to
+reference geography \code{x}
 }
 \description{
 Rank regions, districts, or pixels by similarity to a reference unit across a set of

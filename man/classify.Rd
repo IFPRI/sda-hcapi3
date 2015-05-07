@@ -9,9 +9,10 @@ classify(var, by, ...)
 \arguments{
 \item{var}{character array of variable names (all types are accepted)}
 
-\item{by}{named list of numeric or character arrays representing custom value breaks for each variable to summarize by}
+\item{by}{named list of numeric or character arrays representing custom value
+breaks for each variable to summarize by}
 
-\item{...}{other arguments passed to \code{getLayer()} (e.g. iso3, collapse)}
+\item{...}{other arguments passed to \code\link{getLayer} e.g. iso3, collapse}
 }
 \value{
 a data.table of \code{var} indicators aggregated by custom \code{by} domains
@@ -20,7 +21,7 @@ a data.table of \code{var} indicators aggregated by custom \code{by} domains
 All HarvestChoice spatial layers come with default value breaks to create map legends
 and to automatically convert continuous variables into classified variables (this is needed
 when summarizing). For example, the value breaks for cassava production may be returned
-using \code{getMeta("cass_p")}. They are \code{c(0, 1074, 4260, 10051, 19920, 40085, 101843)}.
+using \code{describe("cass_p")$classBreaks}. They are \code{c(0, 1074, 4260, 10051, 19920, 40085, 101843)}.
 This method extends the classification logic to allow for any custom value break(s).
 For example one can summarize a set of selected indicators over areas
 of low population density, and/or areas covering a single farming system (or any
@@ -44,5 +45,8 @@ classify("pre_mean", by=list(ADM2_NAME_ALT=c("Bale", "Hadiya"), ELEVATION=c(0, 6
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \\
 # -d '{"var" : "pre_mean", "by" : {"ADM2_NAME_ALT" : ["Bale", "Hadidya"], "ELEVATION" : [0, 600]}}' \\
 # -X POST -H "Content-Type:application/json"
+}
+\seealso{
+\code\link{similar} for identifying areas with similar patterns
 }
 

@@ -1,16 +1,15 @@
-
 #' Convert CELL5M layers to raster and/or tabular formats and create archive for download
 #'
-#' Package any result from \code{getLayer()} into the user-specified tabular or raster
+#' Package any result from \code\link{getLayer} into the user-specified tabular or raster
 #' format. Also includes a README file with metadata and citation details. Currently
 #' supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
 #' (tif), R raster (grd), R Data (rda), and ESRI ASCII raster (asc).
 #'
-#' @param var character array of variable codes, passed to getLayer(var, ...)
-#' @param iso3 character array of ISO3 country or region codes, passed to getLayer()
-#' @param by character array of variable codes to summarize by, passed to getLayer()
+#' @param var character array of variable codes, passed to \code\link{getLayer}
+#' @param iso3 character array of ISO3 country or region codes, passed to \code\link{getLayer}
+#' @param by character array of variable codes to summarize by, passed to \code\link{getLayer}
 #' @param format output format c("csv", "json", "tif", "dta", "asc", "grd", "rda")
-#' @param ... any other optional argument passed to getLayer(), e.g. \code{by}, \code{collapse}.
+#' @param ... any other optional argument \code\link{getLayer}, e.g. \code{by}, \code{collapse}.
 #' @return character, path to generated ZIP file
 #' @examples
 #' # Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia

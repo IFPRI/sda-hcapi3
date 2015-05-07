@@ -3,7 +3,7 @@
 \docType{data}
 \name{vi}
 \alias{vi}
-\title{HarvestChoice CELL5M Variable Inventory}
+\title{HarvestChoice inventory of 5-arc-minute spatial indicators}
 \format{A data.table object}
 \usage{
 vi.R

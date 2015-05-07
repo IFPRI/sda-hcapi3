@@ -8,11 +8,14 @@
 #' aggregate distance score. The lower the score, the more similar the unit for the
 #' selected indicators.
 #'
-#' @param x single integer code for the reference geography, either a region code (ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against
+#' @param x single integer code for the reference geography, either a region code
+#' (ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against
 #' @param var character array of HarvestChoice variable codes used in the ranking
-#' @param by single integer indicating the type of reference geography (0-gridcell, 1-region, 2-district)
+#' @param by single integer indicating the type of reference geography (0-gridcell,
+#' 1-region, 2-district)
 #' @param iso3 optional country or region filter (3-letter code)
-#' @return a data.table of regions, districts, or pixels ranked by similarity to reference geography \code{x}
+#' @return a data.table of regions, districts, or pixels ranked by similarity to
+#' reference geography \code{x}
 #' @examples
 #' # Rank all districts in Ghana by similarity to district 16657 (Kpando)
 #' # using the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),

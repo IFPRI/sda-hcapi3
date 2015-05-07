@@ -2,9 +2,9 @@
 % Please edit documentation in R/genPlot.R
 \name{genPlot}
 \alias{genPlot}
-\title{Plot HarvestChoice 5-arc-Minute Spatial Indicators}
+\title{Plot HarvestChoice 5-arc-minute spatial indicators}
 \usage{
-genPlot(var, iso3 = "SSA", pal, format = "default", style = "default",
+genPlot(var, iso3 = "SSA", pal, format = "default", style = "default", n,
   width = 640, height = 640, ...)
 }
 \arguments{
@@ -14,37 +14,45 @@ genPlot(var, iso3 = "SSA", pal, format = "default", style = "default",
 
 \item{pal}{optional Brewer color palette used for plotting, e.g. "Blues"}
 
-\item{format}{one of "default", "print", "thumbnail" to control legend and axes}
+\item{format}{one of "default", "print", or "thumbnail" to control legend and axes}
 
-\item{style}{one of \code{classIntervals()} style arguments (e.g. "kmeans"), or "default" to use default breaks}
+\item{style}{one of \code\link[classInt:classIntervals]{classIntervals} \code{style}
+options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
+
+\item{n}{\code\link[classInt:classIntervals]{classIntervals} \code{n} argument
+to control the number of breaks}
 
 \item{width}{plot width in pixel (unless \code{units} is specified)}
 
 \item{height}{plot height in pixel (unless \code{units} is specified)}
 
-\item{...}{any argument passed to \code{png()}, e.g. units, res, pointsize}
+\item{...}{any argument passed to \code\link[grDevices:png]{png}, e.g. units, res,
+pointsize}
 }
 \value{
 Array of generated file names, one for each plot
 }
 \description{
 Method to plot HarvestChoice rasters with mutiple symbology options.
-\figure{img/PD12_TOT.png}{options: width="35\%"}
-\figure{img/AEZ16_CLAS.GHA.print.png}{options: width="35\%"}
-\figure{img/whea_h.GHA.print.png}{options: width="35\%"}
-\figure{img/FS_2012.png}{options: width="35\%"}
-\figure{img/yield_l_cv.png}{options: width="35\%"}
-\figure{img/soc_d15.png}{options: width="35\%"}
+See examples below.
+}
+\details{
+\figure{PD12_TOT.png}{options: width="4in"}
+\figure{AEZ16_CLAS.GHA.print.png}{options: width="4in"}
+\figure{whea_h.GHA.print.png}{options: width="4in"}
+\figure{FS_2012.png}{options: width="4in"}
+\figure{yield_l_cv.png}{options: width="4in"}
+\figure{soc_d15.png}{options: width="4in"}
 }
 \examples{
 # Generate standard raster plot of 2012 population density for sub-Saharan Africa
-genPlot("PD12_TOT")
+genPlot("PD12_TOT", pal="OrRd")
 
 # Generate 3 raster plots for Ghana with legend and title but not axes
-genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print", style="kmeans")
+genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print")
 
 # Generate 3 raster plots for Nigeria with the specified dimensions
-p <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
+genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
 units="in", res=200, pointsize=8)
 }
 

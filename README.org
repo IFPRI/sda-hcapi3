@@ -22,6 +22,8 @@ HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org
 
 ** Updates
 
+*2015.05.03*: added a =n= argument to =genPlot()= to control the number of legend breaks.
+
 *2015.04.22*: combined =getPlot()= and =genPlot()= into only one =genPlot()= method that can generate multiple plots at once.
 
 *2015.01.22*: allow filtering variables across multiple country ISO3 codes.

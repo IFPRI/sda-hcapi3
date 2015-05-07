@@ -2,7 +2,7 @@
 % Please edit documentation in R/stats.R
 \name{stats}
 \alias{stats}
-\title{Generate Histogram and Boxplot of HarvestChoice Indicator(s)}
+\title{Generate histogram and boxplot of HarvestChoice indicators}
 \usage{
 stats(var, iso3 = "SSA", by = NULL)
 }
@@ -16,7 +16,11 @@ plot
 }
 \description{
 Display a histogram and univariate statistics for any selected variable(s).
-\figure{img/plot.png}{options: width="35\%"}
+See examples below.
+}
+\details{
+\figure{stats1.png}{options: width="4in"}
+\figure{stats2.png}{options: width="4in"}
 }
 \examples{
 # Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid

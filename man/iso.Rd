@@ -3,13 +3,16 @@
 \docType{data}
 \name{iso}
 \alias{iso}
-\title{HarvestChoice Lookup Lists}
+\title{List of ISO3 country and/or region codes}
 \format{arrays}
 \usage{
 iso.R
 }
 \description{
 List of ISO3 country codes and corresponding country/region labels.
+}
+\note{
+Country boundaries are derived from FAO GAUL 2008 (2009 eds.)
 }
 \examples{
 # Lookup lists

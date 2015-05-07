@@ -13,7 +13,7 @@ genCartoCSS(var, pal = "BuGn", legend = TRUE, ...)
 
 \item{legend}{if TRUE returns HarvestChoice legend, otherwise returns default legend}
 
-\item{...}{any argument passed to \code{getLayer()}, e.g. \code{by="FS_2012", iso3="GHA"}}
+\item{...}{any argument passed to \code\link{getLayer}, e.g. \code{by="FS_2012", iso3="GHA"}}
 
 \item{iso3}{optional country or region filter (3-letter code)}
 }

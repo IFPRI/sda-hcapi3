@@ -1,35 +1,44 @@
-#' Plot HarvestChoice 5-arc-Minute Spatial Indicators
+#' Plot HarvestChoice 5-arc-minute spatial indicators
 #'
 #' Method to plot HarvestChoice rasters with mutiple symbology options.
-#' \figure{img/PD12_TOT.png}{options: width="35\%"}
-#' \figure{img/AEZ16_CLAS.GHA.print.png}{options: width="35\%"}
-#' \figure{img/whea_h.GHA.print.png}{options: width="35\%"}
-#' \figure{img/FS_2012.png}{options: width="35\%"}
-#' \figure{img/yield_l_cv.png}{options: width="35\%"}
-#' \figure{img/soc_d15.png}{options: width="35\%"}
+#' See examples below.
+#'
+#' \figure{PD12_TOT.png}{options: width="4in"}
+#' \figure{AEZ16_CLAS.GHA.print.png}{options: width="4in"}
+#' \figure{whea_h.GHA.print.png}{options: width="4in"}
+#' \figure{FS_2012.png}{options: width="4in"}
+#' \figure{yield_l_cv.png}{options: width="4in"}
+#' \figure{soc_d15.png}{options: width="4in"}
 #'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional ISO3 country or region code to filter by
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
-#' @param format one of "default", "print", "thumbnail" to control legend and axes
-#' @param style one of \code{classIntervals()} style arguments (e.g. "kmeans"), or "default" to use default breaks
+#' @param format one of "default", "print", or "thumbnail" to control legend and axes
+#' @param style one of \code\link[classInt:classIntervals]{classIntervals} \code{style}
+#' options (e.g. "kmeans" or "pretty") or "default" to use default breaks
+#'
+#' @param n \code\link[classInt:classIntervals]{classIntervals} \code{n} argument
+#' to control the number of breaks
+#'
 #' @param width plot width in pixel (unless \code{units} is specified)
 #' @param height plot height in pixel (unless \code{units} is specified)
-#' @param ... any argument passed to \code{png()}, e.g. units, res, pointsize
+#' @param ... any argument passed to \code\link[grDevices:png]{png}, e.g. units, res,
+#' pointsize
+#'
 #' @return Array of generated file names, one for each plot
-#' @export
 #' @examples
 #' # Generate standard raster plot of 2012 population density for sub-Saharan Africa
-#' genPlot("PD12_TOT")
+#' genPlot("PD12_TOT", pal="OrRd")
 #'
 #' # Generate 3 raster plots for Ghana with legend and title but not axes
-#' genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print", style="kmeans")
+#' genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print")
 #'
 #' # Generate 3 raster plots for Nigeria with the specified dimensions
-#' p <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
+#' genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
 #' units="in", res=200, pointsize=8)
 #'
-genPlot <- function(var, iso3="SSA", pal, format="default", style="default",
+#' @export
+genPlot <- function(var, iso3="SSA", pal, format="default", style="default", n,
   width=640, height=640, ...) {
 
   iso3 <- iso3[1]
@@ -65,7 +74,7 @@ genPlot <- function(var, iso3="SSA", pal, format="default", style="default",
         if (style!="default") {
           # Re-classify using classIntervals()
           require(classInt)
-          cv <- classIntervals(r$var, style=style)$brks
+          cv <- classIntervals(r$var, style=style, if(!missing(n)) n=n)$brks
         }
 
         # Classify to 1-based integer using `cv`
