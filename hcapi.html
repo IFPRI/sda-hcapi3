@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>hcapi. hcapi3 3.5</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">hcapi3 3.5</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Subset, summarize, and download HarvestChoice 5-arc-minute spatial indicators</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>hcapi(var, iso3&nbsp;=&nbsp;"SSA", by&nbsp;=&nbsp;NULL, wkt&nbsp;=&nbsp;NULL, format&nbsp;=&nbsp;"dt", ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>var</dt>
+      <dd>character array of variable codes, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dt>iso3</dt>
+      <dd>character array of ISO3 country or region codes, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dt>by</dt>
+      <dd>character array of variable codes to summarize by, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dt>wkt</dt>
+      <dd>WKT representation of a spatial object (points, multipoints, or polygons)</dd>
+      <dt>format</dt>
+      <dd>output format, one of "dt" (R data.table, default), "csv", "json", tif",
+"dta", "asc", "grd", "rda"</dd>
+      <dt>...</dt>
+      <dd>other optional arguments passed to <a href='getLayer.html'>getLayer</a>,
+e.g. <code>collapse</code>, <code>as.class</code></dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+a data.table (or other formats) of <code>var</code> indicators aggregated by <code>by</code> domains
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Main method to subset and/or aggregate HarvestChoice layers.
+This method also aggregates classified variables by continuous variables.\
+e.g. <code>getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))</code>.
+It does so by returning the dominant class of a classified variable within each <code>by</code>
+class, and by automatically classifying any continuous variable passed to <code>by</code>
+using default value breaks as specified in the variable metadata.
+The formula used to aggregate classified variables by choosing the dominant class is
+<code>names(sort(table({varCode}), decreasing=T)[1])</code>. This formula computes the
+frequency of each class, ranks them by decreasing frequency, and retains the top one.
+Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
+Use <code>format</code> argument to control the output format for the spatial layer (see below).</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Mean BMI and cassava yield across districts in Tanzania
+hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;), format=&quot;tif&quot;)
+</div>
+<strong class='warning'>Warning message:
+colorTables valid for Byte type only in some drivers</strong>
+<strong class='warning'>Warning message:
+Unable to set color table</strong>
+<div class='output'>[1] &quot;./bmi-ADM1_NAME_ALT-TZA.tif&quot;         &quot;./bmi-ADM1_NAME_ALT-TZA.tif.aux.xml&quot;
+[3] &quot;./README&quot;                           
+</div>
+<div class='input'>
+# Equivalent request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip \
+# -d &quot;{&#39;var&#39;:[&#39;bmi&#39;,&#39;cass_y&#39;], &#39;iso3&#39;:&#39;TZA&#39;, &#39;by&#39;:[&#39;ADM1_NAME&#39;,&#39;ADM2_NAME&#39;], &#39;format&#39;:&#39;tif&#39;}&quot; \
+# -X POST -H &quot;Content-Type:application/json&quot;
+
+# The method may be expanded to summarize classified (discrete) variables by continuous
+# variables. For example the call below returns the dominant agro-ecological zone and
+# average stunting in children under 5 over Ivory Coast&#39;s provinces by elevation class
+hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+</div>
+<div class='output'>        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
+ 1:           Savanes      (256,516] Sub-Humid              NaN
+ 2:          Denguele      (256,516] Sub-Humid              NaN
+ 3:          Denguele      (516,862] Sub-Humid              NaN
+ 4:           Savanes             NA Sub-Humid              NaN
+ 5:            Zanzan      (256,516] Sub-Humid              NaN
+ 6:            Zanzan             NA Sub-Humid              NaN
+ 7:            Zanzan      (516,862] Sub-Humid              NaN
+ 8: Vallee Du Bandama      (256,516] Sub-Humid              NaN
+ 9:           Savanes      (516,862] Sub-Humid              NaN
+10:        Worodougou      (256,516] Sub-Humid              NaN
+11:            Bafing      (256,516] Sub-Humid              NaN
+12:            Bafing      (516,862] Sub-Humid              NaN
+13:        Worodougou      (516,862] Sub-Humid              NaN
+14: Vallee Du Bandama             NA Sub-Humid              NaN
+15:        Worodougou             NA Sub-Humid              NaN
+16:      18 Montagnes      (256,516]     Humid              NaN
+17:      18 Montagnes      (516,862] Sub-Humid              NaN
+18:        N&#39;zi Comoe             NA Sub-Humid              NaN
+19:            Bafing             NA Sub-Humid              NaN
+20:      18 Montagnes (862,1.28e+03]     Humid              NaN
+21:    Haut-sassandra      (256,516]     Humid              NaN
+22:          Marahoue             NA     Humid              NaN
+23:    Haut-sassandra             NA     Humid              NaN
+24:      18 Montagnes             NA     Humid              NaN
+25:          Marahoue      (256,516]     Humid              NaN
+26:              Lacs             NA Sub-Humid              NaN
+27:       Moyen Comoe             NA     Humid              NaN
+28:       Moyen Comoe      (256,516]     Humid              NaN
+29:     Moyen-Cavally      (256,516]     Humid              NaN
+30:     Moyen-Cavally             NA     Humid              NaN
+31:        N&#39;zi Comoe      (256,516] Sub-Humid              NaN
+32:          Fromager             NA     Humid              NaN
+33:            Agneby             NA     Humid              NaN
+34:     Bas Sassandra             NA     Humid              NaN
+35:     Bas Sassandra      (256,516]     Humid              NaN
+36:           Lagunes             NA Sub-Humid              NaN
+37:          Fromager      (256,516]     Humid              NaN
+38:       Sud Bandama             NA Sub-Humid              NaN
+39:       Sud Bandama      (256,516]     Humid              NaN
+40:         Sud Comoe             NA     Humid              NaN
+41:   buffer gridcell             NA        NA              NaN
+        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
+</div>
+<div class='input'>
+# An equivalent request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+# -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
+# -X POST -H &quot;Content-Type:application/json&quot;
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>hcapi</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

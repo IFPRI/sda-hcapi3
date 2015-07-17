@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -35,7 +47,7 @@
         
       </header>
       
-      <h1>HarvestChoice Lookup Lists</h1>
+      <h1>List of ISO3 country and/or region codes</h1>
 
 <div class="row">
   <div class="span8">
@@ -55,31 +67,48 @@
       <p>List of ISO3 country codes and corresponding country/region labels.</p>
   
     </div>
+
+    <div class="Note">
+      <h2>Note</h2>
+
+      <p>Country boundaries are derived from FAO GAUL 2008 (2009 eds.)</p>
+  
+    </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Lookup lists
 names(iso)
 </div>
-<div class='output'> [1] &quot;Angola&quot;                           &quot;Glorioso Island&quot;                  &quot;Juan de Nova Island&quot;             
- [4] &quot;Burundi&quot;                          &quot;Benin&quot;                            &quot;Burkina Faso&quot;                    
- [7] &quot;Botswana&quot;                         &quot;Central African Republic&quot;         &quot;Ivory Coast&quot;                     
-[10] &quot;Cameroon&quot;                         &quot;Democratic Republic of the Congo&quot; &quot;Congo&quot;                           
-[13] &quot;Comoros&quot;                          &quot;Cape Verde&quot;                       &quot;Djibouti&quot;                        
-[16] &quot;Eritrea&quot;                          &quot;Western Sahara&quot;                   &quot;Ethiopia&quot;                        
-[19] &quot;Gabon&quot;                            &quot;Ghana&quot;                            &quot;Guinea&quot;                          
-[22] &quot;Gambia&quot;                           &quot;Guinea-Bissau&quot;                    &quot;Equatorial Guinea&quot;               
-[25] &quot;British Indian Ocean Territory&quot;   &quot;Kenya&quot;                            &quot;Liberia&quot;                         
-[28] &quot;Lesotho&quot;                          &quot;Madagascar&quot;                       &quot;Mali&quot;                            
-[31] &quot;Mozambique&quot;                       &quot;Mauritania&quot;                       &quot;Mauritius&quot;                       
-[34] &quot;Malawi&quot;                           &quot;Mayotte&quot;                          &quot;Namibia&quot;                         
-[37] &quot;Niger&quot;                            &quot;Nigeria&quot;                          &quot;Reunion&quot;                         
-[40] &quot;Rwanda&quot;                           &quot;Sudan&quot;                            &quot;Senegal&quot;                         
-[43] &quot;Saint Helena&quot;                     &quot;Sierra Leone&quot;                     &quot;Somalia&quot;                         
-[46] &quot;Sao Tome and Principe&quot;            &quot;Swaziland&quot;                        &quot;Seychelles&quot;                      
-[49] &quot;Chad&quot;                             &quot;Togo&quot;                             &quot;United Republic of Tanzania&quot;     
-[52] &quot;Uganda&quot;                           &quot;Hala&#39;ib triangle&quot;                 &quot;Ma&#39;tan al-Sarra&quot;                 
-[55] &quot;Ilemi triangle&quot;                   &quot;South Africa&quot;                     &quot;Zambia&quot;                          
-[58] &quot;Zimbabwe&quot;                         &quot;Sub-Saharan Africa&quot;              
+<div class='output'> [1] &quot;Angola&quot;                           &quot;Glorioso Island&quot;                 
+ [3] &quot;Juan de Nova Island&quot;              &quot;Burundi&quot;                         
+ [5] &quot;Benin&quot;                            &quot;Burkina Faso&quot;                    
+ [7] &quot;Botswana&quot;                         &quot;Central African Republic&quot;        
+ [9] &quot;Ivory Coast&quot;                      &quot;Cameroon&quot;                        
+[11] &quot;Democratic Republic of the Congo&quot; &quot;Congo&quot;                           
+[13] &quot;Comoros&quot;                          &quot;Cape Verde&quot;                      
+[15] &quot;Djibouti&quot;                         &quot;Eritrea&quot;                         
+[17] &quot;Western Sahara&quot;                   &quot;Ethiopia&quot;                        
+[19] &quot;Gabon&quot;                            &quot;Ghana&quot;                           
+[21] &quot;Guinea&quot;                           &quot;Gambia&quot;                          
+[23] &quot;Guinea-Bissau&quot;                    &quot;Equatorial Guinea&quot;               
+[25] &quot;British Indian Ocean Territory&quot;   &quot;Kenya&quot;                           
+[27] &quot;Liberia&quot;                          &quot;Lesotho&quot;                         
+[29] &quot;Madagascar&quot;                       &quot;Mali&quot;                            
+[31] &quot;Mozambique&quot;                       &quot;Mauritania&quot;                      
+[33] &quot;Mauritius&quot;                        &quot;Malawi&quot;                          
+[35] &quot;Mayotte&quot;                          &quot;Namibia&quot;                         
+[37] &quot;Niger&quot;                            &quot;Nigeria&quot;                         
+[39] &quot;Reunion&quot;                          &quot;Rwanda&quot;                          
+[41] &quot;Sudan&quot;                            &quot;Senegal&quot;                         
+[43] &quot;Saint Helena&quot;                     &quot;Sierra Leone&quot;                    
+[45] &quot;Somalia&quot;                          &quot;Sao Tome and Principe&quot;           
+[47] &quot;Swaziland&quot;                        &quot;Seychelles&quot;                      
+[49] &quot;Chad&quot;                             &quot;Togo&quot;                            
+[51] &quot;United Republic of Tanzania&quot;      &quot;Uganda&quot;                          
+[53] &quot;Hala&#39;ib triangle&quot;                 &quot;Ma&#39;tan al-Sarra&quot;                 
+[55] &quot;Ilemi triangle&quot;                   &quot;South Africa&quot;                    
+[57] &quot;Zambia&quot;                           &quot;Zimbabwe&quot;                        
+[59] &quot;Sub-Saharan Africa&quot;              
 </div></pre>
   </div>
   <div class="span4">

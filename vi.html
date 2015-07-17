@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -35,7 +47,7 @@
         
       </header>
       
-      <h1>HarvestChoice CELL5M Variable Inventory</h1>
+      <h1>HarvestChoice inventory of 5-arc-minute spatial indicators</h1>
 
 <div class="row">
   <div class="span8">
@@ -72,16 +84,16 @@ names(vi)
 # Full metadata for cassava yield
 vi[&quot;cass_y&quot;]
 </div>
-<div class='output'>   varCode          varLabel                    varTitle published isDomain isProduct                    tbName
-1:  cass_y Cassava yield &#39;05 Cassava Yield (kg/ha, 2005)      TRUE    FALSE     FALSE cell5m_spam2005v2r0_yield
-      version         mxdName  tbKey
-1: SChEF r2.5 spam05_cell5m_y CELL5M
+<div class='output'>   varCode          varLabel                    varTitle published isDomain isProduct
+1:  cass_y Cassava yield &#39;05 Cassava Yield (kg/ha, 2005)      TRUE    FALSE     FALSE
+                      tbName    version         mxdName  tbKey
+1: cell5m_spam2005v2r0_yield SChEF r2.5 spam05_cell5m_y CELL5M
                                                                                                                                                      varDesc
 1: Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
-    unit dec year yearEnd genRaster        cat1  cat2    cat3             extent       type format aggType
-1: kg/ha   0 2005      NA      TRUE Agriculture Yield Cassava sub-Saharan Africa continuous raster   WGHTD
-                         aggFun                   owner caveat
-1: SUM(cass_p)/SUM(cass_h)*1000 u.wood-sichra@cgiar.org     NA
+    unit dec year yearEnd genRaster        cat1  cat2    cat3             extent       type format
+1: kg/ha   0 2005      NA      TRUE Agriculture Yield Cassava sub-Saharan Africa continuous raster
+   aggType                       aggFun                   owner caveat
+1:   WGHTD SUM(cass_p)/SUM(cass_h)*1000 u.wood-sichra@cgiar.org     NA
                                                                                                                       sources
 1: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
     sourceMini

@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -35,7 +47,7 @@
         
       </header>
       
-      <h1>Convert CELL5M layers to raster and/or tabular formats and create archive for download</h1>
+      <h1>Convert CELL5M layers to raster and/or tabular formats for download</h1>
 
 <div class="row">
   <div class="span8">
@@ -45,76 +57,27 @@
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
-      <dd>character array of variable codes, passed to getLayer(var, ...)</dd>
+      <dd>character array of variable codes, passed to <a href='getLayer.html'>getLayer</a></dd>
       <dt>iso3</dt>
-      <dd>character array of ISO3 country or region codes, passed to getLayer()</dd>
+      <dd>character array of ISO3 country or region codes, passed to <a href='getLayer.html'>getLayer</a></dd>
       <dt>by</dt>
-      <dd>character array of variable codes to summarize by, passed to getLayer()</dd>
+      <dd>character array of variable codes to summarize by, passed to <a href='getLayer.html'>getLayer</a></dd>
       <dt>format</dt>
       <dd>output format c("csv", "json", "tif", "dta", "asc", "grd", "rda")</dd>
       <dt>...</dt>
-      <dd>any other optional argument passed to getLayer(), e.g. <code>by</code>, <code>collapse</code>.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-
-      <p><dl>
-character, path to generated ZIP file
-</dl></p>
-  
-    </div>
-
-    <div class="Description">
-      <h2>Description</h2>
-
-      <p>Package any result from <code>getLayer()</code> into the user-specified tabular or raster
+      <dd>any other optional argument <a href='getLayer.html'>getLayer</a>, e.g. <code>by</code>, <code>collapse</code>.}
+}
+{
+character, array of generated file names
+}
+{
+Package any result from <a href='getLayer.html'>getLayer</a> into the user-specified tabular or raster
 format. Also includes a README file with metadata and citation details. Currently
 supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
-(tif), R raster (grd), R Data (rda), and ESRI ASCII raster (asc).</p>
-  
-    </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
-# in STATA format
-genFile(&quot;whea_h&quot;, iso3=c(&quot;NGA&quot;, &quot;ETH&quot;), by=&quot;AEZ16_CLAS&quot;, format=&quot;dta&quot;)
-</div>
-<strong class='warning'>Warning message:
-the condition has length &gt; 1 and only the first element will be used</strong>
-<div class='output'>[1] &quot;whea_h-AEZ16_CLAS-NGA.dta.zip&quot;
-</div>
-<div class='input'>
-# Sorghum production returned in ESRI ASCII raster format
-genFile(&quot;sorg_p&quot;, format=&quot;asc&quot;)
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<strong class='warning'>Warning message:
-colorTables valid for Byte type only in some drivers</strong>
-<strong class='warning'>Warning message:
-Unable to set color table</strong>
-<div class='output'>[1] &quot;sorg_p--SSA.asc.zip&quot;
-</div>
-<div class='input'>
-# Equivalent cUrl requests at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
-# -d &#39;{&quot;var&quot; : &quot;whea_h&quot;, &quot;iso3&quot; : [&quot;NGA&quot;, &quot;ETH&quot;], &quot;by&quot; : &quot;AEZ16_CLAS&quot;, &quot;format&quot; : &quot;dta&quot;}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
-
-# Download generated ZIP file
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0fe45cc2aa/files/whea_h-AEZ16_CLAS-NGA.dta.zip
-
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
-# -d &#39;{&quot;var&quot; : &quot;sorg_p&quot;, &quot;format&quot; : &quot;asc&quot;}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
-
-# Download generated ZIP file
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0760ca93d2/files/sorg_p--SSA.asc.zip
-</div></pre>
-  </div>
+(tif), R raster (grd), R Data (rda), and ESRI ASCII raster (asc).
+</dd>
+    </dl>
+          </div>
   <div class="span4">
     <!-- <ul>
       <li>genFile</li>

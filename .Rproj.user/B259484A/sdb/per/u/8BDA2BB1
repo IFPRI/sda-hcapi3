@@ -1,0 +1,18 @@
+{
+    "contents" : "#####################################################################################\n# Title: Package CELL5M Indicators\n# Date: May 2015\n# Project: HarvestChoice/IFPRI\n# Authors: Bacou, Melanie <mel@mbacou.com>\n#####################################################################################\n\nsetwd(\"/home/projects/shiny/cell5m\")\n\nlibrary(data.table)\nlibrary(foreign)\nlibrary(hcapi3)\n\nload(\"/home/projects/cell5m/rdb/latest/cell5m.rda\")\nvi[published==T & !varCode %in% names(dt), varCode]\n\nn <- vi[published==T, .N]\n\nfor (i in seq(1, n, 200)) {\n  vars <- vi[published==T][i:(i+199), varCode]\n  d <- dt[, .SD, .SDcols=unique(c(g, vars))]\n  attr(d, \"var.labels\") <- vi[names(d)][, varLabel]\n  attr(d, \"datalabel\") <- \"Produced by HarvestChoice/IFPRI at http://hcapi.harvestchoice.org/. Contact <info@harvestchoice.org>.\"\n  attr(d, \"time.stamp\") <- as.character(as.Date(Sys.Date()))\n  write.dta(d, paste0(\"./www/cell5m_2015.05.21-\", i, \".dta\"), version=11L)\n}",
+    "created" : 1432239006229.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "3384122454",
+    "id" : "8BDA2BB1",
+    "lastKnownWriteTime" : 92786832,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

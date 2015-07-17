@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -35,7 +47,7 @@
         
       </header>
       
-      <h1>Subset, and/or summarize HarvestChoice 5-arc-minute layers</h1>
+      <h1>Subset, and/or summarize HarvestChoice 5-arc-minute spatial indicators</h1>
 
 <div class="row">
   <div class="span8">
@@ -53,9 +65,11 @@
       <dt>ids</dt>
       <dd>optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)</dd>
       <dt>collapse</dt>
-      <dd>if FALSE always return all pixel values (useful for plotting and to convert to spatial formats)</dd>
+      <dd>if FALSE always return all pixel values (useful for plotting and to
+convert to spatial formats)</dd>
       <dt>as.class</dt>
-      <dd><code>c("data.table", "list")</code> by default returns a simple data.table. If <code>as.class="list"</code> returns a well-constructed list with variable metadata</dd>
+      <dd>one of "data.table" (default) or "list". By default returns a simple data.table.
+If <code>as.class="list"</code> returns a well-constructed list with variable metadata</dd>
     </dl>
     
     <div class="Value">

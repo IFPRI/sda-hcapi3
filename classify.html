@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -47,9 +59,10 @@
       <dt>var</dt>
       <dd>character array of variable names (all types are accepted)</dd>
       <dt>by</dt>
-      <dd>named list of numeric or character arrays representing custom value breaks for each variable to summarize by</dd>
+      <dd>named list of numeric or character arrays representing custom value
+breaks for each variable to summarize by</dd>
       <dt>...</dt>
-      <dd>other arguments passed to <code>getLayer()</code> (e.g. iso3, collapse)</dd>
+      <dd>other arguments passed to <code><a href='getLayer.html'>getLayer</a></code> e.g. iso3, collapse</dd>
     </dl>
     
     <div class="Value">
@@ -67,7 +80,7 @@ a data.table of <code>var</code> indicators aggregated by custom <code>by</code>
       <p>All HarvestChoice spatial layers come with default value breaks to create map legends
 and to automatically convert continuous variables into classified variables (this is needed
 when summarizing). For example, the value breaks for cassava production may be returned
-using <code>getMeta("cass_p")</code>. They are <code>c(0, 1074, 4260, 10051, 19920, 40085, 101843)</code>.
+using <code>describe("cass_p")$classBreaks</code>. They are <code>c(0, 1074, 4260, 10051, 19920, 40085, 101843)</code>.
 This method extends the classification logic to allow for any custom value break(s).
 For example one can summarize a set of selected indicators over areas
 of low population density, and/or areas covering a single farming system (or any
@@ -115,6 +128,10 @@ classify(&quot;pre_mean&quot;, by=list(ADM2_NAME_ALT=c(&quot;Bale&quot;, &quot;H
       
     </ul> -->
       
+    <h2>See also</h2>
+    
+<code><a href='similar.html'>similar</a></code> for identifying areas with similar patterns
+
         
   </div>
 </div>

@@ -20,6 +20,18 @@ Zhe Guo [ctb]">
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -38,87 +50,90 @@ Zhe Guo [ctb]">
 
     <div class="container">
       <header>
-
+        
       </header>
-
+      
       <div class="row">
   <div class="span8">
-    <p>Methods to retrieve, summarize, aggregate, and plot HarvestChoice
-5-arc-minute spatial layers for sub-Saharan Africa. All methods are combined and documented in this R package, but currently this package cannot be installed locally. Instead we provide access to
-all methods through a RESTful API (credits to <a href="http://github.com/jeroenooms/opencpu">OpenCPU</a>). Method names are endpoints and arguments must be converted from R syntax (as shown in this documentation) to simple JSON objects.</p>
-
-<pre>foo(arg1=c("val1", "val2"))</pre>
-
-<p>must be passed to endpoint <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/foo">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/foo</a> using,</p>
-
-<pre>{"arg1" : ["val1", "val2"]}</pre>
-
-<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice's spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of today over 750 indicators are
-available for sub-Saharan Africa. More about HarvestChoice at <a href="http://harvestchoice.org/">http://harvestchoice.org/</a>.</p>
+    Methods to retrieve, summarize, aggregate, and plot HarvestChoice
+5-arc-minute spatial layers for sub-Saharan Africa.
+This R package cannot be installed locally. Instead we provide access to
+all methods through a RESTful API (credits to \url{http://github.com/jeroenooms/opencpu}).
+Method names are endpoints and arguments must be converted from R syntax to simple
+JSON objects, \code{foo(arg1=c("val1", "val2"))} must be passed to
+\url{http://harvestchoice.org/tools/hcapi/R/foo} using \code{{"arg1" : ["val1", "val2"]}}.
+Through transparent data services our aim is to facilitate the re-use and
+integration of HarvestChoice's spatially-consistent biophysical and socio-economic
+indicators into 3rd-party tools and models. As of today over 750 indicators are
+available for sub-Saharan Africa. More about HarvestChoice at \url{http://harvestchoice.org/}.
 
     <h2>Help topics</h2>
 
-<h3></h3>
-
+    <h3></h3>
+    
+    
     <ul class="index">
-
+        
       <li>
         <code><a href="category.html">category</a></code><br />Show HarvestChoice variable categories (3-level deep)</li>
-
+            
       <li>
         <code><a href="classify.html">classify</a></code><br />Create custom domains for spatial targeting</li>
-
+            
       <li>
         <code><a href="describe.html">describe</a></code><br />Return HarvestChoice variable metadata</li>
-
+            
       <li>
         <code><a href="genCartoCSS.html">genCartoCSS</a></code><br />Generate CartoCSS snippet to symbolize raster tiles</li>
-
+            
       <li>
-        <code><a href="genFile.html">genFile</a></code><br />Convert CELL5M layers to raster and/or tabular formats and create archive for download</li>
-
+        <code><a href="genFile.html">genFile</a></code><br />Convert CELL5M layers to raster and/or tabular formats for download</li>
+            
       <li>
-        <code><a href="genPlot.html">genPlot</a></code><br />Plot HarvestChoice 5-arc-Minute Spatial Indicators</li>
-
+        <code><a href="genPlot.html">genPlot</a></code><br />Plot HarvestChoice 5-arc-minute spatial indicators</li>
+            
       <li>
         <code><a href="genReadme.html">genReadme</a></code><br />Return HarvestChoice data use terms, citation, and variable metadata</li>
-
+            
       <li>
-        <code><a href="getLayer.html">getLayer</a></code><br />Subset, and/or summarize HarvestChoice 5-arc-minute layers</li>
-
+        <code><a href="getLayer.html">getLayer</a></code><br />Subset, and/or summarize HarvestChoice 5-arc-minute spatial indicators</li>
+            
       <li>
         <code><a href="getLayerSQL.html">getLayerSQL</a></code><br />Subset, and/or aggregate HarvestChoice 5-arc-minute layers (SQLite version, now deprecated)</li>
-
+            
       <li>
         <code><a href="getLayerWKT.html">getLayerWKT</a></code><br />Summarize HarvestChoice 5-arc-minute layers over WKT geometri(es)</li>
-
+            
       <li>
-        <code><a href="iso.html">iso</a></code><br />HarvestChoice Lookup Lists</li>
-
+        <code><a href="hcapi.html">hcapi</a></code><br />Subset, summarize, and download HarvestChoice 5-arc-minute spatial indicators</li>
+            
+      <li>
+        <code><a href="iso.html">iso</a></code><br />List of ISO3 country and/or region codes</li>
+            
       <li>
         <code><a href="similar.html">similar</a></code><br />Rank spatial units by similarity</li>
-
+            
       <li>
-        <code><a href="stats.html">stats</a></code><br />Generate Histogram and Boxplot of HarvestChoice Indicator(s)</li>
-
+        <code><a href="stats.html">stats</a></code><br />Generate histogram and boxplot of HarvestChoice indicators</li>
+            
       <li>
-        <code><a href="vi.html">vi</a></code><br />HarvestChoice CELL5M Variable Inventory</li>
-
+        <code><a href="vi.html">vi</a></code><br />HarvestChoice inventory of 5-arc-minute spatial indicators</li>
+    
     </ul>
   </div>
-
+  
   <div class="span3 offset1">
     <h2>Vignettes</h2>
     <ul>
-      <li><a href="vignettes/hcapi3.html">An Introduction to HarvestChoice Data services v3 (stub)</a></li>
+      <li><a href="vignettes/hcapi3.html">An Introduction to HarvestChoice Data services v3</a></li>
     </ul>
-
+        
     <h2>Dependencies</h2>
     <ul>
       <li><strong>Depends</strong>: data.table</li>
       <li><strong>Imports</strong>: RSclient, stringr</li>
       <li><strong>Suggests</strong>: raster, sp, classInt, RColorBrewer, foreign, rgdal, rgeos, knitr</li>
-      <li><strong>Extends</strong>: </li>
+      
     </ul>
     <h2>Authors</h2>
     <ul>
@@ -130,11 +145,10 @@ available for sub-Saharan Africa. More about HarvestChoice at <a href="http://ha
       <li><a href="mailto:josephgreen@gmail.com">Joseph Green</a> [ctb]</li>
       <li><a href="mailto:z.guo@cgiar.org">Zhe Guo</a> [ctb]</li>
     </ul>
-     <h2><a href="http://harvestchoice.org/" target="_new"><img src="./img/hc-logo-white.png" alt="HarvestChoice Home" /></a></h2>
 
   </div>
 </div>
-
+      
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>

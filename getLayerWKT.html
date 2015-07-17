@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -49,27 +61,19 @@
       <dt>wkt</dt>
       <dd>WKT representation of a spatial object (points, multipoints, or polygons)</dd>
       <dt>...</dt>
-      <dd>other arguments passed to <code>getLayer()</code> (by, iso3, collapse)</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-
-      <p><dl>
+      <dd>other arguments passed to <a href='getLayer.html'>getLayer</a> (e.g. <code>by</code>,
+<code>iso3</code>, <code>collapse</code>)}
+}
+{
 a data.table of <code>var</code> indicators summarized across <code>wkt</code> geometry
-</dl></p>
-  
-    </div>
-
-    <div class="Description">
-      <h2>Description</h2>
-
-      <p>This function intersects any spatial object (WKT point, multipoints, or polygons)
+}
+{
+This function intersects any spatial object (WKT point, multipoints, or polygons)
 with HarvestChoice 5-arc-minute grid and returns a list of intersected gridcell IDs
-(CELL5M codes) to pass along as argument to <code>getLayer()</code>.</p>
-  
-    </div>
-      </div>
+(CELL5M codes) to pass along as argument to <a href='getLayer.html'>getLayer</a>.
+</dd>
+    </dl>
+          </div>
   <div class="span4">
     <!-- <ul>
       <li>getLayerWKT</li>

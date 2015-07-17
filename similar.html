@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -45,11 +57,13 @@
     <h2>Arguments</h2>
     <dl>
       <dt>x</dt>
-      <dd>single integer code for the reference geography, either a region code (ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against</dd>
+      <dd>single integer code for the reference geography, either a region code
+(ADM1_CODE_ALT), district code (ADM2_CODE_ALT), or gridcell code (CELL5M) to rank against</dd>
       <dt>var</dt>
       <dd>character array of HarvestChoice variable codes used in the ranking</dd>
       <dt>by</dt>
-      <dd>single integer indicating the type of reference geography (0-gridcell, 1-region, 2-district)</dd>
+      <dd>single integer indicating the type of reference geography (0-gridcell,
+1-region, 2-district)</dd>
       <dt>iso3</dt>
       <dd>optional country or region filter (3-letter code)</dd>
     </dl>
@@ -58,7 +72,8 @@
       <h2>Value</h2>
 
       <p><dl>
-a data.table of regions, districts, or pixels ranked by similarity to reference geography <code>x</code>
+a data.table of regions, districts, or pixels ranked by similarity to
+reference geography <code>x</code>
 </dl></p>
   
     </div>

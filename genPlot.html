@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -32,16 +44,16 @@
 
     <div class="container">
       <header>
-
+        
       </header>
-
-      <h1>Plot HarvestChoice 5-arc-Minute Spatial Indicators</h1>
+      
+      <h1>Plot HarvestChoice 5-arc-minute spatial indicators</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>genPlot(var, iso3&nbsp;=&nbsp;"SSA", pal, format&nbsp;=&nbsp;"default", style&nbsp;=&nbsp;"default", width&nbsp;=&nbsp;640, height&nbsp;=&nbsp;640, ...)</div></pre>
-
+    <pre><div>genPlot(var, iso3&nbsp;=&nbsp;"SSA", pal, format&nbsp;=&nbsp;"default", style&nbsp;=&nbsp;"default", n, width&nbsp;=&nbsp;640, height&nbsp;=&nbsp;640, ...)</div></pre>
+    
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
@@ -51,97 +63,80 @@
       <dt>pal</dt>
       <dd>optional Brewer color palette used for plotting, e.g. "Blues"</dd>
       <dt>format</dt>
-      <dd>one of "default", "print", "thumbnail" to control legend and axes</dd>
+      <dd>one of "default", "print", or "thumbnail" to control legend and axes</dd>
       <dt>style</dt>
-      <dd>one of <code>classIntervals()</code> style arguments (e.g. "kmeans"), or "default" to use default breaks</dd>
+      <dd>one of <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>style</code>
+options (e.g. "kmeans" or "pretty") or "default" to use default breaks</dd>
+      <dt>n</dt>
+      <dd><code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>n</code> argument
+to control the number of breaks</dd>
       <dt>width</dt>
       <dd>plot width in pixel (unless <code>units</code> is specified)</dd>
       <dt>height</dt>
       <dd>plot height in pixel (unless <code>units</code> is specified)</dd>
       <dt>...</dt>
-      <dd>any argument passed to <code>png()</code>, e.g. units, res, pointsize</dd>
+      <dd>any argument passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>, e.g. units, res,
+pointsize</dd>
     </dl>
-
+    
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
 Array of generated file names, one for each plot
 </dl></p>
-
+  
     </div>
 
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Method to plot HarvestChoice rasters with mutiple symbology options.</p>
-<p><img src="img/PD12_TOT.png" width="35%" />
-<img src="img/AEZ16_CLAS.GHA.print.png" width="35%" />
-<img src="img/sorg_h.GHA.print.png" width="35%" />
-<img src="img/FS_2012.png" width="35%" />
-<img src="img/yield_l_cv.png" width="35%" />
-<img src="img/soc_d15.png" width="35%" /></p>
-
+      <p>Method to plot HarvestChoice rasters with mutiple symbology options.
+See examples below.</p>
+  
     </div>
 
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>PD12_TOT.pngoptions: width="40%"
+AEZ16_CLAS.GHA.print.pngoptions: width="40%"
+whea_h.GHA.print.pngoptions: width="40%"
+FS_2012.pngoptions: width="40%"
+yield_l_cv.pngoptions: width="40%"
+soc_d15.pngoptions: width="40%"</p>
+  
+    </div>
+    
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Generate standard raster plot of 2012 population density for sub-Saharan Africa
-genPlot(&quot;PD12_TOT&quot;)
+genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
 </div>
-<div class='output'>PD12_TOT :  Total Pop. Dens. &#39;12
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<div class='output'>[1] &quot;PD12_TOT.png&quot;
-</div>
+<strong class='error'>Error in RS.eval(rc, g0): command failed with status code 0x1: error in R during evaluation</strong>
 <div class='input'>
 # Generate 3 raster plots for Ghana with legend and title but not axes
-genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;sorg_h&quot;), iso3=&quot;GHA&quot;, format=&quot;print&quot;, style=&quot;kmeans&quot;)
+genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, format=&quot;print&quot;)
 </div>
-<div class='output'>AEZ16_CLAS :  AEZ-16
-</div>
-<div class='output'>sorg_h :  Sorghum area &#39;05
-</div>
-<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;sorg_h.GHA.print.png&quot;
-</div>
+<strong class='error'>Error in RS.eval(rc, g0): command failed with status code 0x1: error in R during evaluation</strong>
 <div class='input'>
 # Generate 3 raster plots for Nigeria with the specified dimensions
-p &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), width=5, height=5,
+genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), width=5, height=5,
 units=&quot;in&quot;, res=200, pointsize=8)
 </div>
-<div class='output'>FS_2012 :  Farming System Code
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<div class='output'>yield_l_cv :  Maize yield CV (low)
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<div class='output'>soc_d15 :  Soil org. carbon (5-15cm)
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong></pre>
+<strong class='error'>Error in RS.eval(rc, g0): command failed with status code 0x1: error in R during evaluation</strong></pre>
   </div>
   <div class="span4">
     <!-- <ul>
       <li>genPlot</li>
     </ul>
     <ul>
-
+      
     </ul> -->
-
-
+      
+        
   </div>
 </div>
-
+      
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
