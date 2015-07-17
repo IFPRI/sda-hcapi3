@@ -12,7 +12,7 @@ classify(var, by, ...)
 \item{by}{named list of numeric or character arrays representing custom value
 breaks for each variable to summarize by}
 
-\item{...}{other arguments passed to \code\link{getLayer} e.g. iso3, collapse}
+\item{...}{other arguments passed to \code{\link{getLayer}} e.g. iso3, collapse}
 }
 \value{
 a data.table of \code{var} indicators aggregated by custom \code{by} domains
@@ -47,6 +47,6 @@ classify("pre_mean", by=list(ADM2_NAME_ALT=c("Bale", "Hadiya"), ELEVATION=c(0, 6
 # -X POST -H "Content-Type:application/json"
 }
 \seealso{
-\code\link{similar} for identifying areas with similar patterns
+\code{\link{similar}} for identifying areas with similar patterns
 }
 

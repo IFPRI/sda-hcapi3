@@ -17,7 +17,7 @@
 #' @param ids optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)
 #' @param collapse if FALSE always return all pixel values (useful for plotting and to
 #' convert to spatial formats)
-#' @param as.class \code{c("data.table", "list")} by default returns a simple data.table.
+#' @param as.class one of "data.table" (default) or "list". By default returns a simple data.table.
 #' If \code{as.class="list"} returns a well-constructed list with variable metadata
 #' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
 #' @examples
@@ -47,6 +47,11 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
   if (length(ids)>0) iso3 <- "SSA"
   # If "SSA" in iso3 then limit to SSA
   if ("SSA" %in% iso3) iso3 <- "SSA"
+
+  # Validate list of variables
+  vars <- c(var, by)
+  vars <- vi[vars][is.na(varTitle), list(varCode, varTitle)][, varCode]
+  if (length(vars)>0) return(cat("Variable", vars[1], "was not found in HarvestChoice data catalog."))
 
   if (length(by)>0) {
     # Construct generic aggregation formula

@@ -13,10 +13,10 @@
 #' @param by named list of numeric or character arrays representing custom value
 #' breaks for each variable to summarize by
 #'
-#' @param ... other arguments passed to \code\link{getLayer} e.g. iso3, collapse
+#' @param ... other arguments passed to \code{\link{getLayer}} e.g. iso3, collapse
 #'
 #' @return a data.table of \code{var} indicators aggregated by custom \code{by} domains
-#' @seealso \code\link{similar} for identifying areas with similar patterns
+#' @seealso \code{\link{similar}} for identifying areas with similar patterns
 #' @examples
 #' # Return average wealth index and poverty rates for areas of medium rural
 #' # population density and low market access (under 5hrs travel time)

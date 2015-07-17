@@ -13,6 +13,7 @@ output:
     number_sections: no
     theme: united
     toc: yes
+    fig.path: man/figures,
 vignette: |
   %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteIndexEntry{An Introduction to HarvestChoice Data services v3}
@@ -54,14 +55,14 @@ The API exposes a list of available methods at [http://hcapi.harvestchoice.org/o
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R
 ```
 
-The main data query method is `getLayer()` with a REST endpoint at (http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer)[/R/getLayer], and the main data download method is `genFile()` at (http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile)[/R/genFile]. `category()` and `describe()` may be used to return indicator metadata. Other methods, like `classify()` (summarizing indicators across custom geographic domains) and `similar()` (ranking areas by similarity) are useful to conduct advanced analyses.
+The main data query method is `hcapi()` with a REST endpoint at (http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi)[/R/hcapi]. `category()` and `describe()` may be used to return indicator metadata. Other methods, like `classify()` (summarizing indicators across custom geographic domains) and `similar()` (ranking areas by similarity) are useful to conduct advanced analyses.
 
 
 ### Example #2: method documentation
 
 ```{bash}
 # Sample method documentation
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/getLayer/text
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/hcapi/text
 ```
 
 The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. `getLayer()` is one of the API's main methods allowing users to query and summarize indicators. The documentation above shows that `getLayer()` takes at minimum one parameter `var` indicating which indicator to query (e.g. `var='PD05_TOT'` to return 2005 population density). Other optional parameters include `iso3` limiting the results to one (or multiple) countri(es) (e.g. `iso3=['GHA', 'NGA']` for Ghana and Nigeria), and `by` summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones `by='AEZ8_CLAS'`).
@@ -71,41 +72,37 @@ You can test this query by manually forming the following *cURL* request. This r
 ### Example #3: simple request returning a dataset in JSON
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'" -X POST
 ```
 
-For users of STATA or R the same dataset may be returned in a native format by using the `genFile()` method instead and appending a `format` parameter at the end of the request.
+For users of STATA or R the same dataset may be returned in a native format by using the same method appending a `format` parameter at the end of the request, and appending `/zip` to the URL endpoint. This will return all generated files in a single ZIP file.
 
 ### Example #4: request Ghana 2005 population density (PD05_TOT) summarized across agro-ecological zones (AEZ8_CLAS) in STATA format (dta)
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='dta'" -X POST
 ```
 
 ### Example #5: same request returning a file in RData format
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='rda'" -X POST
 ```
 
-Other possible formats include `csv`, `json` for GeoJSON, and raster formats `grd`, `tif` and `asc` for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to manually request that ZIP file. You can do so at the command line using *wget*.
+Other possible formats include `csv`, `json` for GeoJSON, and raster formats `grd`, `tif` and `asc` for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to add `/zip` to the URL endpoint.
 
 
 ### Example #6: Ghana wheat production in CSV format aggregated over districts
 
 ```{bash}
-# Step 1: generate ZIP file
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip/ \
+# Generate ZIP file
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip/ \
 -d "var='whea_p'&iso3='GHA'&by=['ADM2_CODE_ALT','ADM2_NAME_ALT']&format='csv'" -X POST
 ```
 
-``` 
-# Step 2: download ZIP file
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x08540461d4/files/PD05_TOT-AEZ8_CLAS-GHA.csv.zip
-```
 
 ```
 --2015-02-03 04:10:38--
@@ -144,7 +141,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/describe/text
 
 ```{bash}
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
--d "cat='nutrition'" -X POST
+-d "cat='bmi'" -X POST
 ```
 
 Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format using [http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv](http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv) (`vi` in the URL stands for *Variable Inventory*).

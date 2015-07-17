@@ -8,7 +8,7 @@
 #' @param as.class simple "data.table" or if "list" group variables by category
 #' @param css include Carto CSS rules
 #' @return a data.table or hierarchical list of variable metadata
-#' @seealso \code\link{category} to view HarvestChoice indicator categories
+#' @seealso \code{\link{category}} to view HarvestChoice indicator categories
 #' @examples
 #' # Show complete metadata for all variables under 'Cassava' category
 #' describe(cat="cassava", raster=T)
@@ -176,7 +176,7 @@ category <- function(cat, as.class="data.table") {
 #' @param iso3 optional country or region filter (3-letter code)
 #' @param pal optional Brewer color palette name used for plotting
 #' @param legend if TRUE returns HarvestChoice legend, otherwise returns default legend
-#' @param ... any argument passed to \code\link{getLayer}, e.g. \code{by="FS_2012", iso3="GHA"}
+#' @param ... any argument passed to \code{\link{getLayer}}, e.g. \code{by="FS_2012", iso3="GHA"}
 #' @return character, CartoCSS snippet for variable \code{var}
 #' @examples
 #' genCartoCSS("soc_d5")

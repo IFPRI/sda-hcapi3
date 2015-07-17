@@ -1,4 +1,4 @@
-#' Convert CELL5M layers to raster and/or tabular formats and create archive for download
+#' Convert CELL5M layers to raster and/or tabular formats for download
 #'
 #' Package any result from \code\link{getLayer} into the user-specified tabular or raster
 #' format. Also includes a README file with metadata and citation details. Currently
@@ -10,7 +10,7 @@
 #' @param by character array of variable codes to summarize by, passed to \code\link{getLayer}
 #' @param format output format c("csv", "json", "tif", "dta", "asc", "grd", "rda")
 #' @param ... any other optional argument \code\link{getLayer}, e.g. \code{by}, \code{collapse}.
-#' @return character, path to generated ZIP file
+#' @return character, array of generated file names
 #' @examples
 #' # Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
 #' # in STATA format
@@ -20,19 +20,14 @@
 #' genFile("sorg_p", format="asc")
 #'
 #' # Equivalent cUrl requests at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip \
 #' # -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
 #' # -X POST -H "Content-Type:application/json"
 #'
-#' # Download generated ZIP file
-#' # wget http://hcapi.harvestchoice.org/ocpu/tmp/x0fe45cc2aa/files/whea_h-AEZ16_CLAS-NGA.dta.zip
-#'
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip \
 #' # -d '{"var" : "sorg_p", "format" : "asc"}' \
 #' # -X POST -H "Content-Type:application/json"
 #'
-#' # Download generated ZIP file
-#' # wget http://hcapi.harvestchoice.org/ocpu/tmp/x0760ca93d2/files/sorg_p--SSA.asc.zip
 #'
 #' @export
 genFile <- function(var, iso3="SSA", by=NULL,
@@ -126,7 +121,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
 
   f <- list.files(dirname(fPath), paste0(basename(fPath), ".*"), full.names=T)
   f <- c(f, genReadme(names(d)))
-  fPath <- paste(fPath, "zip", sep=".")
-  zip(fPath, f, flags="-9Xjm", zip="zip")
-  return(fPath)
+  #fPath <- paste(fPath, "zip", sep=".")
+  #zip(fPath, f, flags="-9Xjm", zip="zip")
+  return(f)
 }

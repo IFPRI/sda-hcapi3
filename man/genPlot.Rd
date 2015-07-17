@@ -16,17 +16,17 @@ genPlot(var, iso3 = "SSA", pal, format = "default", style = "default", n,
 
 \item{format}{one of "default", "print", or "thumbnail" to control legend and axes}
 
-\item{style}{one of \code\link[classInt:classIntervals]{classIntervals} \code{style}
+\item{style}{one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
 options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
 
-\item{n}{\code\link[classInt:classIntervals]{classIntervals} \code{n} argument
+\item{n}{\code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
 to control the number of breaks}
 
 \item{width}{plot width in pixel (unless \code{units} is specified)}
 
 \item{height}{plot height in pixel (unless \code{units} is specified)}
 
-\item{...}{any argument passed to \code\link[grDevices:png]{png}, e.g. units, res,
+\item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. units, res,
 pointsize}
 }
 \value{
@@ -37,12 +37,12 @@ Method to plot HarvestChoice rasters with mutiple symbology options.
 See examples below.
 }
 \details{
-\figure{PD12_TOT.png}{options: width="4in"}
-\figure{AEZ16_CLAS.GHA.print.png}{options: width="4in"}
-\figure{whea_h.GHA.print.png}{options: width="4in"}
-\figure{FS_2012.png}{options: width="4in"}
-\figure{yield_l_cv.png}{options: width="4in"}
-\figure{soc_d15.png}{options: width="4in"}
+\figure{PD12_TOT.png}{options: width="40\%"}
+\figure{AEZ16_CLAS.GHA.print.png}{options: width="40\%"}
+\figure{whea_h.GHA.print.png}{options: width="40\%"}
+\figure{FS_2012.png}{options: width="40\%"}
+\figure{yield_l_cv.png}{options: width="40\%"}
+\figure{soc_d15.png}{options: width="40\%"}
 }
 \examples{
 # Generate standard raster plot of 2012 population density for sub-Saharan Africa

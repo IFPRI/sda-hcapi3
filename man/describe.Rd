@@ -43,6 +43,6 @@ describe(raster=T, version="SChEF r2.3", as.class="list")[1:2]
 # -X POST -H "Content-Type:application/json"
 }
 \seealso{
-\code\link{category} to view HarvestChoice indicator categories
+\code{\link{category}} to view HarvestChoice indicator categories
 }
 

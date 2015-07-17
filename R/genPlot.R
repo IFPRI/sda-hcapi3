@@ -3,26 +3,27 @@
 #' Method to plot HarvestChoice rasters with mutiple symbology options.
 #' See examples below.
 #'
-#' \figure{PD12_TOT.png}{options: width="4in"}
-#' \figure{AEZ16_CLAS.GHA.print.png}{options: width="4in"}
-#' \figure{whea_h.GHA.print.png}{options: width="4in"}
-#' \figure{FS_2012.png}{options: width="4in"}
-#' \figure{yield_l_cv.png}{options: width="4in"}
-#' \figure{soc_d15.png}{options: width="4in"}
+#' \figure{PD12_TOT.png}{options: width="40\%"}
+#' \figure{AEZ16_CLAS.GHA.print.png}{options: width="40\%"}
+#' \figure{whea_h.GHA.print.png}{options: width="40\%"}
+#' \figure{FS_2012.png}{options: width="40\%"}
+#' \figure{yield_l_cv.png}{options: width="40\%"}
+#' \figure{soc_d15.png}{options: width="40\%"}
+#'
 #'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional ISO3 country or region code to filter by
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
 #' @param format one of "default", "print", or "thumbnail" to control legend and axes
-#' @param style one of \code\link[classInt:classIntervals]{classIntervals} \code{style}
+#' @param style one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
 #' options (e.g. "kmeans" or "pretty") or "default" to use default breaks
 #'
-#' @param n \code\link[classInt:classIntervals]{classIntervals} \code{n} argument
+#' @param n \code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
 #' to control the number of breaks
 #'
 #' @param width plot width in pixel (unless \code{units} is specified)
 #' @param height plot height in pixel (unless \code{units} is specified)
-#' @param ... any argument passed to \code\link[grDevices:png]{png}, e.g. units, res,
+#' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. units, res,
 #' pointsize
 #'
 #' @return Array of generated file names, one for each plot

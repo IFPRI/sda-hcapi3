@@ -3,8 +3,8 @@
 #' Display a histogram and univariate statistics for any selected variable(s).
 #' See examples below.
 #'
-#' \figure{stats1.png}{options: width="4in"}
-#' \figure{stats2.png}{options: width="4in"}
+#' \figure{stats1.png}{options: width="40\%"}
+#' \figure{stats2.png}{options: width="40\%"}
 #'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional country or region filter (3-letter code)

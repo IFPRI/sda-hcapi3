@@ -2,7 +2,7 @@
 % Please edit documentation in R/genFile.R
 \name{genFile}
 \alias{genFile}
-\title{Convert CELL5M layers to raster and/or tabular formats and create archive for download}
+\title{Convert CELL5M layers to raster and/or tabular formats for download}
 \usage{
 genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
   "dta", "asc", "rda", "grd"), ...)
@@ -19,7 +19,7 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
 \item{...}{any other optional argument \code\link{getLayer}, e.g. \code{by}, \code{collapse}.}
 }
 \value{
-character, path to generated ZIP file
+character, array of generated file names
 }
 \description{
 Package any result from \code\link{getLayer} into the user-specified tabular or raster
@@ -36,18 +36,12 @@ genFile("whea_h", iso3=c("NGA", "ETH"), by="AEZ16_CLAS", format="dta")
 genFile("sorg_p", format="asc")
 
 # Equivalent cUrl requests at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \\
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip \\
 # -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \\
 # -X POST -H "Content-Type:application/json"
 
-# Download generated ZIP file
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0fe45cc2aa/files/whea_h-AEZ16_CLAS-NGA.dta.zip
-
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \\
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile/zip \\
 # -d '{"var" : "sorg_p", "format" : "asc"}' \\
 # -X POST -H "Content-Type:application/json"
-
-# Download generated ZIP file
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0760ca93d2/files/sorg_p--SSA.asc.zip
 }
 
