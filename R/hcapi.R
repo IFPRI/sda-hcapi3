@@ -72,7 +72,7 @@
 hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format="default", ...) {
   if (!missing(wkt)) return(getLayerWKT(var, iso3, by, wkt, ...))
   if (format=="default") return(getLayer(var, iso3, by, ...))
-  if (format=="png") return(genPlot(var, iso3, by, ...))
+  if (format %in% c("png", "plot")) return(genPlot(var, iso3, ...))
   if (format=="stats") return(stats(var, iso3))
   else return(genFile(var, iso3, by, format, ...))
 }

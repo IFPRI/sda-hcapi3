@@ -25,13 +25,14 @@ using \code{describe("cass_p")$classBreaks}. They are \code{c(0, 1074, 4260, 100
 This method extends the classification logic to allow for any custom value break(s).
 For example one can summarize a set of selected indicators over areas
 of low population density, and/or areas covering a single farming system (or any
-combination of custom domains).
+combination of custom domains). Note that calling \code{classify(...)} is equivalent
+to calling the convenience method \code{hcapi(...)}.
 }
 \examples{
 # Return average wealth index and poverty rates for areas of medium rural
 # population density and low market access (under 5hrs travel time)
-classify(c("wealth","TPOV_PT200"),
-    by=list(PD05_RUR=c(60, 100), TT_20K=c(0, 5)))
+x <- classify(c("wealth","TPOV_PT200"),
+       by=list(PD05_RUR=c(60, 100), TT_20K=c(0, 5)))
 
 # Equivalent cUrl request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \\
@@ -39,10 +40,11 @@ classify(c("wealth","TPOV_PT200"),
 # -X POST -H "Content-Type:application/json"
 
 # Return average rainfall in 2 Ethiopia districts for areas below 600m elevation
-classify("pre_mean", by=list(ADM2_NAME_ALT=c("Bale", "Hadiya"), ELEVATION=c(0, 600)))
+x <- classify("pre_mean", by=list(ADM2_NAME_ALT=c("Bale", "Hadiya"), ELEVATION=c(0, 600)))
 
 # Equivalent cUrl request at the command line passing a well-formatted JSON object
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \\
+# Note that the `/classify/json` or `/hcapi/json` endpoints are equivalent
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \\
 # -d '{"var" : "pre_mean", "by" : {"ADM2_NAME_ALT" : ["Bale", "Hadidya"], "ELEVATION" : [0, 600]}}' \\
 # -X POST -H "Content-Type:application/json"
 }

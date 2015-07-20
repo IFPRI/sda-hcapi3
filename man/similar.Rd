@@ -19,7 +19,7 @@ similar(x, var, by = 0, iso3 = "SSA")
 }
 \value{
 a data.table of regions, districts, or pixels ranked by similarity to
-reference geography \code{x}
+a reference geography \code{x}
 }
 \description{
 Rank regions, districts, or pixels by similarity to a reference unit across a set of
@@ -32,9 +32,9 @@ selected indicators.
 }
 \examples{
 # Rank all districts in Ghana by similarity to district 16657 (Kpando)
-# using the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
-# and cassava value of production (cass_v) as benchmarks.
-similar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
+# based on the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
+# and cassava value of production (cass_v).
+x <- similar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 
 # Equivalent cUrl request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \\

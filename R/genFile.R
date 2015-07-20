@@ -10,7 +10,7 @@
 #' @param var character array of variable codes, passed to \code\link{getLayer}
 #' @param iso3 character array of ISO3 country or region codes, passed to \code\link{getLayer}
 #' @param by character array of variable codes to summarize by, passed to \code\link{getLayer}
-#' @param format output format c("csv", "json", "tif", "dta", "asc", "grd", "rda")
+#' @param format output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")
 #' @param ... any other optional argument \code\link{getLayer}, e.g. \code{by}, \code{collapse}.
 #' @return character, array of generated file names
 #' @examples
@@ -80,9 +80,10 @@ genFile <- function(var, iso3="SSA", by=NULL,
   # Validate format
   format <- tolower(format)
   if ( format %in% c("tiff", "geotiff", "geotif") ) format <- "tif"
-  if ( format %in% c("geojson", "json") ) format <- "geojson"
-  if ( format %in% c("grid", "grd") ) format <- "grd"
-  if ( format %in% c("rdata", "RDA", "rda", "RData", "Rdata", "rds") ) format <- "rda"
+  else if ( format %in% c("geojson", "json") ) format <- "geojson"
+  else if ( format %in% c("grid", "grd") ) format <- "grd"
+  else if ( format %in% c("rdata", "RDA", "rda", "RData", "Rdata", "rds") ) format <- "rds"
+  else return(cat(format, "is not a recognized format"))
 
   # Construct temporary data file name
   fPath <- paste(paste(var[1], by[1], iso3[1], sep="-"), format[1], sep=".")
@@ -149,12 +150,12 @@ genFile <- function(var, iso3="SSA", by=NULL,
       setattr(d, "time.stamp", Sys.Date())
       write.dta(d, fPath, version=10L) },
 
-    rda = {
-      # RDA
+    rds = {
+      # RDS
       attr(d, "var.labels") <- vi[names(d)][, varLabel]
       attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://hcapi.harvestchoice.org/. Contact <info@harvestchoice.org>."
       attr(d, "time.stamp") <- as.character(as.Date(Sys.Date()))
-      save(d, file=fPath, compress=T) },
+      saveRDS(d, file=fPath) },
 
     {
       # CSV (default)

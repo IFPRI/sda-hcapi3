@@ -4,8 +4,12 @@
 \alias{genPlot}
 \title{Plot HarvestChoice 5-arc-minute spatial indicators}
 \usage{
-genPlot(var, iso3 = "SSA", pal, format = "default", style = "default", n,
-  width = 640, height = 640, ...)
+genPlot(var, iso3 = "SSA", pal = character(0), layout = "default",
+  style = "default", n = integer(0), width = switch(layout, default = 640,
+  print = 5, thumbnail = 120), height = switch(layout, default = 640, print =
+  5, thumbnail = 120), units = switch(layout, default = "px", print = "in",
+  thumbnail = "px"), res = switch(layout, default = NA, print = 300, thumbnail
+  = NA), ...)
 }
 \arguments{
 \item{var}{character array of variable codes to plot}
@@ -14,10 +18,9 @@ genPlot(var, iso3 = "SSA", pal, format = "default", style = "default", n,
 
 \item{pal}{optional Brewer color palette used for plotting, e.g. "Blues"}
 
-\item{format}{one of "default", "print", or "thumbnail" to control legend and axes}
+\item{layout}{one of "default", "print", or "thumbnail" to control legend and axes}
 
-\item{style}{one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
-options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
+\item{style}{one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}}
 
 \item{n}{\code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
 to control the number of breaks}
@@ -26,15 +29,22 @@ to control the number of breaks}
 
 \item{height}{plot height in pixel (unless \code{units} is specified)}
 
-\item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. units, res,
-pointsize}
+\item{units}{one of "px" (default), "in", "cm" or "mm".
+Passed to \code{\link[grDevices::png]{png}}}
+
+\item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize}
+
+\item{resolution}{in ppi, by default set to 300ppi for print layout.
+Passed to \code{\link[grDevices::png]{png}}
+options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
 }
 \value{
 Array of generated file names, one for each plot
 }
 \description{
-Method to plot HarvestChoice rasters with mutiple symbology options.
-See examples below.
+Method to plot HarvestChoice rasters with mutiple layout and symbology options.
+See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
+the convenience function \code{hcapi(..., format="png")}.
 }
 \details{
 \figure{PD12_TOT.png}{options: width="40\%"}
@@ -46,13 +56,31 @@ See examples below.
 }
 \examples{
 # Generate standard raster plot of 2012 population density for sub-Saharan Africa
-genPlot("PD12_TOT", pal="OrRd")
+x <- genPlot("PD12_TOT", pal="OrRd")
 
 # Generate 3 raster plots for Ghana with legend and title but not axes
-genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", format="print")
+x <- genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", layout="print")
 
 # Generate 3 raster plots for Nigeria with the specified dimensions
-genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
+x <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
 units="in", res=200, pointsize=8)
+
+# This method may be called via HTTP POST request using e.g. cUrl at the command line
+# Return 2 plots showing farming systems and 2012 population density in Ghana
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \\
+# -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \\
+# -X POST -H 'Content-Type:application/json'
+
+# /ocpu/tmp/x03d5aa8e98/R/.val
+# /ocpu/tmp/x03d5aa8e98/stdout
+# /ocpu/tmp/x03d5aa8e98/source
+# /ocpu/tmp/x03d5aa8e98/console
+# /ocpu/tmp/x03d5aa8e98/info
+# /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
+# /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
+# /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+
+# Use wget (at the command line) to download all generated plots
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 }
 

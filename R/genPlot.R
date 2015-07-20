@@ -15,8 +15,12 @@
 #' @param var character array of variable codes to plot
 #' @param iso3 optional ISO3 country or region code to filter by
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
-#' @param type one of "default", "print", or "thumbnail" to control legend and axes
+#' @param layout one of "default", "print", or "thumbnail" to control legend and axes
 #' @param style one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
+#' @param units one of "px" (default), "in", "cm" or "mm".
+#' Passed to \code{\link[grDevices::png]{png}}
+#' @param resolution in ppi, by default set to 300ppi for print layout.
+#' Passed to \code{\link[grDevices::png]{png}}
 #' options (e.g. "kmeans" or "pretty") or "default" to use default breaks
 #'
 #' @param n \code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
@@ -24,8 +28,7 @@
 #'
 #' @param width plot width in pixel (unless \code{units} is specified)
 #' @param height plot height in pixel (unless \code{units} is specified)
-#' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. units, res,
-#' pointsize
+#' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize
 #'
 #' @return Array of generated file names, one for each plot
 #' @examples
@@ -33,7 +36,7 @@
 #' x <- genPlot("PD12_TOT", pal="OrRd")
 #'
 #' # Generate 3 raster plots for Ghana with legend and title but not axes
-#' x <- genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", type="print")
+#' x <- genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", layout="print")
 #'
 #' # Generate 3 raster plots for Nigeria with the specified dimensions
 #' x <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
@@ -45,16 +48,32 @@
 #' # -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
 #' # -X POST -H 'Content-Type:application/json'
 #'
+#' # /ocpu/tmp/x03d5aa8e98/R/.val
+#' # /ocpu/tmp/x03d5aa8e98/stdout
+#' # /ocpu/tmp/x03d5aa8e98/source
+#' # /ocpu/tmp/x03d5aa8e98/console
+#' # /ocpu/tmp/x03d5aa8e98/info
+#' # /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
+#' # /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
+#' # /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+#'
+#' # Use wget (at the command line) to download all generated plots
+#' # wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+#'
 #' @export
-genPlot <- function(var, iso3="SSA", pal, type="default", style="default", n,
-  width=640, height=640, ...) {
+genPlot <- function(var, iso3="SSA", pal=character(0),
+  layout="default", style="default", n=integer(0),
+  width=switch(layout, default=640, print=5, thumbnail=120),
+  height=switch(layout, default=640, print=5, thumbnail=120),
+  units=switch(layout, default="px", print="in", thumbnail="px"),
+  res=switch(layout, default=NA, print=300, thumbnail=NA), ...) {
 
   iso3 <- iso3[1]
   fPath <- character(0)
   setkey(vi, varCode)
 
   # Get GAUL country boundaries
-  rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
+  rc <- RS.connect(port=getOption("hcapi3.port"), proxy.wait=F)
   g0 <- RS.eval(rc, g0)
 
   for (i in var) {
@@ -95,7 +114,7 @@ genPlot <- function(var, iso3="SSA", pal, type="default", style="default", n,
         r[, var := as.integer(var)]
 
         # Plot with HC symbology
-        if (!missing(pal)) {
+        if (length(pal)>0) {
           cc <- colorRampPalette(brewer.pal(9, pal))(length(cl))
         } else {
           cc <- colorRampPalette(cc)(length(cl))
@@ -111,14 +130,14 @@ genPlot <- function(var, iso3="SSA", pal, type="default", style="default", n,
     if (iso3=="SSA") r <- crop(r, g0)
 
     # Open plot device
-    j <- c(i, if(iso3!="SSA") iso3, if(format!="default") format, "png")
+    j <- c(i, if(iso3!="SSA") iso3, if(layout!="default") layout, "png")
     j <- paste(j, collapse=".")
-    png(j, width=width, height=height, ...)
+    png(j, width=width, height=height, units=units, res=res, ...)
 
     # Set global graphic parameters
     par(family="Helvetica-Narrow", bty="n", cex.axis=.6, col.axis="grey50", fg="grey50")
 
-    switch(type,
+    switch(layout,
       default = {
 
         # Set margins
@@ -184,7 +203,6 @@ genPlot <- function(var, iso3="SSA", pal, type="default", style="default", n,
     fPath <- c(fPath, j)
   }
 
-  # Close connection
   RS.close(rc)
   return(fPath)
 }

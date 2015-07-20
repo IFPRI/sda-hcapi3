@@ -4,21 +4,22 @@
 \alias{hcapi}
 \title{Subset, summarize, and download HarvestChoice 5-arc-minute spatial indicators}
 \usage{
-hcapi(var, iso3 = "SSA", by = NULL, wkt = NULL, format = "dt", ...)
+hcapi(var, iso3 = "SSA", by = NULL, wkt = NULL, format = "default", ...)
 }
 \arguments{
-\item{var}{character array of variable codes, passed to \code\link{getLayer}}
+\item{var}{character array of variable codes, passed to \code{\link{getLayer}}}
 
-\item{iso3}{character array of ISO3 country or region codes, passed to \code\link{getLayer}}
+\item{iso3}{character array of ISO3 country or region codes, passed to \code{\link{getLayer}}}
 
-\item{by}{character array of variable codes to summarize by, passed to \code\link{getLayer}}
+\item{by}{character array of variable codes to summarize by, passed to \code{\link{getLayer}}}
 
 \item{wkt}{WKT representation of a spatial object (points, multipoints, or polygons)}
 
-\item{format}{output format, one of "dt" (R data.table, default), "csv", "json", tif",
-"dta", "asc", "grd", "rda"}
+\item{format}{output format, one of "default" (R data.table, default), "csv", "json", tif",
+"dta", "asc", "grd", "rda", or "png", else "png" to plot the rasters, or "stats" to plot
+histogram and univariate statistics.}
 
-\item{...}{other optional arguments passed to \code\link{getLayer},
+\item{...}{other optional arguments passed to \code{\link{getLayer}},
 e.g. \code{collapse}, \code{as.class}}
 }
 \value{
@@ -39,12 +40,39 @@ Use \code{format} argument to control the output format for the spatial layer (s
 }
 \examples{
 # Mean BMI and cassava yield across districts in Tanzania
-hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"), format="tif")
+x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+# Plot results for Mara province
+barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"])
+
+# Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
+x <- hcapi("bmi", iso3="TZA", format="tif")
+
+# Load the generated TIF raster (one band only)
+require(raster)
+x <- raster(x[1])
+
+# Plot the `bmi` series
+plot(x)
 
 # Equivalent request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip \\
-# -d "{'var':['bmi','cass_y'], 'iso3':'TZA', 'by':['ADM1_NAME','ADM2_NAME'], 'format':'tif'}" \\
-# -X POST -H "Content-Type:application/json"
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \\
+# -d '{"var":"bmi", "iso3":"TZA", "format":"tif"}' \\
+# -X POST -H 'Content-Type:application/json'
+
+# /ocpu/tmp/x0bc1ac9bdf/R/.val
+# /ocpu/tmp/x0bc1ac9bdf/stdout
+# /ocpu/tmp/x0bc1ac9bdf/warnings
+# /ocpu/tmp/x0bc1ac9bdf/source
+# /ocpu/tmp/x0bc1ac9bdf/console
+# /ocpu/tmp/x0bc1ac9bdf/info
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+# /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+# /ocpu/tmp/x0bc1ac9bdf/files/README
+
+# Use wget (at the command line) to download all generated files in a ZIP archive
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
@@ -54,6 +82,6 @@ hcapi(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELE
 # An equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \\
 # -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \\
-# -X POST -H "Content-Type:application/json"
+# -X POST -H 'Content-Type:application/json'
 }
 
