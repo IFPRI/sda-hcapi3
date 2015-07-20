@@ -46,7 +46,9 @@ x
 
 # Plot results for Mara province
 require(lattice)
-barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"])
+require(latticeExtra)
+asTheEconomist(
+barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"]))
 
 # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 x <- hcapi("bmi", iso3="TZA", format="tif")
@@ -82,7 +84,8 @@ plot(x)
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
 # average stunting in children under 5 over Ivory Coast's provinces by elevation class
-hcapi(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
+x <- hcapi(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
+x
 
 # An equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \\
