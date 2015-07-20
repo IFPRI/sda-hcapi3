@@ -81,25 +81,25 @@ For users of STATA or R the same dataset may be returned in a native format by u
 ### Example #4: request Ghana 2005 population density (PD05_TOT) summarized across agro-ecological zones (AEZ8_CLAS) in STATA format (dta)
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='dta'" -X POST
 ```
 
 ### Example #5: same request returning a file in RData format
 
 ```{bash}
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 -d "var='PD05_TOT'&iso3='GHA'&by='AEZ8_CLAS'&format='rda'" -X POST
 ```
 
-Other possible formats include `csv`, `json` for GeoJSON, and raster formats `grd`, `tif` and `asc` for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return actual data, but only a JSON response with (if the response is succesful) a pointer to a ZIP file. To download an actual dataset or raster layer you need to add `/zip` to the URL endpoint.
+Other possible formats include `csv`, `json` for GeoJSON, and raster formats `grd`, `tif` and `asc` for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add `/zip` to the session endpoint.
 
 
 ### Example #6: Ghana wheat production in CSV format aggregated over districts
 
 ```{bash}
 # Generate ZIP file
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip/ \
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 -d "var='whea_p'&iso3='GHA'&by=['ADM2_CODE_ALT','ADM2_NAME_ALT']&format='csv'" -X POST
 ```
 

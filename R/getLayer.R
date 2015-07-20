@@ -10,6 +10,8 @@
 #' \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
 #' frequency of each class, ranks them by decreasing frequency, and retains the top one.
 #' Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
+#' Note that calling \code{getLayer(...)} is equivalent to using the convenience method
+#' \code{hcapi(...)} with the same arguments.
 #'
 #' @param var character array of variable names (all types are accepted)
 #' @param iso3 optional array of country or regional codes to filter by (3-letter code)
@@ -22,22 +24,49 @@
 #' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
 #' @examples
 #' # Mean BMI and cassava yield across districts in Tanzania
-#' getLayer(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+#' x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+#' # Plot results for Mara province
+#' barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"])
+#'
+#' # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
+#' x <- hcapi("bmi", iso3="TZA", format="tif")
+#'
+#' # Load the generated TIF raster (one band only)
+#' require(raster)
+#' x <- raster(x[1])
+#'
+#' # Plot the `bmi` series
+#' plot(x)
 #'
 #' # Equivalent request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
-#' # -d "{'var':['bmi','cass_y'], 'iso3':'TZA', 'by':['ADM1_NAME','ADM2_NAME']}" \
-#' # -X POST -H "Content-Type:application/json"
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+#' # -d '{"var":"bmi", "iso3":"TZA", "format":"tif"}' \
+#' # -X POST -H 'Content-Type:application/json'
+#'
+#' # /ocpu/tmp/x0bc1ac9bdf/R/.val
+#' # /ocpu/tmp/x0bc1ac9bdf/stdout
+#' # /ocpu/tmp/x0bc1ac9bdf/warnings
+#' # /ocpu/tmp/x0bc1ac9bdf/source
+#' # /ocpu/tmp/x0bc1ac9bdf/console
+#' # /ocpu/tmp/x0bc1ac9bdf/info
+#' # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+#' # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+#' # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+#' # /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+#' # /ocpu/tmp/x0bc1ac9bdf/files/README
+#'
+#' # Use wget (at the command line) to download all generated files in a ZIP archive
+#' # wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 #'
 #' # The method may be expanded to summarize classified (discrete) variables by continuous
 #' # variables. For example the call below returns the dominant agro-ecological zone and
 #' # average stunting in children under 5 over Ivory Coast's provinces by elevation class
-#' getLayer(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
+#' hcapi(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
 #'
 #' # An equivalent request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 #' # -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
-#' # -X POST -H "Content-Type:application/json"
+#' # -X POST -H 'Content-Type:application/json'
 #'
 #' @export
 getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class="data.table") {

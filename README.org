@@ -22,7 +22,7 @@ HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org
 
 ** Updates
 
-*2015.07.17*: added a new =hcapi()= method that combines =getLayer()=, =genFile()=, and =getLayerWKT()=. =genFile()= no longer creates a ZIP archive when non data.table download formats are called (since adding =/zip= to the API endpoint URL already archives all generated files, this was redundant).
+*2015.07.17*: added a new =hcapi()= convenience method that combines =getLayer()=, =genFile()=, =genPlot()=, =stats()= and =getLayerWKT()=. =genFile()= no longer creates a ZIP archive when non data.table download formats are called (since adding =/zip= to the API session endpoint URL already archives all generated files, this was redundant).
 
 *2015.05.03*: added a =n= argument to =genPlot()= to control the number of legend breaks.
 
