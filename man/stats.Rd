@@ -42,7 +42,7 @@ stats(c("bmi", "cass_y"))
 # /ocpu/tmp/x09db409895/files/DESCRIPTION
 
 # Use wget (at the command line) to download the generated plot(s)
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
 }
 

@@ -30,12 +30,12 @@ to control the number of breaks}
 \item{height}{plot height in pixel (unless \code{units} is specified)}
 
 \item{units}{one of "px" (default), "in", "cm" or "mm".
-Passed to \code{\link[grDevices::png]{png}}}
+Passed to \code{\link[grDevices:png]{png}}}
 
 \item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize}
 
 \item{resolution}{in ppi, by default set to 300ppi for print layout.
-Passed to \code{\link[grDevices::png]{png}}
+Passed to \code{\link[grDevices:png]{png}}
 options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
 }
 \value{
