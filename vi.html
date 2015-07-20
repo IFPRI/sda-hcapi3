@@ -70,7 +70,7 @@ sub-Saharan Africa.</p>
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># List of metadata elements
+    <pre class="examples"><div class='input'># List of metadata elements that may be accessed though `vi`
 names(vi)
 </div>
 <div class='output'> [1] &quot;varCode&quot;     &quot;varLabel&quot;    &quot;varTitle&quot;    &quot;published&quot;   &quot;isDomain&quot;    &quot;isProduct&quot;   &quot;tbName&quot;     
@@ -81,38 +81,59 @@ names(vi)
 [36] &quot;classBreaks&quot; &quot;classLabels&quot; &quot;aggFunR&quot;    
 </div>
 <div class='input'>
-# Full metadata for cassava yield
-vi[&quot;cass_y&quot;]
+# Print full metadata for cassava yield
+knitr::kable(data.frame(t(vi[&quot;cass_y&quot;])), &quot;rst&quot;, row.names=T)
 </div>
-<div class='output'>   varCode          varLabel                    varTitle published isDomain isProduct
-1:  cass_y Cassava yield &#39;05 Cassava Yield (kg/ha, 2005)      TRUE    FALSE     FALSE
-                      tbName    version         mxdName  tbKey
-1: cell5m_spam2005v2r0_yield SChEF r2.5 spam05_cell5m_y CELL5M
-                                                                                                                                                     varDesc
-1: Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
-    unit dec year yearEnd genRaster        cat1  cat2    cat3             extent       type format
-1: kg/ha   0 2005      NA      TRUE Agriculture Yield Cassava sub-Saharan Africa continuous raster
-   aggType                       aggFun                   owner caveat
-1:   WGHTD SUM(cass_p)/SUM(cass_h)*1000 u.wood-sichra@cgiar.org     NA
-                                                                                                                      sources
-1: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
-    sourceMini
-1: IFPRI, 2015
-                                                                                                                                                                                                                  citation
-1: HarvestChoice, 2015. &quot;Cassava Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_y.
-   dPublished            dAuthor     dTopic   dCrop
-1:       TRUE Ulrike Wood-Sichra Production Cassava
-                                                                  dKeywords
-1: Crops, Crop Yield, Cassava Yield, Sub-Saharan Africa, Cassava Production
-                                                                                                                                                         classColors
-1: #ffffffff|#E7E1EF|#DFD1E6|#D8C1DE|#D2B2D6|#CDA4CF|#C996C8|#D084BF|#D872B6|#DF5EAB|#E3469C|#E62F8E|#E0227B|#D61967|#CB1054|#B60A4D|#A10346|#8D003B|#7A002D|#67001F
-                                                                                                                                       classBreaks
-1: 0|471.5|1382.7|2142.35|2857.4|3534.55|4156.3|4748.25|5306.15|5821.45|6250.8|6592.05|7145.8|7868.15|8569.6|9723.1|11589|15262.2|24548.15|38833.3
-                                                                                                                                                                                                                                 classLabels
-1: none|under 472|472 - 1383|1383 - 2143|2143 - 2858|2858 - 3535|3535 - 4157|4157 - 4749|4749 - 5307|5307 - 5822|5822 - 6251|6251 - 6593|6593 - 7146|7146 - 7869|7869 - 8570|8570 - 9724|9724 - 11589|11589 - 15263|15263 - 24549|over 24549
-                                                aggFunR
-1: sum(cass_p, na.rm=TRUE)/sum(cass_h, na.rm=TRUE)*1000
-</div></pre>
+<div class='output'>
+
+===========  =========================================================================================================================================================================================================================================
+\            t.vi..cass_y...                                                                                                                                                                                                                          
+===========  =========================================================================================================================================================================================================================================
+varCode      cass_y                                                                                                                                                                                                                                   
+varLabel     Cassava yield &#39;05                                                                                                                                                                                                                        
+varTitle     Cassava Yield (kg/ha, 2005)                                                                                                                                                                                                              
+published    TRUE                                                                                                                                                                                                                                     
+isDomain     FALSE                                                                                                                                                                                                                                    
+isProduct    FALSE                                                                                                                                                                                                                                    
+tbName       cell5m_spam2005v2r0_yield                                                                                                                                                                                                                
+version      SChEF r2.5                                                                                                                                                                                                                               
+mxdName      spam05_cell5m_y                                                                                                                                                                                                                          
+tbKey        CELL5M                                                                                                                                                                                                                                   
+varDesc      Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.                                                                                
+unit         kg/ha                                                                                                                                                                                                                                    
+dec          0                                                                                                                                                                                                                                        
+year         2005                                                                                                                                                                                                                                     
+yearEnd      NA                                                                                                                                                                                                                                       
+genRaster    TRUE                                                                                                                                                                                                                                     
+cat1         Agriculture                                                                                                                                                                                                                              
+cat2         Yield                                                                                                                                                                                                                                    
+cat3         Cassava                                                                                                                                                                                                                                  
+extent       sub-Saharan Africa                                                                                                                                                                                                                       
+type         continuous                                                                                                                                                                                                                               
+format       raster                                                                                                                                                                                                                                   
+aggType      WGHTD                                                                                                                                                                                                                                    
+aggFun       SUM(cass_p)/SUM(cass_h)*1000                                                                                                                                                                                                             
+owner        u.wood-sichra@cgiar.org                                                                                                                                                                                                                  
+caveat       NA                                                                                                                                                                                                                                       
+sources      You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.                                                                                                               
+sourceMini   IFPRI, 2015                                                                                                                                                                                                                              
+citation     HarvestChoice, 2015. &quot;Cassava Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_y.                  
+dPublished   TRUE                                                                                                                                                                                                                                     
+dAuthor      Ulrike Wood-Sichra                                                                                                                                                                                                                       
+dTopic       Production                                                                                                                                                                                                                               
+dCrop        Cassava                                                                                                                                                                                                                                  
+dKeywords    Crops, Crop Yield, Cassava Yield, Sub-Saharan Africa, Cassava Production                                                                                                                                                                 
+classColors  #ffffffff|#E7E1EF|#DFD1E6|#D8C1DE|#D2B2D6|#CDA4CF|#C996C8|#D084BF|#D872B6|#DF5EAB|#E3469C|#E62F8E|#E0227B|#D61967|#CB1054|#B60A4D|#A10346|#8D003B|#7A002D|#67001F                                                                        
+classBreaks  0|471.5|1382.7|2142.35|2857.4|3534.55|4156.3|4748.25|5306.15|5821.45|6250.8|6592.05|7145.8|7868.15|8569.6|9723.1|11589|15262.2|24548.15|38833.3                                                                                          
+classLabels  none|under 472|472 - 1383|1383 - 2143|2143 - 2858|2858 - 3535|3535 - 4157|4157 - 4749|4749 - 5307|5307 - 5822|5822 - 6251|6251 - 6593|6593 - 7146|7146 - 7869|7869 - 8570|8570 - 9724|9724 - 11589|11589 - 15263|15263 - 24549|over 24549
+aggFunR      sum(cass_p, na.rm=TRUE)/sum(cass_h, na.rm=TRUE)*1000                                                                                                                                                                                     
+===========  =========================================================================================================================================================================================================================================
+</div>
+<div class='input'>
+# Get specific metadata elements
+vi[&quot;cass_y&quot;][, list(varTitle, units)]
+</div>
+<strong class='error'>Error in `rownames&lt;-`(`*tmp*`, value = paste(format(rn, right = TRUE), : length of &#39;dimnames&#39; [1] not equal to array extent</strong></pre>
   </div>
   <div class="span4">
     <!-- <ul>

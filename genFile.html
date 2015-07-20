@@ -57,52 +57,93 @@
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
-      <dd>character array of variable codes, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dd>character array of variable codes, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>iso3</dt>
-      <dd>character array of ISO3 country or region codes, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dd>character array of ISO3 country or region codes, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>by</dt>
-      <dd>character array of variable codes to summarize by, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dd>character array of variable codes to summarize by, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>format</dt>
       <dd>output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")</dd>
       <dt>...</dt>
-      <dd>any other optional argument <a href='getLayer.html'>getLayer</a>, e.g. <code>by</code>, <code>collapse</code>.}
-}
-{
+      <dd>any other optional argument passed to <code><a href='getLayer.html'>getLayer</a></code>,
+e.g. <code>by</code>, <code>collapse</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
 character, array of generated file names
-}
-{
-Package any result from <code><a href='getLayer.html'>getLayer</a></code> into the user-specified tabular or
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Package any result from <code><a href='getLayer.html'>getLayer</a></code> into the user-specified tabular or
 spatial raster format. Also includes a README file with metadata and citation details.
 Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
 (tif), R raster (grd), RData (rda), and ESRI ASCII raster (asc).
 Calling <code>genFile(var="bmi", iso3="TZA", format="dta")</code> is equivalent to calling
-the convenience method <code>hcapi(var="bmi", iso3="TZA", format="dta")</code>.
-}
-{
-# Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
+the convenience method <code>hcapi(var="bmi", iso3="TZA", format="dta")</code>.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
 # in STATA format
-x <- genFile("whea_h", iso3=c("NGA", "ETH"), by="AEZ16_CLAS", format="dta")
-
+x &lt;- genFile(&quot;whea_h&quot;, iso3=c(&quot;NGA&quot;, &quot;ETH&quot;), by=&quot;AEZ16_CLAS&quot;, format=&quot;dta&quot;)
+</div>
+<div class='output'>dta is not a recognized format</div>
+<div class='input'>
 # Load generated STATA file
 require(foreign)
-x <- read.dta(x[1])
-
+</div>
+<strong class='message'>Loading required package: foreign</strong>
+<div class='input'>x &lt;- read.dta(x[1])
+</div>
+<strong class='error'>Error in read.dta(x[1]): first argument must be a file name
+</strong>
+<div class='input'>
 # Plot histogram with full layer title
-hist(x$whea_h, xlab=vi["whea_h"][, varTitle], main=NULL)
-
+hist(x$whea_h, xlab=vi[&quot;whea_h&quot;][, varTitle], main=NULL)
+</div>
+<strong class='error'>Error in hist.default(x$whea_h, xlab = vi[&quot;whea_h&quot;][, varTitle], main = NULL): &#39;x&#39; must be numeric</strong>
+<div class='input'>
 # Sorghum production in Nigeria returned in ESRI ASCII raster format
-x <- genFile("sorg_p", iso3="NGA", format="asc")
-
+x &lt;- genFile(&quot;sorg_p&quot;, iso3=&quot;NGA&quot;, format=&quot;asc&quot;)
+</div>
+<div class='output'>asc is not a recognized format</div>
+<div class='input'>
 # Load and plot generated raster
 require(raster)
-x <- raster(x[1])
-plot(x, main=vi["sorg_p"][, varTitle])
-cellStats(x, "mean")
-
+</div>
+<strong class='message'>Loading required package: raster</strong>
+<strong class='message'>Loading required package: sp</strong>
+<div class='input'>x &lt;- raster(x[1])
+</div>
+<strong class='error'>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function ‘raster’ for signature ‘&quot;NULL&quot;’</strong>
+<div class='input'>plot(x, main=vi[&quot;sorg_p&quot;][, varTitle])
+</div>
+<strong class='warning'>Warning message:
+no non-missing arguments to min; returning Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to max; returning -Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to min; returning Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to max; returning -Inf</strong>
+<strong class='error'>Error in plot.window(...): need finite &#39;xlim&#39; values</strong>
+<div class='input'>cellStats(x, &quot;mean&quot;)
+</div>
+<strong class='error'>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function ‘cellStats’ for signature ‘&quot;NULL&quot;’</strong>
+<p><img src='genFile-24.png' alt='' width='540' height='400' /></p>
+<div class='input'>
 # Equivalent cUrl requests at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
-# -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
-# -X POST -H 'Content-Type:application/json'
+# -d &#39;{&quot;var&quot; : &quot;whea_h&quot;, &quot;iso3&quot; : [&quot;NGA&quot;, &quot;ETH&quot;], &quot;by&quot; : &quot;AEZ16_CLAS&quot;, &quot;format&quot; : &quot;dta&quot;}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
 
 # /ocpu/tmp/x0e654538b7/R/.val
 # /ocpu/tmp/x0e654538b7/stdout
@@ -118,8 +159,8 @@ cellStats(x, "mean")
 # wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
 
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
-# -d '{"var" : "sorg_p", "format" : "asc"}' \
-# -X POST -H "Content-Type:application/json"
+# -d &#39;{&quot;var&quot; : &quot;sorg_p&quot;, &quot;format&quot; : &quot;asc&quot;}&#39; \
+# -X POST -H &quot;Content-Type:application/json&quot;
 
 # /ocpu/tmp/x02a7a044c7/R/.val
 # /ocpu/tmp/x02a7a044c7/stdout
@@ -135,11 +176,8 @@ cellStats(x, "mean")
 
 # Then use wget to download all generated files in a ZIP archive
 # wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
-}
-
-</dd>
-    </dl>
-          </div>
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>genFile</li>
