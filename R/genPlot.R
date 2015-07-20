@@ -4,14 +4,6 @@
 #' See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
 #' the convenience function \code{hcapi(..., format="png")}.
 #'
-#' \figure{PD12_TOT.png}{options: width="40\%"}
-#' \figure{AEZ16_CLAS.GHA.print.png}{options: width="40\%"}
-#' \figure{whea_h.GHA.print.png}{options: width="40\%"}
-#' \figure{FS_2012.png}{options: width="40\%"}
-#' \figure{yield_l_cv.png}{options: width="40\%"}
-#' \figure{soc_d15.png}{options: width="40\%"}
-#'
-#'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional ISO3 country or region code to filter by
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"

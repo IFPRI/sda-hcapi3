@@ -46,14 +46,6 @@ Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
 the convenience function \code{hcapi(..., format="png")}.
 }
-\details{
-\figure{PD12_TOT.png}{options: width="40\%"}
-\figure{AEZ16_CLAS.GHA.print.png}{options: width="40\%"}
-\figure{whea_h.GHA.print.png}{options: width="40\%"}
-\figure{FS_2012.png}{options: width="40\%"}
-\figure{yield_l_cv.png}{options: width="40\%"}
-\figure{soc_d15.png}{options: width="40\%"}
-}
 \examples{
 # Generate standard raster plot of 2012 population density for sub-Saharan Africa
 x <- genPlot("PD12_TOT", pal="OrRd")

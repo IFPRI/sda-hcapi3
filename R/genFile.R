@@ -79,7 +79,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
 
   # Validate format
   format <- tolower(format)
-  if ( format %in% c("tiff", "geotiff", "geotif") ) format <- "tif"
+  if ( format %in% c("tiff", "geotiff", "geotif", "tif") ) format <- "tif"
   else if ( format %in% c("geojson", "json") ) format <- "geojson"
   else if ( format %in% c("grid", "grd") ) format <- "grd"
   else if ( format %in% c("rdata", "RDA", "rda", "RData", "Rdata", "rds") ) format <- "rds"

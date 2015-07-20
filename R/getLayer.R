@@ -25,11 +25,15 @@
 #' @examples
 #' # Mean BMI and cassava yield across districts in Tanzania
 #' x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+#' x
+#'
 #' # Plot results for Mara province
+#' require(lattice)
 #' barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"])
 #'
 #' # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 #' x <- hcapi("bmi", iso3="TZA", format="tif")
+#' x
 #'
 #' # Load the generated TIF raster (one band only)
 #' require(raster)

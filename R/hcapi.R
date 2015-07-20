@@ -16,7 +16,7 @@
 #' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
 #' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
 #' @param format output format, one of "default" (R data.table, default), "csv", "json", tif",
-#' "dta", "asc", "grd", "rda", or "png", else "png" to plot the rasters, or "stats" to plot
+#' "dta", "asc", "grd", "rds", else "png" to plot the rasters, or "stats" to plot
 #' histogram and univariate statistics.
 #' @param wkt WKT representation of a spatial object (points, multipoints, or polygons)
 #' @param ... other optional arguments passed to \code{\link{getLayer}},
@@ -25,11 +25,15 @@
 #' @examples
 #' # Mean BMI and cassava yield across districts in Tanzania
 #' x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+#' x
+#'
 #' # Plot results for Mara province
+#' require(lattice)
 #' barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"])
 #'
 #' # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 #' x <- hcapi("bmi", iso3="TZA", format="tif")
+#' x
 #'
 #' # Load the generated TIF raster (one band only)
 #' require(raster)

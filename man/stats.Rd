@@ -19,10 +19,6 @@ Display a histogram and univariate statistics for any selected HarvestChoice var
 See examples below. Note that calling \code{stats(...)} is equivalent to calling the
 convenience method \code{hcapi(..., format="stats")}.
 }
-\details{
-\figure{stats1.png}{options: width="40\%"}
-\figure{stats2.png}{options: width="40\%"}
-}
 \examples{
 # Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
 stats(c("bmi", "cass_y"))

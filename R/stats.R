@@ -4,9 +4,6 @@
 #' See examples below. Note that calling \code{stats(...)} is equivalent to calling the
 #' convenience method \code{hcapi(..., format="stats")}.
 #'
-#' \figure{stats1.png}{options: width="40\%"}
-#' \figure{stats2.png}{options: width="40\%"}
-#'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional country or region filter (3-letter code)
 #' @return array of file name, one for each plot

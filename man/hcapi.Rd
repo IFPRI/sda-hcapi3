@@ -16,7 +16,7 @@ hcapi(var, iso3 = "SSA", by = NULL, wkt = NULL, format = "default", ...)
 \item{wkt}{WKT representation of a spatial object (points, multipoints, or polygons)}
 
 \item{format}{output format, one of "default" (R data.table, default), "csv", "json", tif",
-"dta", "asc", "grd", "rda", or "png", else "png" to plot the rasters, or "stats" to plot
+"dta", "asc", "grd", "rds", else "png" to plot the rasters, or "stats" to plot
 histogram and univariate statistics.}
 
 \item{...}{other optional arguments passed to \code{\link{getLayer}},
@@ -41,11 +41,15 @@ Use \code{format} argument to control the output format for the spatial layer (s
 \examples{
 # Mean BMI and cassava yield across districts in Tanzania
 x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+x
+
 # Plot results for Mara province
+require(lattice)
 barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"])
 
 # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 x <- hcapi("bmi", iso3="TZA", format="tif")
+x
 
 # Load the generated TIF raster (one band only)
 require(raster)
