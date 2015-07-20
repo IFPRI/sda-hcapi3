@@ -6,7 +6,7 @@
 #'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional country or region filter (3-letter code)
-#' @return array of file name, one for each plot
+#' @return array of file names, one for each plot
 #' @examples
 #' # Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
 #' stats(c("bmi", "cass_y"))

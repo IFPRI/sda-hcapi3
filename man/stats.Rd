@@ -12,7 +12,7 @@ stats(var, iso3 = "SSA", by = NULL)
 \item{iso3}{optional country or region filter (3-letter code)}
 }
 \value{
-array of file name, one for each plot
+array of file names, one for each plot
 }
 \description{
 Display a histogram and univariate statistics for any selected HarvestChoice variable(s).

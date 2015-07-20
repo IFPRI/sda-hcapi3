@@ -7,11 +7,12 @@
 #' Calling \code{genFile(var="bmi", iso3="TZA", format="dta")} is equivalent to calling
 #' the convenience method \code{hcapi(var="bmi", iso3="TZA", format="dta")}.
 #'
-#' @param var character array of variable codes, passed to \code\link{getLayer}
-#' @param iso3 character array of ISO3 country or region codes, passed to \code\link{getLayer}
-#' @param by character array of variable codes to summarize by, passed to \code\link{getLayer}
+#' @param var character array of variable codes, passed to \code{\link{getLayer}}
+#' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
+#' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
 #' @param format output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")
-#' @param ... any other optional argument \code\link{getLayer}, e.g. \code{by}, \code{collapse}.
+#' @param ... any other optional argument passed to \code{\link{getLayer}},
+#' e.g. \code{by}, \code{collapse}.
 #' @return character, array of generated file names
 #' @examples
 #' # Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia

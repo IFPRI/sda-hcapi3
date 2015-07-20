@@ -13,11 +13,14 @@ Metadata elements for HarvestChoice collection of 5-arc-minute rasters for
 sub-Saharan Africa.
 }
 \examples{
-# List of metadata elements
+# List of metadata elements that may be accessed though `vi`
 names(vi)
 
-# Full metadata for cassava yield
-vi["cass_y"]
+# Print full metadata for cassava yield
+knitr::kable(data.frame(t(vi["cass_y"])), "rst", row.names=T)
+
+# Get specific metadata elements
+vi["cass_y"][, list(varTitle, units)]
 }
 \keyword{datasets}
 

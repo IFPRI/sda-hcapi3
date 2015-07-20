@@ -8,15 +8,16 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
   "dta", "asc", "rda", "grd"), ...)
 }
 \arguments{
-\item{var}{character array of variable codes, passed to \code\link{getLayer}}
+\item{var}{character array of variable codes, passed to \code{\link{getLayer}}}
 
-\item{iso3}{character array of ISO3 country or region codes, passed to \code\link{getLayer}}
+\item{iso3}{character array of ISO3 country or region codes, passed to \code{\link{getLayer}}}
 
-\item{by}{character array of variable codes to summarize by, passed to \code\link{getLayer}}
+\item{by}{character array of variable codes to summarize by, passed to \code{\link{getLayer}}}
 
 \item{format}{output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")}
 
-\item{...}{any other optional argument \code\link{getLayer}, e.g. \code{by}, \code{collapse}.}
+\item{...}{any other optional argument passed to \code{\link{getLayer}},
+e.g. \code{by}, \code{collapse}.}
 }
 \value{
 character, array of generated file names

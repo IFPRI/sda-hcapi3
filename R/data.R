@@ -9,11 +9,14 @@
 #' @usage vi.R
 #' @format A data.table object
 #' @examples
-#' # List of metadata elements
+#' # List of metadata elements that may be accessed though `vi`
 #' names(vi)
 #'
-#' # Full metadata for cassava yield
-#' vi["cass_y"]
+#' # Print full metadata for cassava yield
+#' knitr::kable(data.frame(t(vi["cass_y"])), "rst", row.names=T)
+#'
+#' # Get specific metadata elements
+#' vi["cass_y"][, list(varTitle, units)]
 NULL
 
 #' List of ISO3 country and/or region codes
