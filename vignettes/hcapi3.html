@@ -108,7 +108,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R</code></pre>
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
   0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
-  0    66    0    66    0     0     59      0 --:--:--  0:00:01 --:--:--    60
+  0    66    0    66    0     0     58      0 --:--:--  0:00:01 --:--:--    60
 ## Redirect to http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/</code></pre>
 <p>The main data query method is <code>hcapi()</code> with a REST endpoint at (<a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi</a>)[/R/hcapi]. <code>category()</code> and <code>describe()</code> may be used to return indicator metadata. Other methods, like <code>classify()</code> (summarizing indicators across custom geographic domains) and <code>similar()</code> (ranking areas by similarity) are useful to conduct advanced analyses.</p>
 </div>
@@ -120,7 +120,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/hcapi/text</code></p
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-101  4043    0  4043    0     0  65281      0 --:--:-- --:--:-- --:--:-- 96261
+101  4075    0  4075    0     0  77238      0 --:--:-- --:--:-- --:--:--  117k
 ## hcapi                  package:hcapi3                  R Documentation
 ## 
 ## Subset, summarize, and download HarvestChoice 5-arc-minute spatial
@@ -161,9 +161,9 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/hcapi/text</code></p
 ##           or polygons)
 ## 
 ##   format: output format, one of &quot;default&quot; (R data.table, default),
-##           &quot;csv&quot;, &quot;json&quot;, tif&quot;, &quot;dta&quot;, &quot;asc&quot;, &quot;grd&quot;, &quot;rda&quot;, or &quot;png&quot;,
-##           else &quot;png&quot; to plot the rasters, or &quot;stats&quot; to plot histogram
-##           and univariate statistics.
+##           &quot;csv&quot;, &quot;json&quot;, tif&quot;, &quot;dta&quot;, &quot;asc&quot;, &quot;grd&quot;, &quot;rds&quot;, else &quot;png&quot;
+##           to plot the rasters, or &quot;stats&quot; to plot histogram and
+##           univariate statistics.
 ## 
 ##      ...: other optional arguments passed to getLayer, e.g. collapse,
 ##           as.class
@@ -177,11 +177,15 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/hcapi/text</code></p
 ## 
 ##      # Mean BMI and cassava yield across districts in Tanzania
 ##      x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+##      x
+##      
 ##      # Plot results for Mara province
+##      require(lattice)
 ##      barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;])
 ##      
 ##      # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 ##      x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
+##      x
 ##      
 ##      # Load the generated TIF raster (one band only)
 ##      require(raster)
@@ -230,7 +234,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/hcapi/text</code></p
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   2157 --:--:-- --:--:-- --:--:--  2157
+  0     0    0     0    0    40      0   2187 --:--:-- --:--:-- --:--:--  2187
   0     0    0     0    0    40      0     39 --:--:--  0:00:01 --:--:--     0
 124   209    0   209    0    40    149     28 --:--:--  0:00:01 --:--:--   122
 124   209    0   209    0    40    149     28 --:--:--  0:00:01 --:--:--   122
@@ -260,15 +264,15 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/hcapi/text</code></p
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   2879 --:--:-- --:--:-- --:--:--  2879
+  0     0    0     0    0    53      0   2900 --:--:-- --:--:-- --:--:--  2900
   0     0    0     0    0    53      0     51 --:--:--  0:00:01 --:--:--     0
-237   184    0   184    0    53    155     44 --:--:--  0:00:01 --:--:--   112
-## /ocpu/tmp/x0ec625d3ea/R/.val
-## /ocpu/tmp/x0ec625d3ea/stdout
-## /ocpu/tmp/x0ec625d3ea/source
-## /ocpu/tmp/x0ec625d3ea/console
-## /ocpu/tmp/x0ec625d3ea/info
-## /ocpu/tmp/x0ec625d3ea/files/DESCRIPTION</code></pre>
+237   184    0   184    0    53    153     44 --:--:--  0:00:01 --:--:--   110
+## /ocpu/tmp/x016ee7c0d8/R/.val
+## /ocpu/tmp/x016ee7c0d8/stdout
+## /ocpu/tmp/x016ee7c0d8/source
+## /ocpu/tmp/x016ee7c0d8/console
+## /ocpu/tmp/x016ee7c0d8/info
+## /ocpu/tmp/x016ee7c0d8/files/DESCRIPTION</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3>Example #5: same request returning a file in RData format</h3>
@@ -277,17 +281,18 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/man/hcapi/text</code></p
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   2887 --:--:-- --:--:-- --:--:--  2887
-  0     0    0     0    0    53      0     51 --:--:--  0:00:01 --:--:--     0
-163   274    0   274    0    53    193     37 --:--:--  0:00:01 --:--:--   158
-## /ocpu/tmp/x0d01856b5f/R/.val
-## /ocpu/tmp/x0d01856b5f/stdout
-## /ocpu/tmp/x0d01856b5f/source
-## /ocpu/tmp/x0d01856b5f/console
-## /ocpu/tmp/x0d01856b5f/info
-## /ocpu/tmp/x0d01856b5f/files/DESCRIPTION
-## /ocpu/tmp/x0d01856b5f/files/PD05_TOT-AEZ8_CLAS-GHA.rds
-## /ocpu/tmp/x0d01856b5f/files/README</code></pre>
+  0     0    0     0    0    53      0    877 --:--:-- --:--:-- --:--:--   877
+  0     0    0     0    0    53      0     49 --:--:--  0:00:01 --:--:--     0
+163   274    0   274    0    53    189     36 --:--:--  0:00:01 --:--:--   159
+163   274    0   274    0    53    189     36 --:--:--  0:00:01 --:--:--   159
+## /ocpu/tmp/x0c017ea159/R/.val
+## /ocpu/tmp/x0c017ea159/stdout
+## /ocpu/tmp/x0c017ea159/source
+## /ocpu/tmp/x0c017ea159/console
+## /ocpu/tmp/x0c017ea159/info
+## /ocpu/tmp/x0c017ea159/files/DESCRIPTION
+## /ocpu/tmp/x0c017ea159/files/PD05_TOT-AEZ8_CLAS-GHA.rds
+## /ocpu/tmp/x0c017ea159/files/README</code></pre>
 <p>Other possible formats include <code>csv</code>, <code>json</code> for GeoJSON, and raster formats <code>grd</code>, <code>tif</code> and <code>asc</code> for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add <code>/zip</code> to the session endpoint.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -298,10 +303,9 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   3928 --:--:-- --:--:-- --:--:--  3928
+  0     0    0     0    0    73      0   3978 --:--:-- --:--:-- --:--:--  3978
   0     0    0     0    0    73      0     71 --:--:--  0:00:01 --:--:--     0
-  0    55    0    55    0    73     49     65 --:--:--  0:00:01 --:--:--     0
-  0    55    0    55    0    73     49     65 --:--:--  0:00:01 --:--:--     0
+  0    55    0    55    0    73     48     64 --:--:--  0:00:01 --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code>--2015-02-03 04:10:38--
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
@@ -326,7 +330,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    705 --:--:-- --:--:-- --:--:--   705
+  0     0    0     0    0    13      0    703 --:--:-- --:--:-- --:--:--   703
   0     0    0     0    0    13      0     12 --:--:--  0:00:01 --:--:--     0
 107  1174    0  1174    0    13    966     10 --:--:--  0:00:01 --:--:--   970
 ## [
@@ -388,7 +392,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-104  1462    0  1462    0     0  25942      0 --:--:-- --:--:-- --:--:-- 38473
+104  1462    0  1462    0     0  27509      0 --:--:-- --:--:-- --:--:-- 43000
 ## describe                package:hcapi3                 R Documentation
 ## 
 ## Return HarvestChoice variable metadata
@@ -449,7 +453,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    483 --:--:-- --:--:-- --:--:--   483
+  0     0    0     0    0     9      0    501 --:--:-- --:--:-- --:--:--   501
   0     0    0     0    0     9      0      8 --:--:--  0:00:01 --:--:--     0
   0     3    0     3    0     9      2      7 --:--:--  0:00:01 --:--:--     0
 ## []</code></pre>
