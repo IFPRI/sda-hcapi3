@@ -17,10 +17,15 @@ sub-Saharan Africa.
 names(vi)
 
 # Print full metadata for cassava yield
-knitr::kable(data.frame(t(vi["cass_y"])), "rst", row.names=T)
+x <- as.list(t(vi["cass_y"]))
+names(x) <- names(vi)
+x
 
 # Get specific metadata elements
 vi["cass_y"][, list(varTitle, units)]
+
+# Count of layers by category
+vi[, .N, by=list(cat1, cat2)]
 }
 \keyword{datasets}
 

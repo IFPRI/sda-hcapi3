@@ -13,7 +13,9 @@
 #' @param format output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")
 #' @param ... any other optional argument passed to \code{\link{getLayer}},
 #' e.g. \code{by}, \code{collapse}.
+#'
 #' @return character, array of generated file names
+#'
 #' @examples
 #' # Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
 #' # in STATA format
@@ -74,16 +76,19 @@
 #'
 #' @export
 genFile <- function(var, iso3="SSA", by=NULL,
-  format=c("csv", "geojson", "tif", "dta", "asc", "rda", "grd"), ...) {
+  format=c("csv", "geojson", "tif", "dta", "asc", "rds", "grd"), ...) {
 
   setkey(vi, varCode)
 
   # Validate format
   format <- tolower(format)
-  if ( format %in% c("tiff", "geotiff", "geotif", "tif") ) format <- "tif"
-  else if ( format %in% c("geojson", "json") ) format <- "geojson"
-  else if ( format %in% c("grid", "grd") ) format <- "grd"
-  else if ( format %in% c("rdata", "RDA", "rda", "RData", "Rdata", "rds") ) format <- "rds"
+  if (format %in% c("tiff", "geotiff", "geotif", "tif")) format <- "tif"
+  else if (format %in% c("geojson", "json")) format <- "geojson"
+  else if (format %in% c("grid", "grd")) format <- "grd"
+  else if (format %in% c("rdata", "rda", "rdata", "rds")) format <- "rds"
+  else if (format %in% c("dta", "stata")) format <- "dta"
+  else if (format %in% c("asc", "ascii")) format <- "asc"
+  else if (format %in% c("csv", "xls", "xlsx")) format <- "csv"
   else return(cat(format, "is not a recognized format"))
 
   # Construct temporary data file name

@@ -6,15 +6,18 @@ output:
   html_document:
     fig_caption: yes
     fig_width: 6
-    theme: united
+    theme: default
+    highlight: tango
     toc: yes
     toc_depth: 2
-  knitr:::html_vignette:
+  rmarkdown::html_vignette:
     number_sections: no
-    theme: united
+    theme: default
+    highlight: tango
     toc: yes
-    fig.path: man/figures,
-vignette: |
+    toc_depth: 2
+    fig.path: man/img,
+vignette: >
   %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteIndexEntry{An Introduction to HarvestChoice Data services v3}
 ---
