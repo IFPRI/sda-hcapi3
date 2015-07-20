@@ -52,23 +52,24 @@
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>hcapi(var, iso3&nbsp;=&nbsp;"SSA", by&nbsp;=&nbsp;NULL, wkt&nbsp;=&nbsp;NULL, format&nbsp;=&nbsp;"dt", ...)</div></pre>
+    <pre><div>hcapi(var, iso3&nbsp;=&nbsp;"SSA", by&nbsp;=&nbsp;NULL, wkt&nbsp;=&nbsp;NULL, format&nbsp;=&nbsp;"default", ...)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
-      <dd>character array of variable codes, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dd>character array of variable codes, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>iso3</dt>
-      <dd>character array of ISO3 country or region codes, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dd>character array of ISO3 country or region codes, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>by</dt>
-      <dd>character array of variable codes to summarize by, passed to <a href='getLayer.html'>getLayer</a></dd>
+      <dd>character array of variable codes to summarize by, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>wkt</dt>
       <dd>WKT representation of a spatial object (points, multipoints, or polygons)</dd>
       <dt>format</dt>
-      <dd>output format, one of "dt" (R data.table, default), "csv", "json", tif",
-"dta", "asc", "grd", "rda"</dd>
+      <dd>output format, one of "default" (R data.table, default), "csv", "json", tif",
+"dta", "asc", "grd", "rda", or "png", else "png" to plot the rasters, or "stats" to plot
+histogram and univariate statistics.</dd>
       <dt>...</dt>
-      <dd>other optional arguments passed to <a href='getLayer.html'>getLayer</a>,
+      <dd>other optional arguments passed to <code><a href='getLayer.html'>getLayer</a></code>,
 e.g. <code>collapse</code>, <code>as.class</code></dd>
     </dl>
     
@@ -100,26 +101,62 @@ Use <code>format</code> argument to control the output format for the spatial la
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean BMI and cassava yield across districts in Tanzania
-hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;), format=&quot;tif&quot;)
+x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+# Plot results for Mara province
+barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;])
+</div>
+<strong class='error'>Error in eval(expr, envir, enclos): could not find function &quot;barchart&quot;</strong>
+<div class='input'>
+# Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
+x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
+</div>
+<div class='output'>tif is not a recognized format</div>
+<div class='input'>
+# Load the generated TIF raster (one band only)
+require(raster)
+x &lt;- raster(x[1])
+</div>
+<strong class='error'>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function ‘raster’ for signature ‘&quot;NULL&quot;’</strong>
+<div class='input'>
+# Plot the `bmi` series
+plot(x)
 </div>
 <strong class='warning'>Warning message:
-colorTables valid for Byte type only in some drivers</strong>
+no non-missing arguments to min; returning Inf</strong>
 <strong class='warning'>Warning message:
-Unable to set color table</strong>
-<div class='output'>[1] &quot;./bmi-ADM1_NAME_ALT-TZA.tif&quot;         &quot;./bmi-ADM1_NAME_ALT-TZA.tif.aux.xml&quot;
-[3] &quot;./README&quot;                           
-</div>
+no non-missing arguments to max; returning -Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to min; returning Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to max; returning -Inf</strong>
+<strong class='error'>Error in plot.window(...): need finite &#39;xlim&#39; values</strong>
 <div class='input'>
 # Equivalent request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/zip \
-# -d &quot;{&#39;var&#39;:[&#39;bmi&#39;,&#39;cass_y&#39;], &#39;iso3&#39;:&#39;TZA&#39;, &#39;by&#39;:[&#39;ADM1_NAME&#39;,&#39;ADM2_NAME&#39;], &#39;format&#39;:&#39;tif&#39;}&quot; \
-# -X POST -H &quot;Content-Type:application/json&quot;
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+# -d &#39;{&quot;var&quot;:&quot;bmi&quot;, &quot;iso3&quot;:&quot;TZA&quot;, &quot;format&quot;:&quot;tif&quot;}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
+
+# /ocpu/tmp/x0bc1ac9bdf/R/.val
+# /ocpu/tmp/x0bc1ac9bdf/stdout
+# /ocpu/tmp/x0bc1ac9bdf/warnings
+# /ocpu/tmp/x0bc1ac9bdf/source
+# /ocpu/tmp/x0bc1ac9bdf/console
+# /ocpu/tmp/x0bc1ac9bdf/info
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+# /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+# /ocpu/tmp/x0bc1ac9bdf/files/README
+
+# Use wget (at the command line) to download all generated files in a ZIP archive
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
 # average stunting in children under 5 over Ivory Coast&#39;s provinces by elevation class
 hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
 </div>
+<p><img src='hcapi-14.png' alt='' width='540' height='400' /></p>
 <div class='output'>        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
  1:           Savanes      (256,516] Sub-Humid              NaN
  2:          Denguele      (256,516] Sub-Humid              NaN
@@ -168,7 +205,7 @@ hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quo
 # An equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 # -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
+# -X POST -H &#39;Content-Type:application/json&#39;
 </div></pre>
   </div>
   <div class="span4">

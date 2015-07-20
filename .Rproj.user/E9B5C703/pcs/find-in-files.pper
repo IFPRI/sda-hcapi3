@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "/home/projects/ocpu/hcapi3",
+        "query" : "figures",
+        "regex" : false
+    }
+}

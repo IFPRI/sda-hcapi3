@@ -84,38 +84,28 @@ using <code>describe("cass_p")$classBreaks</code>. They are <code>c(0, 1074, 426
 This method extends the classification logic to allow for any custom value break(s).
 For example one can summarize a set of selected indicators over areas
 of low population density, and/or areas covering a single farming system (or any
-combination of custom domains).</p>
+combination of custom domains). Note that calling <code>classify(...)</code> is equivalent
+to calling the convenience method <code>hcapi(...)</code>.</p>
   
     </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Return average wealth index and poverty rates for areas of medium rural
 # population density and low market access (under 5hrs travel time)
-classify(c(&quot;wealth&quot;,&quot;TPOV_PT200&quot;),
-    by=list(PD05_RUR=c(60, 100), TT_20K=c(0, 5)))
-</div>
-<div class='output'>   PD05_RUR TT_20K wealth TPOV_PT200
-1:       NA     NA      2         71
-2:       NA  (0,5]      2         65
-3: (60,100]  (0,5]      2         72
-4: (60,100]     NA      2         74
-</div>
-<div class='input'>
+x &lt;- classify(c(&quot;wealth&quot;,&quot;TPOV_PT200&quot;),
+       by=list(PD05_RUR=c(60, 100), TT_20K=c(0, 5)))
+
 # Equivalent cUrl request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \
 # -d &#39;{&quot;var&quot; : [&quot;wealth&quot;, &quot;TPOV_PT200&quot;], &quot;by&quot; : {&quot;PD05_RUR&quot; : [60, 100], &quot;TT_20K&quot; : [0, 5]}}&#39; \
 # -X POST -H &quot;Content-Type:application/json&quot;
 
 # Return average rainfall in 2 Ethiopia districts for areas below 600m elevation
-classify(&quot;pre_mean&quot;, by=list(ADM2_NAME_ALT=c(&quot;Bale&quot;, &quot;Hadiya&quot;), ELEVATION=c(0, 600)))
-</div>
-<div class='output'>   ELEVATION pre_mean
-1:   (0,600]      784
-2:        NA      922
-</div>
-<div class='input'>
+x &lt;- classify(&quot;pre_mean&quot;, by=list(ADM2_NAME_ALT=c(&quot;Bale&quot;, &quot;Hadiya&quot;), ELEVATION=c(0, 600)))
+
 # Equivalent cUrl request at the command line passing a well-formatted JSON object
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/classify/json \
+# Note that the `/classify/json` or `/hcapi/json` endpoints are equivalent
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 # -d &#39;{&quot;var&quot; : &quot;pre_mean&quot;, &quot;by&quot; : {&quot;ADM2_NAME_ALT&quot; : [&quot;Bale&quot;, &quot;Hadidya&quot;], &quot;ELEVATION&quot; : [0, 600]}}&#39; \
 # -X POST -H &quot;Content-Type:application/json&quot;
 </div></pre>

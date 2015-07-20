@@ -66,7 +66,7 @@
       <h2>Value</h2>
 
       <p><dl>
-plot
+array of file name, one for each plot
 </dl></p>
   
     </div>
@@ -74,23 +74,42 @@ plot
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Display a histogram and univariate statistics for any selected variable(s).
-See examples below.</p>
+      <p>Display a histogram and univariate statistics for any selected HarvestChoice variable(s).
+See examples below. Note that calling <code>stats(...)</code> is equivalent to calling the
+convenience method <code>hcapi(..., format="stats")</code>.</p>
   
     </div>
 
     <div class="Details">
       <h2>Details</h2>
 
-      <p>stats1.pngoptions: width="40%"
-stats2.pngoptions: width="40%"</p>
+<p><img src="img/stats-2.png" width="35%" /></p>
   
     </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
 stats(c(&quot;bmi&quot;, &quot;cass_y&quot;))
-</div></pre>
+
+#&#39; # This method may be called via HTTP POST request using e.g. cUrl at the command line
+# Return 2 plots showing farming systems and 2012 population density in Ghana
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
+# -d &#39;{&quot;var&quot;:[&quot;bmi&quot;, &quot;cass_y&quot;]}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
+
+# /ocpu/tmp/x09db409895/R/.val
+# /ocpu/tmp/x09db409895/graphics/1
+# /ocpu/tmp/x09db409895/graphics/2
+# /ocpu/tmp/x09db409895/source
+# /ocpu/tmp/x09db409895/console
+# /ocpu/tmp/x09db409895/info
+# /ocpu/tmp/x09db409895/files/DESCRIPTION
+
+# Use wget (at the command line) to download the generated plot(s)
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
+</div>
+<p><img src='stats-2.png' alt='' width='540' height='400' /></p></pre>
   </div>
   <div class="span4">
     <!-- <ul>

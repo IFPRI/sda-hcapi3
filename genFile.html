@@ -63,7 +63,7 @@
       <dt>by</dt>
       <dd>character array of variable codes to summarize by, passed to <a href='getLayer.html'>getLayer</a></dd>
       <dt>format</dt>
-      <dd>output format c("csv", "json", "tif", "dta", "asc", "grd", "rda")</dd>
+      <dd>output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")</dd>
       <dt>...</dt>
       <dd>any other optional argument <a href='getLayer.html'>getLayer</a>, e.g. <code>by</code>, <code>collapse</code>.}
 }
@@ -71,10 +71,72 @@
 character, array of generated file names
 }
 {
-Package any result from <a href='getLayer.html'>getLayer</a> into the user-specified tabular or raster
-format. Also includes a README file with metadata and citation details. Currently
-supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
-(tif), R raster (grd), R Data (rda), and ESRI ASCII raster (asc).
+Package any result from <code><a href='getLayer.html'>getLayer</a></code> into the user-specified tabular or
+spatial raster format. Also includes a README file with metadata and citation details.
+Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
+(tif), R raster (grd), RData (rda), and ESRI ASCII raster (asc).
+Calling <code>genFile(var="bmi", iso3="TZA", format="dta")</code> is equivalent to calling
+the convenience method <code>hcapi(var="bmi", iso3="TZA", format="dta")</code>.
+}
+{
+# Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
+# in STATA format
+x <- genFile("whea_h", iso3=c("NGA", "ETH"), by="AEZ16_CLAS", format="dta")
+
+# Load generated STATA file
+require(foreign)
+x <- read.dta(x[1])
+
+# Plot histogram with full layer title
+hist(x$whea_h, xlab=vi["whea_h"][, varTitle], main=NULL)
+
+# Sorghum production in Nigeria returned in ESRI ASCII raster format
+x <- genFile("sorg_p", iso3="NGA", format="asc")
+
+# Load and plot generated raster
+require(raster)
+x <- raster(x[1])
+plot(x, main=vi["sorg_p"][, varTitle])
+cellStats(x, "mean")
+
+# Equivalent cUrl requests at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+# -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
+# -X POST -H 'Content-Type:application/json'
+
+# /ocpu/tmp/x0e654538b7/R/.val
+# /ocpu/tmp/x0e654538b7/stdout
+# /ocpu/tmp/x0e654538b7/warnings
+# /ocpu/tmp/x0e654538b7/source
+# /ocpu/tmp/x0e654538b7/console
+# /ocpu/tmp/x0e654538b7/info
+# /ocpu/tmp/x0e654538b7/files/DESCRIPTION
+# /ocpu/tmp/x0e654538b7/files/README
+# /ocpu/tmp/x0e654538b7/files/whea_h-AEZ16_CLAS-NGA.dta
+
+# Use wget (at the command line) to download all generated files in a ZIP archive
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
+
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+# -d '{"var" : "sorg_p", "format" : "asc"}' \
+# -X POST -H "Content-Type:application/json"
+
+# /ocpu/tmp/x02a7a044c7/R/.val
+# /ocpu/tmp/x02a7a044c7/stdout
+# /ocpu/tmp/x02a7a044c7/warnings
+# /ocpu/tmp/x02a7a044c7/source
+# /ocpu/tmp/x02a7a044c7/console
+# /ocpu/tmp/x02a7a044c7/info
+# /ocpu/tmp/x02a7a044c7/files/DESCRIPTION
+# /ocpu/tmp/x02a7a044c7/files/README
+# /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc
+# /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc.aux.xml
+# /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.prj
+
+# Then use wget to download all generated files in a ZIP archive
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
+}
+
 </dd>
     </dl>
           </div>

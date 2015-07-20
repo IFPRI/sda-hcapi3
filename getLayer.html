@@ -93,38 +93,70 @@ using default value breaks as specified in the variable metadata.
 The formula used to aggregate classified variables by choosing the dominant class is
 <code>names(sort(table({varCode}), decreasing=T)[1])</code>. This formula computes the
 frequency of each class, ranks them by decreasing frequency, and retains the top one.
-Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).</p>
+Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
+Note that calling <code>getLayer(...)</code> is equivalent to using the convenience method
+<code>hcapi(...)</code> with the same arguments.</p>
   
     </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean BMI and cassava yield across districts in Tanzania
-getLayer(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+# Plot results for Mara province
+barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;])
 </div>
-<div class='output'>     ADM1_NAME_ALT ADM2_NAME_ALT  bmi cass_y
-  1:        Kagera       Karagwe 21.5    780
-  2:        Kagera  Bukoba Rural 21.5   6430
-  3:          Mara        Tarime 21.6   6681
-  4:        Kagera  Bukoba Urban 21.5   6813
-  5:          Mara  Musoma Rural 21.6   5797
- ---                                        
-124:        Mtwara  Mtwara urban 21.4   7503
-125:        Mtwara    Tandahimba 20.8   2555
-126:        Mtwara        Masasi 20.9   4128
-127:        Mtwara        Newala 20.9   2117
-128:        Ruvuma  Songea Urban 22.1   5774
+<strong class='error'>Error in eval(expr, envir, enclos): could not find function &quot;barchart&quot;</strong>
+<div class='input'>
+# Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
+x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
 </div>
+<div class='output'>tif is not a recognized format</div>
+<div class='input'>
+# Load the generated TIF raster (one band only)
+require(raster)
+x &lt;- raster(x[1])
+</div>
+<strong class='error'>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function ‘raster’ for signature ‘&quot;NULL&quot;’</strong>
+<div class='input'>
+# Plot the `bmi` series
+plot(x)
+</div>
+<strong class='warning'>Warning message:
+no non-missing arguments to min; returning Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to max; returning -Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to min; returning Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to max; returning -Inf</strong>
+<strong class='error'>Error in plot.window(...): need finite &#39;xlim&#39; values</strong>
 <div class='input'>
 # Equivalent request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
-# -d &quot;{&#39;var&#39;:[&#39;bmi&#39;,&#39;cass_y&#39;], &#39;iso3&#39;:&#39;TZA&#39;, &#39;by&#39;:[&#39;ADM1_NAME&#39;,&#39;ADM2_NAME&#39;]}&quot; \
-# -X POST -H &quot;Content-Type:application/json&quot;
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+# -d &#39;{&quot;var&quot;:&quot;bmi&quot;, &quot;iso3&quot;:&quot;TZA&quot;, &quot;format&quot;:&quot;tif&quot;}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
+
+# /ocpu/tmp/x0bc1ac9bdf/R/.val
+# /ocpu/tmp/x0bc1ac9bdf/stdout
+# /ocpu/tmp/x0bc1ac9bdf/warnings
+# /ocpu/tmp/x0bc1ac9bdf/source
+# /ocpu/tmp/x0bc1ac9bdf/console
+# /ocpu/tmp/x0bc1ac9bdf/info
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+# /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+# /ocpu/tmp/x0bc1ac9bdf/files/README
+
+# Use wget (at the command line) to download all generated files in a ZIP archive
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
 # average stunting in children under 5 over Ivory Coast&#39;s provinces by elevation class
-getLayer(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
 </div>
+<p><img src='getLayer-14.png' alt='' width='540' height='400' /></p>
 <div class='output'>        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
  1:           Savanes      (256,516] Sub-Humid              NaN
  2:          Denguele      (256,516] Sub-Humid              NaN
@@ -171,9 +203,9 @@ getLayer(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&
 </div>
 <div class='input'>
 # An equivalent request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/getLayer/json \
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 # -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
+# -X POST -H &#39;Content-Type:application/json&#39;
 </div></pre>
   </div>
   <div class="span4">

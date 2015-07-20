@@ -52,7 +52,7 @@
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>genPlot(var, iso3&nbsp;=&nbsp;"SSA", pal, format&nbsp;=&nbsp;"default", style&nbsp;=&nbsp;"default", n, width&nbsp;=&nbsp;640, height&nbsp;=&nbsp;640, ...)</div></pre>
+    <pre><div>genPlot(var, iso3&nbsp;=&nbsp;"SSA", pal&nbsp;=&nbsp;character(0), layout&nbsp;=&nbsp;"default", style&nbsp;=&nbsp;"default", n&nbsp;=&nbsp;integer(0), width&nbsp;=&nbsp;switch(layout, default&nbsp;=&nbsp;640, print&nbsp;=&nbsp;5, thumbnail&nbsp;=&nbsp;120), height&nbsp;=&nbsp;switch(layout, default&nbsp;=&nbsp;640, print = 5, thumbnail&nbsp;=&nbsp;120), units&nbsp;=&nbsp;switch(layout, default&nbsp;=&nbsp;"px", print&nbsp;=&nbsp;"in", thumbnail&nbsp;=&nbsp;"px"), res&nbsp;=&nbsp;switch(layout, default&nbsp;=&nbsp;NA, print&nbsp;=&nbsp;300, thumbnail &nbsp;=&nbsp;NA), ...)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
@@ -62,11 +62,10 @@
       <dd>optional ISO3 country or region code to filter by</dd>
       <dt>pal</dt>
       <dd>optional Brewer color palette used for plotting, e.g. "Blues"</dd>
-      <dt>format</dt>
+      <dt>layout</dt>
       <dd>one of "default", "print", or "thumbnail" to control legend and axes</dd>
       <dt>style</dt>
-      <dd>one of <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>style</code>
-options (e.g. "kmeans" or "pretty") or "default" to use default breaks</dd>
+      <dd>one of <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>style</code></dd>
       <dt>n</dt>
       <dd><code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>n</code> argument
 to control the number of breaks</dd>
@@ -74,9 +73,15 @@ to control the number of breaks</dd>
       <dd>plot width in pixel (unless <code>units</code> is specified)</dd>
       <dt>height</dt>
       <dd>plot height in pixel (unless <code>units</code> is specified)</dd>
+      <dt>units</dt>
+      <dd>one of "px" (default), "in", "cm" or "mm".
+Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code></dd>
       <dt>...</dt>
-      <dd>any argument passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>, e.g. units, res,
-pointsize</dd>
+      <dd>any argument passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>, e.g. pointsize</dd>
+      <dt>resolution</dt>
+      <dd>in ppi, by default set to 300ppi for print layout.
+Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>
+options (e.g. "kmeans" or "pretty") or "default" to use default breaks</dd>
     </dl>
     
     <div class="Value">
@@ -91,39 +96,81 @@ Array of generated file names, one for each plot
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Method to plot HarvestChoice rasters with mutiple symbology options.
-See examples below.</p>
+      <p>Method to plot HarvestChoice rasters with mutiple layout and symbology options.
+See examples below. Note that calling <code>genPlot(...)</code> is equivalent to calling
+the convenience function <code>hcapi(..., format="png")</code>.</p>
   
     </div>
 
     <div class="Details">
       <h2>Details</h2>
 
-      <p>PD12_TOT.pngoptions: width="40%"
-AEZ16_CLAS.GHA.print.pngoptions: width="40%"
-whea_h.GHA.print.pngoptions: width="40%"
-FS_2012.pngoptions: width="40%"
-yield_l_cv.pngoptions: width="40%"
-soc_d15.pngoptions: width="40%"</p>
+<p><img src="img/getLayer-14.png" width="35%" />
+<img src="img/getLayer-17.png" width="35%" />
+<img src="img/hcapi-14.png" width="35%" /></p>
   
     </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Generate standard raster plot of 2012 population density for sub-Saharan Africa
-genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
+x &lt;- genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
 </div>
-<strong class='error'>Error in RS.eval(rc, g0): command failed with status code 0x1: error in R during evaluation</strong>
+<div class='output'>PD12_TOT :  Total Pop. Dens. &#39;12
+</div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
 <div class='input'>
 # Generate 3 raster plots for Ghana with legend and title but not axes
-genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, format=&quot;print&quot;)
+x &lt;- genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
 </div>
-<strong class='error'>Error in RS.eval(rc, g0): command failed with status code 0x1: error in R during evaluation</strong>
+<div class='output'>AEZ16_CLAS :  AEZ-16
+</div>
+<div class='output'>whea_h :  Wheat area &#39;05
+</div>
 <div class='input'>
 # Generate 3 raster plots for Nigeria with the specified dimensions
-genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), width=5, height=5,
+x &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), width=5, height=5,
 units=&quot;in&quot;, res=200, pointsize=8)
 </div>
-<strong class='error'>Error in RS.eval(rc, g0): command failed with status code 0x1: error in R during evaluation</strong></pre>
+<div class='output'>FS_2012 :  Farming System Code
+</div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
+<div class='output'>yield_l_cv :  Maize yield CV (low)
+</div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
+<div class='output'>soc_d15 :  Soil org. carbon (5-15cm)
+</div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
+<div class='input'>
+# This method may be called via HTTP POST request using e.g. cUrl at the command line
+# Return 2 plots showing farming systems and 2012 population density in Ghana
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+# -d &#39;{&quot;var&quot;:[&quot;FS_2012_TX&quot;, &quot;PD12_TOT&quot;], &quot;iso3&quot;:&quot;GHA&quot;, &quot;format&quot;:&quot;png&quot;}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
+
+# /ocpu/tmp/x03d5aa8e98/R/.val
+# /ocpu/tmp/x03d5aa8e98/stdout
+# /ocpu/tmp/x03d5aa8e98/source
+# /ocpu/tmp/x03d5aa8e98/console
+# /ocpu/tmp/x03d5aa8e98/info
+# /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
+# /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
+# /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+
+# Use wget (at the command line) to download all generated plots
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+</div></pre>
   </div>
   <div class="span4">
     <!-- <ul>
