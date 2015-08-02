@@ -114,7 +114,8 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
           # Classify continuous by variables using `classBreaks`
           bynum <- sapply(bynum, function(i) {
             b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-            paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "), ordered_result=T)")
+            paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "),
+              dig.lab=", vi[i][, dec], ", ordered_result=T)")
           })
         }
 
@@ -135,7 +136,8 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
 
         # Classify
         bynum <- sapply(bynum, function(i) paste0(i,
-          "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "), ordered_result=T)"))
+          "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "),
+          dig.lab=", vi[i][, dec], ", ordered_result=T)"))
         bynum <- paste0(bynum, collapse=", ")
         by <- names(by)
       })
