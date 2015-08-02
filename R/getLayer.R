@@ -6,9 +6,8 @@
 #' It does so by returning the dominant class of a classified variable within each \code{by}
 #' class, and by automatically classifying any continuous variable passed to \code{by}
 #' using default value breaks as specified in the variable metadata.
-#' The formula used to aggregate classified variables by choosing the dominant class is
-#' \code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
-#' frequency of each class, ranks them by decreasing frequency, and retains the top one.
+#' The dominant class of \code{x} is defined as \code{names(which.max(table(x)))}. For
+#' convenience this function is wrapped as \code{\link{dominant}} in this package.
 #' Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
 #' Note that calling \code{getLayer(...)} is equivalent to using the convenience method
 #' \code{hcapi(...)} with the same arguments.
@@ -112,7 +111,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
         fltr <- as.character(NA)
 
         if (length(bynum)>0) {
-          # Classify using `classBreaks`
+          # Classify continuous by variables using `classBreaks`
           bynum <- sapply(bynum, function(i) {
             b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
             paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "), ordered_result=T)")
@@ -141,12 +140,15 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
         by <- names(by)
       })
 
-    # Put it together
+    # If a country is selected add country name
+    if (iso3!="SSA") bynum=paste("ISO3, ADM0_NAME, ", bynum)
+
+    # Put entire query string together
     data <- paste0("dt",
-      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if(iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
-      if(!is.na(fltr)) paste0("[", fltr, "]"),
-      "[, list(", agg, "), by=list(", bynum, ")]")
+      if (length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+      if (iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
+      if (!is.na(fltr)) paste0("[", fltr, "]"),
+      "[, list(", agg, "), keyby=list(", bynum, ")]")
 
     # Eval in Rserve (through socket instead of DB connection)
     # Uncomment to connect from remote host
@@ -154,7 +156,6 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
     rc <- RS.connect(port=getOption("hcapi3.port"), proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
-    #setkeyv(data, by)
 
   } else {
     # No aggregation. Don't duplicate any variable
@@ -162,7 +163,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
     vars <- unique(vars)
     vars <- vars[!is.na(vars)]
 
-    # Put it together
+    # Put query string together
     data <- paste0("dt",
       if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
       if(iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),

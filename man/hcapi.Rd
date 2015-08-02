@@ -32,9 +32,8 @@ e.g. \code{getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))
 It does so by returning the dominant class of a classified variable within each \code{by}
 class, and by automatically classifying any continuous variable passed to \code{by}
 using default value breaks as specified in the variable metadata.
-The formula used to aggregate classified variables by choosing the dominant class is
-\code{names(sort(table({varCode}), decreasing=T)[1])}. This formula computes the
-frequency of each class, ranks them by decreasing frequency, and retains the top one.
+The dominant class of \code{x} is defined as \code{names(which.max(table(x)))}. For
+convenience this function is wrapped as \code{\link{dominant}} in this package.
 Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
 Use \code{format} argument to control the output format for the spatial layer (see below).
 }

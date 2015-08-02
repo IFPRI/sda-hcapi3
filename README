@@ -22,6 +22,8 @@ HTTP POST requests may be tested interactively at http://hcapi.harvestchoice.org
 
 ** Updates
 
+*2015.08.01*: added a convenience method to return the dominant class of a classified variable =dominant()=. This is akin to =median()= for numeric variables. Also improved the performance of the earlier method, and modifed the variable inventory accordingly.
+
 *2015.07.17*: added a new =hcapi()= convenience method that combines =getLayer()=, =genFile()=, =genPlot()=, =stats()= and =getLayerWKT()=. =genFile()= no longer creates a ZIP archive when non data.table download formats are called (since adding =/zip= to the API session endpoint URL already archives all generated files, this was redundant).
 
 *2015.05.03*: added a =n= argument to =genPlot()= to control the number of legend breaks.

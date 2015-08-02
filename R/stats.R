@@ -39,7 +39,7 @@ stats <- function(var, iso3="SSA", by=NULL) {
     p <- hist(d[[i]], plot=F)
     b <- (max(p$counts)-min(p$counts))/20
 
-    hist(d[[i]], n=30, xlab=NA, ylim=c(-b, max(p$counts)), col="azure3",
+    hist(d[[i]], n=30, xlab=NA, ylab=NA, ylim=c(-b, max(p$counts)), col="azure3",
       main=paste(vi[varCode==i, varTitle], names(iso)[iso==iso3], sep=" - "))
     boxplot(d[[i]], horizontal=T, at=-b, border="blue", boxwex=b*2, axes=F, outline=F, add=T)
     legend(x="topright", legend=paste(c("N", names(t)), c(dim(d)[1], t), sep=":   "), bg="white")
