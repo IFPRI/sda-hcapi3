@@ -15,9 +15,9 @@
 #' @param var character array of variable names (all types are accepted)
 #' @param iso3 optional array of country or regional codes to filter by (3-letter code)
 #' @param by optional character array of variables to group by (all types are accepted)
-#' @param ids optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)
-#' @param collapse if FALSE always return all pixel values (useful for plotting and to
-#' convert to spatial formats)
+#' @param ids optional gridcell ids to filter by (if collapse=F) or summarize by (if collapse=T)
+#' @param collapse if TRUE collapses over \code{by} variables. If FALSE always return
+#' all pixel values (useful for plotting and to convert to spatial formats).
 #' @param as.class one of "data.table" (default) or "list". By default returns a simple data.table.
 #' If \code{as.class="list"} returns a well-constructed list with variable metadata
 #' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
@@ -75,7 +75,10 @@
 #' # -X POST -H 'Content-Type:application/json'
 #'
 #' @export
-getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class="data.table") {
+getLayer <- function(var, iso3="SSA", by=NULL,
+  ids=NULL,
+  collapse=TRUE,
+  as.class="data.table") {
 
   setkey(vi, varCode)
   # If pixel ids are passed ignore any country filter
@@ -86,9 +89,12 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
   # Validate list of variables
   vars <- c(var, by)
   vars <- vi[vars][is.na(varTitle), list(varCode, varTitle)][, varCode]
-  if (length(vars)>0) return(cat("Variable", vars[1], "was not found in HarvestChoice data catalog."))
+  if (length(vars)>0) return(
+    cat("Variable", paste0(vars, collapse=", "),
+      "was not found in HarvestChoice data catalog.",
+      "Use describe() or category() to query HarvestChoice metadata."))
 
-  if (length(by)>0) {
+  if (length(by)>0 | (length(ids)>0 & collapse==T)) {
     # Construct generic aggregation formula
     setkey(vi, varCode)
     agg <- vi[var][, aggFunR]
@@ -101,17 +107,19 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
     }
 
     # Construct `by` statement
-    switch(class(by),
+    bynum <- as.character(NA)
+    fltr <- as.character(NA)
+
+    if (length(by)>0) { switch(class(by),
 
       `character` = {
         # Simple array of variable codes
         # If `by` include continuous variables, then auto-classify before grouping
         bynum <- vi[by][!type=="class", varCode]
         byclass <- setdiff(by, bynum)
-        fltr <- as.character(NA)
 
         if (length(bynum)>0) {
-          # Classify continuous by variables using `classBreaks`
+          # Classify continuous `by` variables using `classBreaks`
           bynum <- sapply(bynum, function(i) {
             b <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
             paste0(i, "=cut(", i, ", c(", paste(b, collapse=", "), "),
@@ -138,19 +146,20 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
         bynum <- sapply(bynum, function(i) paste0(i,
           "=cut(", i, ", c(", paste0(by[[i]], collapse=", "), "),
           dig.lab=", vi[i][, dec], ", ordered_result=T)"))
-        bynum <- paste0(bynum, collapse=", ")
+        bynum <- paste(bynum, collapse=", ")
         by <- names(by)
       })
 
-    # If a country is selected add country name
-    if (iso3!="SSA") bynum=paste("ISO3, ADM0_NAME, ", bynum)
+      # If a country is selected add country name
+      if (iso3!="SSA") bynum=paste("ISO3, ADM0_NAME, ", bynum)
+    }
 
     # Put entire query string together
     data <- paste0("dt",
       if (length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
       if (iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
-      if (!is.na(fltr)) paste0("[", fltr, "]"),
-      "[, list(", agg, "), keyby=list(", bynum, ")]")
+      if (!is.na(fltr)) paste0("[", fltr, "]"), "[, .(", agg, ")",
+      if (!is.na(bynum)) ", keyby=.(", bynum, ")", "]")
 
     # Eval in Rserve (through socket instead of DB connection)
     # Uncomment to connect from remote host
@@ -169,7 +178,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
     data <- paste0("dt",
       if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
       if(iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
-      "[, list(", paste0(vars, collapse=", "), ")]")
+      "[, .(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve
     rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)

@@ -14,10 +14,10 @@ getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
 
 \item{by}{optional character array of variables to group by (all types are accepted)}
 
-\item{ids}{optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)}
+\item{ids}{optional gridcell ids to filter by (if collapse=F) or summarize by (if collapse=T)}
 
-\item{collapse}{if FALSE always return all pixel values (useful for plotting and to
-convert to spatial formats)}
+\item{collapse}{if TRUE collapses over \code{by} variables. If FALSE always return
+all pixel values (useful for plotting and to convert to spatial formats).}
 
 \item{as.class}{one of "data.table" (default) or "list". By default returns a simple data.table.
 If \code{as.class="list"} returns a well-constructed list with variable metadata}

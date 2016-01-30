@@ -2,11 +2,11 @@
 #'
 #' This function intersects any spatial object (WKT point, multipoints, or polygons)
 #' with HarvestChoice 5-arc-minute grid and returns a list of intersected gridcell IDs
-#' (CELL5M codes) to pass along as argument to \code\link{getLayer}.
+#' (CELL5M codes) to pass along as argument to \code{\link{getLayer}}.
 #'
 #' @param var character array of variable names (all types are accepted)
 #' @param wkt WKT representation of a spatial object (points, multipoints, or polygons)
-#' @param ... other arguments passed to \code\link{getLayer} (e.g. \code{by},
+#' @param ... other arguments passed to \code{\link{getLayer}} (e.g. \code{by},
 #' \code{iso3}, \code{collapse})
 #' @return a data.table of \code{var} indicators summarized across \code{wkt} geometry
 #' @export
@@ -25,6 +25,6 @@ getLayerWKT <- function(var, wkt, ...) {
   out <- extract(d, wkt, small=T)
   out <- out[!is.na(out)]
   out <- unique(out)
-  out <- getLayer(var=var, ids=out, ...)
+  out <- getLayer(var=var, ids=out, collapse="all")
   return(out)
 }

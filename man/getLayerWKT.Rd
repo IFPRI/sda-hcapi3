@@ -11,7 +11,7 @@ getLayerWKT(var, wkt, ...)
 
 \item{wkt}{WKT representation of a spatial object (points, multipoints, or polygons)}
 
-\item{...}{other arguments passed to \code\link{getLayer} (e.g. \code{by},
+\item{...}{other arguments passed to \code{\link{getLayer}} (e.g. \code{by},
 \code{iso3}, \code{collapse})}
 }
 \value{
@@ -20,6 +20,6 @@ a data.table of \code{var} indicators summarized across \code{wkt} geometry
 \description{
 This function intersects any spatial object (WKT point, multipoints, or polygons)
 with HarvestChoice 5-arc-minute grid and returns a list of intersected gridcell IDs
-(CELL5M codes) to pass along as argument to \code\link{getLayer}.
+(CELL5M codes) to pass along as argument to \code{\link{getLayer}}.
 }
 
