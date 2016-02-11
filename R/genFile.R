@@ -103,21 +103,35 @@ genFile <- function(var, iso3="SSA", by=NULL,
   }
 
   if ( format %in% c("asc", "tif", "grd", "nc") ) {
-    # Process only the first layer (not all raster formats support multibands)
-    var <- var[1]
+    # Raster formats require more work
+    pts <- d[, .(X, Y)]
+    var <- setdiff(names(d), g)
+    d <- d[, .SD, .SDcols=var]
 
-    cl <- as.character(unlist(vi[var][, strsplit(classLabels, "|", fixed=T)]))
-    cc <- as.character(unlist(vi[var][, strsplit(classColors, "|", fixed=T)]))
-    ct <- "Float32"
+    cl <- lapply(var,
+      function(x) as.character(unlist(vi[x][, strsplit(classLabels, "|", fixed=T)])))
+    cc <- lapply(var,
+      function(x) as.character(unlist(vi[x][, strsplit(classColors, "|", fixed=T)])))
+    ct <- lapply(var, function(x) "Float32")
 
-    if ( vi[var][, type] == "class" )  {
-      # If categorical raster, then convert to 0-based integer and add labels
-      d[[var]] <- as.integer(factor(d[[var]], levels=cl, ordered=T))-1L
-      ct <- "Byte"
+    names(cl) <- names(cc) <- names(ct) <- var
+
+    for (i in var) {
+      if ( vi[i][, type] == "class" )  {
+        # If categorical raster, then convert to 0-based integer and add labels
+        d[[i]] <- as.integer(factor(d[[i]], levels=cl[[i]], ordered=T))-1L
+        ct[[i]] <- "Byte"
+      }
     }
 
+    # If there's one Float, then set all layers as Float
+    if( sum(sapply(ct, `==`, "Float32"))>0 ) {
+      ct <- "Float32"; mv <- -9999
+    } else { ct <- "Byte"; mv <- 255 }
+
+
     # Convert to unprojected raster
-    d <- SpatialPixelsDataFrame(d[, list(X, Y)], data.frame(d),
+    d <- SpatialPixelsDataFrame(pts, data.frame(d),
       tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
   }
 
@@ -125,34 +139,32 @@ genFile <- function(var, iso3="SSA", by=NULL,
 
     tif = {
       # GeoTIFF
-      writeGDAL(d[, var], fPath, driver="GTiff",
-        mvFlag=-9999, type=ct, setStatistics=T,
-        catNames=list(cl), colorTables=list(cc),
+      writeGDAL(d, fPath, driver="GTiff",
+        mvFlag=mv, type=ct, setStatistics=T,
+        catNames=cl, colorTables=cc,
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     nc = {
-      # netCDF, numeric bands only
-      d <- d[, setdiff(names(d), g)]
-      # d <- d[, names(d)[sapply(d@data, class)=="numeric"]]
-      writeGDAL(d, fPath, driver="netCDF") },
+      writeGDAL(d, fPath, driver="netCDF",
+        mvFlag=mv, catNames=cl, colorTables=cc, setStatistics=T) },
 
     grd = {
       # Raster grid
-      writeGDAL(d[, var], fPath, driver="raster",
-        mvFlag=-9999, type=ct, setStatistics=T,
-        catNames=list(cl), colorTables=list(cc),
+      writeGDAL(d, fPath, driver="raster",
+        mvFlag=mv, type=ct, setStatistics=T,
+        catNames=cl, colorTables=cc,
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     asc = {
       # ESRI ASCII grid
-      writeGDAL(d[, var], fPath, driver="AAIGrid",
-        mvFlag=-9999, type=ct, setStatistics=T,
+      writeGDAL(d, fPath, driver="AAIGrid",
+        mvFlag=mv, type=ct, setStatistics=T,
         catNames=list(cl), colorTables=list(cc),
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     geojson = {
       # GeoJSON
-      d <- SpatialPointsDataFrame(d[, list(X, Y)], d,
+      d <- SpatialPointsDataFrame(d[, .(X, Y)], d,
         proj4string=CRS("+proj=longlat +datum=WGS84 +no_defs"))
       writeOGR(d, fPath, var[1], driver="GeoJSON") },
 
