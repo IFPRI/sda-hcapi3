@@ -3,7 +3,7 @@
 #' Package any result from \code{\link{getLayer}} into the user-specified tabular or
 #' spatial raster format. Also includes a README file with metadata and citation details.
 #' Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
-#' (tif), R raster (grd), RData (rda), and ESRI ASCII raster (asc).
+#' (tif), R raster (grd), RData (rda), ESRI ASCII raster (asc), and netCDF (nc).
 #' Calling \code{genFile(var="bmi", iso3="TZA", format="dta")} is equivalent to calling
 #' the convenience method \code{hcapi(var="bmi", iso3="TZA", format="dta")}.
 #'
@@ -89,6 +89,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
   else if (format %in% c("dta", "stata")) format <- "dta"
   else if (format %in% c("asc", "ascii")) format <- "asc"
   else if (format %in% c("csv", "xls", "xlsx")) format <- "csv"
+  else if (format %in% c("nc", "netcdf")) format <- "nc"
   else return(cat(format, "is not a recognized format"))
 
   # Construct temporary data file name
@@ -101,7 +102,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
     d <- getLayer(var, iso3, by, ...)
   }
 
-  if ( format %in% c("asc", "tif", "grd") ) {
+  if ( format %in% c("asc", "tif", "grd", "nc") ) {
     # Process only the first layer (not all raster formats support multibands)
     var <- var[1]
 
@@ -125,6 +126,13 @@ genFile <- function(var, iso3="SSA", by=NULL,
     tif = {
       # GeoTIFF
       writeGDAL(d[, var], fPath, driver="GTiff",
+        mvFlag=-9999, type=ct, setStatistics=T,
+        catNames=list(cl), colorTables=list(cc),
+        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
+
+    nc = {
+      # netCDF
+      writeGDAL(d[, var], fPath, driver="netCDF",
         mvFlag=-9999, type=ct, setStatistics=T,
         catNames=list(cl), colorTables=list(cc),
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
