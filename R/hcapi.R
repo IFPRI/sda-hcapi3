@@ -2,7 +2,7 @@
 #'
 #' Main method to subset and/or aggregate HarvestChoice layers.
 #' This method also aggregates classified variables by continuous variables.\\
-#' e.g. \code{getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))}.
+#' e.g. \code{hcapi(c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))}.
 #' It does so by returning the dominant class of a classified variable within each \code{by}
 #' class, and by automatically classifying any continuous variable passed to \code{by}
 #' using default value breaks as specified in the variable metadata.
