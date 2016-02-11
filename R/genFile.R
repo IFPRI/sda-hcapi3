@@ -117,7 +117,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
     }
 
     # Convert to unprojected raster
-    d <- SpatialPixelsDataFrame(d[, list(X, Y)], d,
+    d <- SpatialPixelsDataFrame(d[, list(X, Y)], data.frame(d),
       tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
   }
 
@@ -131,11 +131,10 @@ genFile <- function(var, iso3="SSA", by=NULL,
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     nc = {
-      # netCDF
-      writeGDAL(d[, var], fPath, driver="netCDF",
-        mvFlag=-9999, type=ct, setStatistics=T,
-        catNames=list(cl), colorTables=list(cc),
-        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
+      # netCDF, numeric bands only
+      d <- d[, setdiff(names(d), g)]
+      # d <- d[, names(d)[sapply(d@data, class)=="numeric"]]
+      writeGDAL(d, fPath, driver="netCDF") },
 
     grd = {
       # Raster grid
@@ -162,7 +161,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
       setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
       setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://hcapi.harvestchoice.org/. Contact <info@harvestchoice.org>.")
       setattr(d, "time.stamp", Sys.Date())
-      write.dta(d, fPath, version=10L) },
+      write.dta(d, fPath, version=12L) },
 
     rds = {
       # RDS
