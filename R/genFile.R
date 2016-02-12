@@ -140,27 +140,27 @@ genFile <- function(var, iso3="SSA", by=NULL,
   switch(format,
     tif = {
       # GeoTIFF, write by layer to preserve color palettes
-      lapply(names(d), function(x) writeGDAL(d[, x], driver="GTiff",
+      lapply(names(d), function(x) writeGDAL(d[, x], drivername="GTiff",
         gsub(".", paste0("-band-", x, "."), fPath, fixed=T),
         type=ct[[x]], mvFlag=mv[[x]], catNames=cl[x], colorTables=cc[x],
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES"))) },
 
     nc = {
       # netCDF, write brick and layer names and units
+      # Note that named layers are not implemented yet
       writeRaster(brick(d), fPath, format="CDF",
-        setStatistics=T, catNames=cl, colorTables=cc, overwrite=T,
-        zname=names(d), zunit=vi[names(d), unit]) },
+        overwrite=T, xname="lon", yname="lat", zname="indicator") },
 
     grd = {
       # Native raster grid
-      writeGDAL(d, fPath, driver="raster",
-        setStatistics=T, catNames=cl, colorTables=cc) },
+      writeRaster(brick(d), fPath, overwrite=T) },
 
     asc = {
-      # ESRI ASCII grid
-      writeGDAL(d, fPath, driver="AAIGrid",
-        setStatistics=T, catNames=list(cl), colorTables=list(cc),
-        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
+      # ESRI ASCII grid, write by layer
+      lapply(names(d), function(x) writeGDAL(d[, x], drivername="AAIGrid",
+        gsub(".", paste0("-band-", x, "."), fPath, fixed=T),
+        type=ct[[x]], mvFlag=mv[[x]], catNames=cl[x], colorTables=cc[x],
+        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES"))) },
 
     geojson = {
       # GeoJSON
@@ -189,8 +189,8 @@ genFile <- function(var, iso3="SSA", by=NULL,
 
   f <- list.files(dirname(fPath),
     paste0("^", strsplit(basename(fPath), "\\.")[[1]][1]), full.names=T)
-  file.copy(paste0(path.package("hcapi3"), "/data/LICENSE"), "./LICENSE")
-  f <- c(f, readme(names(d)), "./LICENSE")
+  file.copy(paste0(path.package("hcapi3"), "/TERMS"), "./TERMS")
+  f <- c(f, readme(names(d)), "./TERMS")
   #fPath <- paste(fPath, "zip", sep=".")
   #zip(fPath, f, flags="-9Xjm", zip="zip")
   return(f)
