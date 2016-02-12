@@ -119,22 +119,18 @@ genFile <- function(var, iso3="SSA", by=NULL,
     cc <- lapply(var,
       function(x) as.character(unlist(vi[x][, strsplit(classColors, "|", fixed=T)])))
     ct <- lapply(var, function(x) "Float32")
+    mv <- lapply(var, function(x) -9999)
 
-    names(cl) <- names(cc) <- names(ct) <- var
+    names(cl) <- names(cc) <- names(ct) <- names(mv) <- var
 
     for (i in var) {
       if ( vi[i][, type] == "class" )  {
         # If categorical raster, then convert to 0-based integer and add labels
         d[[i]] <- as.integer(factor(d[[i]], levels=cl[[i]], ordered=T))-1L
         ct[[i]] <- "Byte"
+        mv[[i]] <- 255
       }
     }
-
-    # If there's one Float, then set all layers as Float
-    if( sum(sapply(ct, `==`, "Float32"))>0 ) {
-      ct <- "Float32"; mv <- -9999
-    } else { ct <- "Byte"; mv <- 255 }
-
 
     # Convert to unprojected raster
     d <- SpatialPixelsDataFrame(pts, data.frame(d),
@@ -142,30 +138,28 @@ genFile <- function(var, iso3="SSA", by=NULL,
   }
 
   switch(format,
-
     tif = {
-      # GeoTIFF
-      writeGDAL(d, fPath, driver="GTiff",
-        mvFlag=mv, type=ct, setStatistics=T,
-        catNames=cl, colorTables=cc,
-        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
+      # GeoTIFF, write by layer to preserve color palettes
+      lapply(names(d), function(x) writeGDAL(d[, x], driver="GTiff",
+        gsub(".", paste0("-band-", x, "."), fPath, fixed=T),
+        type=ct[[x]], mvFlag=mv[[x]], catNames=cl[x], colorTables=cc[x],
+        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES"))) },
 
     nc = {
-      writeGDAL(d, fPath, driver="netCDF",
-        mvFlag=mv, catNames=cl, colorTables=cc, setStatistics=T) },
+      # netCDF, write brick and layer names and units
+      writeRaster(brick(d), fPath, format="CDF",
+        setStatistics=T, catNames=cl, colorTables=cc, overwrite=T,
+        zname=names(d), zunit=vi[names(d), unit]) },
 
     grd = {
-      # Raster grid
+      # Native raster grid
       writeGDAL(d, fPath, driver="raster",
-        mvFlag=mv, type=ct, setStatistics=T,
-        catNames=cl, colorTables=cc,
-        options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
+        setStatistics=T, catNames=cl, colorTables=cc) },
 
     asc = {
       # ESRI ASCII grid
       writeGDAL(d, fPath, driver="AAIGrid",
-        mvFlag=mv, type=ct, setStatistics=T,
-        catNames=list(cl), colorTables=list(cc),
+        setStatistics=T, catNames=list(cl), colorTables=list(cc),
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES")) },
 
     geojson = {
@@ -193,7 +187,8 @@ genFile <- function(var, iso3="SSA", by=NULL,
       write.csv(d, fPath, row.names=F, na="") }
   )
 
-  f <- list.files(dirname(fPath), paste0(basename(fPath), ".*"), full.names=T)
+  f <- list.files(dirname(fPath),
+    paste0("^", strsplit(basename(fPath), "\\.")[[1]][1]), full.names=T)
   file.copy(paste0(path.package("hcapi3"), "/data/LICENSE"), "./LICENSE")
   f <- c(f, readme(names(d)), "./LICENSE")
   #fPath <- paste(fPath, "zip", sep=".")
