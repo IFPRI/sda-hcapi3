@@ -92,7 +92,8 @@ genFile <- function(var, iso3="SSA", by=NULL,
   else if (format %in% c("nc", "netcdf")) format <- "nc"
   else return(paste(format, "is not a recognized format."))
 
-  # Construct temporary data file name
+  # Construct temporary file name
+  tmpdir <- tempdir()
   fPath <- paste(paste("hcapi", var[1], by[1], tolower(iso3[1]), sep="-"), format, sep=".")
 
   # If many variables, simply use `cat2` file name instead
@@ -110,6 +111,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
 
   if ( format %in% c("asc", "tif", "grd", "nc") ) {
     # Raster formats require more work
+    fPath <- paste(paste("hcapi", tolower(iso3[1]), sep="-"), format, sep=".")
     pts <- d[, .(X, Y)]
     var <- setdiff(names(d), g)
     d <- d[, .SD, .SDcols=var]
@@ -137,11 +139,15 @@ genFile <- function(var, iso3="SSA", by=NULL,
       tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
   }
 
+  # Temp file path
+  tmpdir <- tempdir()
+  fPath <- paste(tmpdir, fPath, sep="/")
+
   switch(format,
     tif = {
       # GeoTIFF, write by layer to preserve color palettes
       lapply(names(d), function(x) writeGDAL(d[, x], drivername="GTiff",
-        gsub(".", paste0("-band-", x, "."), fPath, fixed=T),
+        gsub(".", paste0("-", x, "."), fPath, fixed=T),
         type=ct[[x]], mvFlag=mv[[x]], catNames=cl[x], colorTables=cc[x],
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES"))) },
 
@@ -158,7 +164,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
     asc = {
       # ESRI ASCII grid, write by layer
       lapply(names(d), function(x) writeGDAL(d[, x], drivername="AAIGrid",
-        gsub(".", paste0("-band-", x, "."), fPath, fixed=T),
+        gsub(".", paste0("-", x, "."), fPath, fixed=T),
         type=ct[[x]], mvFlag=mv[[x]], catNames=cl[x], colorTables=cc[x],
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES"))) },
 
@@ -187,11 +193,14 @@ genFile <- function(var, iso3="SSA", by=NULL,
       write.csv(d, fPath, row.names=F, na="") }
   )
 
-  f <- list.files(dirname(fPath),
-    paste0("^", strsplit(basename(fPath), "\\.")[[1]][1]), full.names=T)
-  file.copy(paste0(path.package("hcapi3"), "/TERMS"), "./TERMS")
-  f <- c(f, readme(names(d)), "./TERMS")
-  #fPath <- paste(fPath, "zip", sep=".")
-  #zip(fPath, f, flags="-9Xjm", zip="zip")
+  f <- list.files(dirname(fPath), full.names=T)
+  f <- c(f,
+    readme(names(d), paste(tmpdir, "README.csv", sep="/")),
+    paste(path.package("hcapi3"), "TERMS", sep="/"))
+
   return(f)
 }
+
+#fPath <- paste(fPath, "zip", sep=".")
+#zip(fPath, f, flags="-9Xjm", zip="zip")
+

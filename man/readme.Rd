@@ -2,18 +2,20 @@
 % Please edit documentation in R/readme.R
 \name{readme}
 \alias{readme}
-\title{Return HarvestChoice data use terms, citation, and variable metadata}
+\title{Write HarvestChoice variable metadata to CSV}
 \usage{
-readme(var)
+readme(var, file = paste(tempdir(), "README.csv", sep = "/"))
 }
 \arguments{
 \item{var}{character array of CELL5M variable codes}
+
+\item{file}{output file path}
 }
 \value{
-character, path to generated README.csv file
+character, path to generated README file
 }
 \description{
 This information is appended to all data downloads, but may also be queried
-separately. Variable metadata is now made available in tabular format (tsv).
+separately. Variable metadata is now made available in tabular format (csv).
 }
 

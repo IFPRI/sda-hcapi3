@@ -1,11 +1,12 @@
 
-#' Return HarvestChoice data use terms, citation, and variable metadata
+#' Write HarvestChoice variable metadata to CSV
 #'
 #' This information is appended to all data downloads, but may also be queried
-#' separately. Variable metadata is now made available in tabular format (tsv).
+#' separately. Variable metadata is now made available in tabular format (csv).
 #'
 #' @param var character array of CELL5M variable codes
-#' @return character, path to generated README.csv file
+#' @param file output file path
+#' @return character, path to generated README file
 #' @examples
 #' # README for soil organic carbon concentration and 2012 total population
 #' f <- readme(c("soc_d5", "PN12_TOT"))
@@ -18,7 +19,7 @@
 #'
 #' @export
 
-readme <- function(var) {
+readme <- function(var, file=paste(tempdir(), "README.csv", sep="/")) {
 
   # Retrieve meta
   meta <- vi[var][, list(
@@ -39,9 +40,8 @@ readme <- function(var) {
     Citation=citation)]
 
   # Write one variable at a time
-  f <- "./README.csv"
-  write.csv(meta, f, row.names=F, na="")
-  return(f)
+  write.csv(meta, file, row.names=F, na="")
+  return(file)
 }
 
 
