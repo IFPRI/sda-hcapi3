@@ -10,7 +10,7 @@
 #' @param var character array of variable codes, passed to \code{\link{getLayer}}
 #' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
 #' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
-#' @param format output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")
+#' @param format output format, one of "csv", "json", "tif", "dta", "asc", "grd", "rds".
 #' @param ... any other optional argument passed to \code{\link{getLayer}},
 #' e.g. \code{by}, \code{collapse}.
 #'
@@ -90,10 +90,16 @@ genFile <- function(var, iso3="SSA", by=NULL,
   else if (format %in% c("asc", "ascii")) format <- "asc"
   else if (format %in% c("csv", "xls", "xlsx")) format <- "csv"
   else if (format %in% c("nc", "netcdf")) format <- "nc"
-  else return(cat(format, "is not a recognized format"))
+  else return(paste(format, "is not a recognized format."))
 
   # Construct temporary data file name
-  fPath <- paste(paste(var[1], by[1], iso3[1], sep="-"), format[1], sep=".")
+  fPath <- paste(paste("hcapi", var[1], by[1], tolower(iso3[1]), sep="-"), format, sep=".")
+
+  # If many variables, simply use `cat2` file name instead
+  if ( length(var)>1 ) {
+    fPath <- gsub(" ", "_", tolower(vi[var[1], cat2]), fixed=T)
+    fPath <- paste(paste("hcapi", fPath, tolower(iso3[1]), sep="-"), format, sep=".")
+  }
 
   if ( format %in% c("grd", "asc", "tif", "geojson") ) {
     # Call getLayer() and don't collapse for spatial formats

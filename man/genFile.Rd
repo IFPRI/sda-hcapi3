@@ -14,7 +14,7 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
 
 \item{by}{character array of variable codes to summarize by, passed to \code{\link{getLayer}}}
 
-\item{format}{output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")}
+\item{format}{output format, one of "csv", "json", "tif", "dta", "asc", "grd", "rds".}
 
 \item{...}{any other optional argument passed to \code{\link{getLayer}},
 e.g. \code{by}, \code{collapse}.}
