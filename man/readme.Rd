@@ -4,12 +4,12 @@
 \alias{readme}
 \title{Write HarvestChoice variable metadata to CSV}
 \usage{
-readme(var, file = paste(tempdir(), "README.csv", sep = "/"))
+readme(var, file = "./readme.csv")
 }
 \arguments{
 \item{var}{character array of CELL5M variable codes}
 
-\item{file}{output file path}
+\item{file}{output file path, default ./README.csv in current directory}
 }
 \value{
 character, path to generated README file

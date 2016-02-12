@@ -11,6 +11,7 @@
 #' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
 #' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
 #' @param format output format, one of "csv", "json", "tif", "dta", "asc", "grd", "rds".
+#' @param path output directory, default to current working directory
 #' @param ... any other optional argument passed to \code{\link{getLayer}},
 #' e.g. \code{by}, \code{collapse}.
 #'
@@ -76,7 +77,7 @@
 #'
 #' @export
 genFile <- function(var, iso3="SSA", by=NULL,
-  format=c("csv", "geojson", "tif", "dta", "asc", "rds", "grd"), ...) {
+  format=c("csv", "geojson", "tif", "dta", "asc", "rds", "grd"), path=".", ...) {
 
   setkey(vi, varCode)
 
@@ -93,7 +94,6 @@ genFile <- function(var, iso3="SSA", by=NULL,
   else return(paste(format, "is not a recognized format."))
 
   # Construct temporary file name
-  tmpdir <- tempdir()
   fPath <- paste(paste("hcapi", var[1], by[1], tolower(iso3[1]), sep="-"), format, sep=".")
 
   # If many variables, simply use `cat2` file name instead
@@ -139,9 +139,8 @@ genFile <- function(var, iso3="SSA", by=NULL,
       tolerance=0.00360015, proj4string=CRS("+init=epsg:4326"))
   }
 
-  # Temp file path
-  tmpdir <- tempdir()
-  fPath <- paste(tmpdir, fPath, sep="/")
+  # File path
+  fPath <- paste(path, fPath, sep="/")
 
   switch(format,
     tif = {
@@ -193,11 +192,12 @@ genFile <- function(var, iso3="SSA", by=NULL,
       write.csv(d, fPath, row.names=F, na="") }
   )
 
-  f <- list.files(dirname(fPath), full.names=T)
-  f <- c(f,
-    readme(names(d), paste(tmpdir, "README.csv", sep="/")),
-    paste(path.package("hcapi3"), "TERMS", sep="/"))
 
+  # Add README and TERMS
+  readme(names(d), paste(path, "readme.csv", sep="/"))
+  file.copy(paste(path.package("hcapi3"), "www/terms.html", sep="/"), paste(path, "terms.html", sep="/"))
+  f <- list.files(path, paste0("^", strsplit(basename(fPath), ".", fixed=T)[[1]][1]), full.names=T)
+  f <- c(f, paste(path, c("terms.html", "readme.csv"), sep="/"))
   return(f)
 }
 

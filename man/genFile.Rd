@@ -5,7 +5,7 @@
 \title{Convert CELL5M layers to raster and/or tabular formats for download}
 \usage{
 genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
-  "dta", "asc", "rds", "grd"), ...)
+  "dta", "asc", "rds", "grd"), path = ".", ...)
 }
 \arguments{
 \item{var}{character array of variable codes, passed to \code{\link{getLayer}}}
@@ -15,6 +15,8 @@ genFile(var, iso3 = "SSA", by = NULL, format = c("csv", "geojson", "tif",
 \item{by}{character array of variable codes to summarize by, passed to \code{\link{getLayer}}}
 
 \item{format}{output format, one of "csv", "json", "tif", "dta", "asc", "grd", "rds".}
+
+\item{path}{output directory, default to current working directory}
 
 \item{...}{any other optional argument passed to \code{\link{getLayer}},
 e.g. \code{by}, \code{collapse}.}

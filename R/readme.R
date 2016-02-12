@@ -5,7 +5,7 @@
 #' separately. Variable metadata is now made available in tabular format (csv).
 #'
 #' @param var character array of CELL5M variable codes
-#' @param file output file path
+#' @param file output file path, default ./README.csv in current directory
 #' @return character, path to generated README file
 #' @examples
 #' # README for soil organic carbon concentration and 2012 total population
@@ -19,7 +19,7 @@
 #'
 #' @export
 
-readme <- function(var, file=paste(tempdir(), "README.csv", sep="/")) {
+readme <- function(var, file="./readme.csv") {
 
   # Retrieve meta
   meta <- vi[var][, list(
