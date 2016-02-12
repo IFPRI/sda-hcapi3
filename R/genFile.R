@@ -188,7 +188,8 @@ genFile <- function(var, iso3="SSA", by=NULL,
   )
 
   f <- list.files(dirname(fPath), paste0(basename(fPath), ".*"), full.names=T)
-  f <- c(f, genReadme(names(d)))
+  file.copy(paste0(path.package("hcapi3"), "/data/LICENSE"), "./LICENSE")
+  f <- c(f, readme(names(d)), "./LICENSE")
   #fPath <- paste(fPath, "zip", sep=".")
   #zip(fPath, f, flags="-9Xjm", zip="zip")
   return(f)

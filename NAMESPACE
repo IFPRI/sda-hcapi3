@@ -3,7 +3,7 @@
 export(hcapi)
 export(genFile)
 export(genPlot)
-export(genReadme)
+export(readme)
 export(stats)
 export(genCartoCSS)
 export(category)
