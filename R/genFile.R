@@ -11,9 +11,9 @@
 #' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
 #' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
 #' @param format output format, one of "csv", "json", "tif", "dta", "asc", "grd", "rds".
-#' @param path output directory, default to current working directory
+#' @param dir output directory, default to current working directory
 #' @param ... any other optional argument passed to \code{\link{getLayer}},
-#' e.g. \code{by}, \code{collapse}.
+#'   e.g. \code{by}, \code{collapse}.
 #'
 #' @return character, array of generated file names
 #'
@@ -77,7 +77,7 @@
 #'
 #' @export
 genFile <- function(var, iso3="SSA", by=NULL,
-  format=c("csv", "geojson", "tif", "dta", "asc", "rds", "grd"), path=".", ...) {
+  format=c("csv", "geojson", "tif", "dta", "asc", "rds", "grd"), dir=".", ...) {
 
   setkey(vi, varCode)
 
@@ -91,7 +91,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
   else if (format %in% c("asc", "ascii")) format <- "asc"
   else if (format %in% c("csv", "xls", "xlsx")) format <- "csv"
   else if (format %in% c("nc", "netcdf")) format <- "nc"
-  else return(paste(format, "is not a recognized format."))
+  else stop(paste(format, "is not a recognized format."))
 
   # Construct temporary file name
   fPath <- paste(paste("hcapi", var[1], by[1], tolower(iso3[1]), sep="-"), format, sep=".")
@@ -140,13 +140,13 @@ genFile <- function(var, iso3="SSA", by=NULL,
   }
 
   # File path
-  fPath <- paste(path, fPath, sep="/")
+  fPath <- paste(dir, fPath, sep="/")
 
   switch(format,
     tif = {
       # GeoTIFF, write by layer to preserve color palettes
       lapply(names(d), function(x) writeGDAL(d[, x], drivername="GTiff",
-        gsub(".", paste0("-", x, "."), fPath, fixed=T),
+        gsub(".tif", paste0("-", x, ".tif"), fPath, fixed=T),
         type=ct[[x]], mvFlag=mv[[x]], catNames=cl[x], colorTables=cc[x],
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES"))) },
 
@@ -163,7 +163,7 @@ genFile <- function(var, iso3="SSA", by=NULL,
     asc = {
       # ESRI ASCII grid, write by layer
       lapply(names(d), function(x) writeGDAL(d[, x], drivername="AAIGrid",
-        gsub(".", paste0("-", x, "."), fPath, fixed=T),
+        gsub(".asc", paste0("-", x, ".asc"), fPath, fixed=T),
         type=ct[[x]], mvFlag=mv[[x]], catNames=cl[x], colorTables=cc[x],
         options=c("INTERLEAVE=BAND", "TFW=YES", "ESRI_XML_PAM=YES"))) },
 
@@ -176,14 +176,14 @@ genFile <- function(var, iso3="SSA", by=NULL,
     dta = {
       # Stata
       setattr(d, "var.labels", vi[names(d)][, paste0(varLabel, " (", unit, ")")])
-      setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://hcapi.harvestchoice.org/. Contact <info@harvestchoice.org>.")
+      setattr(d, "datalabel", "Produced by HarvestChoice/IFPRI at http://harvestchoice.org/. Contact <info@harvestchoice.org>.")
       setattr(d, "time.stamp", Sys.Date())
       write.dta(d, fPath, version=12L) },
 
     rds = {
       # RDS
       attr(d, "var.labels") <- vi[names(d)][, varLabel]
-      attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://hcapi.harvestchoice.org/. Contact <info@harvestchoice.org>."
+      attr(d, "datalabel") <- "Produced by HarvestChoice/IFPRI at http://harvestchoice.org/. Contact <info@harvestchoice.org>."
       attr(d, "time.stamp") <- as.character(as.Date(Sys.Date()))
       saveRDS(d, file=fPath) },
 
@@ -193,14 +193,10 @@ genFile <- function(var, iso3="SSA", by=NULL,
   )
 
 
-  # Add README and TERMS
-  readme(names(d), paste(path, "readme.csv", sep="/"))
-  file.copy(paste(path.package("hcapi3"), "www/terms.html", sep="/"), paste(path, "terms.html", sep="/"))
-  f <- list.files(path, paste0("^", strsplit(basename(fPath), ".", fixed=T)[[1]][1]), full.names=T)
-  f <- c(f, paste(path, c("terms.html", "readme.csv"), sep="/"))
+  # Add auxiliary files and use terms
+  m <- meta(names(d), format=format, dir=dir)
+  file.copy(system.file("./www/terms.html", package="hcapi3"), dir)
+  f <- list.files(dir, paste0("^", strsplit(basename(fPath), ".", fixed=T)[[1]][1]), full.names=T)
+  f <- c(f, m)
   return(f)
 }
-
-#fPath <- paste(fPath, "zip", sep=".")
-#zip(fPath, f, flags="-9Xjm", zip="zip")
-

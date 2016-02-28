@@ -3,18 +3,15 @@ title: "HARVESTCHOICE USER LICENSE"
 author: "Version 2008-01 April 16, 2008-2016"
 output:
   html_document:
-    theme: default
-    number_sections: no    
+    fig_height: 4
+    fig_width: 4
+    highlight: tango
     toc: yes
-  rmarkdown::html_vignette:
-    theme: default
-    number_sections: no
-    toc: yes
-vignette: >
-  %\VignetteEngine{knitr::rmarkdown} 
-  %\VignetteIndexEntry{HarvestChoice User License}
+    toc_depth: 2
 ---
 
+
+--------------------------------------------------------------------------------------
 This dataset was obtained from HarvestChoice at http://www.harvestchoice.org/.
  
 ## USE TERMS FOR ENCLOSED DATA FILES
@@ -23,8 +20,10 @@ The Data and any Related Materials are the property of HarvestChoice and its Con
 
 
 ## CITATION
+
+Please cite and reference:
  
-HarvestChoice; International Food Policy Research Institute (IFPRI); University of Minnesota, 2016, *"CELL5M: A geospatial data and analytics platform of harmonized multi-disciplinary data layers for Africa South of the Sahara"*, http://dx.doi.org/10.7910/DVN/G4TBLF, Harvard Dataverse.
+> HarvestChoice; International Food Policy Research Institute (IFPRI); University of Minnesota, 2016, *"CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara"*, http://dx.doi.org/10.7910/DVN/G4TBLF, Harvard Dataverse.
 
 
 ## Summary of License

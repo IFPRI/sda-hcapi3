@@ -5,21 +5,19 @@ date: '`r Sys.Date()`'
 output:
   html_document:
     fig_caption: yes
-    fig_width: 6
-    theme: default
+    fig_width: 4
     highlight: tango
     toc: yes
     toc_depth: 2
   rmarkdown::html_vignette:
     number_sections: no
-    theme: default
     highlight: tango
     toc: yes
     toc_depth: 2
     fig.path: man/img,
 vignette: >
+  %\VignetteIndexEntry{hcapi3}
   %\VignetteEngine{knitr::rmarkdown} 
-  %\VignetteIndexEntry{An Introduction to HarvestChoice Data services v3}
 ---
 
 

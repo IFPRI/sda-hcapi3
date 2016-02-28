@@ -87,6 +87,46 @@ describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css
 }
 
 
+#' Show HarvestChoice variable categories (3-level deep)
+#'
+#' @param cat optional fuzzy filter
+#' @param as.class "data.table" simple data table or "list" grouped by category
+#' @return a data.table with \code{N} showing the number of indicators in each category,
+#' or a list of variable categories
+#' @examples
+#' # List all HarvestChoice indicators matching category "Demographics"
+#' category("demographics")
+#'
+#' # List all HarvestChoice indicators matching "cassava", return as a hierarchical list
+#' category("cassava", as.class="list")
+#'
+#' # Equivalent request using cURL at the command line and passing well-formatted JSON
+#' # objects
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#' # -d '{"cat" : "demographics'} \
+#' # -X POST -H "Content-Type:application/json"
+#'
+#' #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#' # -d '{"cat" :" cassava", "as.class" : "list"} \
+#' # -X POST -H "Content-Type:application/json"
+#' @export
+category <- function(cat, as.class="data.table") {
+
+  out <- vi[published==T, list(varCode, varLabel),
+    keyby=list(Category=cat1, Subcategory=cat2, Item=cat3)]
+
+  if (!missing(cat)) {
+    out <- out[tolower(Category) %like% tolower(cat) |
+        tolower(Subcategory) %like% tolower(cat) |
+        tolower(Item) %like% tolower(cat)]
+  }
+
+  if (as.class=="list") {
+    out <- split(out, out$Category)
+    out <- lapply(out, function(x) split(x, x$Subcategory))
+  }
+  return(out)
+}
 
 
 

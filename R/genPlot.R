@@ -10,12 +10,12 @@
 #' @param layout one of "default", "print", or "thumbnail" to control legend and axes
 #' @param style one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
 #' @param units one of "px" (default), "in", "cm" or "mm".
-#' Passed to \code{\link[grDevices:png]{png}}
+#'   Passed to \code{\link[grDevices:png]{png}}
 #' @param resolution in ppi, by default set to 300ppi for print layout.
-#' Passed to \code{\link[grDevices:png]{png}}
-#' options (e.g. "kmeans" or "pretty") or "default" to use default breaks
+#'   Passed to \code{\link[grDevices:png]{png}}
+#'   options (e.g. "kmeans" or "pretty") or "default" to use default breaks
 #' @param n \code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
-#' to control the number of breaks
+#'   to control the number of breaks
 #' @param width plot width in pixel (unless \code{units} is specified)
 #' @param height plot height in pixel (unless \code{units} is specified)
 #' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize

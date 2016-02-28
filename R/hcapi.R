@@ -18,8 +18,8 @@
 #' "dta", "asc", "grd", "rds", else "png" to plot the rasters, or "stats" to plot
 #' histogram and univariate statistics.
 #' @param wkt WKT representation of a spatial object (points, multipoints, or polygons)
-#' @param ... other optional arguments passed to \code{\link{getLayer}},
-#' e.g. \code{collapse}, \code{as.class}
+#' @param ... other optional arguments passed to \code{\link{getLayer}} or \code{\link{genFile}},
+#' e.g. \code{collapse}, \code{as.class}, \code{dir}.
 #' @return a data.table (or other formats) of \code{var} indicators aggregated by \code{by} domains
 #' @examples
 #' # Mean BMI and cassava yield across districts in Tanzania
