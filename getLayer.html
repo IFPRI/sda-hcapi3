@@ -119,13 +119,8 @@ x
 <div class='input'>
 # Plot results for Mara province
 require(lattice)
-</div>
-<strong class='message'>Loading required package: lattice</strong>
-<div class='input'>require(latticeExtra)
-</div>
-<strong class='message'>Loading required package: latticeExtra</strong>
-<strong class='message'>Loading required package: RColorBrewer</strong>
-<div class='input'>asTheEconomist(
+require(latticeExtra)
+asTheEconomist(
 barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;]))
 
 # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
@@ -135,7 +130,7 @@ x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
 colorTables valid for Byte type only in some drivers</strong>
 <strong class='warning'>Warning message:
 Unable to set color table</strong>
-<p><img src='getLayer-11.png' alt='' width='540' height='400' /></p>
+<p><img src='getLayer-6.png' alt='' width='540' height='400' /></p>
 <div class='input'>x
 </div>
 <div class='output'>[1] &quot;./hcapi-tza-bmi.tfw&quot;         &quot;./hcapi-tza-bmi.tif&quot;         &quot;./hcapi-tza-bmi.tif.aux.xml&quot;
@@ -158,7 +153,7 @@ no non-missing arguments to min; returning Inf</strong>
 <strong class='warning'>Warning message:
 no non-missing arguments to max; returning -Inf</strong>
 <strong class='error'>Error in plot.window(...): need finite &#39;ylim&#39; values</strong>
-<p><img src='getLayer-21.png' alt='' width='540' height='400' /></p>
+<p><img src='getLayer-16.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # Equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
