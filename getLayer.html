@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>getLayer. hcapi3 3.5</title>
+<title>getLayer. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.5</a>
+      <a class="brand" href="#">hcapi3 3.7</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -63,10 +63,10 @@
       <dt>by</dt>
       <dd>optional character array of variables to group by (all types are accepted)</dd>
       <dt>ids</dt>
-      <dd>optional gridcell ids to return (if collapse=F) or summarize by (if collapse=T)</dd>
+      <dd>optional gridcell ids to filter by (if collapse=F) or summarize by (if collapse=T)</dd>
       <dt>collapse</dt>
-      <dd>if FALSE always return all pixel values (useful for plotting and to
-convert to spatial formats)</dd>
+      <dd>if TRUE collapses over <code>by</code> variables. If FALSE always return
+all pixel values (useful for plotting and to convert to spatial formats).</dd>
       <dt>as.class</dt>
       <dd>one of "data.table" (default) or "list". By default returns a simple data.table.
 If <code>as.class="list"</code> returns a well-constructed list with variable metadata</dd>
@@ -90,9 +90,8 @@ e.g. <code>getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))
 It does so by returning the dominant class of a classified variable within each <code>by</code>
 class, and by automatically classifying any continuous variable passed to <code>by</code>
 using default value breaks as specified in the variable metadata.
-The formula used to aggregate classified variables by choosing the dominant class is
-<code>names(sort(table({varCode}), decreasing=T)[1])</code>. This formula computes the
-frequency of each class, ranks them by decreasing frequency, and retains the top one.
+The dominant class of <code>x</code> is defined as <code>names(which.max(table(x)))</code>. For
+convenience this function is wrapped as <code><a href='dominant.html'>dominant</a></code> in this package.
 Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
 Note that calling <code>getLayer(...)</code> is equivalent to using the convenience method
 <code>hcapi(...)</code> with the same arguments.</p>
@@ -104,25 +103,30 @@ Note that calling <code>getLayer(...)</code> is equivalent to using the convenie
 x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
 x
 </div>
-<div class='output'>     ADM1_NAME_ALT ADM2_NAME_ALT  bmi cass_y
-  1:        Kagera       Karagwe 21.5    780
-  2:        Kagera  Bukoba Rural 21.5   6430
-  3:          Mara        Tarime 21.6   6681
-  4:        Kagera  Bukoba Urban 21.5   6813
-  5:          Mara  Musoma Rural 21.6   5797
- ---                                        
-124:        Mtwara  Mtwara urban 21.4   7503
-125:        Mtwara    Tandahimba 20.8   2555
-126:        Mtwara        Masasi 20.9   4128
-127:        Mtwara        Newala 20.9   2117
-128:        Ruvuma  Songea Urban 22.1   5774
+<div class='output'>     ISO3                   ADM0_NAME     ADM1_NAME_ALT   ADM2_NAME_ALT  bmi cass_y
+  1:  TZA United Republic of Tanzania            Arusha         Arumeru 21.2    NaN
+  2:  TZA United Republic of Tanzania            Arusha          Arusha 22.2    NaN
+  3:  TZA United Republic of Tanzania            Arusha          Karatu 21.2    NaN
+  4:  TZA United Republic of Tanzania            Arusha         Monduli 21.2    NaN
+  5:  TZA United Republic of Tanzania            Arusha      Ngorongoro 21.2    NaN
+ ---                                                                               
+124:  TZA United Republic of Tanzania      Unguja North         North B 21.7    NaN
+125:  TZA United Republic of Tanzania      Unguja South         Central 22.9    NaN
+126:  TZA United Republic of Tanzania      Unguja South           South 23.2    NaN
+127:  TZA United Republic of Tanzania Unguja Urban West            West 23.2    NaN
+128:  TZA United Republic of Tanzania   buffer gridcell buffer gridcell  NaN    NaN
 </div>
 <div class='input'>
 # Plot results for Mara province
 require(lattice)
 </div>
 <strong class='message'>Loading required package: lattice</strong>
-<div class='input'>barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;])
+<div class='input'>require(latticeExtra)
+</div>
+<strong class='message'>Loading required package: latticeExtra</strong>
+<strong class='message'>Loading required package: RColorBrewer</strong>
+<div class='input'>asTheEconomist(
+barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;]))
 
 # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
@@ -131,20 +135,30 @@ x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
 colorTables valid for Byte type only in some drivers</strong>
 <strong class='warning'>Warning message:
 Unable to set color table</strong>
-<p><img src='getLayer-8.png' alt='' width='540' height='400' /></p>
+<p><img src='getLayer-11.png' alt='' width='540' height='400' /></p>
 <div class='input'>x
 </div>
-<div class='output'>[1] &quot;./bmi--TZA.tif&quot;         &quot;./bmi--TZA.tif.aux.xml&quot; &quot;./README&quot;              
+<div class='output'>[1] &quot;./hcapi-tza-bmi.tfw&quot;         &quot;./hcapi-tza-bmi.tif&quot;         &quot;./hcapi-tza-bmi.tif.aux.xml&quot;
+[4] &quot;./meta.csv&quot;                  &quot;./README.md&quot;                 &quot;./datapackage.json&quot;         
 </div>
 <div class='input'>
 # Load the generated TIF raster (one band only)
 require(raster)
 x &lt;- raster(x[1])
-
+</div>
+<strong class='error'>Error in .rasterObjectFromFile(x, band = band, objecttype = &quot;RasterLayer&quot;, : Cannot create a RasterLayer object from this file.</strong>
+<div class='input'>
 # Plot the `bmi` series
 plot(x)
 </div>
-<p><img src='getLayer-12.png' alt='' width='540' height='400' /></p>
+<strong class='warning'>Warning message:
+NAs introduced by coercion</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to min; returning Inf</strong>
+<strong class='warning'>Warning message:
+no non-missing arguments to max; returning -Inf</strong>
+<strong class='error'>Error in plot.window(...): need finite &#39;ylim&#39; values</strong>
+<p><img src='getLayer-21.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # Equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
@@ -169,51 +183,52 @@ plot(x)
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
 # average stunting in children under 5 over Ivory Coast&#39;s provinces by elevation class
-hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+x
 </div>
-<div class='output'>        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
- 1:           Savanes      (256,516] Sub-Humid              NaN
- 2:          Denguele      (256,516] Sub-Humid              NaN
- 3:          Denguele      (516,862] Sub-Humid              NaN
- 4:           Savanes             NA Sub-Humid              NaN
- 5:            Zanzan      (256,516] Sub-Humid              NaN
- 6:            Zanzan             NA Sub-Humid              NaN
- 7:            Zanzan      (516,862] Sub-Humid              NaN
- 8: Vallee Du Bandama      (256,516] Sub-Humid              NaN
- 9:           Savanes      (516,862] Sub-Humid              NaN
-10:        Worodougou      (256,516] Sub-Humid              NaN
-11:            Bafing      (256,516] Sub-Humid              NaN
-12:            Bafing      (516,862] Sub-Humid              NaN
-13:        Worodougou      (516,862] Sub-Humid              NaN
-14: Vallee Du Bandama             NA Sub-Humid              NaN
-15:        Worodougou             NA Sub-Humid              NaN
-16:      18 Montagnes      (256,516]     Humid              NaN
-17:      18 Montagnes      (516,862] Sub-Humid              NaN
-18:        N&#39;zi Comoe             NA Sub-Humid              NaN
-19:            Bafing             NA Sub-Humid              NaN
-20:      18 Montagnes (862,1.28e+03]     Humid              NaN
-21:    Haut-sassandra      (256,516]     Humid              NaN
-22:          Marahoue             NA     Humid              NaN
-23:    Haut-sassandra             NA     Humid              NaN
-24:      18 Montagnes             NA     Humid              NaN
-25:          Marahoue      (256,516]     Humid              NaN
-26:              Lacs             NA Sub-Humid              NaN
-27:       Moyen Comoe             NA     Humid              NaN
-28:       Moyen Comoe      (256,516]     Humid              NaN
-29:     Moyen-Cavally      (256,516]     Humid              NaN
-30:     Moyen-Cavally             NA     Humid              NaN
-31:        N&#39;zi Comoe      (256,516] Sub-Humid              NaN
-32:          Fromager             NA     Humid              NaN
-33:            Agneby             NA     Humid              NaN
-34:     Bas Sassandra             NA     Humid              NaN
-35:     Bas Sassandra      (256,516]     Humid              NaN
-36:           Lagunes             NA Sub-Humid              NaN
-37:          Fromager      (256,516]     Humid              NaN
-38:       Sud Bandama             NA Sub-Humid              NaN
-39:       Sud Bandama      (256,516]     Humid              NaN
-40:         Sud Comoe             NA     Humid              NaN
-41:   buffer gridcell             NA        NA              NaN
-        ADM1_NAME_ALT      ELEVATION AEZ8_CLAS stunted_moderate
+<div class='output'>    ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS stunted_moderate
+ 1:  CIV Ivory Coast      18 Montagnes            NA     Humid              NaN
+ 2:  CIV Ivory Coast      18 Montagnes (3e+02,5e+02]     Humid              NaN
+ 3:  CIV Ivory Coast      18 Montagnes (5e+02,9e+02] Sub-Humid              NaN
+ 4:  CIV Ivory Coast      18 Montagnes (9e+02,1e+03]     Humid              NaN
+ 5:  CIV Ivory Coast            Agneby            NA     Humid              NaN
+ 6:  CIV Ivory Coast            Bafing            NA Sub-Humid              NaN
+ 7:  CIV Ivory Coast            Bafing (3e+02,5e+02] Sub-Humid              NaN
+ 8:  CIV Ivory Coast            Bafing (5e+02,9e+02] Sub-Humid              NaN
+ 9:  CIV Ivory Coast     Bas Sassandra            NA     Humid              NaN
+10:  CIV Ivory Coast     Bas Sassandra (3e+02,5e+02]     Humid              NaN
+11:  CIV Ivory Coast          Denguele (3e+02,5e+02] Sub-Humid              NaN
+12:  CIV Ivory Coast          Denguele (5e+02,9e+02] Sub-Humid              NaN
+13:  CIV Ivory Coast          Fromager            NA     Humid              NaN
+14:  CIV Ivory Coast          Fromager (3e+02,5e+02]     Humid              NaN
+15:  CIV Ivory Coast    Haut-sassandra            NA     Humid              NaN
+16:  CIV Ivory Coast    Haut-sassandra (3e+02,5e+02]     Humid              NaN
+17:  CIV Ivory Coast              Lacs            NA Sub-Humid              NaN
+18:  CIV Ivory Coast           Lagunes            NA Sub-Humid              NaN
+19:  CIV Ivory Coast          Marahoue            NA     Humid              NaN
+20:  CIV Ivory Coast          Marahoue (3e+02,5e+02]     Humid              NaN
+21:  CIV Ivory Coast       Moyen Comoe            NA     Humid              NaN
+22:  CIV Ivory Coast       Moyen Comoe (3e+02,5e+02]     Humid              NaN
+23:  CIV Ivory Coast     Moyen-Cavally            NA     Humid              NaN
+24:  CIV Ivory Coast     Moyen-Cavally (3e+02,5e+02]     Humid              NaN
+25:  CIV Ivory Coast        N&#39;zi Comoe            NA Sub-Humid              NaN
+26:  CIV Ivory Coast        N&#39;zi Comoe (3e+02,5e+02] Sub-Humid              NaN
+27:  CIV Ivory Coast           Savanes            NA Sub-Humid              NaN
+28:  CIV Ivory Coast           Savanes (3e+02,5e+02] Sub-Humid              NaN
+29:  CIV Ivory Coast           Savanes (5e+02,9e+02] Sub-Humid              NaN
+30:  CIV Ivory Coast       Sud Bandama            NA Sub-Humid              NaN
+31:  CIV Ivory Coast       Sud Bandama (3e+02,5e+02]     Humid              NaN
+32:  CIV Ivory Coast         Sud Comoe            NA     Humid              NaN
+33:  CIV Ivory Coast Vallee Du Bandama            NA Sub-Humid              NaN
+34:  CIV Ivory Coast Vallee Du Bandama (3e+02,5e+02] Sub-Humid              NaN
+35:  CIV Ivory Coast        Worodougou            NA Sub-Humid              NaN
+36:  CIV Ivory Coast        Worodougou (3e+02,5e+02] Sub-Humid              NaN
+37:  CIV Ivory Coast        Worodougou (5e+02,9e+02] Sub-Humid              NaN
+38:  CIV Ivory Coast            Zanzan            NA Sub-Humid              NaN
+39:  CIV Ivory Coast            Zanzan (3e+02,5e+02] Sub-Humid              NaN
+40:  CIV Ivory Coast            Zanzan (5e+02,9e+02] Sub-Humid              NaN
+41:  CIV Ivory Coast   buffer gridcell            NA        NA              NaN
+    ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS stunted_moderate
 </div>
 <div class='input'>
 # An equivalent request at the command line

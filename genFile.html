@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>genFile. hcapi3 3.5</title>
+<title>genFile. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.5</a>
+      <a class="brand" href="#">hcapi3 3.7</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -52,7 +52,7 @@
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>genFile(var, iso3&nbsp;=&nbsp;"SSA", by&nbsp;=&nbsp;NULL, format&nbsp;=&nbsp;c("csv", "geojson", "tif", "dta", "asc", "rda", "grd"), ...)</div></pre>
+    <pre><div>genFile(var, iso3&nbsp;=&nbsp;"SSA", by&nbsp;=&nbsp;NULL, format&nbsp;=&nbsp;c("csv", "geojson", "tif", "dta", "asc", "rds", "grd"), dir&nbsp;=&nbsp;".", ...)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
@@ -63,10 +63,12 @@
       <dt>by</dt>
       <dd>character array of variable codes to summarize by, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>format</dt>
-      <dd>output format c("csv", "json", "tif", "dta", "asc", "grd", "rds")</dd>
+      <dd>output format, one of "csv", "json", "tif", "dta", "asc", "grd", "rds".</dd>
+      <dt>dir</dt>
+      <dd>output directory, default to current working directory</dd>
       <dt>...</dt>
       <dd>any other optional argument passed to <code><a href='getLayer.html'>getLayer</a></code>,
-e.g. <code>by</code>, <code>collapse</code>.</dd>
+  e.g. <code>by</code>, <code>collapse</code>.</dd>
     </dl>
     
     <div class="Value">
@@ -84,7 +86,7 @@ character, array of generated file names
       <p>Package any result from <code><a href='getLayer.html'>getLayer</a></code> into the user-specified tabular or
 spatial raster format. Also includes a README file with metadata and citation details.
 Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
-(tif), R raster (grd), RData (rda), and ESRI ASCII raster (asc).
+(tif), R raster (grd), RData (rda), ESRI ASCII raster (asc), and netCDF (nc).
 Calling <code>genFile(var="bmi", iso3="TZA", format="dta")</code> is equivalent to calling
 the convenience method <code>hcapi(var="bmi", iso3="TZA", format="dta")</code>.</p>
   
@@ -95,50 +97,49 @@ the convenience method <code>hcapi(var="bmi", iso3="TZA", format="dta")</code>.<
 # in STATA format
 x &lt;- genFile(&quot;whea_h&quot;, iso3=c(&quot;NGA&quot;, &quot;ETH&quot;), by=&quot;AEZ16_CLAS&quot;, format=&quot;dta&quot;)
 </div>
-<div class='output'>dta is not a recognized format</div>
+<strong class='warning'>Warning message:
+the condition has length &gt; 1 and only the first element will be used</strong>
+<strong class='warning'>Warning message:
+the condition has length &gt; 1 and only the first element will be used</strong>
 <div class='input'>
 # Load generated STATA file
 require(foreign)
 </div>
 <strong class='message'>Loading required package: foreign</strong>
 <div class='input'>x &lt;- read.dta(x[1])
-</div>
-<strong class='error'>Error in read.dta(x[1]): first argument must be a file name
-</strong>
-<div class='input'>
+
 # Plot histogram with full layer title
 hist(x$whea_h, xlab=vi[&quot;whea_h&quot;][, varTitle], main=NULL)
-</div>
-<strong class='error'>Error in hist.default(x$whea_h, xlab = vi[&quot;whea_h&quot;][, varTitle], main = NULL): &#39;x&#39; must be numeric</strong>
-<div class='input'>
+
 # Sorghum production in Nigeria returned in ESRI ASCII raster format
 x &lt;- genFile(&quot;sorg_p&quot;, iso3=&quot;NGA&quot;, format=&quot;asc&quot;)
 </div>
-<div class='output'>asc is not a recognized format</div>
+<strong class='warning'>Warning message:
+colorTables valid for Byte type only in some drivers</strong>
+<strong class='warning'>Warning message:
+Unable to set color table</strong>
+<p><img src='genFile-9.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # Load and plot generated raster
 require(raster)
 </div>
 <strong class='message'>Loading required package: raster</strong>
 <strong class='message'>Loading required package: sp</strong>
+<strong class='message'>
+Attaching package: ‘raster’
+</strong>
+<strong class='message'>The following object is masked from ‘package:data.table’:
+
+    shift
+</strong>
 <div class='input'>x &lt;- raster(x[1])
+plot(x, main=vi[&quot;sorg_p&quot;][, varTitle])
 </div>
-<strong class='error'>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function ‘raster’ for signature ‘&quot;NULL&quot;’</strong>
-<div class='input'>plot(x, main=vi[&quot;sorg_p&quot;][, varTitle])
-</div>
-<strong class='warning'>Warning message:
-no non-missing arguments to min; returning Inf</strong>
-<strong class='warning'>Warning message:
-no non-missing arguments to max; returning -Inf</strong>
-<strong class='warning'>Warning message:
-no non-missing arguments to min; returning Inf</strong>
-<strong class='warning'>Warning message:
-no non-missing arguments to max; returning -Inf</strong>
-<strong class='error'>Error in plot.window(...): need finite &#39;xlim&#39; values</strong>
+<p><img src='genFile-16.png' alt='' width='540' height='400' /></p>
 <div class='input'>cellStats(x, &quot;mean&quot;)
 </div>
-<strong class='error'>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function ‘cellStats’ for signature ‘&quot;NULL&quot;’</strong>
-<p><img src='genFile-24.png' alt='' width='540' height='400' /></p>
+<div class='output'>[1] 897.064
+</div>
 <div class='input'>
 # Equivalent cUrl requests at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \

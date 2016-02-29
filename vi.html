@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>vi. hcapi3 3.5</title>
+<title>vi. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.5</a>
+      <a class="brand" href="#">hcapi3 3.7</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -73,67 +73,173 @@ sub-Saharan Africa.</p>
     <pre class="examples"><div class='input'># List of metadata elements that may be accessed though `vi`
 names(vi)
 </div>
-<div class='output'> [1] &quot;varCode&quot;     &quot;varLabel&quot;    &quot;varTitle&quot;    &quot;published&quot;   &quot;isDomain&quot;    &quot;isProduct&quot;   &quot;tbName&quot;     
- [8] &quot;version&quot;     &quot;mxdName&quot;     &quot;tbKey&quot;       &quot;varDesc&quot;     &quot;unit&quot;        &quot;dec&quot;         &quot;year&quot;       
-[15] &quot;yearEnd&quot;     &quot;genRaster&quot;   &quot;cat1&quot;        &quot;cat2&quot;        &quot;cat3&quot;        &quot;extent&quot;      &quot;type&quot;       
-[22] &quot;format&quot;      &quot;aggType&quot;     &quot;aggFun&quot;      &quot;owner&quot;       &quot;caveat&quot;      &quot;sources&quot;     &quot;sourceMini&quot; 
-[29] &quot;citation&quot;    &quot;dPublished&quot;  &quot;dAuthor&quot;     &quot;dTopic&quot;      &quot;dCrop&quot;       &quot;dKeywords&quot;   &quot;classColors&quot;
-[36] &quot;classBreaks&quot; &quot;classLabels&quot; &quot;aggFunR&quot;    
+<div class='output'> [1] &quot;varCode&quot;     &quot;varLabel&quot;    &quot;varTitle&quot;    &quot;sortOrder&quot;   &quot;published&quot;   &quot;isDomain&quot;   
+ [7] &quot;isProduct&quot;   &quot;tbName&quot;      &quot;version&quot;     &quot;mxdName&quot;     &quot;tbKey&quot;       &quot;varDesc&quot;    
+[13] &quot;unit&quot;        &quot;dec&quot;         &quot;year&quot;        &quot;yearEnd&quot;     &quot;genRaster&quot;   &quot;cat1&quot;       
+[19] &quot;cat2&quot;        &quot;cat3&quot;        &quot;extent&quot;      &quot;type&quot;        &quot;format&quot;      &quot;aggType&quot;    
+[25] &quot;aggFun&quot;      &quot;owner&quot;       &quot;caveat&quot;      &quot;sources&quot;     &quot;sourceMini&quot;  &quot;citation&quot;   
+[31] &quot;dPublished&quot;  &quot;dAuthor&quot;     &quot;dTopic&quot;      &quot;dCrop&quot;       &quot;dKeywords&quot;   &quot;classColors&quot;
+[37] &quot;classBreaks&quot; &quot;classLabels&quot; &quot;aggFunR&quot;    
 </div>
 <div class='input'>
 # Print full metadata for cassava yield
-knitr::kable(data.frame(t(vi[&quot;cass_y&quot;])), &quot;rst&quot;, row.names=T)
+x &lt;- as.list(t(vi[&quot;cass_y&quot;]))
+names(x) &lt;- names(vi)
+x
 </div>
-<div class='output'>
+<div class='output'>$varCode
+[1] &quot;cass_y&quot;
 
-===========  =========================================================================================================================================================================================================================================
-\            t.vi..cass_y...                                                                                                                                                                                                                          
-===========  =========================================================================================================================================================================================================================================
-varCode      cass_y                                                                                                                                                                                                                                   
-varLabel     Cassava yield &#39;05                                                                                                                                                                                                                        
-varTitle     Cassava Yield (kg/ha, 2005)                                                                                                                                                                                                              
-published    TRUE                                                                                                                                                                                                                                     
-isDomain     FALSE                                                                                                                                                                                                                                    
-isProduct    FALSE                                                                                                                                                                                                                                    
-tbName       cell5m_spam2005v2r0_yield                                                                                                                                                                                                                
-version      SChEF r2.5                                                                                                                                                                                                                               
-mxdName      spam05_cell5m_y                                                                                                                                                                                                                          
-tbKey        CELL5M                                                                                                                                                                                                                                   
-varDesc      Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.                                                                                
-unit         kg/ha                                                                                                                                                                                                                                    
-dec          0                                                                                                                                                                                                                                        
-year         2005                                                                                                                                                                                                                                     
-yearEnd      NA                                                                                                                                                                                                                                       
-genRaster    TRUE                                                                                                                                                                                                                                     
-cat1         Agriculture                                                                                                                                                                                                                              
-cat2         Yield                                                                                                                                                                                                                                    
-cat3         Cassava                                                                                                                                                                                                                                  
-extent       sub-Saharan Africa                                                                                                                                                                                                                       
-type         continuous                                                                                                                                                                                                                               
-format       raster                                                                                                                                                                                                                                   
-aggType      WGHTD                                                                                                                                                                                                                                    
-aggFun       SUM(cass_p)/SUM(cass_h)*1000                                                                                                                                                                                                             
-owner        u.wood-sichra@cgiar.org                                                                                                                                                                                                                  
-caveat       NA                                                                                                                                                                                                                                       
-sources      You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.                                                                                                               
-sourceMini   IFPRI, 2015                                                                                                                                                                                                                              
-citation     HarvestChoice, 2015. &quot;Cassava Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_y.                  
-dPublished   TRUE                                                                                                                                                                                                                                     
-dAuthor      Ulrike Wood-Sichra                                                                                                                                                                                                                       
-dTopic       Production                                                                                                                                                                                                                               
-dCrop        Cassava                                                                                                                                                                                                                                  
-dKeywords    Crops, Crop Yield, Cassava Yield, Sub-Saharan Africa, Cassava Production                                                                                                                                                                 
-classColors  #ffffffff|#E7E1EF|#DFD1E6|#D8C1DE|#D2B2D6|#CDA4CF|#C996C8|#D084BF|#D872B6|#DF5EAB|#E3469C|#E62F8E|#E0227B|#D61967|#CB1054|#B60A4D|#A10346|#8D003B|#7A002D|#67001F                                                                        
-classBreaks  0|471.5|1382.7|2142.35|2857.4|3534.55|4156.3|4748.25|5306.15|5821.45|6250.8|6592.05|7145.8|7868.15|8569.6|9723.1|11589|15262.2|24548.15|38833.3                                                                                          
-classLabels  none|under 472|472 - 1383|1383 - 2143|2143 - 2858|2858 - 3535|3535 - 4157|4157 - 4749|4749 - 5307|5307 - 5822|5822 - 6251|6251 - 6593|6593 - 7146|7146 - 7869|7869 - 8570|8570 - 9724|9724 - 11589|11589 - 15263|15263 - 24549|over 24549
-aggFunR      sum(cass_p, na.rm=TRUE)/sum(cass_h, na.rm=TRUE)*1000                                                                                                                                                                                     
-===========  =========================================================================================================================================================================================================================================
+$varLabel
+[1] &quot;Cassava yield &#39;05&quot;
+
+$varTitle
+[1] &quot;Cassava Yield (kg/ha, 2005)&quot;
+
+$sortOrder
+[1] &quot;1&quot;
+
+$published
+[1] &quot;TRUE&quot;
+
+$isDomain
+[1] &quot;FALSE&quot;
+
+$isProduct
+[1] &quot;FALSE&quot;
+
+$tbName
+[1] &quot;cell5m_spam2005v2r0_yield&quot;
+
+$version
+[1] &quot;SChEF r2.5&quot;
+
+$mxdName
+[1] &quot;spam05_cell5m_y&quot;
+
+$tbKey
+[1] &quot;CELL5M&quot;
+
+$varDesc
+[1] &quot;Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.&quot;
+
+$unit
+[1] &quot;kg/ha&quot;
+
+$dec
+[1] &quot;0&quot;
+
+$year
+[1] &quot;2005&quot;
+
+$yearEnd
+[1] NA
+
+$genRaster
+[1] &quot;TRUE&quot;
+
+$cat1
+[1] &quot;Agriculture&quot;
+
+$cat2
+[1] &quot;Yield&quot;
+
+$cat3
+[1] &quot;Cassava&quot;
+
+$extent
+[1] &quot;sub-Saharan Africa&quot;
+
+$type
+[1] &quot;continuous&quot;
+
+$format
+[1] &quot;raster&quot;
+
+$aggType
+[1] &quot;WGHTD&quot;
+
+$aggFun
+[1] &quot;SUM(cass_p)/SUM(cass_h)*1000&quot;
+
+$owner
+[1] &quot;u.wood-sichra@cgiar.org&quot;
+
+$caveat
+[1] NA
+
+$sources
+[1] &quot;You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.&quot;
+
+$sourceMini
+[1] &quot;IFPRI, 2015&quot;
+
+$citation
+[1] &quot;HarvestChoice, 2015. \&quot;Cassava Yield (kg/ha, 2005)\&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_y.&quot;
+
+$dPublished
+[1] &quot;TRUE&quot;
+
+$dAuthor
+[1] &quot;Ulrike Wood-Sichra&quot;
+
+$dTopic
+[1] &quot;Production&quot;
+
+$dCrop
+[1] &quot;Cassava&quot;
+
+$dKeywords
+[1] &quot;Crops, Crop Yield, Cassava Yield, Sub-Saharan Africa, Cassava Production&quot;
+
+$classColors
+[1] &quot;#ffffffff|#E7E1EF|#DFD1E6|#D8C1DE|#D2B2D6|#CDA4CF|#C996C8|#D084BF|#D872B6|#DF5EAB|#E3469C|#E62F8E|#E0227B|#D61967|#CB1054|#B60A4D|#A10346|#8D003B|#7A002D|#67001F&quot;
+
+$classBreaks
+[1] &quot;0|471.5|1382.7|2142.35|2857.4|3534.55|4156.3|4748.25|5306.15|5821.45|6250.8|6592.05|7145.8|7868.15|8569.6|9723.1|11589|15262.2|24548.15|38833.3&quot;
+
+$classLabels
+[1] &quot;none|under 472|472 - 1383|1383 - 2143|2143 - 2858|2858 - 3535|3535 - 4157|4157 - 4749|4749 - 5307|5307 - 5822|5822 - 6251|6251 - 6593|6593 - 7146|7146 - 7869|7869 - 8570|8570 - 9724|9724 - 11589|11589 - 15263|15263 - 24549|over 24549&quot;
+
+$aggFunR
+[1] &quot;sum(cass_p, na.rm=TRUE)/sum(cass_h, na.rm=TRUE)*1000&quot;
+
 </div>
 <div class='input'>
 # Get specific metadata elements
 vi[&quot;cass_y&quot;][, list(varTitle, units)]
 </div>
-<strong class='error'>Error in `rownames&lt;-`(`*tmp*`, value = paste(format(rn, right = TRUE), : length of &#39;dimnames&#39; [1] not equal to array extent</strong></pre>
+<strong class='error'>Error in `rownames&lt;-`(`*tmp*`, value = paste(format(rn, right = TRUE, : length of &#39;dimnames&#39; [1] not equal to array extent</strong>
+<div class='input'>
+# Count of layers by category
+vi[, .N, by=list(cat1, cat2)]
+</div>
+<div class='output'>              cat1                  cat2   N
+ 1:    Agriculture             Livestock  16
+ 2: Administrative              National   3
+ 3: Administrative             Provinces   2
+ 4: Administrative             Districts   2
+ 5:    Agroecology Agro-Ecological Zones   4
+ 6:    Agroecology    Land Cover and Use  25
+ 7: Administrative           Raster Grid   3
+ 8:    Agroecology             Elevation   1
+ 9:    Agroecology       Farming Systems   2
+10:    Agroecology    Pests and Diseases   8
+11:    Agroecology               Climate   7
+12:        Markets            Marketshed   1
+13:   Demographics            Population  12
+14:        Markets              Portshed   2
+15:   Demographics    Income and Poverty  36
+16:    Agroecology        Soil Resources  19
+17:        Markets           Travel Time  11
+18:    Agriculture        Harvested Area 144
+19:    Agriculture            Production 144
+20:    Agriculture   Value of Production 167
+21:    Agriculture                 Yield 144
+22:   Demographics  Health and Nutrition  90
+23:    Agriculture     Yield Variability   2
+              cat1                  cat2   N
+</div></pre>
   </div>
   <div class="span4">
     <!-- <ul>

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>getLayerWKT. hcapi3 3.5</title>
+<title>getLayerWKT. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.5</a>
+      <a class="brand" href="#">hcapi3 3.7</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -61,19 +61,28 @@
       <dt>wkt</dt>
       <dd>WKT representation of a spatial object (points, multipoints, or polygons)</dd>
       <dt>...</dt>
-      <dd>other arguments passed to <a href='getLayer.html'>getLayer</a> (e.g. <code>by</code>,
-<code>iso3</code>, <code>collapse</code>)}
-}
-{
-a data.table of <code>var</code> indicators summarized across <code>wkt</code> geometry
-}
-{
-This function intersects any spatial object (WKT point, multipoints, or polygons)
-with HarvestChoice 5-arc-minute grid and returns a list of intersected gridcell IDs
-(CELL5M codes) to pass along as argument to <a href='getLayer.html'>getLayer</a>.
-</dd>
+      <dd>other arguments passed to <code><a href='getLayer.html'>getLayer</a></code> (e.g. <code>by</code>,
+<code>iso3</code>, <code>collapse</code>)</dd>
     </dl>
-          </div>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+a data.table of <code>var</code> indicators summarized across <code>wkt</code> geometry
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>This function intersects any spatial object (WKT point, multipoints, or polygons)
+with HarvestChoice 5-arc-minute grid and returns a list of intersected gridcell IDs
+(CELL5M codes) to pass along as argument to <code><a href='getLayer.html'>getLayer</a></code>.</p>
+  
+    </div>
+      </div>
   <div class="span4">
     <!-- <ul>
       <li>getLayerWKT</li>

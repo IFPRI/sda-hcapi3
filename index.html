@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>Index. hcapi3 3.5</title>
+<title>Index. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Melanie Bacou [aut, cre],
 Maria Comanescu [ctb],
@@ -38,7 +38,7 @@ Zhe Guo [ctb]">
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.5</a>
+      <a class="brand" href="#">hcapi3 3.7</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -50,91 +50,134 @@ Zhe Guo [ctb]">
 
     <div class="container">
       <header>
-
+        
       </header>
-
+      
       <div class="row">
   <div class="span8">
-<p>Methods to retrieve, summarize, aggregate, and plot HarvestChoice
-5-arc-minute spatial layers for sub-Saharan Africa. All methods are combined and documented in this R package, but currently this package cannot be installed locally. Instead we provide access to
-all methods through a RESTful API (credits to <a href="http://github.com/jeroenooms/opencpu">OpenCPU</a>). Method names are endpoints and arguments must be converted from R syntax (as shown in this documentation) to simple JSON objects.</p>
+    <hr/>
 
-<pre>foo(arg1=c("val1", "val2"))</pre>
+<h2>About</h2>
 
-<p>must be passed to endpoint <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/foo">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/foo</a> using,</p>
+<blockquote>
+<p>CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara</p>
+</blockquote>
 
-<pre>{"arg1" : ["val1", "val2"]}</pre>
+<p><em>HarvestChoice CELL5M-SSA</em> is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. This database was created as the central core to a decision-support system for policy analysts, development practitioners, and researchers to explore the spatial relationships at the nexus of our climate, the environment, agriculture, nutrition, health, and poverty. All indicators are currently geo-referenced to a spatial resolution of <strong>5 arc-minute</strong> (equivalent to around 10 km<sup>2^</sup> at the Equateur).</p>
 
-<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice's spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of today over 750 indicators are
-available for sub-Saharan Africa. More about HarvestChoice at <a href="http://harvestchoice.org/">http://harvestchoice.org/</a>.</p>
+<h2>Data Retrieval</h2>
+
+<h3>HarvestChoice Data Services v3.0</h3>
+
+<p>The preferred method of data retrieval is through HarvestChoice RESTful API published under <a href="http://harvestchoice.github.io/hc-api3/">HarvestChoice Data Services v3.0</a>. This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice 5-arc-minute spatial layers for sub-Saharan Africa.</p>
+
+<p>This data package was generated through the API. Here is the Curl commmand that was used to retrieve this archive:</p>
+
+<pre><code>curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/meta \
+ -d &#39;{&quot;var&quot;:[&quot;bmi&quot;]}&#39; \
+ -X POST -H &#39;Content-Type:application/json&#39;
+
+</code></pre>
+
+<p>Other data retrieval and data visualization options are listed below. </p>
+
+<h3>HarvestChoice MAPPR</h3>
+
+<p>An option to interactively explore and summarize HarvestChoice data layers is to use <a href="http://harvestchoice.org/mappr">HarvestChoice MAPPR</a> on-line platform. Individual indicators may be mapped and summarized across pre-defined spatial domains or across user-selected geographies. MAPPR also provides advanced query tools for marketshed analyses.</p>
+
+<h3>HarvestChoice TABLR</h3>
+
+<p>Another tool for quick data summaries is <a href="http://harvestchoice.org/tablr">HarvestChoice TABLR</a>. This is an on-line report generator to quickly retrieve and export subsets of CELL5M-SSA. Best for users who do not need to visualize results on a map.</p>
+
+<h3>HarvestChoice Data Catalog</h3>
+
+<p>For more information about the <em>International Food Policy Resaearch Institute (IFPRI)</em> and <em>HarvestChoice Program</em>, and to explore individual data layers, visit <a href="http://harvestchoice.org/">HarvestChoice website</a>.</p>
+
+<h2>Metadata</h2>
+
+<p>This package contains both a <code>META.csv</code> file with complete metadata records. A <code>datapackage.json</code> file compliant with the latest <strong>Tabular Data Package</strong> RFC specifications documented at <a href="http://dataprotocols.org/tabular-data-package/">http://dataprotocols.org/tabular-data-package/</a> is also included.</p>
+
+<h2>Use Terms</h2>
+
+<p>Please refer to the [terms.html](./terms.html) file included in the root of this data package.</p>
+
+<h2>Citation</h2>
+
+<p>Please cite and reference:</p>
+
+<blockquote>
+<p>HarvestChoice; International Food Policy Research Institute (IFPRI); University of Minnesota, 2016, <em>&ldquo;CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara&rdquo;</em>, <a href="http://dx.doi.org/10.7910/DVN/G4TBLF">http://dx.doi.org/10.7910/DVN/G4TBLF</a>, Harvard Dataverse.</p>
+</blockquote>
+
 
     <h2>Help topics</h2>
 
     <h3></h3>
-
-
+    
+    
     <ul class="index">
-
+        
       <li>
         <code><a href="category.html">category</a></code><br />Show HarvestChoice variable categories (3-level deep)</li>
-
-      <li>
-        <code><a href="classify.html">classify</a></code><br />Create custom domains for spatial targeting</li>
-
+            
       <li>
         <code><a href="describe.html">describe</a></code><br />Return HarvestChoice variable metadata</li>
-
+            
+      <li>
+        <code><a href="dominant.html">dominant</a></code><br />Return the dominant class (the mode of a classified variable)</li>
+            
       <li>
         <code><a href="genCartoCSS.html">genCartoCSS</a></code><br />Generate CartoCSS snippet to symbolize raster tiles</li>
-
+            
       <li>
         <code><a href="genFile.html">genFile</a></code><br />Convert CELL5M layers to raster and/or tabular formats for download</li>
-
+            
       <li>
         <code><a href="genPlot.html">genPlot</a></code><br />Plot HarvestChoice 5-arc-minute spatial indicators</li>
-
-      <li>
-        <code><a href="genReadme.html">genReadme</a></code><br />Return HarvestChoice data use terms, citation, and variable metadata</li>
-
+            
       <li>
         <code><a href="getLayer.html">getLayer</a></code><br />Subset, and/or summarize HarvestChoice 5-arc-minute spatial indicators</li>
-
+            
       <li>
         <code><a href="getLayerSQL.html">getLayerSQL</a></code><br />Subset, and/or aggregate HarvestChoice 5-arc-minute layers (SQLite version, now deprecated)</li>
-
+            
       <li>
         <code><a href="getLayerWKT.html">getLayerWKT</a></code><br />Summarize HarvestChoice 5-arc-minute layers over WKT geometri(es)</li>
-
+            
       <li>
         <code><a href="hcapi.html">hcapi</a></code><br />Subset, summarize, and download HarvestChoice 5-arc-minute spatial indicators</li>
-
+            
       <li>
         <code><a href="iso.html">iso</a></code><br />List of ISO3 country and/or region codes</li>
-
+            
+      <li>
+        <code><a href="meta.html">meta</a></code><br />Write HarvestChoice CELL5M auxiliary files to CSV and JSON per Tabular Data
+</li>
+            
       <li>
         <code><a href="similar.html">similar</a></code><br />Rank spatial units by similarity</li>
-
+            
       <li>
         <code><a href="stats.html">stats</a></code><br />Generate histogram and boxplot of HarvestChoice indicators</li>
-
+            
       <li>
         <code><a href="vi.html">vi</a></code><br />HarvestChoice inventory of 5-arc-minute spatial indicators</li>
-
+    
     </ul>
   </div>
-
+  
   <div class="span3 offset1">
     <h2>Vignettes</h2>
     <ul>
-      <li><a href="vignettes/hcapi3.html">An Introduction to HarvestChoice Data services v3</a></li>
+      <li><a href="vignettes/hcapi3.html">hcapi3</a></li>
     </ul>
-
+        
     <h2>Dependencies</h2>
     <ul>
       <li><strong>Depends</strong>: data.table</li>
       <li><strong>Imports</strong>: RSclient, stringr</li>
       <li><strong>Suggests</strong>: raster, sp, classInt, RColorBrewer, foreign, rgdal, rgeos, knitr</li>
-
+      
     </ul>
     <h2>Authors</h2>
     <ul>
@@ -147,11 +190,9 @@ available for sub-Saharan Africa. More about HarvestChoice at <a href="http://ha
       <li><a href="mailto:z.guo@cgiar.org">Zhe Guo</a> [ctb]</li>
     </ul>
 
-    <h2><a href="http://harvestchoice.org/" target="_new"><img src="./img/hc-logo-white.png" alt="HarvestChoice Home" /></a></h2>
-
   </div>
 </div>
-
+      
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
