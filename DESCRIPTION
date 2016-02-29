@@ -20,7 +20,7 @@ Author: Melanie Bacou [aut, cre],
     Zhe Guo [ctb]
 Maintainer: Melanie Bacou <mel@mbacou.com>
 Depends:
-    R (>= 2.14.0),
+    R (>= 3.2.0),
     data.table
 Imports:
     RSclient,
@@ -51,5 +51,5 @@ License: GPL (>= 3)
 URL: http://harvestchoice.org/, https://github.com/harvestchoice/hc-api3
 BugReports: http://harvestchoice.org/
 MailingList: support@harvestchoice.org
-Packaged: 2015-05-01 11:20:02 UTC; mbacou
+Packaged: 2016-02-28 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
