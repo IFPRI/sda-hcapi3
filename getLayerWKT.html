@@ -44,16 +44,16 @@
 
     <div class="container">
       <header>
-
+        
       </header>
-
+      
       <h1>Summarize HarvestChoice 5-arc-minute layers over WKT geometri(es)</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
     <pre><div>getLayerWKT(var, wkt, ...)</div></pre>
-
+    
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
@@ -65,7 +65,7 @@ multipoints, or polygons)</dd>
       <dd>other arguments passed to <code><a href='getLayer.html'>getLayer</a></code> (e.g. <code>by</code>,
 <code>collapse</code>, <code>format</code>)</dd>
     </dl>
-
+    
     <div class="Value">
       <h2>Value</h2>
 
@@ -73,7 +73,7 @@ multipoints, or polygons)</dd>
 a data.table (or other <code>format</code>) of <code>var</code> indicators summarized
 across <code>wkt</code> geometri(es)
 </dl></p>
-
+  
     </div>
 
     <div class="Description">
@@ -82,15 +82,19 @@ across <code>wkt</code> geometri(es)
       <p>This function intersects (extracts) any spatial object (WKT point, multipoints,
 polygons or multipolygons) with HarvestChoice 5-arc-minute grid and returns an array
 of intersected gridcell IDs (CELL5M codes) to pass along as argument to <code><a href='getLayer.html'>getLayer</a></code>.</p>
-
+  
     </div>
-
+    
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean harvested maize area summarized across a custom polygon
 x &lt;- getLayerWKT(&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 15.36599264077935345,
 -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
 </div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
 <div class='input'>head(x)
 </div>
 <div class='output'>   ISO3 maiz_h
@@ -102,13 +106,13 @@ x &lt;- getLayerWKT(&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006
       <li>getLayerWKT</li>
     </ul>
     <ul>
-
+      
     </ul> -->
-
-
+      
+        
   </div>
 </div>
-
+      
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>

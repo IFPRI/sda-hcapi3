@@ -44,16 +44,16 @@
 
     <div class="container">
       <header>
-
+        
       </header>
-
+      
       <h1>Subset, summarize, and download HarvestChoice 5-arc-minute spatial indicators</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
     <pre><div>hcapi(var, iso3&nbsp;=&nbsp;"SSA", by&nbsp;=&nbsp;NULL, wkt&nbsp;=&nbsp;NULL, format&nbsp;=&nbsp;NULL, ...)</div></pre>
-
+    
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
@@ -71,14 +71,14 @@ else "png" to plot the rasters, or "stats" to plot histogram and univariate stat
       <dd>other optional arguments passed to <code><a href='getLayer.html'>getLayer</a></code> or <code><a href='genFile.html'>genFile</a></code>,
 e.g. <code>collapse</code>, <code>as.class</code>, <code>dir</code></dd>
     </dl>
-
+    
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
 a data.table (or other formats) of <code>var</code> indicators aggregated by <code>by</code> domains
 </dl></p>
-
+  
     </div>
 
     <div class="Description">
@@ -95,9 +95,9 @@ The dominant class of a variable <code>x</code> is defined by <code><a href='dom
 Layers may also be summarized over a spatial area (passed as an integer array of CELL5M IDs)
 using parameter <code>ids</code>. Use <code>format</code> argument to control the output format
 (see below).</p>
-
+  
     </div>
-
+    
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean body mass index and cassava yield across provinces and districts of Tanzania
 x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
@@ -109,7 +109,7 @@ x
   3:  TZA United Republic of Tanzania            Arusha          Karatu 21.2    NaN
   4:  TZA United Republic of Tanzania            Arusha         Monduli 21.2    NaN
   5:  TZA United Republic of Tanzania            Arusha      Ngorongoro 21.2    NaN
- ---
+ ---                                                                               
 124:  TZA United Republic of Tanzania      Unguja North         North B 21.7    NaN
 125:  TZA United Republic of Tanzania      Unguja South         Central 22.9    NaN
 126:  TZA United Republic of Tanzania      Unguja South           South 23.2    NaN
@@ -119,24 +119,30 @@ x
 <div class='input'>
 # Plot results for Mara province
 require(lattice)
-barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+</div>
+<strong class='message'>Loading required package: lattice</strong>
+<div class='input'>barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
 
 # Mean cassava yield in Ivory Coast in GeoTIFF raster format
 x &lt;- hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
 </div>
-<p><img src='hcapi-6.png' alt='' width='540' height='400' /></p>
+<strong class='warning'>Warning message:
+colorTables valid for Byte type only in some drivers</strong>
+<strong class='warning'>Warning message:
+Unable to set color table</strong>
+<p><img src='hcapi-8.png' alt='' width='540' height='400' /></p>
 <div class='input'>x
 </div>
-<div class='output'>[1] &quot;./hcapi-civ-cass_y.tfw&quot;         &quot;./hcapi-civ-cass_y.tif&quot;
-[3] &quot;./hcapi-civ-cass_y.tif.aux.xml&quot; &quot;./meta.csv&quot;
-[5] &quot;./README.md&quot;                    &quot;./datapackage.json&quot;
+<div class='output'>[1] &quot;./hcapi-civ-cass_y.tfw&quot;         &quot;./hcapi-civ-cass_y.tif&quot;        
+[3] &quot;./hcapi-civ-cass_y.tif.aux.xml&quot; &quot;./meta.csv&quot;                    
+[5] &quot;./README.md&quot;                    &quot;./datapackage.json&quot;            
 </div>
 <div class='input'>
 # Plot the generated TIF raster (one band only)
 require(raster)
 plot(raster(x[2]))
 </div>
-<p><img src='hcapi-10.png' alt='' width='540' height='400' /></p>
+<p><img src='hcapi-12.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # Equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
@@ -183,6 +189,10 @@ x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 1
 -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
 </div>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 1</strong>
+<strong class='warning'>Warning message:
+grid has empty column/rows in dimension 2</strong>
 <div class='input'>head(x)
 </div>
 <div class='output'>   ISO3 maiz_h
@@ -194,17 +204,17 @@ x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 1
       <li>hcapi</li>
     </ul>
     <ul>
-
+      
     </ul> -->
-
+      
     <h2>See also</h2>
-
+    
 <code><a href='getLayer.html'>getLayer</a></code>, <code><a href='getLayerWKT.html'>getLayerWKT</a></code>, <code><a href='genFile.html'>genFile</a></code>
 
-
+        
   </div>
 </div>
-
+      
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>

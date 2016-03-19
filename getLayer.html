@@ -86,11 +86,11 @@ a data.table (or json array) of <code>var</code> indicators aggregated by <code>
 
       <p>Workhorse method to subset and/or aggregate HarvestChoice layers.
 This method also aggregates classified variables by continuous variables.\
-e.g. <code>getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))</code>.
+e.g. <code>getLayer(var="AEZ16_CLAS", by="bmi")</code>.
 It does so by returning the dominant class of a classified variable within each <code>by</code>
 class, and by automatically classifying any continuous variable passed to <code>by</code>
 using default value breaks as specified in the variable metadata.
-The dominant class of <code>x</code> is defined as <code>mode(x)</code>.
+The dominant class of a variable <code>x</code> is defined as <code><a href='dominant.html'>dominant</a>(x)</code>.
 Layers may also be summarized over a spatial area (passed as an integer array of CELL5M IDs).
 Note that calling <code>getLayer(...)</code> is equivalent to using the convenience method
 <code>hcapi(...)</code> with the same arguments.</p>
@@ -98,28 +98,22 @@ Note that calling <code>getLayer(...)</code> is equivalent to using the convenie
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Mean BMI and cassava yield across districts in Tanzania
-x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+    <pre class="examples"><div class='input'># Mean body mass index and maize yield across districts in Tanzania
+x &lt;- hcapi(c(&quot;bmi&quot;, &quot;maiz_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
 head(x)
 </div>
-<div class='output'>   ISO3                   ADM0_NAME ADM1_NAME_ALT ADM2_NAME_ALT  bmi cass_y
-1:  TZA United Republic of Tanzania        Arusha       Arumeru 21.2    NaN
+<div class='output'>   ISO3                   ADM0_NAME ADM1_NAME_ALT ADM2_NAME_ALT  bmi maiz_y
+1:  TZA United Republic of Tanzania        Arusha       Arumeru 21.2   2767
 2:  TZA United Republic of Tanzania        Arusha        Arusha 22.2    NaN
-3:  TZA United Republic of Tanzania        Arusha        Karatu 21.2    NaN
-4:  TZA United Republic of Tanzania        Arusha       Monduli 21.2    NaN
-5:  TZA United Republic of Tanzania        Arusha    Ngorongoro 21.2    NaN
-6:  TZA United Republic of Tanzania Dar es Salaam         Ilala 23.3   6829
+3:  TZA United Republic of Tanzania        Arusha        Karatu 21.2   2074
+4:  TZA United Republic of Tanzania        Arusha       Monduli 21.2   1816
+5:  TZA United Republic of Tanzania        Arusha    Ngorongoro 21.2   1159
+6:  TZA United Republic of Tanzania Dar es Salaam         Ilala 23.3   2462
 </div>
 <div class='input'>
 # Plot results for Mara province
-require(lattice)
-</div>
-<strong class='message'>Loading required package: lattice</strong>
-<div class='input'>require(latticeExtra)
-</div>
-<strong class='message'>Loading required package: latticeExtra</strong>
-<strong class='message'>Loading required package: RColorBrewer</strong>
-<div class='input'>asTheEconomist(barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;]))
+lattice::barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+
 
 # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
@@ -128,25 +122,21 @@ x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
 colorTables valid for Byte type only in some drivers</strong>
 <strong class='warning'>Warning message:
 Unable to set color table</strong>
-<p><img src='getLayer-11.png' alt='' width='540' height='400' /></p>
-<div class='input'>x
+<p><img src='getLayer-6.png' alt='' width='540' height='400' /></p>
+<div class='input'>head(x)
 </div>
 <div class='output'>[1] &quot;./hcapi-tza-bmi.tfw&quot;         &quot;./hcapi-tza-bmi.tif&quot;         &quot;./hcapi-tza-bmi.tif.aux.xml&quot;
 [4] &quot;./meta.csv&quot;                  &quot;./README.md&quot;                 &quot;./datapackage.json&quot;         
 </div>
 <div class='input'>
-# Load the generated TIF raster (one band only)
-require(raster)
-x &lt;- raster(x[2])
-
 # Plot the `bmi` series
-plot(x)
+plot(raster(x[2]))
 </div>
-<p><img src='getLayer-15.png' alt='' width='540' height='400' /></p>
+<p><img src='getLayer-10.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # Equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-# -d &#39;{&quot;var&quot;:&quot;bmi&quot;, &quot;iso3&quot;:&quot;TZA&quot;, &quot;format&quot;:&quot;tif&quot;}&#39; \
+# -d &#39;{&quot;var&quot;:[&quot;bmi&quot;, &quot;maiz_y&quot;], &quot;iso3&quot;:&quot;TZA&quot;, &quot;format&quot;:&quot;tif&quot;}&#39; \
 # -X POST -H &#39;Content-Type:application/json&#39;
 
 # /ocpu/tmp/x0bc1ac9bdf/R/.val
@@ -166,22 +156,22 @@ plot(x)
 
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
-# average stunting in children under 5 over Ivory Coast&#39;s provinces by elevation class
-x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+# banana harvested area over Ivory Coast&#39;s provinces across elevation zones
+x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
 head(x)
 </div>
-<div class='output'>   ISO3   ADM0_NAME ADM1_NAME_ALT     ELEVATION AEZ8_CLAS stunted_moderate
-1:  CIV Ivory Coast  18 Montagnes            NA     Humid              NaN
-2:  CIV Ivory Coast  18 Montagnes (3e+02,5e+02]     Humid              NaN
-3:  CIV Ivory Coast  18 Montagnes (5e+02,9e+02] Sub-Humid              NaN
-4:  CIV Ivory Coast  18 Montagnes (9e+02,1e+03]     Humid              NaN
-5:  CIV Ivory Coast        Agneby            NA     Humid              NaN
-6:  CIV Ivory Coast        Bafing            NA Sub-Humid              NaN
+<div class='output'>   ISO3   ADM0_NAME ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h
+1:  CIV Ivory Coast  18 Montagnes            NA     Humid     66
+2:  CIV Ivory Coast  18 Montagnes (3e+02,5e+02]     Humid    456
+3:  CIV Ivory Coast  18 Montagnes (5e+02,9e+02] Sub-Humid     86
+4:  CIV Ivory Coast  18 Montagnes (9e+02,1e+03]     Humid     23
+5:  CIV Ivory Coast        Agneby            NA     Humid    322
+6:  CIV Ivory Coast        Bafing            NA Sub-Humid      0
 </div>
 <div class='input'>
 # An equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
-# -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
+# -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;bana_h&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
 # -X POST -H &#39;Content-Type:application/json&#39;
 </div></pre>
   </div>
@@ -193,6 +183,10 @@ head(x)
       
     </ul> -->
       
+    <h2>See also</h2>
+    
+<a href='hcapi.html'>hcapi</a> <a href='getLayerWKT.html'>getLayerWKT</a>
+
         
   </div>
 </div>
