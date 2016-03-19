@@ -71,14 +71,14 @@
 #' # -X POST -H 'Content-Type:application/json'
 #'
 #' # Mean harvested maize area summarized across a custom polygon
-#' x <- hcapi("maiz_h", wkt="POLYGON((-16.35819663578485006 15.36599264077935345,
+#' x <- hcapi(var="maiz_h", wkt="POLYGON((-16.35819663578485006 15.36599264077935345,
 #' -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 #' -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))")
 #' head(x)
 #'
 #' @export
 hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format=NULL, ...) {
-  if( !missing(wkt) ) return(getLayerWKT(var, iso3, by, wkt, ...))
+  if( !missing(wkt) ) return(getLayerWKT(var, wkt, ...))
   if( missing(format) ) return(getLayer(var, iso3, by, ...))
   if( format %in% c("png", "plot") ) return(genPlot(var, iso3, ...))
   if( format=="stats" ) return(stats(var, iso3))
