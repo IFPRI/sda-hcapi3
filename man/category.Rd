@@ -35,4 +35,7 @@ category("cassava", as.class="list")
 # -d '{"cat" :" cassava", "as.class" : "list"} \\
 # -X POST -H "Content-Type:application/json"
 }
+\seealso{
+\code{\link{describe}} to view complete indicator metadata
+}
 

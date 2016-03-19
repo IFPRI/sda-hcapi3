@@ -18,11 +18,11 @@
 #' # -d '{"cat" : "cassava", "raster" : true, "as.class" : "list"}' \
 #' # -X POST -H "Content-Type:application/json"
 #'
-#' describe(raster=T, version="SChEF r2.3", as.class="list")[1:2]
+#' describe(raster=T, cat="population", as.class="list")[1:2]
 #'
 #' # Equivalent cURL request at the command line
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
-#' # -d '{"raster" : true, "version" : "SChEF r2.3", "as.class" : "list"}' \
+#' # -d '{"raster" : true, "cat" : "population", as.class" : "list"}' \
 #' # -X POST -H "Content-Type:application/json"
 #'
 #' @export
@@ -93,6 +93,7 @@ describe <- function(var, cat, version, raster=FALSE, as.class="data.table", css
 #' @param as.class "data.table" simple data table or "list" grouped by category
 #' @return a data.table with \code{N} showing the number of indicators in each category,
 #' or a list of variable categories
+#' @seealso \code{\link{describe}} to view complete indicator metadata
 #' @examples
 #' # List all HarvestChoice indicators matching category "Demographics"
 #' category("demographics")

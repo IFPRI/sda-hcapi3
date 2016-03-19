@@ -1,38 +1,26 @@
 ---
 title:  "HarvestChoice Data Services v3.0"
 author: "IFPRI/HarvestChoice"
-date:   "`r Sys.Date`"
+date:   "`r Sys.Date()`"
 output:
   html_document:
     fig_height: 4
     fig_width: 4
     highlight: tango
-    toc: yes
-    toc_depth: 2
 ---
 
 
---------------------------------------------------------------------------------------
+# HarvestChoice Data Services v3.0
 
 ## About
 
-> CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara
-
-*HarvestChoice CELL5M-SSA* is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. This database was created as the central core to a decision-support system for policy analysts, development practitioners, and researchers to explore the spatial relationships at the nexus of our climate, the environment, agriculture, nutrition, health, and poverty. All indicators are currently geo-referenced to a spatial resolution of **5 arc-minute** (equivalent to around 10 km^2^ at the Equateur).
+*HarvestChoice CELL5M-SSA* is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. This database was created as the central core to a decision-support system for policy analysts, development practitioners, and researchers to explore the spatial relationships at the nexus of our climate, the environment, agriculture, nutrition, health, and poverty. All indicators are currently geo-referenced to a spatial resolution of **5 arc-minute** (equivalent to around 10 km^2 at the Equateur).
 
 ## Data Retrieval
 
 ### HarvestChoice Data Services v3.0
 
-The preferred method of data retrieval is through HarvestChoice RESTful API published under [HarvestChoice Data Services v3.0](http://harvestchoice.github.io/hc-api3/). This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice 5-arc-minute spatial layers for sub-Saharan Africa.
-
-This data package was generated through the API. Here is the Curl commmand that was used to retrieve this archive:
-
-```
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
--d '{"var":["bmi","maiz_h"], "iso3":"TZA", "format":"tif"}' \
--X POST -H 'Content-Type:application/json'
-```
+The preferred method of data retrieval is through HarvestChoice RESTful API published under [HarvestChoice Data Services v3.0](http://harvestchoice.github.io/hc-api3/). This API provides a full range of methods to retrieve, summarize, aggregate, plot and map HarvestChoice spatial layers.
 
 Other data retrieval and data visualization options are listed below. 
 

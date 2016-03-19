@@ -6,9 +6,8 @@
 #' It does so by returning the dominant class of a classified variable within each \code{by}
 #' class, and by automatically classifying any continuous variable passed to \code{by}
 #' using default value breaks as specified in the variable metadata.
-#' The dominant class of \code{x} is defined as \code{names(which.max(table(x)))}. For
-#' convenience this function is wrapped as \code{\link{dominant}} in this package.
-#' Layers can also be summarized over a spatial area (passed as an integer array of CELL5M ids).
+#' The dominant class of \code{x} is defined as \code{mode(x)}.
+#' Layers may also be summarized over a spatial area (passed as an integer array of CELL5M IDs).
 #' Note that calling \code{getLayer(...)} is equivalent to using the convenience method
 #' \code{hcapi(...)} with the same arguments.
 #'
@@ -24,13 +23,12 @@
 #' @examples
 #' # Mean BMI and cassava yield across districts in Tanzania
 #' x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
-#' x
+#' head(x)
 #'
 #' # Plot results for Mara province
 #' require(lattice)
 #' require(latticeExtra)
-#' asTheEconomist(
-#' barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"]))
+#' asTheEconomist(barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"]))
 #'
 #' # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 #' x <- hcapi("bmi", iso3="TZA", format="tif")
@@ -38,7 +36,7 @@
 #'
 #' # Load the generated TIF raster (one band only)
 #' require(raster)
-#' x <- raster(x[1])
+#' x <- raster(x[2])
 #'
 #' # Plot the `bmi` series
 #' plot(x)
@@ -67,7 +65,7 @@
 #' # variables. For example the call below returns the dominant agro-ecological zone and
 #' # average stunting in children under 5 over Ivory Coast's provinces by elevation class
 #' x <- hcapi(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
-#' x
+#' head(x)
 #'
 #' # An equivalent request at the command line
 #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
@@ -75,10 +73,7 @@
 #' # -X POST -H 'Content-Type:application/json'
 #'
 #' @export
-getLayer <- function(var, iso3="SSA", by=NULL,
-  ids=NULL,
-  collapse=TRUE,
-  as.class="data.table") {
+getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class="data.table") {
 
   setkey(vi, varCode)
   # If pixel ids are passed ignore any country filter
@@ -169,15 +164,16 @@ getLayer <- function(var, iso3="SSA", by=NULL,
     RS.close(rc)
 
   } else {
-    # No aggregation. Don't duplicate any variable
+    # No aggregation, return pixel values
+    # Don't duplicate any variable
     vars <- c(g, var, by)
     vars <- unique(vars)
     vars <- vars[!is.na(vars)]
 
     # Put query string together
     data <- paste0("dt",
-      if(length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if(iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
+      if (length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
+      if (iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
       "[, .(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve

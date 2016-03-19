@@ -183,7 +183,7 @@ $(document).ready(function () {
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    66    0    66    0     0    791      0 --:--:-- --:--:-- --:--:--   942
+  0    66    0    66    0     0    731      0 --:--:-- --:--:-- --:--:--  1178
 ## Redirect to http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/</code></pre>
 <p>The main data query method is <code>hcapi()</code> with a REST endpoint at (<a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi</a>)[/R/hcapi]. <code>category()</code> and <code>describe()</code> may be used to return indicator metadata. Other methods, like <code>classify()</code> (summarizing indicators across custom geographic domains) and <code>similar()</code> (ranking areas by similarity) are useful to conduct advanced analyses.</p>
 </div>
@@ -195,7 +195,7 @@ $(document).ready(function () {
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-101  3966    0  3966    0     0  60006      0 --:--:-- --:--:-- --:--:--  121k
+101  3947    0  3947    0     0  71076      0 --:--:-- --:--:-- --:--:-- 93976
 ## hcapi                  package:hcapi3                  R Documentation
 ## 
 ## Subset, summarize, and download HarvestChoice 5-arc-minute spatial
@@ -210,11 +210,11 @@ $(document).ready(function () {
 ##      dominant class of a classified variable within each by class, and
 ##      by automatically classifying any continuous variable passed to by
 ##      using default value breaks as specified in the variable metadata.
-##      The dominant class of x is defined as names(which.max(table(x))).
-##      For convenience this function is wrapped as dominant in this
-##      package. Layers can also be summarized over a spatial area (passed
-##      as an integer array of CELL5M ids). Use format argument to control
-##      the output format for the spatial layer (see below).
+##      The dominant class of x is defined as mode(x). For convenience
+##      this function is wrapped as dominant in this package. Layers can
+##      also be summarized over a spatial area (passed as an integer array
+##      of CELL5M ids). Use format argument to control the output format
+##      for the spatial layer (see below).
 ## 
 ## Usage:
 ## 
@@ -307,8 +307,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   2924 --:--:-- --:--:-- --:--:--  2924
-143   389    0   389    0    40   1019    104 --:--:-- --:--:-- --:--:--   950
+  0     0    0     0    0    40      0   2878 --:--:-- --:--:-- --:--:--  2878
+143   389    0   389    0    40   1008    103 --:--:-- --:--:-- --:--:--   940
 ## [
 ##   {
 ##     &quot;ISO3&quot;: &quot;GHA&quot;,
@@ -343,20 +343,21 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   3874 --:--:-- --:--:-- --:--:--  3874
-114   404    0   404    0    53   1033    135 --:--:-- --:--:-- --:--:--   928
-114   404    0   404    0    53   1033    135 --:--:-- --:--:-- --:--:--   928
-## /ocpu/tmp/x04f7d3f3a7/R/.val
-## /ocpu/tmp/x04f7d3f3a7/stdout
-## /ocpu/tmp/x04f7d3f3a7/source
-## /ocpu/tmp/x04f7d3f3a7/console
-## /ocpu/tmp/x04f7d3f3a7/info
-## /ocpu/tmp/x04f7d3f3a7/files/datapackage.json
-## /ocpu/tmp/x04f7d3f3a7/files/DESCRIPTION
-## /ocpu/tmp/x04f7d3f3a7/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
-## /ocpu/tmp/x04f7d3f3a7/files/meta.csv
-## /ocpu/tmp/x04f7d3f3a7/files/README.md
-## /ocpu/tmp/x04f7d3f3a7/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   1586 --:--:-- --:--:-- --:--:--  1586
+122   435    0   435    0    53   1040    126 --:--:-- --:--:-- --:--:--   992
+122   435    0   435    0    53   1040    126 --:--:-- --:--:-- --:--:--   992
+## /ocpu/tmp/x00e9c0d919/R/.val
+## /ocpu/tmp/x00e9c0d919/stdout
+## /ocpu/tmp/x00e9c0d919/warnings
+## /ocpu/tmp/x00e9c0d919/source
+## /ocpu/tmp/x00e9c0d919/console
+## /ocpu/tmp/x00e9c0d919/info
+## /ocpu/tmp/x00e9c0d919/files/datapackage.json
+## /ocpu/tmp/x00e9c0d919/files/DESCRIPTION
+## /ocpu/tmp/x00e9c0d919/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
+## /ocpu/tmp/x00e9c0d919/files/meta.csv
+## /ocpu/tmp/x00e9c0d919/files/README.md
+## /ocpu/tmp/x00e9c0d919/files/terms.html</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3>Example #5: same request returning a file in RData format</h3>
@@ -365,19 +366,20 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   3939 --:--:-- --:--:-- --:--:--  3939
-114   404    0   404    0    53    969    127 --:--:-- --:--:-- --:--:--   870
-## /ocpu/tmp/x0396f7b353/R/.val
-## /ocpu/tmp/x0396f7b353/stdout
-## /ocpu/tmp/x0396f7b353/source
-## /ocpu/tmp/x0396f7b353/console
-## /ocpu/tmp/x0396f7b353/info
-## /ocpu/tmp/x0396f7b353/files/datapackage.json
-## /ocpu/tmp/x0396f7b353/files/DESCRIPTION
-## /ocpu/tmp/x0396f7b353/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
-## /ocpu/tmp/x0396f7b353/files/meta.csv
-## /ocpu/tmp/x0396f7b353/files/README.md
-## /ocpu/tmp/x0396f7b353/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   1602 --:--:-- --:--:-- --:--:--  1602
+122   435    0   435    0    53   1036    126 --:--:-- --:--:-- --:--:--   989
+## /ocpu/tmp/x0883c1c758/R/.val
+## /ocpu/tmp/x0883c1c758/stdout
+## /ocpu/tmp/x0883c1c758/warnings
+## /ocpu/tmp/x0883c1c758/source
+## /ocpu/tmp/x0883c1c758/console
+## /ocpu/tmp/x0883c1c758/info
+## /ocpu/tmp/x0883c1c758/files/datapackage.json
+## /ocpu/tmp/x0883c1c758/files/DESCRIPTION
+## /ocpu/tmp/x0883c1c758/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
+## /ocpu/tmp/x0883c1c758/files/meta.csv
+## /ocpu/tmp/x0883c1c758/files/README.md
+## /ocpu/tmp/x0883c1c758/files/terms.html</code></pre>
 <p>Other possible formats include <code>csv</code>, <code>json</code> for GeoJSON, and raster formats <code>grd</code>, <code>tif</code> and <code>asc</code> for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add <code>/zip</code> to the session endpoint.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -388,8 +390,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   5489 --:--:-- --:--:-- --:--:--  5489
-  0    55    0    55    0    73    742    986 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0    73      0   5437 --:--:-- --:--:-- --:--:--  5437
+  0    55    0    55    0    73    727    965 --:--:-- --:--:-- --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code>--2015-02-03 04:10:38--
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
@@ -414,8 +416,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    959 --:--:-- --:--:-- --:--:--   959
-107  1174    0  1174    0    13   6327     70 --:--:-- --:--:-- --:--:--  6789
+  0     0    0     0    0    13      0    991 --:--:-- --:--:-- --:--:--   991
+107  1174    0  1174    0    13   6122     67 --:--:-- --:--:-- --:--:--  6522
 ## [
 ##   {
 ##     &quot;Category&quot;: &quot;Agroecology&quot;,
@@ -475,7 +477,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-104  1462    0  1462    0     0  32121      0 --:--:-- --:--:-- --:--:-- 47161
+104  1462    0  1462    0     0  30483      0 --:--:-- --:--:-- --:--:-- 43000
 ## describe                package:hcapi3                 R Documentation
 ## 
 ## Return HarvestChoice variable metadata
@@ -536,8 +538,9 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    269 --:--:-- --:--:-- --:--:--   269
-  0     3    0     3    0     9     14     44 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     9      0    636 --:--:-- --:--:-- --:--:--   636
+  0     3    0     3    0     9     15     47 --:--:-- --:--:-- --:--:--     0
+  0     3    0     3    0     9     15     47 --:--:-- --:--:-- --:--:--     0
 ## []</code></pre>
 <p>Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format using <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv</a> (<code>vi</code> in the URL stands for <em>Variable Inventory</em>).</p>
 </div>

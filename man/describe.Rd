@@ -35,11 +35,11 @@ describe(cat="cassava", raster=T)
 # -d '{"cat" : "cassava", "raster" : true, "as.class" : "list"}' \\
 # -X POST -H "Content-Type:application/json"
 
-describe(raster=T, version="SChEF r2.3", as.class="list")[1:2]
+describe(raster=T, cat="population", as.class="list")[1:2]
 
 # Equivalent cURL request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \\
-# -d '{"raster" : true, "version" : "SChEF r2.3", "as.class" : "list"}' \\
+# -d '{"raster" : true, "cat" : "population", as.class" : "list"}' \\
 # -X POST -H "Content-Type:application/json"
 }
 \seealso{

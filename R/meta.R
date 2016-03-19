@@ -59,7 +59,7 @@ meta <- function(var, format=NULL, dir=".") {
 
 
   # Write custom `README.md` and `README.html`
-  r <- readLines(system.file("./www/datapackage.md", package="hcapi3"))
+  r <- readLines(system.file("./www/readme.md", package="hcapi3"))
   r <- gsub("$date$", Sys.Date(), r, fixed=T)
   r <- gsub("$json$", toJSON(list(var=var)), r, fixed=T)
   write(r, d[2])
