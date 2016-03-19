@@ -84,6 +84,12 @@ head(x)
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \\
 # -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \\
 # -X POST -H 'Content-Type:application/json'
+
+# Mean harvested maize area summarized across a custom polygon
+x <- hcapi("maiz_h", wkt="POLYGON((-16.35819663578485006 15.36599264077935345,
+-15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
+-16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))")
+head(x)
 }
 \seealso{
 \code{\link{getLayer}}, \code{\link{getLayerWKT}}, \code{\link{genFile}}
