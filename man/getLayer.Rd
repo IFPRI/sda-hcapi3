@@ -28,39 +28,34 @@ a data.table (or json array) of \code{var} indicators aggregated by \code{by} do
 \description{
 Workhorse method to subset and/or aggregate HarvestChoice layers.
 This method also aggregates classified variables by continuous variables.\\
-e.g. \code{getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))}.
+e.g. \code{getLayer(var="AEZ16_CLAS", by="bmi")}.
 It does so by returning the dominant class of a classified variable within each \code{by}
 class, and by automatically classifying any continuous variable passed to \code{by}
 using default value breaks as specified in the variable metadata.
-The dominant class of \code{x} is defined as \code{mode(x)}.
+The dominant class of a variable \code{x} is defined as \code{\link{dominant}(x)}.
 Layers may also be summarized over a spatial area (passed as an integer array of CELL5M IDs).
 Note that calling \code{getLayer(...)} is equivalent to using the convenience method
 \code{hcapi(...)} with the same arguments.
 }
 \examples{
-# Mean BMI and cassava yield across districts in Tanzania
-x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+# Mean body mass index and maize yield across districts in Tanzania
+x <- hcapi(c("bmi", "maiz_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
 head(x)
 
 # Plot results for Mara province
-require(lattice)
-require(latticeExtra)
-asTheEconomist(barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"]))
+lattice::barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT=="Mara"], col="grey90")
+
 
 # Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
 x <- hcapi("bmi", iso3="TZA", format="tif")
-x
-
-# Load the generated TIF raster (one band only)
-require(raster)
-x <- raster(x[2])
+head(x)
 
 # Plot the `bmi` series
-plot(x)
+plot(raster(x[2]))
 
 # Equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \\
-# -d '{"var":"bmi", "iso3":"TZA", "format":"tif"}' \\
+# -d '{"var":["bmi", "maiz_y"], "iso3":"TZA", "format":"tif"}' \\
 # -X POST -H 'Content-Type:application/json'
 
 # /ocpu/tmp/x0bc1ac9bdf/R/.val
@@ -80,13 +75,16 @@ plot(x)
 
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
-# average stunting in children under 5 over Ivory Coast's provinces by elevation class
-x <- hcapi(c("AEZ8_CLAS", "stunted_moderate"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
+# banana harvested area over Ivory Coast's provinces across elevation zones
+x <- hcapi(c("AEZ8_CLAS", "bana_h"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
 head(x)
 
 # An equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \\
-# -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \\
+# -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \\
 # -X POST -H 'Content-Type:application/json'
+}
+\seealso{
+\link{hcapi} \link{getLayerWKT}
 }
 

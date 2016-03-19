@@ -183,7 +183,7 @@ $(document).ready(function () {
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    66    0    66    0     0    735      0 --:--:-- --:--:-- --:--:--   868
+  0    66    0    66    0     0    764      0 --:--:-- --:--:-- --:--:--   916
 ## Redirect to http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/</code></pre>
 <p>The main data query method is <code>hcapi()</code> with a REST endpoint at (<a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi</a>)[/R/hcapi]. <code>category()</code> and <code>describe()</code> may be used to return indicator metadata. Other methods, like <code>classify()</code> (summarizing indicators across custom geographic domains) and <code>similar()</code> (ranking areas by similarity) are useful to conduct advanced analyses.</p>
 </div>
@@ -298,9 +298,9 @@ $(document).ready(function () {
 ##      # -X POST -H 'Content-Type:application/json'
 ##      
 ##      # Mean harvested maize area summarized across a custom polygon
-##      x &lt;- hcapi(&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663
-100  4336    0  4336    0     0  57414      0 --:--:-- --:--:-- --:--:--  100k
-## 578485006 15.36599264077935345,
+##      x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.3581
+100  4340    0  4340    0     0  63505      0 --:--:-- --:--:-- --:--:--  105k
+## 9663578485006 15.36599264077935345,
 ##      -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 ##      -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
 ##      head(x)
@@ -315,8 +315,9 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   1575 --:--:-- --:--:-- --:--:--  1575
-143   389    0   389    0    40    791     81 --:--:-- --:--:-- --:--:--   748
+  0     0    0     0    0    40      0   1600 --:--:-- --:--:-- --:--:--  1600
+143   389    0   389    0    40    833     85 --:--:-- --:--:-- --:--:--   789
+143   389    0   389    0    40    833     85 --:--:-- --:--:-- --:--:--   789
 ## [
 ##   {
 ##     &quot;ISO3&quot;: &quot;GHA&quot;,
@@ -351,21 +352,20 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   3961 --:--:-- --:--:-- --:--:--  3961
-122   435    0   435    0    53    904    110 --:--:-- --:--:-- --:--:--   816
-122   435    0   435    0    53    904    110 --:--:-- --:--:-- --:--:--   816
-## /ocpu/tmp/x0f9d6385c5/R/.val
-## /ocpu/tmp/x0f9d6385c5/stdout
-## /ocpu/tmp/x0f9d6385c5/warnings
-## /ocpu/tmp/x0f9d6385c5/source
-## /ocpu/tmp/x0f9d6385c5/console
-## /ocpu/tmp/x0f9d6385c5/info
-## /ocpu/tmp/x0f9d6385c5/files/datapackage.json
-## /ocpu/tmp/x0f9d6385c5/files/DESCRIPTION
-## /ocpu/tmp/x0f9d6385c5/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
-## /ocpu/tmp/x0f9d6385c5/files/meta.csv
-## /ocpu/tmp/x0f9d6385c5/files/README.md
-## /ocpu/tmp/x0f9d6385c5/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   2116 --:--:-- --:--:-- --:--:--  2116
+122   435    0   435    0    53    880    107 --:--:-- --:--:-- --:--:--   814
+## /ocpu/tmp/x01db6d8cbd/R/.val
+## /ocpu/tmp/x01db6d8cbd/stdout
+## /ocpu/tmp/x01db6d8cbd/warnings
+## /ocpu/tmp/x01db6d8cbd/source
+## /ocpu/tmp/x01db6d8cbd/console
+## /ocpu/tmp/x01db6d8cbd/info
+## /ocpu/tmp/x01db6d8cbd/files/datapackage.json
+## /ocpu/tmp/x01db6d8cbd/files/DESCRIPTION
+## /ocpu/tmp/x01db6d8cbd/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
+## /ocpu/tmp/x01db6d8cbd/files/meta.csv
+## /ocpu/tmp/x01db6d8cbd/files/README.md
+## /ocpu/tmp/x01db6d8cbd/files/terms.html</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3>Example #5: same request returning a file in RData format</h3>
@@ -374,20 +374,21 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   3852 --:--:-- --:--:-- --:--:--  3852
-122   435    0   435    0    53    891    108 --:--:-- --:--:-- --:--:--   807
-## /ocpu/tmp/x0b9fc0f14e/R/.val
-## /ocpu/tmp/x0b9fc0f14e/stdout
-## /ocpu/tmp/x0b9fc0f14e/warnings
-## /ocpu/tmp/x0b9fc0f14e/source
-## /ocpu/tmp/x0b9fc0f14e/console
-## /ocpu/tmp/x0b9fc0f14e/info
-## /ocpu/tmp/x0b9fc0f14e/files/datapackage.json
-## /ocpu/tmp/x0b9fc0f14e/files/DESCRIPTION
-## /ocpu/tmp/x0b9fc0f14e/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
-## /ocpu/tmp/x0b9fc0f14e/files/meta.csv
-## /ocpu/tmp/x0b9fc0f14e/files/README.md
-## /ocpu/tmp/x0b9fc0f14e/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   3925 --:--:-- --:--:-- --:--:--  3925
+122   435    0   435    0    53    888    108 --:--:-- --:--:-- --:--:--   802
+122   435    0   435    0    53    888    108 --:--:-- --:--:-- --:--:--   802
+## /ocpu/tmp/x0af0a9e718/R/.val
+## /ocpu/tmp/x0af0a9e718/stdout
+## /ocpu/tmp/x0af0a9e718/warnings
+## /ocpu/tmp/x0af0a9e718/source
+## /ocpu/tmp/x0af0a9e718/console
+## /ocpu/tmp/x0af0a9e718/info
+## /ocpu/tmp/x0af0a9e718/files/datapackage.json
+## /ocpu/tmp/x0af0a9e718/files/DESCRIPTION
+## /ocpu/tmp/x0af0a9e718/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
+## /ocpu/tmp/x0af0a9e718/files/meta.csv
+## /ocpu/tmp/x0af0a9e718/files/README.md
+## /ocpu/tmp/x0af0a9e718/files/terms.html</code></pre>
 <p>Other possible formats include <code>csv</code>, <code>json</code> for GeoJSON, and raster formats <code>grd</code>, <code>tif</code> and <code>asc</code> for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add <code>/zip</code> to the session endpoint.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -398,9 +399,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   5176 --:--:-- --:--:-- --:--:--  5176
-  0    55    0    55    0    73    654    868 --:--:-- --:--:-- --:--:--     0
-  0    55    0    55    0    73    653    866 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0    73      0   5417 --:--:-- --:--:-- --:--:--  5417
+  0    55    0    55    0    73    649    861 --:--:-- --:--:-- --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code>--2015-02-03 04:10:38--
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
@@ -425,8 +425,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    995 --:--:-- --:--:-- --:--:--   995
-107  1174    0  1174    0    13   5355     59 --:--:-- --:--:-- --:--:--  5635
+  0     0    0     0    0    13      0    952 --:--:-- --:--:-- --:--:--   952
+107  1174    0  1174    0    13   5177     57 --:--:-- --:--:-- --:--:--  5450
 ## [
 ##   {
 ##     &quot;Category&quot;: &quot;Agroecology&quot;,
@@ -486,7 +486,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-103  1453    0  1453    0     0  29268      0 --:--:-- --:--:-- --:--:-- 41514
+103  1453    0  1453    0     0  30304      0 --:--:-- --:--:-- --:--:-- 42735
 ## describe                package:hcapi3                 R Documentation
 ## 
 ## Return HarvestChoice variable metadata
@@ -547,8 +547,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    655 --:--:-- --:--:-- --:--:--   655
-  0     3    0     3    0     9     12     38 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     9      0    679 --:--:-- --:--:-- --:--:--   679
+  0     3    0     3    0     9     13     39 --:--:-- --:--:-- --:--:--     0
 ## []</code></pre>
 <p>Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format using <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv</a> (<code>vi</code> in the URL stands for <em>Variable Inventory</em>).</p>
 </div>
