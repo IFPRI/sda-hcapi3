@@ -7,3 +7,6 @@ p <- list.files("./", "*.png")
 p <- setdiff(list.files(),
   c(h, p, "R", "js", "css", "icons", "img", "vignettes", "hc-api3-doc.Rproj"))
 file.remove(p)
+
+# Check index.html manually
+# Also remove warming messages

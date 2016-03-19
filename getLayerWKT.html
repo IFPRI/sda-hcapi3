@@ -44,57 +44,71 @@
 
     <div class="container">
       <header>
-        
+
       </header>
-      
+
       <h1>Summarize HarvestChoice 5-arc-minute layers over WKT geometri(es)</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
     <pre><div>getLayerWKT(var, wkt, ...)</div></pre>
-    
+
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
-      <dd>character array of variable names (all types are accepted)</dd>
+      <dd>character array of variable names to summarize (all types are accepted)</dd>
       <dt>wkt</dt>
-      <dd>WKT representation of a spatial object (points, multipoints, or polygons)</dd>
+      <dd>unprojected (epsg:4326) WKT representation of a spatial object (points,
+multipoints, or polygons)</dd>
       <dt>...</dt>
       <dd>other arguments passed to <code><a href='getLayer.html'>getLayer</a></code> (e.g. <code>by</code>,
-<code>iso3</code>, <code>collapse</code>)</dd>
+<code>collapse</code>, <code>format</code>)</dd>
     </dl>
-    
+
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-a data.table of <code>var</code> indicators summarized across <code>wkt</code> geometry
+a data.table (or other <code>format</code>) of <code>var</code> indicators summarized
+across <code>wkt</code> geometri(es)
 </dl></p>
-  
+
     </div>
 
     <div class="Description">
       <h2>Description</h2>
 
-      <p>This function intersects any spatial object (WKT point, multipoints, or polygons)
-with HarvestChoice 5-arc-minute grid and returns a list of intersected gridcell IDs
-(CELL5M codes) to pass along as argument to <code><a href='getLayer.html'>getLayer</a></code>.</p>
-  
+      <p>This function intersects (extracts) any spatial object (WKT point, multipoints,
+polygons or multipolygons) with HarvestChoice 5-arc-minute grid and returns an array
+of intersected gridcell IDs (CELL5M codes) to pass along as argument to <code><a href='getLayer.html'>getLayer</a></code>.</p>
+
     </div>
-      </div>
+
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Mean harvested maize area summarized across a custom polygon
+x &lt;- getLayerWKT(&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 15.36599264077935345,
+-15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
+-16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
+</div>
+<div class='input'>head(x)
+</div>
+<div class='output'>   ISO3 maiz_h
+1:  SEN    330
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>getLayerWKT</li>
     </ul>
     <ul>
-      
+
     </ul> -->
-      
-        
+
+
   </div>
 </div>
-      
+
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>

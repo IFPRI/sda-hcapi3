@@ -104,7 +104,9 @@ the condition has length &gt; 1 and only the first element will be used</strong>
 <div class='input'>
 # Load generated STATA file
 require(foreign)
-x &lt;- read.dta(x[1])
+</div>
+<strong class='message'>Loading required package: foreign</strong>
+<div class='input'>x &lt;- read.dta(x[1])
 
 # Plot histogram with full layer title
 hist(x$whea_h, xlab=vi[&quot;whea_h&quot;][, varTitle], main=NULL)
@@ -116,14 +118,24 @@ x &lt;- genFile(&quot;sorg_p&quot;, iso3=&quot;NGA&quot;, format=&quot;asc&quot;
 colorTables valid for Byte type only in some drivers</strong>
 <strong class='warning'>Warning message:
 Unable to set color table</strong>
-<p><img src='genFile-7.png' alt='' width='540' height='400' /></p>
+<p><img src='genFile-9.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # Load and plot generated raster
 require(raster)
-x &lt;- raster(x[1])
+</div>
+<strong class='message'>Loading required package: raster</strong>
+<strong class='message'>Loading required package: sp</strong>
+<strong class='message'>
+Attaching package: ‘raster’
+</strong>
+<strong class='message'>The following object is masked from ‘package:data.table’:
+
+    shift
+</strong>
+<div class='input'>x &lt;- raster(x[1])
 plot(x, main=vi[&quot;sorg_p&quot;][, varTitle])
 </div>
-<p><img src='genFile-9.png' alt='' width='540' height='400' /></p>
+<p><img src='genFile-16.png' alt='' width='540' height='400' /></p>
 <div class='input'>cellStats(x, &quot;mean&quot;)
 </div>
 <div class='output'>[1] 897.064

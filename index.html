@@ -63,13 +63,21 @@ Zhe Guo [ctb]">
 <p>CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara</p>
 </blockquote>
 
-<p><em>HarvestChoice CELL5M-SSA</em> is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. This database was created as the central core to a decision-support system for policy analysts, development practitioners, and researchers to explore the spatial relationships at the nexus of our climate, the environment, agriculture, nutrition, health, and poverty. All indicators are currently geo-referenced to a spatial resolution of <strong>5 arc-minute</strong> (equivalent to around 10 km<sup>2</sup> at the Equateur).</p>
+<p><em>HarvestChoice CELL5M-SSA</em> is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. This database was created as the central core to a decision-support system for policy analysts, development practitioners, and researchers to explore the spatial relationships at the nexus of our climate, the environment, agriculture, nutrition, health, and poverty. All indicators are currently geo-referenced to a spatial resolution of <strong>5 arc-minute</strong> (equivalent to around 10 km<sup>2^</sup> at the Equateur).</p>
 
 <h2>Data Retrieval</h2>
 
 <h3>HarvestChoice Data Services v3.0</h3>
 
-<p>The preferred method of data retrieval is through HarvestChoice RESTful API published under <a href="http://harvestchoice.github.io/hc-api3/">HarvestChoice Data Services v3.0</a>. This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice spatial layers.</p>
+<p>The preferred method of data retrieval is through HarvestChoice RESTful API published under <a href="http://harvestchoice.github.io/hc-api3/">HarvestChoice Data Services v3.0</a>. This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice 5-arc-minute spatial layers for sub-Saharan Africa.</p>
+
+<p>This data package was generated through the API. Here is the Curl commmand that was used to retrieve this archive:</p>
+
+<pre><code>curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/meta \
+ -d &#39;{&quot;var&quot;:[&quot;cass_y&quot;]}&#39; \
+ -X POST -H &#39;Content-Type:application/json&#39;
+
+</code></pre>
 
 <p>Other data retrieval and data visualization options are listed below. </p>
 
@@ -84,10 +92,6 @@ Zhe Guo [ctb]">
 <h3>HarvestChoice Data Catalog</h3>
 
 <p>For more information about the <em>International Food Policy Resaearch Institute (IFPRI)</em> and <em>HarvestChoice Program</em>, and to explore individual data layers, visit <a href="http://harvestchoice.org/">HarvestChoice website</a>.</p>
-
-<h2>Use Terms</h2>
-
-<p>Please refer to the [terms.html](./terms.html) file included in the root of this data package.</p>
 
 <h2>Citation</h2>
 
