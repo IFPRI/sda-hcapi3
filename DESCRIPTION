@@ -53,4 +53,4 @@ BugReports: http://harvestchoice.org/
 MailingList: support@harvestchoice.org
 Packaged: 2016-02-28 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1

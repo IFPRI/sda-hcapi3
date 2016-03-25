@@ -181,6 +181,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
 
   # Rounding (ugly but fast)
   var <- names(data)[sapply(data, is.numeric)]
+  var <- setdiff(var, c("X", "Y"))
   for(i in var) eval(parse(text=paste0("data[, ", i, " := round(", i, ", ", vi[i][, dec], ")]")))
 
   if (as.class=="list") {
