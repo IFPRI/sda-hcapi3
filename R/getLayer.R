@@ -12,7 +12,8 @@
 #' \code{hcapi(...)} with the same arguments.
 #'
 #' @param var character array of variable names (all types are accepted)
-#' @param iso3 optional array of country or regional codes to filter by (3-letter code)
+#' @param iso3 optional array of country or regional code(s) to filter by (use 3-letter code).
+#' Use \code{iso} to view all avalaible codes.
 #' @param by optional character array of variables to group by (all types are accepted)
 #' @param ids optional gridcell ids to filter by (if collapse=F) or summarize by (if collapse=T)
 #' @param collapse if TRUE collapses over \code{by} variables. If FALSE always return
@@ -142,13 +143,13 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
       })
 
       # If a country is selected add country name
-      if (iso3!="SSA") bynum=paste("ISO3, ADM0_NAME, ", bynum)
+      if (!"SSA" %in% iso3) bynum=paste("ISO3, ADM0_NAME, ", bynum)
     }
 
     # Put entire query string together
     data <- paste0("dt",
       if (length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if (iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
+      if (!"SSA" %in% iso3) paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
       if (!is.na(fltr)) paste0("[", fltr, "]"), "[, .(", agg, ")",
       if (!is.na(bynum)) ", keyby=.(", bynum, ")", "]")
 
@@ -169,7 +170,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
     # Put query string together
     data <- paste0("dt",
       if (length(ids)>0) paste0("[CELL5M %in% c(", paste0(ids, collapse=","), ")]"),
-      if (iso3!="SSA") paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
+      if (!"SSA" %in% iso3) paste0("[ISO3 %in% c('", paste0(iso3, collapse="','"), "')]"),
       "[, .(", paste0(vars, collapse=", "), ")]")
 
     # Eval in Rserve

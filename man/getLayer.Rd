@@ -10,7 +10,8 @@ getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
 \arguments{
 \item{var}{character array of variable names (all types are accepted)}
 
-\item{iso3}{optional array of country or regional codes to filter by (3-letter code)}
+\item{iso3}{optional array of country or regional code(s) to filter by (use 3-letter code).
+Use \code{iso} to view all avalaible codes.}
 
 \item{by}{optional character array of variables to group by (all types are accepted)}
 

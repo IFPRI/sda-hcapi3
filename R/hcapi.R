@@ -17,7 +17,7 @@
 #' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
 #' @param format output format, one of "csv", "json", tif", "dta", "asc", "grd", "rds",
 #' else "png" to plot the rasters, or "stats" to plot histogram and univariate statistics
-#' @param wkt WKT representation of a spatial object (points, multipoints, or polygons)
+#' @param wkt WKT representation of a spatial object (points, multipoints, or polygons, multipolygons)
 #' @param ... other optional arguments passed to \code{\link{getLayer}} or \code{\link{genFile}},
 #' e.g. \code{collapse}, \code{as.class}, \code{dir}
 #' @return a data.table (or other formats) of \code{var} indicators aggregated by \code{by} domains
@@ -78,10 +78,10 @@
 #'
 #' @export
 hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format=NULL, ...) {
-  if( !missing(wkt) ) return(getLayerWKT(var, wkt, ...))
-  if( missing(format) ) return(getLayer(var, iso3, by, ...))
-  if( format %in% c("png", "plot") ) return(genPlot(var, iso3, ...))
-  if( format=="stats" ) return(stats(var, iso3))
+  if (!missing(wkt)) return(getLayerWKT(var, wkt, ...))
+  if (missing(format)) return(getLayer(var, iso3, by, ...))
+  if (format %in% c("png", "plot")) return(genPlot(var, iso3, ...))
+  if (format=="stats") return(stats(var, iso3))
   else return(genFile(var, iso3, by, format, ...))
 }
 

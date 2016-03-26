@@ -13,7 +13,7 @@ hcapi(var, iso3 = "SSA", by = NULL, wkt = NULL, format = NULL, ...)
 
 \item{by}{character array of variable codes to summarize by, passed to \code{\link{getLayer}}}
 
-\item{wkt}{WKT representation of a spatial object (points, multipoints, or polygons)}
+\item{wkt}{WKT representation of a spatial object (points, multipoints, or polygons, multipolygons)}
 
 \item{format}{output format, one of "csv", "json", tif", "dta", "asc", "grd", "rds",
 else "png" to plot the rasters, or "stats" to plot histogram and univariate statistics}

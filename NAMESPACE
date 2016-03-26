@@ -12,6 +12,7 @@ export(getLayerWKT)
 export(describe)
 export(similar)
 export(dominant)
+export(genRank)
 
 import(RSclient)
 import(RColorBrewer)
