@@ -1,7 +1,7 @@
 
 # Run this script to upate HCAPI3 web documentation.
 library(staticdocs)
-build_site(pkg="../hc-api3", site_path="./")
+build_site(pkg="../hc-api3", site_path="./", examples=T)
 h <- list.files("./", "*.html")
 p <- list.files("./", "*.png")
 p <- setdiff(list.files(),
