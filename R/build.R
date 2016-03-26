@@ -1,6 +1,8 @@
 
 # Run this script to upate HCAPI3 web documentation.
 library(staticdocs)
+h <- list.files("./", "*.html")
+file.remove(h)
 build_site(pkg="../hc-api3", site_path="./", examples=T)
 h <- list.files("./", "*.html")
 p <- list.files("./", "*.png")

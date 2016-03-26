@@ -97,7 +97,85 @@ Note that calling <code>getLayer(...)</code> is equivalent to using the convenie
 <code>hcapi(...)</code> with the same arguments.</p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Mean body mass index and maize yield across districts in Tanzania
+x &lt;- hcapi(c(&quot;bmi&quot;, &quot;maiz_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+head(x)
+</div>
+<div class='output'>   ISO3                   ADM0_NAME ADM1_NAME_ALT ADM2_NAME_ALT  bmi maiz_y
+1:  TZA United Republic of Tanzania        Arusha       Arumeru 21.2   2767
+2:  TZA United Republic of Tanzania        Arusha        Arusha 22.2    NaN
+3:  TZA United Republic of Tanzania        Arusha        Karatu 21.2   2074
+4:  TZA United Republic of Tanzania        Arusha       Monduli 21.2   1816
+5:  TZA United Republic of Tanzania        Arusha    Ngorongoro 21.2   1159
+6:  TZA United Republic of Tanzania Dar es Salaam         Ilala 23.3   2462
+</div>
+<div class='input'>
+# Plot results for Mara province
+lattice::barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+
+
+# Mean BMI and cassava yield across districts in Tanzania in GeoTIFF
+x &lt;- hcapi(&quot;bmi&quot;, iso3=&quot;TZA&quot;, format=&quot;tif&quot;)
+</div>
+<strong class='warning'>Warning message:
+colorTables valid for Byte type only in some drivers</strong>
+<strong class='warning'>Warning message:
+Unable to set color table</strong>
+<p><img src='getLayer-6.png' alt='' width='540' height='400' /></p>
+<div class='input'>head(x)
+</div>
+<div class='output'>[1] &quot;./hcapi-tza-bmi.tfw&quot;         &quot;./hcapi-tza-bmi.tif&quot;         &quot;./hcapi-tza-bmi.tif.aux.xml&quot;
+[4] &quot;./meta.csv&quot;                  &quot;./README.md&quot;                 &quot;./datapackage.json&quot;         
+</div>
+<div class='input'>
+# Plot the `bmi` series
+plot(raster(x[2]))
+</div>
+<p><img src='getLayer-10.png' alt='' width='540' height='400' /></p>
+<div class='input'>
+# Equivalent request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+# -d &#39;{&quot;var&quot;:[&quot;bmi&quot;, &quot;maiz_y&quot;], &quot;iso3&quot;:&quot;TZA&quot;, &quot;format&quot;:&quot;tif&quot;}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
+
+# /ocpu/tmp/x0bc1ac9bdf/R/.val
+# /ocpu/tmp/x0bc1ac9bdf/stdout
+# /ocpu/tmp/x0bc1ac9bdf/warnings
+# /ocpu/tmp/x0bc1ac9bdf/source
+# /ocpu/tmp/x0bc1ac9bdf/console
+# /ocpu/tmp/x0bc1ac9bdf/info
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+# /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+# /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+# /ocpu/tmp/x0bc1ac9bdf/files/README
+
+# Use wget (at the command line) to download all generated files in a ZIP archive
+# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+
+# The method may be expanded to summarize classified (discrete) variables by continuous
+# variables. For example the call below returns the dominant agro-ecological zone and
+# banana harvested area over Ivory Coast&#39;s provinces across elevation zones
+x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+head(x)
+</div>
+<div class='output'>   ISO3   ADM0_NAME ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h
+1:  CIV Ivory Coast  18 Montagnes            NA     Humid     66
+2:  CIV Ivory Coast  18 Montagnes (3e+02,5e+02]     Humid    456
+3:  CIV Ivory Coast  18 Montagnes (5e+02,9e+02] Sub-Humid     86
+4:  CIV Ivory Coast  18 Montagnes (9e+02,1e+03]     Humid     23
+5:  CIV Ivory Coast        Agneby            NA     Humid    322
+6:  CIV Ivory Coast        Bafing            NA Sub-Humid      0
+</div>
+<div class='input'>
+# An equivalent request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+# -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;bana_h&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>getLayer</li>
