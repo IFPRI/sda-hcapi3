@@ -1,12 +1,6 @@
 ---
 title:  "HarvestChoice Data Services v3.0"
 author: "IFPRI/HarvestChoice"
-date:   "`r Sys.Date()`"
-output:
-  html_document:
-    fig_height: 4
-    fig_width: 4
-    highlight: tango
 ---
 
 
