@@ -1,9 +1,15 @@
 ---
-title:  "CELL5M-SSA DATA PACKAGE"
-author: "IFPRI/HarvestChoice"
-date:   "$date$"
+title: "CELL5M-SSA DATA PACKAGE"
+author: "Bacou, Melanie"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    fig_height: 4
+    fig_width: 4
+    highlight: tango
+    toc: yes
+    toc_depth: 2
 ---
-
 
 --------------------------------------------------------------------------------------
 
@@ -18,16 +24,6 @@ date:   "$date$"
 ### HarvestChoice Data Services v3.0
 
 The preferred method of data retrieval is through HarvestChoice RESTful API published under [HarvestChoice Data Services v3.0](http://harvestchoice.github.io/hc-api3/). This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice 5-arc-minute spatial layers for sub-Saharan Africa.
-
-This data package was generated through the API. Here is the Curl commmand that was used to retrieve this archive:
-
-
-```
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/meta \
- -d '$json$' \
- -X POST -H 'Content-Type:application/json'
-
-```
 
 Other data retrieval and data visualization options are listed below. 
 
@@ -45,19 +41,8 @@ Another tool for quick data summaries is [HarvestChoice TABLR](http://harvestcho
 For more information about the *International Food Policy Resaearch Institute (IFPRI)* and *HarvestChoice Program*, and to explore individual data layers, visit [HarvestChoice website](http://harvestchoice.org/).
 
 
-## Metadata
-
-This package contains both a `META.csv` file with complete metadata records. A `datapackage.json` file compliant with the latest **Tabular Data Package** RFC specifications documented at http://dataprotocols.org/tabular-data-package/ is also included.
-
-## Use Terms
-
-Please refer to the [terms.html](./terms.html) file included in the root of this data package.
-
-
 ## Citation
 
 Please cite and reference:
 
 > HarvestChoice; International Food Policy Research Institute (IFPRI); University of Minnesota, 2016, *"CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara"*, http://dx.doi.org/10.7910/DVN/G4TBLF, Harvard Dataverse.
-
-
