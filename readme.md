@@ -1,8 +1,3 @@
----
-title:  "HarvestChoice Data Services v3.0"
-author: "IFPRI/HarvestChoice"
----
-
 
 # HarvestChoice Data Services v3.0
 

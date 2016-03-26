@@ -18,7 +18,7 @@ districts, agro-ecological zones, etc.), see examples.}
 \item{...}{optional arguments passed to \code{\link{hcapi}}, e.g. \code{iso3} and \code{wkt}}
 }
 \value{
-a matrix or list of matrices of commodities ranked from top to bottom
+data.table(s) of commodities ranked from top to bottom
 }
 \description{
 Returns top and bottom commodities in terms of aggregate production, harvested area,

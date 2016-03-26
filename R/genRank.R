@@ -11,7 +11,7 @@
 #' \code{by} may be specified to return aggregates across sub-zones (e.g. across provinces,
 #' districts, agro-ecological zones, etc.), see examples.
 #' @param ... optional arguments passed to \code{\link{hcapi}}, e.g. \code{iso3} and \code{wkt}
-#' @return a matrix or list of matrices of commodities ranked from top to bottom
+#' @return data.table(s) of commodities ranked from top to bottom
 #' @seealso \link{hcapi}
 #' @examples
 #' # Rank commodities in Angola and Mozambique by harvested area and production
