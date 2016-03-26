@@ -9,4 +9,4 @@ p <- setdiff(list.files(),
 file.remove(p)
 
 # Check index.html manually
-# Also remove warming messages
+# Also remove warning messages

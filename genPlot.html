@@ -101,68 +101,7 @@ See examples below. Note that calling <code>genPlot(...)</code> is equivalent to
 the convenience function <code>hcapi(..., format="png")</code>.</p>
   
     </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Generate standard raster plot of 2012 population density for sub-Saharan Africa
-x &lt;- genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
-</div>
-<div class='output'>PD12_TOT :  Total Pop. Dens. &#39;12
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<div class='input'>
-# Generate 3 raster plots for Ghana with legend and title but not axes
-x &lt;- genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
-</div>
-<div class='output'>AEZ16_CLAS :  AEZ-16
-</div>
-<div class='output'>whea_h :  Wheat area &#39;05
-</div>
-<div class='input'>
-# Generate 3 raster plots for Nigeria with the specified dimensions
-x &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), width=5, height=5,
-units=&quot;in&quot;, res=200, pointsize=8)
-</div>
-<div class='output'>FS_2012 :  Farming System Code
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<div class='output'>yield_l_cv :  Maize yield CV (low)
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<div class='output'>soc_d15 :  Soil org. carbon (5-15cm)
-</div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
-<div class='input'>
-# This method may be called via HTTP POST request using e.g. cUrl at the command line
-# Return 2 plots showing farming systems and 2012 population density in Ghana
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-# -d &#39;{&quot;var&quot;:[&quot;FS_2012_TX&quot;, &quot;PD12_TOT&quot;], &quot;iso3&quot;:&quot;GHA&quot;, &quot;format&quot;:&quot;png&quot;}&#39; \
-# -X POST -H &#39;Content-Type:application/json&#39;
-
-# /ocpu/tmp/x03d5aa8e98/R/.val
-# /ocpu/tmp/x03d5aa8e98/stdout
-# /ocpu/tmp/x03d5aa8e98/source
-# /ocpu/tmp/x03d5aa8e98/console
-# /ocpu/tmp/x03d5aa8e98/info
-# /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
-# /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
-# /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
-
-# Use wget (at the command line) to download all generated plots
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
-</div></pre>
-  </div>
+      </div>
   <div class="span4">
     <!-- <ul>
       <li>genPlot</li>

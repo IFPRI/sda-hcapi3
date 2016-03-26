@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>dominant. hcapi3 3.7</title>
+<title>genRank. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -47,24 +47,32 @@
         
       </header>
       
-      <h1>Return the dominant class (the mode of a classified variable)</h1>
+      <h1>Rank agricultural productions across geographies</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>dominant(x)</div></pre>
+    <pre><div>genRank(var&nbsp;=&nbsp;"h", by&nbsp;=&nbsp;"ISO3", ...)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
-      <dt>x</dt>
-      <dd>character array, can also be a factor</dd>
+      <dt>var</dt>
+      <dd>one or several of "h", "p", or "v" for ranking by harvested area (h),
+production (p), and/or value of production (v).
+This argument may be expanded in the future to include additional sub-groups of indicators.</dd>
+      <dt>by</dt>
+      <dd>by default returns aggregate production across all selected countries.
+<code>by</code> may be specified to return aggregates across sub-zones (e.g. across provinces,
+districts, agro-ecological zones, etc.), see examples.</dd>
+      <dt>...</dt>
+      <dd>optional arguments passed to <code><a href='hcapi.html'>hcapi</a></code>, e.g. <code>iso3</code> and <code>wkt</code></dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-a 1-length character of the dominant class
+a matrix or list of matrices of commodities ranked from top to bottom
 </dl></p>
   
     </div>
@@ -72,25 +80,23 @@ a 1-length character of the dominant class
     <div class="Description">
       <h2>Description</h2>
 
-      <p>This is a helper method used to return the dominant class of a classified variable.
-This is equivalent to median for a numeric variable.</p>
+      <p>Returns top and bottom commodities in terms of aggregate production, harvested area,
+and/or value of production.</p>
   
     </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>dominant(sample(letters, 100, replace=T))
-</div>
-<div class='output'>[1] &quot;j&quot;
-</div></pre>
-  </div>
+      </div>
   <div class="span4">
     <!-- <ul>
-      <li>dominant</li>
+      <li>genRank</li>
     </ul>
     <ul>
       
     </ul> -->
       
+    <h2>See also</h2>
+    
+<a href='hcapi.html'>hcapi</a>
+
         
   </div>
 </div>

@@ -68,7 +68,7 @@
       <dd>output directory, default to current working directory</dd>
       <dt>...</dt>
       <dd>any other optional argument passed to <code><a href='getLayer.html'>getLayer</a></code>,
-  e.g. <code>by</code>, <code>collapse</code>.</dd>
+e.g. <code>by</code>, <code>collapse</code>.</dd>
     </dl>
     
     <div class="Value">
@@ -91,94 +91,7 @@ Calling <code>genFile(var="bmi", iso3="TZA", format="dta")</code> is equivalent 
 the convenience method <code>hcapi(var="bmi", iso3="TZA", format="dta")</code>.</p>
   
     </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
-# in STATA format
-x &lt;- genFile(&quot;whea_h&quot;, iso3=c(&quot;NGA&quot;, &quot;ETH&quot;), by=&quot;AEZ16_CLAS&quot;, format=&quot;dta&quot;)
-</div>
-<strong class='warning'>Warning message:
-the condition has length &gt; 1 and only the first element will be used</strong>
-<strong class='warning'>Warning message:
-the condition has length &gt; 1 and only the first element will be used</strong>
-<div class='input'>
-# Load generated STATA file
-require(foreign)
-</div>
-<strong class='message'>Loading required package: foreign</strong>
-<div class='input'>x &lt;- read.dta(x[1])
-
-# Plot histogram with full layer title
-hist(x$whea_h, xlab=vi[&quot;whea_h&quot;][, varTitle], main=NULL)
-
-# Sorghum production in Nigeria returned in ESRI ASCII raster format
-x &lt;- genFile(&quot;sorg_p&quot;, iso3=&quot;NGA&quot;, format=&quot;asc&quot;)
-</div>
-<strong class='warning'>Warning message:
-colorTables valid for Byte type only in some drivers</strong>
-<strong class='warning'>Warning message:
-Unable to set color table</strong>
-<p><img src='genFile-9.png' alt='' width='540' height='400' /></p>
-<div class='input'>
-# Load and plot generated raster
-require(raster)
-</div>
-<strong class='message'>Loading required package: raster</strong>
-<strong class='message'>Loading required package: sp</strong>
-<strong class='message'>
-Attaching package: ‘raster’
-</strong>
-<strong class='message'>The following object is masked from ‘package:data.table’:
-
-    shift
-</strong>
-<div class='input'>x &lt;- raster(x[1])
-plot(x, main=vi[&quot;sorg_p&quot;][, varTitle])
-</div>
-<p><img src='genFile-16.png' alt='' width='540' height='400' /></p>
-<div class='input'>cellStats(x, &quot;mean&quot;)
-</div>
-<div class='output'>[1] 897.064
-</div>
-<div class='input'>
-# Equivalent cUrl requests at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
-# -d &#39;{&quot;var&quot; : &quot;whea_h&quot;, &quot;iso3&quot; : [&quot;NGA&quot;, &quot;ETH&quot;], &quot;by&quot; : &quot;AEZ16_CLAS&quot;, &quot;format&quot; : &quot;dta&quot;}&#39; \
-# -X POST -H &#39;Content-Type:application/json&#39;
-
-# /ocpu/tmp/x0e654538b7/R/.val
-# /ocpu/tmp/x0e654538b7/stdout
-# /ocpu/tmp/x0e654538b7/warnings
-# /ocpu/tmp/x0e654538b7/source
-# /ocpu/tmp/x0e654538b7/console
-# /ocpu/tmp/x0e654538b7/info
-# /ocpu/tmp/x0e654538b7/files/DESCRIPTION
-# /ocpu/tmp/x0e654538b7/files/README
-# /ocpu/tmp/x0e654538b7/files/whea_h-AEZ16_CLAS-NGA.dta
-
-# Use wget (at the command line) to download all generated files in a ZIP archive
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
-
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
-# -d &#39;{&quot;var&quot; : &quot;sorg_p&quot;, &quot;format&quot; : &quot;asc&quot;}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
-
-# /ocpu/tmp/x02a7a044c7/R/.val
-# /ocpu/tmp/x02a7a044c7/stdout
-# /ocpu/tmp/x02a7a044c7/warnings
-# /ocpu/tmp/x02a7a044c7/source
-# /ocpu/tmp/x02a7a044c7/console
-# /ocpu/tmp/x02a7a044c7/info
-# /ocpu/tmp/x02a7a044c7/files/DESCRIPTION
-# /ocpu/tmp/x02a7a044c7/files/README
-# /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc
-# /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc.aux.xml
-# /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.prj
-
-# Then use wget to download all generated files in a ZIP archive
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
-</div></pre>
-  </div>
+      </div>
   <div class="span4">
     <!-- <ul>
       <li>genFile</li>
