@@ -19,7 +19,7 @@
 #' @param collapse if TRUE collapses over \code{by} variables. If FALSE always return
 #' all pixel values (useful for plotting and to convert to spatial formats).
 #' @param as.class one of "data.table" (default) or "list". By default returns a simple data.table.
-#' If \code{as.class="list"} returns a well-constructed list with variable metadata
+#' If \code{as.class="list"} returns a well-constructed list with variable metadata.
 #' @return a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
 #' @seealso \link{hcapi} \link{getLayerWKT}
 #' @examples
@@ -193,7 +193,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
       ColumnUnit=unit,
       ColumnDesc=varDesc,
       ColumnSource=sources)]
-    data <- list(ColumnList=d.names, ValueList=as.matrix(data))
+    data <- list(ColumnList=d.names, ValueList=data)
   }
 
   return(data)

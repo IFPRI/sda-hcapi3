@@ -7,7 +7,7 @@
 genRank(var = "h", by = "ISO3", ...)
 }
 \arguments{
-\item{var}{one or several of c("h", "p", "v") for ranking by harvested area (h),
+\item{var}{one or several of "h", "p", or "v" for ranking by harvested area (h),
 production (p), and/or value of production (v).
 This argument may be expanded in the future to include additional sub-groups of indicators.}
 
@@ -18,7 +18,7 @@ districts, agro-ecological zones, etc.), see examples.}
 \item{...}{optional arguments passed to \code{\link{hcapi}}, e.g. \code{iso3} and \code{wkt}}
 }
 \value{
-a list of data.table(s) of commodities ranked from top to bottom
+a matrix or list of matrices of commodities ranked from top to bottom
 }
 \description{
 Returns top and bottom commodities in terms of aggregate production, harvested area,

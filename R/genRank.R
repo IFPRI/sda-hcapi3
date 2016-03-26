@@ -4,14 +4,14 @@
 #' Returns top and bottom commodities in terms of aggregate production, harvested area,
 #' and/or value of production.
 #'
-#' @param var one or several of c("h", "p", "v") for ranking by harvested area (h),
+#' @param var one or several of "h", "p", or "v" for ranking by harvested area (h),
 #' production (p), and/or value of production (v).
 #' This argument may be expanded in the future to include additional sub-groups of indicators.
 #' @param by by default returns aggregate production across all selected countries.
 #' \code{by} may be specified to return aggregates across sub-zones (e.g. across provinces,
 #' districts, agro-ecological zones, etc.), see examples.
 #' @param ... optional arguments passed to \code{\link{hcapi}}, e.g. \code{iso3} and \code{wkt}
-#' @return a list of data.table(s) of commodities ranked from top to bottom
+#' @return a matrix or list of matrices of commodities ranked from top to bottom
 #' @seealso \link{hcapi}
 #' @examples
 #' # Rank commodities in Angola and Mozambique by harvested area and production
@@ -21,11 +21,11 @@
 #' genRank("p", iso3="AGO", by="AEZ5_CLAS")
 #'
 #' # Equivalent request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank \
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
 #' # -d '{"var" : ["h", "p"], "iso3" : ["AGO", "MOZ"]}' \
 #' # -X POST -H 'Content-Type:application/json'
 #'
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank \
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
 #' # -d '{"var" : "p", "iso3" : "AGO", "by" : "AEZ5_CLAS"}' \
 #' # -X POST -H 'Content-Type:application/json'
 #'
@@ -40,11 +40,11 @@ genRank <- function(var="h", by="ISO3", ...) {
   var.p <- vi[published==T & isProduct==T & substr(varCode, 5, 6)=="_p", varCode]
   var.v <- vi[published==T & isProduct==T & substr(varCode, 5, 6)=="_v", varCode]
 
-  out <- lapply(var, function(x) {
+  data <- lapply(var, function(x) {
     var <- switch(x, h=var.h, p=var.p, v=var.v)
     val <- switch(x, h="Havested Area (ha)", p="Production (mt)", v="Value of Production (intl. $)")
     # Do not support summarizing across lower admin units (yet)
-    dt <- hcapi(var, by=by, ...)
+    dt <- hcapi(var, ..., by=by, as.class="data.table")
     dt[, ISO3 := NULL]
     dt <- melt(dt, measure.vars=var)
     dt <- dt[!is.na(value)]
@@ -55,8 +55,8 @@ genRank <- function(var="h", by="ISO3", ...) {
     return(dt)
   })
 
-  if(length(out)==1) out <- out[[1]]
-  return(out)
+  if(length(data)==1) data <- data[[1]]
+  return(data)
 }
 
 

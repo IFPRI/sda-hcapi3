@@ -21,7 +21,7 @@ Use \code{iso} to view all avalaible codes.}
 all pixel values (useful for plotting and to convert to spatial formats).}
 
 \item{as.class}{one of "data.table" (default) or "list". By default returns a simple data.table.
-If \code{as.class="list"} returns a well-constructed list with variable metadata}
+If \code{as.class="list"} returns a well-constructed list with variable metadata.}
 }
 \value{
 a data.table (or json array) of \code{var} indicators aggregated by \code{by} domains
