@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>getLayerSQL. hcapi3 3.7</title>
+<title>datapackage. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -47,32 +47,31 @@
         
       </header>
       
-      <h1>Subset, and/or aggregate HarvestChoice 5-arc-minute layers (SQLite version, now deprecated)</h1>
+      <h1>Write HarvestChoice auxiliary files to CSV and JSON per Tabular Data Package RFC
+specifications</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>getLayerSQL(var, iso3&nbsp;=&nbsp;"SSA", by&nbsp;=&nbsp;NULL, wkt&nbsp;=&nbsp;NULL, collapse&nbsp;=&nbsp;TRUE)</div></pre>
+    <pre><div>datapackage(var, format&nbsp;=&nbsp;NULL, dir&nbsp;=&nbsp;".")</div></pre>
     
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
-      <dd>character array of variable names (all types are accepted)</dd>
-      <dt>iso3</dt>
-      <dd>optional country or regional filter (3-letter code)</dd>
-      <dt>by</dt>
-      <dd>optional character array of variables to group by (all types are accepted)</dd>
-      <dt>wkt</dt>
-      <dd>optional WKT representation of a spatial object (points or polygons) to summarize over</dd>
-      <dt>collapse</dt>
-      <dd>if FALSE always return all pixel values (useful for plotting and spatial formats)</dd>
+      <dd>character array of HarvestChoice indicator code(s)</dd>
+      <dt>format</dt>
+      <dd>file extension corresponding to the data package output
+format. See <code><a href='genFile.html'>genFile</a></code>. If <code>NULL</code> no auxiliary file is produced
+aside from metadata records in <code>meta.csv</code>.</dd>
+      <dt>dir</dt>
+      <dd>character, optional output directory. Default to current working directory.</dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-a data.table of <code>var</code> indicators aggregated by <code>by</code>
+character array of generated auxiliary file names
 </dl></p>
   
     </div>
@@ -80,27 +79,26 @@ a data.table of <code>var</code> indicators aggregated by <code>by</code>
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Workhorse method to subset and/or aggregate HarvestChoice layers.
-This method also aggregates classified variables by continuous variables.
-e.g. <code>getLayer(var=c("whea_h", "AEZ16_CLAS"), by=c("ADM2_NAME_ALT", "bmi"))</code>.
-It does so by returning the dominant class of a classified variable within each <code>by</code>
-class, and by automatically classifying any continuous variable passed to <code>by</code>
-using value breaks specified as part of each variable metadata.
-The formula used to aggregate classified variables by choosing the dominant class is
-<code>names(sort(table({varCode}), decreasing=T)[1])</code>. This formula computes the
-frequency of each class, ranks them by decreasing frequency, and retains the top one.
-Layers can also be summarized over a spatial area (passed as WKT point, multipoints, or polygons).</p>
+      <p>This information is appended to all data downloads, but may also be queried
+separately. Variable metadata is made available in tabular (.csv)
+and in JSON (.json) format in conformity with Tabular Data Package RFC
+specifications documented at <a href = 'http://dataprotocols.org/tabular-data-package/'>http://dataprotocols.org/tabular-data-package/</a>.</p>
   
     </div>
       </div>
   <div class="span4">
     <!-- <ul>
-      <li>getLayerSQL</li>
+      <li>datapackage</li>
     </ul>
     <ul>
       
     </ul> -->
       
+    <h2>See also</h2>
+    
+<code><a href='indicator.html'>indicator</a></code> and <code><a href='category.html'>category</a></code> for other convenience
+methods to query HarvestChoice metadata.
+
         
   </div>
 </div>

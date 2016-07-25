@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>meta. hcapi3 3.7</title>
+<title>indicator. hcapi3 3.7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -47,31 +47,32 @@
         
       </header>
       
-      <h1>Write HarvestChoice CELL5M auxiliary files to CSV and JSON per Tabular Data
-Package RFC specifications</h1>
+      <h1>Return HarvestChoice indicator metadata</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>meta(var, format&nbsp;=&nbsp;NULL, dir&nbsp;=&nbsp;".")</div></pre>
+    <pre><div>indicator(q, version&nbsp;=&nbsp;NULL, as.class&nbsp;=&nbsp;"data.table", cartoCSS&nbsp;=&nbsp;FALSE)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
-      <dt>var</dt>
-      <dd>character array of CELL5M variable codes</dd>
-      <dt>format</dt>
-      <dd>character, file extension corresponding to the data package output
-format. See <code><a href='genFile.html'>genFile</a></code>. If <code>NULL</code> no auxiliary file is produced
-aside from metadata records in <code>meta.csv</code>.</dd>
-      <dt>dir</dt>
-      <dd>character, optional output directory. Default to current working directory.</dd>
+      <dt>q</dt>
+      <dd>search string to match against HarvestChoice indicator codes,
+labels, and categories. Will attempt a fuzzy match against these metadata elements.</dd>
+      <dt>version</dt>
+      <dd>optional version filter</dd>
+      <dt>as.class</dt>
+      <dd>"data.table" (default) or "list" for a list of indicators grouped
+by category</dd>
+      <dt>cartoCSS</dt>
+      <dd>also include formatted CartoCSS rules</dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-character, paths to all generated auxiliary files
+a data.table or hierarchical list of indicator metadata
 </dl></p>
   
     </div>
@@ -79,35 +80,22 @@ character, paths to all generated auxiliary files
     <div class="Description">
       <h2>Description</h2>
 
-      <p>This information is appended to all data downloads, but may also be queried
-separately. Variable metadata is made available in tabular format (.csv)
-and in JSON (.json) format in conformity with the latest Tabular Data Package RFC
-specifications documented at <a href = 'http://dataprotocols.org/tabular-data-package/'>http://dataprotocols.org/tabular-data-package/</a>.</p>
+      <p>Return HarvestChoice indicator metadata</p>
   
     </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Generate auxiliary files for soil organic carbon concentration and 2012 total population
-f &lt;- meta(c(&quot;soc_d5&quot;, &quot;PN12_TOT&quot;))
-f
-</div>
-<div class='output'>[1] &quot;./meta.csv&quot;
-</div>
-<div class='input'>
-# Equivalent cUrl request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/meta \
-# -d &#39;{&quot;var&quot; : [&quot;soc_d5&quot;, &quot;PN12_TOT&quot;]}&#39; \
-# -X POST -H &#39;Content-Type:application/json&#39;
-</div></pre>
-  </div>
+      </div>
   <div class="span4">
     <!-- <ul>
-      <li>meta</li>
+      <li>indicator</li>
     </ul>
     <ul>
       
     </ul> -->
       
+    <h2>See also</h2>
+    
+<code><a href='category.html'>category</a></code> to view HarvestChoice indicator categories
+
         
   </div>
 </div>

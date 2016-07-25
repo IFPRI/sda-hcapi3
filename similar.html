@@ -90,19 +90,7 @@ aggregate distance score. The lower the score, the more similar the unit for the
 selected indicators.</p>
   
     </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Rank all districts in Ghana by similarity to district 16657 (Kpando)
-# based on the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
-# and cassava value of production (cass_v).
-x &lt;- similar(16657, c(&quot;LGP_AVG&quot;, &quot;GMIA_V5&quot;, &quot;cass_v&quot;), by=2, iso3=&quot;GHA&quot;)
-
-# Equivalent cUrl request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
-# -d &#39;{&quot;x&quot; : 16657, &quot;var&quot; : [&quot;LGP_AVG&quot;, &quot;GMIA_V5&quot;, &quot;cass_v&quot;], &quot;by&quot; : 2, &quot;iso3&quot; : &quot;GHA&quot;}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
-</div></pre>
-  </div>
+      </div>
   <div class="span4">
     <!-- <ul>
       <li>similar</li>
