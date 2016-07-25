@@ -1,22 +1,22 @@
-#' Convert CELL5M layers to raster and/or tabular formats for download
+#' Download HarvestChoice indicators in raster and/or tabular formats
 #'
-#' Package any result from \code{\link{getLayer}} into the user-specified tabular or
-#' spatial raster format. Also includes a README file with metadata and citation details.
-#' Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (json), GeoTIFF
-#' (tif), R raster (grd), RData (rda), ESRI ASCII raster (asc), and netCDF (nc).
+#' Package result from \code{\link{getLayer}} into any user-specified tabular or
+#' spatial raster format. Also includes README and Tabular Data Package specifications.
+#' Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (geojson),
+#' GeoTIFF (tif), R raster (grd), RData (rda), ESRI ASCII raster (asc), and netCDF (nc).
 #' Calling \code{genFile(var="bmi", iso3="TZA", format="dta")} is equivalent to calling
 #' the convenience method \code{hcapi(var="bmi", iso3="TZA", format="dta")}.
 #'
-#' @param var character array of variable codes, passed to \code{\link{getLayer}}
+#' @param var character array of indicator codes, passed to \code{\link{getLayer}}
 #' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
-#' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
+#' @param by character array of indicator codes to summarize by, passed to \code{\link{getLayer}}
 #' @param format output format, one of "csv", "json", "tif", "dta", "asc", "grd", "rds".
 #' @param dir output directory, default to current working directory
 #' @param ... any other optional argument passed to \code{\link{getLayer}},
-#'   e.g. \code{by}, \code{collapse}.
+#'   e.g. \code{as.class}, \code{collapse}.
 #'
-#' @return character, array of generated file names
-#'
+#' @return character, array of generated file names included in the data package
+#' @seealso \code{\link{datapackage}} to generate associated metadata records
 #' @examples
 #' # Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
 #' # in STATA format
@@ -27,15 +27,14 @@
 #' x <- read.dta(x[1])
 #'
 #' # Plot histogram with full layer title
-#' hist(x$whea_h, xlab=vi["whea_h"][, varTitle], main=NULL)
+#' hist(x$whea_h, xlab=vi["whea_h", varLabel])
 #'
-#' # Sorghum production in Nigeria returned in ESRI ASCII raster format
+#' # Sorghum production in Nigeria in ESRI ASCII raster format
 #' x <- genFile("sorg_p", iso3="NGA", format="asc")
 #'
 #' # Load and plot generated raster
-#' require(raster)
 #' x <- raster(x[1])
-#' plot(x, main=vi["sorg_p"][, varTitle])
+#' plot(x, main=vi["sorg_p", varLabel])
 #' cellStats(x, "mean")
 #'
 #' # Equivalent cUrl requests at the command line
@@ -91,9 +90,9 @@ genFile <- function(var, iso3="SSA", by=NULL,
   else if (format %in% c("asc", "ascii")) format <- "asc"
   else if (format %in% c("csv", "xls", "xlsx")) format <- "csv"
   else if (format %in% c("nc", "netcdf")) format <- "nc"
-  else stop(paste(format, "is not a recognized format."))
+  else stop("'", format, "' is not a recognized format.")
 
-  # Construct temporary file name
+  # Construct pretty file name
   fPath <- paste(paste("hcapi", var[1], by[1], tolower(iso3[1]), sep="-"), format, sep=".")
 
   # If many variables, simply use `cat2` file name instead
@@ -103,14 +102,14 @@ genFile <- function(var, iso3="SSA", by=NULL,
   }
 
   if ( format %in% c("grd", "asc", "tif", "geojson") ) {
-    # Call getLayer() and don't collapse for spatial formats
+    # Don't collapse for spatial formats
     d <- getLayer(var, iso3, by, collapse=F, ...)
   } else {
     d <- getLayer(var, iso3, by, ...)
   }
 
   if ( format %in% c("asc", "tif", "grd", "nc") ) {
-    # Raster formats require more work
+    # Raster formats take more work
     fPath <- paste(paste("hcapi", tolower(iso3[1]), sep="-"), format, sep=".")
     pts <- d[, .(X, Y)]
     var <- setdiff(names(d), g)
@@ -192,9 +191,8 @@ genFile <- function(var, iso3="SSA", by=NULL,
       write.csv(d, fPath, row.names=F, na="") }
   )
 
-
   # Add auxiliary files and use terms
-  m <- meta(names(d), format=format, dir=dir)
+  m <- datapackage(names(d), format=format, dir=dir)
   file.copy(system.file("./www/terms.html", package="hcapi3"), dir)
   f <- list.files(dir, paste0("^", strsplit(basename(fPath), ".", fixed=T)[[1]][1]), full.names=T)
   f <- c(f, m)

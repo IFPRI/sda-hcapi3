@@ -1,52 +1,54 @@
 
-#' Write HarvestChoice CELL5M auxiliary files to CSV and JSON per Tabular Data
-#' Package RFC specifications
+#' Write HarvestChoice auxiliary files to CSV and JSON per Tabular Data Package RFC
+#' specifications
 #'
 #' This information is appended to all data downloads, but may also be queried
-#' separately. Variable metadata is made available in tabular format (.csv)
-#' and in JSON (.json) format in conformity with the latest Tabular Data Package RFC
+#' separately. Variable metadata is made available in tabular (.csv)
+#' and in JSON (.json) format in conformity with Tabular Data Package RFC
 #' specifications documented at \url{http://dataprotocols.org/tabular-data-package/}.
 #'
-#' @param var character array of CELL5M variable codes
-#' @param format character, file extension corresponding to the data package output
+#' @param var character array of HarvestChoice indicator code(s)
+#' @param format file extension corresponding to the data package output
 #' format. See \code{\link{genFile}}. If \code{NULL} no auxiliary file is produced
 #' aside from metadata records in \code{meta.csv}.
 #' @param dir character, optional output directory. Default to current working directory.
-#' @return character, paths to all generated auxiliary files
+#' @return character array of generated auxiliary file names
+#' @seealso \code{\link{indicator}} and \code{\link{category}} for other convenience
+#' methods to query HarvestChoice metadata.
 #' @examples
-#' # Generate auxiliary files for soil organic carbon concentration and 2012 total population
-#' f <- meta(c("soc_d5", "PN12_TOT"))
-#' f
+#' # Generate auxiliary files for soil organic carbon concentration and 2012 total
+#' population
+#' datapackage(c("soc_d5", "PN12_TOT"))
 #'
 #' # Equivalent cUrl request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/meta \
+#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
 #' # -d '{"var" : ["soc_d5", "PN12_TOT"]}' \
 #' # -X POST -H 'Content-Type:application/json'
 #'
 #' @export
 
-meta <- function(var, format=NULL, dir=".") {
+datapackage <- function(var, format=NULL, dir=".") {
 
   # Auxiliary file names
   d <- paste(dir, c("meta.csv", "README.md", "datapackage.json"), sep="/")
 
   # Retrieve metadata records
   dt <- vi[var][, list(
-    Code=varCode,
-    Label=varLabel,
-    Details=varDesc,
-    Type=type,
-    Unit=unit,
-    Version=version,
-    `Aggregation Formula`=aggFunR,
-    Period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
-    Category=cat1,
-    Subcategory=cat2,
-    Item=cat3,
-    Source=ifelse(is.na(sources), sourceMini, sources),
-    Contact=owner,
-    Acquired=format(Sys.Date(), "%m/%d/%Y"),
-    Citation=citation)]
+    code=varCode,
+    label=varLabel,
+    description=varDesc,
+    type=type,
+    unit=unit,
+    version=version,
+    aggFormula=aggFunR,
+    period=ifelse(is.na(yearEnd), year, paste(year, yearEnd, sep=" - ")),
+    category=cat1,
+    subcategory=cat2,
+    item=cat3,
+    source=ifelse(is.na(sources), sourceMini, sources),
+    contact=owner,
+    downloadedOn=format(Sys.Date(), "%m/%d/%Y"),
+    citation=citation)]
 
   # Write to `meta.csv`
   write.csv(dt, d[1], row.names=F, na="")
@@ -104,10 +106,10 @@ meta <- function(var, format=NULL, dir=".") {
         rds="application/octet-stream",
         tif="image/tiff"),
       schema=list(fields=dt[, .(
-        name=Code,
-        type=ifelse(Type=="class", "string", "numeric"),
-        description=paste(Label, Details, sep=" - "),
-        unit=Unit)]))
+        name=code,
+        type=ifelse(type=="class", "string", "numeric"),
+        description=paste(label, description, sep=" - "),
+        unit=unit)]))
   )
 
   write(toJSON(j, dataframe="rows", pretty=T, auto_unbox=T), file=d[3])

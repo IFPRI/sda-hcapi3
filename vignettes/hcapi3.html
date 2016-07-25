@@ -183,7 +183,7 @@ $(document).ready(function () {
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    66    0    66    0     0    564      0 --:--:-- --:--:-- --:--:--   956
+  0    66    0    66    0     0    718      0 --:--:-- --:--:-- --:--:--   846
 ## Redirect to http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/</code></pre>
 <p>The main data query method is <code>hcapi()</code> with a REST endpoint at (<a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi</a>)[/R/hcapi]. <code>category()</code> and <code>describe()</code> may be used to return indicator metadata. Other methods, like <code>classify()</code> (summarizing indicators across custom geographic domains) and <code>similar()</code> (ranking areas by similarity) are useful to conduct advanced analyses.</p>
 </div>
@@ -194,9 +194,7 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-103  1867    0  1867    0     0  23710      0 --:--:-- --:--:-- --:--:-- 58343
-## hcapi                  package:hcapi3                  R Documentation
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0hcapi                  package:hcapi3                  R Documentation
 ## 
 ## Subset, summarize, and download HarvestChoice 5-arc-minute spatial
 ## indicators
@@ -248,7 +246,65 @@ $(document).ready(function () {
 ## 
 ## See Also:
 ## 
-##      getLayer, getLayerWKT, genFile</code></pre>
+##      getLayer, getLayerWKT, genFile
+## 
+## Examples:
+## 
+##      # Mean body mass index and cassava yield across provinces and districts of Tanzania
+##      x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+##      x
+##      
+##      # Plot results for Mara province
+##      require(lattice)
+##      barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+##      
+##      # Mean cassava yield in Ivory Coast in GeoTIFF raster format
+##      x &lt;- hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
+##      x
+##      
+##      # Plot the generated TIF raster (one band only)
+##      require(raster)
+##      plot(raster(x[2]))
+##      
+##      # Equivalent request at the command line
+##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+##      # -d '{&quot;var&quot;:&quot;cass_y&quot;, &quot;iso3&quot;:&quot;CIV&quot;, &quot;format&quot;:&quot;tif&quot;}' \
+##      # -X POST -H 'Content-Type:application/json'
+##      
+##      # /ocpu/tmp/x0bc1ac9bdf/R/.val
+##      # /ocpu/tmp/x0bc1ac9bdf/stdout
+##      # /ocpu/tmp/x0bc1ac9bdf/warnings
+##      # /ocpu/tmp/x0bc1ac9bdf/source
+##      # /ocpu/tmp/x0bc1ac9bdf/console
+##      # /ocpu/tmp/x0bc1ac9bdf/info
+##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+##      # /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+##      # /ocpu/tmp/x0bc1ac9bdf/files/README
+##      
+##      # Use wget (at the command line) to download all generated files in a ZIP archive
+##      # wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+##      
+##      # The method may be expanded to summarize classified (discrete) variables along continuous
+##      # variables. For example the call below returns the dominant agro-ecological zone and
+##      # average stunting in children under 5 over Ethiopia's provinces by elevation class
+##      x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;ETH&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+##      head(x)
+##      
+##      # An equivalent request at the command line
+##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+##      # -d '{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;ETH&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}' \
+##      # -X POST -H 'Content-Type:application/json'
+##      
+##      # Mean harvested maize area summarized across a custom polygon
+##      x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;PO
+101  4355    0  4355    0     0  79019      0 --:--:-- --:--:-- --:--:--  103k
+## LYGON((-16.35819663578485006 15.36599264077935345,
+##      -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
+##      -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
+##      head(x)
+## </code></pre>
 <p>The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. <code>getLayer()</code> is one of the API’s main methods allowing users to query and summarize indicators. The documentation above shows that <code>getLayer()</code> takes at minimum one parameter <code>var</code> indicating which indicator to query (e.g. <code>var='PD05_TOT'</code> to return 2005 population density). Other optional parameters include <code>iso3</code> limiting the results to one (or multiple) countri(es) (e.g. <code>iso3=['GHA', 'NGA']</code> for Ghana and Nigeria), and <code>by</code> summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones <code>by='AEZ8_CLAS'</code>).</p>
 <p>You can test this query by manually forming the following <em>cURL</em> request. This returns a JSON array.</p>
 </div>
@@ -259,9 +315,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   1609 --:--:-- --:--:-- --:--:--  1609
-143   389    0   389    0    40    790     81 --:--:-- --:--:-- --:--:--   745
-143   389    0   389    0    40    790     81 --:--:-- --:--:-- --:--:--   745
+  0     0    0     0    0    40      0   1463 --:--:-- --:--:-- --:--:--  1463
+143   389    0   389    0    40    755     77 --:--:-- --:--:-- --:--:--   716
 ## [
 ##   {
 ##     &quot;ISO3&quot;: &quot;GHA&quot;,
@@ -296,19 +351,20 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   1131 --:--:-- --:--:-- --:--:--  1131
-114   404    0   404    0    53    732     96 --:--:-- --:--:-- --:--:--   695
-## /ocpu/tmp/x06589fffdb/R/.val
-## /ocpu/tmp/x06589fffdb/stdout
-## /ocpu/tmp/x06589fffdb/source
-## /ocpu/tmp/x06589fffdb/console
-## /ocpu/tmp/x06589fffdb/info
-## /ocpu/tmp/x06589fffdb/files/datapackage.json
-## /ocpu/tmp/x06589fffdb/files/DESCRIPTION
-## /ocpu/tmp/x06589fffdb/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
-## /ocpu/tmp/x06589fffdb/files/meta.csv
-## /ocpu/tmp/x06589fffdb/files/README.md
-## /ocpu/tmp/x06589fffdb/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   3709 --:--:-- --:--:-- --:--:--  3709
+114   404    0   404    0    53    797    104 --:--:-- --:--:-- --:--:--   711
+114   404    0   404    0    53    796    104 --:--:-- --:--:-- --:--:--   711
+## /ocpu/tmp/x01ef6475f7/R/.val
+## /ocpu/tmp/x01ef6475f7/stdout
+## /ocpu/tmp/x01ef6475f7/source
+## /ocpu/tmp/x01ef6475f7/console
+## /ocpu/tmp/x01ef6475f7/info
+## /ocpu/tmp/x01ef6475f7/files/datapackage.json
+## /ocpu/tmp/x01ef6475f7/files/DESCRIPTION
+## /ocpu/tmp/x01ef6475f7/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
+## /ocpu/tmp/x01ef6475f7/files/meta.csv
+## /ocpu/tmp/x01ef6475f7/files/README.md
+## /ocpu/tmp/x01ef6475f7/files/terms.html</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3>Example #5: same request returning a file in RData format</h3>
@@ -317,19 +373,19 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   1136 --:--:-- --:--:-- --:--:--  1136
-114   404    0   404    0    53    741     97 --:--:-- --:--:-- --:--:--   704
-## /ocpu/tmp/x0998201171/R/.val
-## /ocpu/tmp/x0998201171/stdout
-## /ocpu/tmp/x0998201171/source
-## /ocpu/tmp/x0998201171/console
-## /ocpu/tmp/x0998201171/info
-## /ocpu/tmp/x0998201171/files/datapackage.json
-## /ocpu/tmp/x0998201171/files/DESCRIPTION
-## /ocpu/tmp/x0998201171/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
-## /ocpu/tmp/x0998201171/files/meta.csv
-## /ocpu/tmp/x0998201171/files/README.md
-## /ocpu/tmp/x0998201171/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   4029 --:--:-- --:--:-- --:--:--  4029
+114   404    0   404    0    53    793    104 --:--:-- --:--:-- --:--:--   707
+## /ocpu/tmp/x079a0cc0f2/R/.val
+## /ocpu/tmp/x079a0cc0f2/stdout
+## /ocpu/tmp/x079a0cc0f2/source
+## /ocpu/tmp/x079a0cc0f2/console
+## /ocpu/tmp/x079a0cc0f2/info
+## /ocpu/tmp/x079a0cc0f2/files/datapackage.json
+## /ocpu/tmp/x079a0cc0f2/files/DESCRIPTION
+## /ocpu/tmp/x079a0cc0f2/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
+## /ocpu/tmp/x079a0cc0f2/files/meta.csv
+## /ocpu/tmp/x079a0cc0f2/files/README.md
+## /ocpu/tmp/x079a0cc0f2/files/terms.html</code></pre>
 <p>Other possible formats include <code>csv</code>, <code>json</code> for GeoJSON, and raster formats <code>grd</code>, <code>tif</code> and <code>asc</code> for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add <code>/zip</code> to the session endpoint.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -340,8 +396,9 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   5367 --:--:-- --:--:-- --:--:--  5367
-  0    55    0    55    0    73    611    811 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0    73      0   3035 --:--:-- --:--:-- --:--:--  3035
+  0    55    0    55    0    73    582    773 --:--:-- --:--:-- --:--:--     0
+  0    55    0    55    0    73    582    772 --:--:-- --:--:-- --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code>--2015-02-03 04:10:38--
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
@@ -366,8 +423,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    971 --:--:-- --:--:-- --:--:--   971
-107  1174    0  1174    0    13   4479     49 --:--:-- --:--:-- --:--:--  4681
+  0     0    0     0    0    13      0    970 --:--:-- --:--:-- --:--:--   970
+107  1174    0  1174    0    13   4488     49 --:--:-- --:--:-- --:--:--  4681
 ## [
 ##   {
 ##     &quot;Category&quot;: &quot;Agroecology&quot;,
@@ -427,7 +484,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-104   732    0   732    0     0  15638      0 --:--:-- --:--:-- --:--:-- 22181
+103  1453    0  1453    0     0  30910      0 --:--:-- --:--:-- --:--:-- 44030
 ## describe                package:hcapi3                 R Documentation
 ## 
 ## Return HarvestChoice variable metadata
@@ -461,7 +518,25 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ## 
 ## See Also:
 ## 
-##      category to view HarvestChoice indicator categories</code></pre>
+##      category to view HarvestChoice indicator categories
+## 
+## Examples:
+## 
+##      # Show complete metadata for all variables under 'Cassava' category
+##      describe(cat=&quot;cassava&quot;, raster=T)
+##      
+##      # Equivalent cURL request at the command line
+##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+##      # -d '{&quot;cat&quot; : &quot;cassava&quot;, &quot;raster&quot; : true, &quot;as.class&quot; : &quot;list&quot;}' \
+##      # -X POST -H &quot;Content-Type:application/json&quot;
+##      
+##      describe(raster=T, cat=&quot;population&quot;, as.class=&quot;list&quot;)[1:2]
+##      
+##      # Equivalent cURL request at the command line
+##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/describe/json \
+##      # -d '{&quot;raster&quot; : true, &quot;cat&quot; : &quot;population&quot;, as.class&quot; : &quot;list&quot;}' \
+##      # -X POST -H &quot;Content-Type:application/json&quot;
+## </code></pre>
 </div>
 <div id="example-9-return-metadata-records-for-all-indicators-under-the-health-and-nutrition-category" class="section level3">
 <h3>Example #9: return metadata records for all indicators under the ‘Health and Nutrition’ category</h3>
@@ -470,8 +545,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    661 --:--:-- --:--:-- --:--:--   661
-  0     3    0     3    0     9     11     34 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     9      0    356 --:--:-- --:--:-- --:--:--   356
+  0     3    0     3    0     9     12     37 --:--:-- --:--:-- --:--:--     0
 ## []</code></pre>
 <p>Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format using <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv</a> (<code>vi</code> in the URL stands for <em>Variable Inventory</em>).</p>
 </div>

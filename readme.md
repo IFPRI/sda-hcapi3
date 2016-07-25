@@ -1,5 +1,5 @@
 
-# HarvestChoice Data Services v3.0
+# HarvestChoice Data Services v3
 
 ## About
 
@@ -24,7 +24,17 @@ Another tool for quick data summaries is [HarvestChoice TABLR](http://harvestcho
 
 ### HarvestChoice Data Catalog
 
-For more information about the *International Food Policy Resaearch Institute (IFPRI)* and *HarvestChoice Program*, and to explore individual data layers, visit [HarvestChoice website](http://harvestchoice.org/).
+For more information about the *International Food Policy Resaearch Institute (IFPRI)* and *HarvestChoice Program*, and to explore individual data layers, visit [HarvestChoice website](http://harvestchoice.org/data).
+
+### *HarvestChoice* R Package
+
+For R users access to HarvestChoice Data Services are provided through a package available on  GitHub at http://github.com/harvestchoice/hc-api.
+
+
+```r
+# Install HarvestChoice R package
+devtools::install_github("harvestchoice/hc-api")
+```
 
 
 ## Citation

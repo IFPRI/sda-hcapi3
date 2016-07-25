@@ -1,4 +1,4 @@
-#' Summarize HarvestChoice 5-arc-minute layers over WKT geometri(es)
+#' Summarize HarvestChoice indicators over WKT geometri(es)
 #'
 #' This function intersects (extracts) any spatial object (WKT point, multipoints,
 #' polygons or multipolygons) with HarvestChoice 5-arc-minute grid and returns an array

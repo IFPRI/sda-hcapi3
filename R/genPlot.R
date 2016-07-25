@@ -5,7 +5,7 @@
 #' the convenience function \code{hcapi(..., format="png")}.
 #'
 #' @param var character array of variable codes to plot
-#' @param iso3 optional ISO3 country or region code to filter by
+#' @param iso3 optional ISO3 country or region code(s)
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
 #' @param layout one of "default", "print", or "thumbnail" to control legend and axes
 #' @param style one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
@@ -23,13 +23,13 @@
 #' @return Array of generated file names, one for each plot
 #' @examples
 #' # Generate standard raster plot of 2012 population density for sub-Saharan Africa
-#' x <- genPlot("PD12_TOT", pal="OrRd")
+#' genPlot("PD12_TOT", pal="OrRd")
 #'
 #' # Generate 3 raster plots for Ghana with legend and title but not axes
-#' x <- genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", layout="print")
+#' genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", layout="print")
 #'
 #' # Generate 3 raster plots for Nigeria with the specified dimensions
-#' x <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
+#' genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
 #' units="in", res=200, pointsize=8)
 #'
 #' # This method may be called via HTTP POST request using e.g. cUrl at the command line
@@ -56,21 +56,22 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
   width=switch(layout, default=640, print=5, thumbnail=120),
   height=switch(layout, default=640, print=5, thumbnail=120),
   units=switch(layout, default="px", print="in", thumbnail="px"),
-  res=switch(layout, default=NA, print=300, thumbnail=NA), ...) {
+  res=switch(layout, print=300, NA), ...) {
 
   iso3 <- iso3[1]
   fPath <- character(0)
   setkey(vi, varCode)
 
+  layout <- match.arg(layout, c("default", "print", "thumbnail"))
+  style <- match.arg(style, c("default",
+    "fixed", "sd", "equal", "pretty", "quantile", "kmeans",
+    "hclust", "bclust", "fisher", "jenks"))
+
   # Get GAUL country boundaries
   rc <- RS.connect(port=getOption("hcapi3.port"), proxy.wait=F)
   g0 <- RS.eval(rc, g0)
 
-  for (i in var) {
-
-    # Quick validation
-    cat(i, ": ", vi[i][, varLabel], fill=T)
-    if (is.na(vi[i][, varLabel])) next
+  for (i in var) for (ii in iso3) {
 
     # Get HC symbology
     cv <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
@@ -78,7 +79,7 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
     cc <- tolower(as.character(unlist(strsplit(vi[i][, classColors], "|", fixed=T))))
 
     # Get data
-    r <- getLayer(i, iso3, collapse=F)
+    r <- getLayer(i, iso3=ii, collapse=F)
     setnames(r, i, "var")
 
     switch(vi[i][, type],
@@ -117,10 +118,10 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
     r <- raster(r)
 
     # Crop to SSA (the grid was buffered)
-    if (iso3=="SSA") r <- crop(r, g0)
+    if (ii=="SSA") r <- crop(r, g0)
 
     # Open plot device
-    j <- c(i, if(iso3!="SSA") iso3, if(layout!="default") layout, "png")
+    j <- c(i, if(ii!="SSA") ii, if(layout!="default") layout, "png")
     j <- paste(j, collapse=".")
     png(j, width=width, height=height, units=units, res=res, ...)
 
@@ -147,7 +148,7 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
         # Add annotations
         title(col.main="grey10", adj=0, font.main=1, line=1,
           main=str_wrap(paste0(
-            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==iso3]), 50))
+            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==ii]), 50))
         title(cex.sub=ifelse(width<10, .7, .8), col.sub="grey10", adj=0, line=5, font.sub=1,
           sub=str_wrap(paste0("Source: ", vi[i][, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90))
       },
@@ -166,7 +167,7 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
         # Add annotations
         title(col.main="grey10", adj=0, font.main=1, line=0,
           main=str_wrap(paste0(
-            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==iso3]), 50))
+            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==ii]), 50))
         title(cex.sub=ifelse(width<10, .7, .8), col.sub="grey10", adj=0, line=2, font.sub=1,
           sub=str_wrap(paste0("Source: ", vi[i][, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90))
       },
@@ -183,10 +184,10 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
     # Always add country boundaries
     plot(g0, col=NA, border="gray50", lwd=.1, add=T)
 
-    if (iso3!="SSA") {
+    if (ii!="SSA") {
       # Also add province boundaries
       g1 <- RS.eval(rc, g1)
-      plot(g1[g1$ADM0_NAME==names(iso)[iso==iso3],], col=NA, border="gray", lwd=.1, add=T)
+      plot(g1[g1$ADM0_NAME==names(iso)[iso==ii],], col=NA, border="gray", lwd=.1, add=T)
     }
 
     dev.off()

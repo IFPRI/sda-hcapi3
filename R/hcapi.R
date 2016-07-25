@@ -1,42 +1,39 @@
-#' Subset, summarize, and download HarvestChoice 5-arc-minute spatial indicators
+#' Query, subset, summarize, and download HarvestChoice indicators
 #'
-#' Main method to subset and/or aggregate HarvestChoice layers.
-#' This method also aggregates classified variables by continuous variables.\\
-#' e.g. \code{hcapi(var="AEZ16_CLAS", by="bmi")}. Here \code{AEZ16_CLAS} is a classified
-#' variable, and \code{bmi} is a continuous variable, but the request is valid.
-#' The dominant class of \code{AEZ16_CLAS} is returned along intervals of \code{bmi}.
-#' By default intervals are read from the variable metadata, but custom intervals may
-#' also be defined, e.g. \code{hcapi(var="AEZ16_CLAS", by=list(bmi=c(0,5,10,15,20,25)))}.
-#' The dominant class of a variable \code{x} is defined by \code{\link{dominant}}.
-#' Layers may also be summarized over a spatial area (passed as an integer array of CELL5M IDs)
-#' using parameter \code{ids}. Use \code{format} argument to control the output format
-#' (see below).
+#' Wrapper method to query, subset and/or aggregate HarvestChoice layers.
+#' This method may also be used to summarize classified variables along continuous
+#' variables, e.g. \code{hcapi(var="AEZ16_CLAS", by="bmi")}. Here \code{AEZ16_CLAS} is
+#' a classified (categorical) raster, and \code{bmi} is a continuous raster, but the
+#' request is valid. The dominant class of \code{AEZ16_CLAS} is returned along intervals
+#' of \code{bmi}. Default interval breaks are used but custom intervals may also be
+#' defined, e.g. \code{hcapi(var="AEZ16_CLAS", by=list(bmi=c(0,5,10,15,20,25)))}.
+#' The dominant class of a variable \code{var} is defined by \code{\link{dominant(var)}}.
+#' Layers may also be summarized over spatial points are areas (passed as WKT representations
+#' using argument \code{wkt}). Use the \code{format} argument to control the output
+#' format (see examples below).
 #'
 #' @param var character array of variable codes, passed to \code{\link{getLayer}}
 #' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
 #' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
-#' @param format output format, one of "csv", "json", tif", "dta", "asc", "grd", "rds",
-#' else "png" to plot the rasters, or "stats" to plot histogram and univariate statistics
+#' @param format output format, one of "data.table", "csv", "tif", "dta", "asc", "grd", "rds",
+#' else "png" to plot the rasters, or "hist" to plot histogram and univariate statistics
 #' @param wkt WKT representation of a spatial object (points, multipoints, or polygons, multipolygons)
-#' @param ... other optional arguments passed to \code{\link{getLayer}} or \code{\link{genFile}},
-#' e.g. \code{collapse}, \code{as.class}, \code{dir}
-#' @return a data.table (or other formats) of \code{var} indicators aggregated by \code{by} domains
+#' @param ... other optional arguments passed to \code{\link{getLayer}}, \code{\link{genFile}},
+#' or to \code{\link{genPlot}}, e.g. \code{collapse}, \code{as.class}, \code{dir}, \code{pal}.
+#' @return a data.table (or other formats) of \code{var} indicators summarized by \code{by} domains
 #' @seealso \code{\link{getLayer}}, \code{\link{getLayerWKT}}, \code{\link{genFile}}
 #' @examples
 #' # Mean body mass index and cassava yield across provinces and districts of Tanzania
-#' x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
-#' x
+#' hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
 #'
 #' # Plot results for Mara province
 #' require(lattice)
 #' barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"], col="grey90")
 #'
 #' # Mean cassava yield in Ivory Coast in GeoTIFF raster format
-#' x <- hcapi("cass_y", iso3="CIV", format="tif")
-#' x
+#' hcapi("cass_y", iso3="CIV", format="tif")
 #'
 #' # Plot the generated TIF raster (one band only)
-#' require(raster)
 #' plot(raster(x[2]))
 #'
 #' # Equivalent request at the command line
@@ -77,11 +74,18 @@
 #' head(x)
 #'
 #' @export
-hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format=NULL, ...) {
-  if (!missing(wkt)) return(getLayerWKT(var, wkt, ...))
-  if (missing(format)) return(getLayer(var, iso3, by, ...))
-  if (format %in% c("png", "plot")) return(genPlot(var, iso3, ...))
-  if (format=="stats") return(stats(var, iso3))
+hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format="data.table", ...) {
+
+  # Validate
+  format <- match.arg(format,
+    c("data.table", "list", "csv", "tif", "dta", "asc", "grd", "rds", "png", "hist"))
+
+  # Dispatch
+  if (!missing(wkt)) return(getLayerWKT(var, wkt=wkt, ...))
+  if (format %in% c("data.table", "list")) return(getLayer(var, iso3, by, as.class=format, ...))
+  if (format == "png") return(genPlot(var, iso3, ...))
+  if (format == "hist") return(stats(var, iso3))
   else return(genFile(var, iso3, by, format, ...))
+
 }
 

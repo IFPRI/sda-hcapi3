@@ -1,7 +1,6 @@
-#' HarvestChoice inventory of 5-arc-minute spatial indicators
+#' Catalog of HarvestChoice indicators
 #'
-#' Metadata elements for HarvestChoice collection of 5-arc-minute rasters for
-#' sub-Saharan Africa.
+#' Complete metadata records for HarvestChoice 5-arc-minute inidcators.
 #'
 #' @docType data
 #' @keywords datasets
@@ -13,15 +12,13 @@
 #' names(vi)
 #'
 #' # Print full metadata for cassava yield
-#' x <- as.list(t(vi["cass_y"]))
-#' names(x) <- names(vi)
-#' x
+#' t(vi["cass_y"])
 #'
 #' # Get specific metadata elements
-#' vi["cass_y"][, list(varTitle, units)]
+#' vi["cass_y", .(varTitle, unit)]
 #'
 #' # Count of layers by category
-#' vi[, .N, by=list(cat1, cat2)]
+#' vi[, .N, by=.(cat1, cat2)]
 NULL
 
 #' List of ISO3 country and/or region codes
@@ -36,6 +33,6 @@ NULL
 #' @note Country boundaries are derived from FAO GAUL 2008 (2009 eds.)
 #' @examples
 #' # Lookup lists
-#' names(iso)
+#' iso
 #'
 NULL

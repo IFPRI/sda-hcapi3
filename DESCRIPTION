@@ -2,23 +2,15 @@ Package: hcapi3
 Type: Package
 Version: 3.7
 Date: 2016-02-28
-Title: HarvestChoice Data Services
+Title: HarvestChoice Data Services v3
 Authors@R: c(
     person("Melanie", "Bacou", role=c("aut", "cre"), email="mel@mbacou.com"),
-	  person("Maria", "Comanescu", role="ctb", email="m.comanescu@cgiar.org"),
+	  person("Maria", "Comanescu", role="ctb", email="mery.comanescu@gmail.com"),
 	  person("Ulrike", "Wood-Sichra", role="ctb", email="u.wood-sichra@cgiar.org"),
 	  person("Jawoo", "Koo", role="ctb", email="j.koo@cgiar.org"),
 	  person("Carlo", "Azzarri", role="ctb", email="c.azzarri@cgiar.org"),
 	  person("Joseph", "Green", role="ctb", email="josephgreen@gmail.com"),
 	  person("Zhe", "Guo", role="ctb", email="z.guo@cgiar.org"))
-Author: Melanie Bacou [aut, cre],
-    Maria Comanescu [ctb],
-    Ulrike Wood-Sichra [ctb],
-    Jawoo Koo [ctb],
-    Carlo azzarri [ctb],
-    Joseph Green [ctb],
-    Zhe Guo [ctb]
-Maintainer: Melanie Bacou <mel@mbacou.com>
 Depends:
     R (>= 3.2.0),
     data.table
@@ -32,24 +24,23 @@ Suggests:
     RColorBrewer,
     foreign,
     rgdal,
-    rgeos,
-    knitr
+    rgeos
 LazyData: yes
-Description: Methods to retrieve, summarize, aggregate, and plot HarvestChoice
-    5-arc-minute spatial layers for sub-Saharan Africa. This R package cannot be
-    installed locally. Instead we provide access to all methods through a RESTful
-    API (credits to \url{http://github.com/jeroenooms/opencpu}). Method names
-    are endpoints and arguments must be converted from R syntax to simple JSON
-    objects, \code{foo(arg1=c("val1", "val2"))} must be passed to \url{http://
+Description: Methods to retrieve, summarize, and plot HarvestChoice 5-arc-minute
+    spatial layers for Africa South of the Sahara. This R package cannot be installed
+    locally. Instead we provide access to all methods through a RESTful API (credits
+    to \url{http://github.com/jeroenooms/opencpu}). Method names are endpoints and
+    arguments must be converted from R syntax to simple JSON objects,
+    \code{foo(arg1=c("val1", "val2"))} must be passed to \url{http://
     harvestchoice.org/tools/hcapi/R/foo} using \code{{"arg1" : ["val1", "val2"]}}.
     Through transparent data services our aim is to facilitate the re-use and
     integration of HarvestChoice's spatially-consistent biophysical and socio-
-    economic indicators into 3rd-party tools and models. As of today over 750
+    economic indicators into 3rd-party tools and models. As of today over 800
     indicators are available for sub-Saharan Africa. More about HarvestChoice at
     \url{http://harvestchoice.org/}.
 License: GPL (>= 3)
-URL: http://harvestchoice.org/, https://github.com/harvestchoice/hc-api3
-BugReports: http://harvestchoice.org/
+URL: http://harvestchoice.github.io/hc-api3/, http://harvestchoice.org/
+BugReports: http://github.com/harvestchoice/hc-api3
 MailingList: support@harvestchoice.org
 Packaged: 2016-03-26 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
