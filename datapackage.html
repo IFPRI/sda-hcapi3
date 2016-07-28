@@ -85,7 +85,23 @@ and in JSON (.json) format in conformity with Tabular Data Package RFC
 specifications documented at <a href = 'http://dataprotocols.org/tabular-data-package/'>http://dataprotocols.org/tabular-data-package/</a>.</p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Generate auxiliary files for soil organic carbon concentration and 2012 total
+population
+</div>
+<strong class='error'>Error in eval(expr, envir, enclos): object &#39;population&#39; not found</strong>
+<div class='input'>datapackage(c(&quot;soc_d5&quot;, &quot;PN12_TOT&quot;))
+</div>
+<div class='output'>[1] &quot;./meta.csv&quot;
+</div>
+<div class='input'>
+# Equivalent cUrl request at the command line
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
+# -d &#39;{&quot;var&quot; : [&quot;soc_d5&quot;, &quot;PN12_TOT&quot;]}&#39; \
+# -X POST -H &#39;Content-Type:application/json&#39;
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>datapackage</li>
