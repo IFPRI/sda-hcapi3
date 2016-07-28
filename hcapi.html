@@ -118,9 +118,7 @@ hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;A
 <div class='input'>
 # Plot results for Mara province
 require(lattice)
-</div>
-<strong class='message'>Loading required package: lattice</strong>
-<div class='input'>barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
 </div>
 <strong class='error'>Error in barchart.formula(ADM2_NAME_ALT ~ bmi, data = x[ADM1_NAME_ALT == : object &#39;x&#39; not found</strong>
 <div class='input'>
@@ -180,10 +178,6 @@ x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 1
 -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
 </div>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 1</strong>
-<strong class='warning'>Warning message:
-grid has empty column/rows in dimension 2</strong>
 <strong class='error'>Error in if (length(by) &gt; 0 | (length(ids) &gt; 0 &amp; collapse == T)) {: argument is of length zero</strong>
 <div class='input'>head(x)
 </div>
