@@ -76,6 +76,10 @@ to control the number of breaks</dd>
       <dt>units</dt>
       <dd>one of "px" (default), "in", "cm" or "mm".
 Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code></dd>
+      <dt>res</dt>
+      <dd>The nominal resolution in ppi which will be recorded in the
+    bitmap file, if a positive integer.  Also used for <code>units</code>
+    other than the default, and to convert points to pixels.</dd>
       <dt>...</dt>
       <dd>any argument passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>, e.g. pointsize</dd>
       <dt>resolution</dt>
@@ -104,19 +108,26 @@ the convenience function <code>hcapi(..., format="png")</code>.</p>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Generate standard raster plot of 2012 population density for sub-Saharan Africa
-genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
+x &lt;- genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
 </div>
 <strong class='warning'>Warning message:
 grid has empty column/rows in dimension 1</strong>
 <strong class='warning'>Warning message:
 grid has empty column/rows in dimension 2</strong>
+<div class='input'>knitr::include_graphics(x)
+</div>
 <div class='output'>[1] &quot;PD12_TOT.png&quot;
+attr(,&quot;class&quot;)
+[1] &quot;knit_image_paths&quot; &quot;knit_asis&quot;       
 </div>
 <div class='input'>
 # Generate 3 raster plots for Ghana with legend and title but not axes
-genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
+x &lt;- genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
+knitr::include_graphics(x)
 </div>
 <div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;whea_h.GHA.print.png&quot;    
+attr(,&quot;class&quot;)
+[1] &quot;knit_image_paths&quot; &quot;knit_asis&quot;       
 </div>
 <div class='input'>
 # Generate 3 raster plots for Nigeria with the specified dimensions
