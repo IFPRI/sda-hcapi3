@@ -57,8 +57,8 @@
     <h2>Arguments</h2>
     <dl>
       <dt>q</dt>
-      <dd>search string to match against HarvestChoice indicator codes,
-labels, and categories. Will attempt a fuzzy match against these metadata elements.</dd>
+      <dd>character array of pattern(s) to search against HarvestChoice indicator codes,
+labels, and categories. Will attempt a fuzzy match.</dd>
       <dt>version</dt>
       <dd>optional version filter</dd>
       <dt>as.class</dt>
@@ -196,19 +196,32 @@ a data.table or hierarchical list of indicator metadata
 10:   http://harvestchoice.org/data/cass_y
 11: http://harvestchoice.org/data/cass_i_y
 12: http://harvestchoice.org/data/cass_r_y
-                                                                                  wms downloadedOn
- 1: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_h/MapServer/WMSServer   2016-07-28
- 2: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_h/MapServer/WMSServer   2016-07-28
- 3: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_h/MapServer/WMSServer   2016-07-28
- 4: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-28
- 5: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-28
- 6: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-28
- 7: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-28
- 8: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-28
- 9: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-28
-10: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-28
-11: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-28
-12: http://apps.harvestchoice.org/arcgis/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-28
+                                                                                       wms
+ 1: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer
+ 2: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer
+ 3: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer
+ 4: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer
+ 5: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer
+ 6: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer
+ 7: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer
+ 8: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer
+ 9: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer
+10: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer
+11: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer
+12: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer
+    downloadedOn
+ 1:   2016-07-28
+ 2:   2016-07-28
+ 3:   2016-07-28
+ 4:   2016-07-28
+ 5:   2016-07-28
+ 6:   2016-07-28
+ 7:   2016-07-28
+ 8:   2016-07-28
+ 9:   2016-07-28
+10:   2016-07-28
+11:   2016-07-28
+12:   2016-07-28
 </div>
 <div class='input'>
 # Equivalent cURL request at the command line
@@ -261,11 +274,16 @@ $Demographics$Population$Rural
 2: http://harvestchoice.org/data/pn05_rur
 3: http://harvestchoice.org/data/pd00_rur
 4: http://harvestchoice.org/data/pd05_rur
-                                                                              wms downloadedOn
-1: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-2: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-3: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-4: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
+                                                                                   wms
+1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+   downloadedOn
+1:   2016-07-28
+2:   2016-07-28
+3:   2016-07-28
+4:   2016-07-28
 
 $Demographics$Population$Total
                   label     code            unit       type     period     category subcategory
@@ -316,12 +334,18 @@ $Demographics$Population$Total
 3: http://harvestchoice.org/data/pn05_tot
 4: http://harvestchoice.org/data/pn12_tot
 5: http://harvestchoice.org/data/pd12_tot
-                                                                              wms downloadedOn
-1: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-2: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-3: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-4: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-5: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
+                                                                                   wms
+1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+5: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+   downloadedOn
+1:   2016-07-28
+2:   2016-07-28
+3:   2016-07-28
+4:   2016-07-28
+5:   2016-07-28
 
 $Demographics$Population$Urban
                     label     code            unit       type     period     category subcategory
@@ -356,10 +380,14 @@ $Demographics$Population$Urban
 1: http://harvestchoice.org/data/pn00_urb
 2: http://harvestchoice.org/data/pn05_urb
 3: http://harvestchoice.org/data/pd05_urb
-                                                                              wms downloadedOn
-1: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-2: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
-3: http://apps.harvestchoice.org/arcgis/services/cell5m_socio/MapServer/WMSServer   2016-07-28
+                                                                                   wms
+1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+   downloadedOn
+1:   2016-07-28
+2:   2016-07-28
+3:   2016-07-28
 
 
 

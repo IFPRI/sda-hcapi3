@@ -57,7 +57,8 @@
     <h2>Arguments</h2>
     <dl>
       <dt>q</dt>
-      <dd>optional fuzzy filter</dd>
+      <dd>character array of pattern(s) to search for. If omitted will return all
+available indicators.</dd>
       <dt>as.class</dt>
       <dd>"data.table" or "list" of indicator codes grouped by category</dd>
     </dl>
@@ -134,8 +135,12 @@ $Agriculture$Yield
 # -d &#39;{&quot;q&quot; : &quot;demographics&#39;} \
 # -X POST -H &quot;Content-Type:application/json&quot;
 
-#&#39; # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 # -d &#39;{&quot;q&quot; :&quot; cassava&quot;, &quot;as.class&quot; : &quot;list&quot;} \
+# -X POST -H &quot;Content-Type:application/json&quot;
+
+# To return a complete list of published indicators omit &#39;q&#39;
+# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 # -X POST -H &quot;Content-Type:application/json&quot;
 </div></pre>
   </div>
