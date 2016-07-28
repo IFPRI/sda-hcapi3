@@ -26,12 +26,12 @@ Suggests:
     rgdal,
     rgeos
 LazyData: yes
-Description: Methods to retrieve, summarize, and plot HarvestChoice 5-arc-minute
-    spatial layers for Africa South of the Sahara. This R package cannot be installed
-    locally. Instead we provide access to all methods through a RESTful API (credits
-    to \url{http://github.com/jeroenooms/opencpu}). Method names are endpoints and
-    arguments must be converted from R syntax to simple JSON objects,
-    \code{foo(arg1=c("val1", "val2"))} must be passed to \url{http://
+Description: Methods to retrieve, summarize, and plot HarvestChoice 5-arc-
+    minute spatial layers for Africa South of the Sahara. This R package cannot be
+    installed locally. Instead we provide access to all methods through a RESTful
+    API (credits to \url{http://github.com/jeroenooms/opencpu}). Method names
+    are endpoints and arguments must be converted from R syntax to simple JSON
+    objects, \code{foo(arg1=c("val1", "val2"))} must be passed to \url{http://
     harvestchoice.org/tools/hcapi/R/foo} using \code{{"arg1" : ["val1", "val2"]}}.
     Through transparent data services our aim is to facilitate the re-use and
     integration of HarvestChoice's spatially-consistent biophysical and socio-
@@ -44,4 +44,4 @@ BugReports: http://github.com/harvestchoice/hc-api3
 MailingList: support@harvestchoice.org
 Packaged: 2016-03-26 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.0

@@ -74,18 +74,14 @@
 #' head(x)
 #'
 #' @export
-hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format="data.table", ...) {
-
-  # Validate
-  format <- match.arg(format,
-    c("data.table", "list", "csv", "tif", "dta", "asc", "grd", "rds", "png", "hist"))
+hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format=NULL, ...) {
 
   # Dispatch
-  if (!missing(wkt)) return(getLayerWKT(var, wkt=wkt, ...))
-  if (format %in% c("data.table", "list")) return(getLayer(var, iso3, by, as.class=format, ...))
-  if (format == "png") return(genPlot(var, iso3, ...))
+  if (!missing(wkt)) return(getLayerWKT(var, iso3, by, wkt=wkt, ...))
+  if (missing(format)) return(getLayer(var, iso3, by, ...))
+  if (format == "png") format <- NULL; return(genPlot(var, iso3, ...))
   if (format == "hist") return(stats(var, iso3))
-  else return(genFile(var, iso3, by, format, ...))
+  else return(genFile(var, iso3, by, format=format, ...))
 
 }
 

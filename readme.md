@@ -7,7 +7,7 @@
 
 ## Data Retrieval
 
-### HarvestChoice Data Services v3.0
+### HarvestChoice Data Services v3
 
 The preferred method of data retrieval is through HarvestChoice RESTful API published under [HarvestChoice Data Services v3.0](http://harvestchoice.github.io/hc-api3/). This API provides a full range of methods to retrieve, summarize, aggregate, plot and map HarvestChoice spatial layers.
 

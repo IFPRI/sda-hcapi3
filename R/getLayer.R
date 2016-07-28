@@ -160,16 +160,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
 
   if (as.class=="list") {
     # Also return metadata (mimick earlier API behavior)
-    d.names <- vi[names(data)][, .(
-      code=varCode,
-      label=varLabel,
-      unit=unit,
-      description=varDesc,
-      sources=sources)]
-
-    data <- structure(
-      list(data=data, meta=d.names),
-      class="hcapi, list")
+    data <- list(meta=vi[names(data)], data=data)
   }
 
   return(data)

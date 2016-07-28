@@ -31,7 +31,7 @@ indicator <- function(q, version=NULL, as.class="data.table", cartoCSS=FALSE) {
 
   if(missing(q)) stop("'q' is missing. Enter a search string to query HarvestChoice metadata records,
     or use 'category()' to return a complete catalog.")
-  x <- tolower(x)
+  q <- tolower(q)
 
   out <- vi[published==TRUE & (
     tolower(varCode) %like% q |
