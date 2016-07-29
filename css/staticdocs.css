@@ -2,7 +2,7 @@
  @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
 .navbar-inner {
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3E3C30), to(#656253));
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, to(#3E3C30), from(#656253));
 }
 
 header {
@@ -10,13 +10,12 @@ header {
 }
 
 body {
-  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
   color: #636363;
 }
 
 h1,h2,h3,h4,h5 {
- font-family: "Frutiger Neue W02 Thin", Arial, sans-serif;
- color: #427730;
+ font-family: "Droid Serif", Arial, sans-serif;
 }
 
 
