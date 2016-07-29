@@ -6,18 +6,18 @@
 }
 
 header {
+  height: 30px;
   background-image: url('http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png') no-repeat;
 }
 
 body {
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
-  color: #636363;
+  font-family: 'Pt Sans', Arial, Helvetica, sans-serif;
+  color: #444;
 }
 
 h1,h2,h3,h4,h5 {
- font-family: "Droid Serif", Arial, sans-serif;
+ font-family: 'Droid Serif', serif;
 }
-
 
 h2 {padding-top: 20px}
 
