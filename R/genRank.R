@@ -4,13 +4,17 @@
 #' Returns top and bottom commodities in terms of aggregate production, harvested area,
 #' and/or value of production.
 #'
+#' API call: rank commodities in Angola and Mozambique by harvested area and production
+#'
 #' \code{
-#' # API call: rank commodities in Angola and Mozambique by harvested area and production
 #' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
 #'  -d '{"var" : ["h", "p"], "iso3" : ["AGO", "MOZ"]}' \
 #'  -X POST -H 'Content-Type:application/json'
+#' }
 #'
-#' # API call: rank commodities across Angola's agro-ecological zones by production
+#' API call: rank commodities across Angola's agro-ecological zones by production
+#'
+#' \code{
 #' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
 #'  -d '{"var" : "p", "iso3" : "AGO", "by" : "AEZ5_CLAS"}' \
 #'  -X POST -H 'Content-Type:application/json'

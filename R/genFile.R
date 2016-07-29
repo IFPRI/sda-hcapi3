@@ -7,9 +7,10 @@
 #' Calling \code{genFile(var="bmi", iso3="TZA", format="dta")} is equivalent to calling
 #' the convenience method \code{hcapi(var="bmi", iso3="TZA", format="dta")}.
 #'
+#' API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and
+#' Ethiopia in STATA format
+#'
 #' \code{
-#' # API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
-#' # in STATA format
 #' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 #'  -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
 #'  -X POST -H 'Content-Type:application/json'
@@ -23,11 +24,17 @@
 #' /ocpu/tmp/x0e654538b7/files/DESCRIPTION
 #' /ocpu/tmp/x0e654538b7/files/README
 #' /ocpu/tmp/x0e654538b7/files/whea_h-AEZ16_CLAS-NGA.dta
+#' }
 #'
-#' # GET all generated files in a ZIP archive
+#' GET all generated files in a ZIP archive
+#'
+#' \code{
 #' wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
+#' }
 #'
-#' # API call: sorghum production in Nigeria in ESRI ASCII raster format
+#' API call: sorghum production in Nigeria in ESRI ASCII raster format
+#'
+#' \code{
 #' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 #'  -d '{"var" : "sorg_p", "format" : "asc"}' \
 #'  -X POST -H "Content-Type:application/json"
@@ -43,10 +50,12 @@
 #' /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc
 #' /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc.aux.xml
 #' /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.prj
+#' }
 #'
-#' # GET all generated files in a ZIP archive
+#' GET all generated files in a ZIP archive
+#'
+#' \code{
 #' wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
-#'
 #' }
 #'
 #' @param var character array of indicator codes, passed to \code{\link{getLayer}}

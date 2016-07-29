@@ -50,8 +50,9 @@ See examples below. Note that calling \code{genPlot(...)} is equivalent to calli
 the convenience function \code{hcapi(..., format="png")}.
 }
 \details{
+API call: generate 2 plots showing farming systems and 2012 population density for Ghana
+
 \code{
-# API call: generate 2 plots showing farming systems and 2012 population density for Ghana
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
  -X POST -H 'Content-Type:application/json'
@@ -64,8 +65,11 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
 /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
 /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+}
 
-# GET all generated plots in a ZIP archive
+GET all generated plots in a ZIP archive
+
+\code{
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 }
 }

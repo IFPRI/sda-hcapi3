@@ -191,7 +191,7 @@ $(document).ready(function () {
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-106   106    0   106    0     0   1060      0 --:--:-- --:--:-- --:--:--  1232
+106   106    0   106    0     0   1040      0 --:--:-- --:--:-- --:--:--  1218
 ## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
@@ -249,6 +249,36 @@ $(document).ready(function () {
 ##      ...: other optional arguments passed to getLayer, genFile, or to
 ##           genPlot, e.g. collapse, as.class, dir, pal.
 ## 
+## Details:
+## 
+##      # API call: mean body mass index and cassava yield across
+##      provinces and districts of Tanzania curl
+##      http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \ -d
+##      '{&quot;var&quot;:&quot;cass_y&quot;, &quot;iso3&quot;:&quot;CIV&quot;, &quot;format&quot;:&quot;tif&quot;}' \ -X POST -H
+##      'Content-Type:application/json'
+## 
+##      /ocpu/tmp/x0bc1ac9bdf/R/.val /ocpu/tmp/x0bc1ac9bdf/stdout
+##      /ocpu/tmp/x0bc1ac9bdf/warnings /ocpu/tmp/x0bc1ac9bdf/source
+##      /ocpu/tmp/x0bc1ac9bdf/console /ocpu/tmp/x0bc1ac9bdf/info
+##      /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+##      /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+##      /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+##      /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+##      /ocpu/tmp/x0bc1ac9bdf/files/README
+## 
+##      # GET all generated files in a ZIP archive wget
+##      http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+## 
+##      # API call: the method may be expanded to summarize classified
+##      (discrete) variables along continuous # variables. For example the
+##      call below returns the dominant agro-ecological zone and # average
+##      stunting in children under 5 over Ethiopia's provinces by
+##      elevation class curl
+##      http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+##      -d '{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;ETH&quot;,
+##      &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}' \ -X POST -H
+##      'Content-Type:application/json'
+## 
 ## Value:
 ## 
 ##      a data.table (or other formats) of var indicators summarized by by
@@ -276,44 +306,19 @@ $(document).ready(function () {
 ##      require(raster)
 ##      plot(raster(x[2]))
 ##      
-##      # Equivalent request at the command line
-##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-##      # -d '{&quot;var&quot;:&quot;cass_y&quot;, &quot;iso3&quot;:&quot;CIV&quot;, &quot;format&quot;:&quot;tif&quot;}' \
-##      # -X POST -H 'Content-Type:application/json'
-##      
-##      # /ocpu/tmp/x0bc1ac9bdf/R/.val
-##      # /ocpu/tmp/x0bc1ac9bdf/stdout
-##      # /ocpu/tmp/x0bc1ac9bdf/warnings
-##      # /ocpu/tmp/x0bc1ac9bdf/source
-##      # /ocpu/tmp/x0bc1ac9bdf/console
-##      # /ocpu/tmp/x0bc1ac9bdf/info
-##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
-##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
-##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
-##      # /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
-##      # /ocpu/tmp/x0bc1ac9bdf/files/README
-##      
-##      # Use wget (at the command line) to download all generated files in a ZIP archive
-##      # wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
-##      
 ##      # The method may be expanded to summarize classified (discrete) variables along continuous
 ##      # variables. For example the call below returns the dominant agro-ecological zone and
-##      # average stunting in children under 5 over Ethiopia's provinces by elevation class
+##      # average stunting in children under 5 over Ethiopia's pro
+102  4593    0  4593    0     0  76065      0 --:--:-- --:--:-- --:--:--  128k
+## vinces by elevation class
 ##      x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;ETH&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
-##      head(x)
+##      x
 ##      
-##      # An equivalent request at the command line
-##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
-##      # -d '{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;ETH&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}' \
-##      # -X POST -H 'Content-Type:application/json'
-##      
-##      # Mean harvested maize area summarized across a custom polyg
-102  4395    0  4395    0     0  92020      0 --:--:-- --:--:-- --:--:--  126k
-## on
+##      # Mean harvested maize area summarized across a custom polygon
 ##      x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 15.36599264077935345,
 ##      -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 ##      -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
-##      head(x)
+##      x
 ## </code></pre>
 <p>The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. <code>getLayer()</code> is one of the API’s main methods allowing users to query and summarize indicators. The documentation above shows that <code>getLayer()</code> takes at minimum one parameter <code>var</code> indicating which indicator to query (e.g. <code>var='PD05_TOT'</code> to return 2005 population density). Other optional parameters include <code>iso3</code> limiting the results to one (or multiple) countri(es) (e.g. <code>iso3=['GHA', 'NGA']</code> for Ghana and Nigeria), and <code>by</code> summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones <code>by='AEZ8_CLAS'</code>).</p>
 <p>You can test this query by manually forming the following <em>cURL</em> request. This returns a JSON array.</p>
@@ -325,8 +330,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   2985 --:--:-- --:--:-- --:--:--  2985
-146   106    0   106    0    40   1025    386 --:--:-- --:--:-- --:--:--   741
+  0     0    0     0    0    40      0   2988 --:--:-- --:--:-- --:--:--  2988
+146   106    0   106    0    40   1047    395 --:--:-- --:--:-- --:--:--   758
 ## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
@@ -340,8 +345,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   3987 --:--:-- --:--:-- --:--:--  3987
-159   106    0   106    0    53   1054    527 --:--:-- --:--:-- --:--:--   609
+  0     0    0     0    0    53      0   1473 --:--:-- --:--:-- --:--:--  1473
+159   106    0   106    0    53    880    440 --:--:-- --:--:-- --:--:--   630
 ## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
@@ -354,8 +359,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   3971 --:--:-- --:--:-- --:--:--  3971
-159   106    0   106    0    53   1037    518 --:--:-- --:--:-- --:--:--   602
+  0     0    0     0    0    53      0   3959 --:--:-- --:--:-- --:--:--  3959
+159   106    0   106    0    53   1017    508 --:--:-- --:--:-- --:--:--   588
 ## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
@@ -370,8 +375,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   5277 --:--:-- --:--:-- --:--:--  5277
-179   106    0   106    0    73   1050    723 --:--:-- --:--:-- --:--:--   379
+  0     0    0     0    0    73      0   5640 --:--:-- --:--:-- --:--:--  5640
+179   106    0   106    0    73   1040    716 --:--:-- --:--:-- --:--:--   375
 ## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
@@ -399,8 +404,9 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    955 --:--:-- --:--:-- --:--:--   955
-119   106    0   106    0    13   1026    125 --:--:-- --:--:-- --:--:--  1044
+  0     0    0     0    0    13      0    938 --:--:-- --:--:-- --:--:--   938
+119   106    0   106    0    13   1034    126 --:--:-- --:--:-- --:--:--  1044
+119   106    0   106    0    13   1034    126 --:--:-- --:--:-- --:--:--  1044
 ## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
@@ -413,7 +419,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    96    0    96    0     0   2752      0 --:--:-- --:--:-- --:--:--  4571
+  0    96    0    96    0     0   2071      0 --:--:-- --:--:-- --:--:--  4571
 ## No documentation for 'describe' in specified packages and libraries:
 ## you could try '??describe'</code></pre>
 </div>
@@ -424,9 +430,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    360 --:--:-- --:--:-- --:--:--   360
-115   106    0   106    0     9    963     81 --:--:-- --:--:-- --:--:--  1127
-115   106    0   106    0     9    962     81 --:--:-- --:--:-- --:--:--  1127
+  0     0    0     0    0     9      0    680 --:--:-- --:--:-- --:--:--   680
+115   106    0   106    0     9   1027     87 --:--:-- --:--:-- --:--:--  1089
 ## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:

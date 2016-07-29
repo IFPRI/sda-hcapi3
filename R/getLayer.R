@@ -2,27 +2,28 @@
 #'
 #' Workhorse method to query, subset and/or aggregate HarvestChoice layers.
 #' This method may also be used to summarize classified variables along continuous
-#' variables, e.g. \code{getLayer(var="AEZ16_CLAS", by="bmi")}.
+#' variables, e.g. \code{\link{getLayer}(var="AEZ16_CLAS", by="bmi")}.
 #' It does so by returning the dominant class of a classified variable within each \code{by}
 #' class, and by splitting any continuous variable passed to \code{by} using default value
 #' breaks. The dominant class of a variable \code{var} is defined as \code{\link{dominant}(var)}.
 #' Variables may also be summarized over custom areas (passed as an integer array of
-#' gridcell IDs). Note that calling \code{getLayer(...)} is equivalent to using the
-#' convenience method \code{hcapi(...)} with the same arguments.
+#' gridcell IDs). Note that calling \code{\link{getLayer}} is equivalent to using the
+#' convenience method \code{\link{hcapi}} with the same arguments.
+#'
+#' API call: mean body mass index and maize yield across districts in Tanzania
 #'
 #' \code{
-#' # API call: mean body mass index and maize yield across districts in Tanzania
 #' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 #'  -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
 #'  -X POST -H 'Content-Type:application/json'
 #' }
 #'
 #' @param var character array of variable names (all types are accepted). Use e.g.
-#' \code{link{category("poverty")}} to search for valid variable codes).
+#' \code{\link{category}("poverty")} to search for valid variable codes).
 #' @param iso3 optional array of 3-letter country or regional code(s) to filter by.
 #' Use \code{iso} to view all available codes.
 #' @param by optional character array of variables to summarize by (all types are accepted)
-#' @param ids optional array of gridcell ids to filter by (if collapse=FALSE) or
+#' @param ids optional array of gridcell ids to filter by (if \code{collapse=FALSE}) or
 #' summarize by (if collapse=TRUE).
 #' @param collapse if TRUE collapses over \code{by} variables. If FALSE always return
 #' all pixel values (useful for plotting and to convert to spatial formats).
@@ -31,7 +32,7 @@
 #'
 #' @return a data.table (or json array) of \code{var} indicators aggregated by
 #' \code{by} domains
-#' @seealso \link{hcapi} and \link{getLayerWKT}
+#' @seealso \code{\link{hcapi}} and \code{\link{getLayerWKT}}
 #' @examples
 #' # Mean body mass index and maize yield across districts in Tanzania
 #' x <- getLayer(c("bmi", "maiz_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))

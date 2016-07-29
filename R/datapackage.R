@@ -7,9 +7,10 @@
 #' and in JSON (.json) format in conformity with Tabular Data Package RFC
 #' specifications documented at \url{http://dataprotocols.org/tabular-data-package/}.
 #'
+#' API call: Generate auxiliary files for soil organic carbon concentration and
+#' 2012 total population
+#'
 #' \code{
-#' # API call: Generate auxiliary files for soil organic carbon concentration and
-#' # 2012 total population
 #' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
 #'  -d '{"var" : ["soc_d5", "PN12_TOT"]}' \
 #'  -X POST -H 'Content-Type:application/json'

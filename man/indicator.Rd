@@ -24,13 +24,17 @@ a data.table or hierarchical list of indicator metadata
 Return complete metadata records for selected HarvestChoice indicators.
 }
 \details{
-\code{
 # API call: metadata records for all indicators matching 'cassava' or 'population'
+
+\code{
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : ["cassava", "population"]}' \
  -X POST -H "Content-Type:application/json"
+}
 
-# API call: metadata records for all indicators matching 'population' in a list
+API call: metadata records for all indicators matching 'population' in a list
+
+\code{
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : "population", "as.class" : "list"}' \
  -X POST -H "Content-Type:application/json"

@@ -32,14 +32,16 @@ a classified (categorical) raster, and \code{bmi} is a continuous raster, but th
 request is valid. The dominant class of \code{AEZ16_CLAS} is returned along intervals
 of \code{bmi}. Default interval breaks are used but custom intervals may also be
 defined, e.g. \code{hcapi(var="AEZ16_CLAS", by=list(bmi=c(0,5,10,15,20,25)))}.
-The dominant class of a variable \code{var} is defined by \code{\link{dominant(var)}}.
+The dominant class of a variable \code{var} is defined by \code{\link{dominant}(var)}.
 Layers may also be summarized over spatial points are areas (passed as WKT representations
 using argument \code{wkt}). Use the \code{format} argument to control the output
 format (see examples below).
 }
 \details{
+API call: mean body mass index and cassava yield across provinces and districts of
+Tanzania
+
 \code{
-# API call: mean body mass index and cassava yield across provinces and districts of Tanzania
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":"cass_y", "iso3":"CIV", "format":"tif"}' \
  -X POST -H 'Content-Type:application/json'
@@ -55,13 +57,19 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
 /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
 /ocpu/tmp/x0bc1ac9bdf/files/README
+}
 
-# GET all generated files in a ZIP archive
+GET all generated files in a ZIP archive
+
+\code{
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+}
 
-# API call: the method may be expanded to summarize classified (discrete) variables along continuous
-# variables. For example the call below returns the dominant agro-ecological zone and
-# average stunting in children under 5 over Ethiopia's provinces by elevation class
+API call: the method may be expanded to summarize classified (discrete) variables along continuous
+variables. For example the call below returns the dominant agro-ecological zone and
+average stunting in children under 5 over Ethiopia's provinces by elevation class
+
+\code{
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
  -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
  -X POST -H 'Content-Type:application/json'

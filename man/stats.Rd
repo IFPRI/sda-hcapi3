@@ -20,8 +20,8 @@ See examples below. Note that calling \code{stats(...)} is equivalent to calling
 convenience method \code{hcapi(..., format="stats")}.
 }
 \details{
-\code{
 # API call: generate 2 plots showing farming systems and 2012 population density in Ghana
+\code{
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
  -d '{"var":["bmi", "cass_y"]}' \
  -X POST -H 'Content-Type:application/json'
@@ -33,8 +33,11 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
 /ocpu/tmp/x09db409895/console
 /ocpu/tmp/x09db409895/info
 /ocpu/tmp/x09db409895/files/DESCRIPTION
+}
 
-# Use wget (at the command line) to download the generated plot(s)
+Use wget (at the command line) to download the generated plot(s)
+
+\code{
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
 }
