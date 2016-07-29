@@ -99,6 +99,18 @@ gridcell IDs). Note that calling <code>getLayer(...)</code> is equivalent to usi
 convenience method <code>hcapi(...)</code> with the same arguments.</p>
   
     </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>
+# API call: mean body mass index and maize yield across districts in Tanzania
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+ -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
+ -X POST -H 'Content-Type:application/json'
+</code></p>
+  
+    </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean body mass index and maize yield across districts in Tanzania
@@ -120,14 +132,19 @@ x
 </div>
 <div class='input'>
 # Plot results for Mara province
-lattice::barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+require(lattice)
+</div>
+<strong class='message'>Loading required package: lattice</strong>
+<div class='input'>barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
 
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
 # banana harvested area over Ivory Coast&#39;s provinces and elevation zones
-hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
+x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
 </div>
-<p><img src='getLayer-4.png' alt='' width='540' height='400' /></p>
+<p><img src='getLayer-6.png' alt='' width='540' height='400' /></p>
+<div class='input'>x
+</div>
 <div class='output'>    ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h
  1:  CIV Ivory Coast      18 Montagnes            NA     Humid     66
  2:  CIV Ivory Coast      18 Montagnes (3e+02,5e+02]     Humid    456
@@ -172,12 +189,7 @@ hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;, by=c(&
 41:  CIV Ivory Coast   buffer gridcell            NA        NA      0
     ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h
 </div>
-<div class='input'>
-# An equivalent POST request
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
-# -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;bana_h&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
-# -X POST -H &#39;Content-Type:application/json&#39;
-</div></pre>
+<div class='input'></div></pre>
   </div>
   <div class="span4">
     <!-- <ul>

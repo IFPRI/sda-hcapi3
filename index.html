@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Index. hcapi3 3.7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">hcapi3 3.7</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <div class="row">
+  <div class="span8">
+    <hr/>
+
+<h2>About</h2>
+
+<blockquote>
+<p>CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara</p>
+</blockquote>
+
+<p><em>HarvestChoice CELL5M-SSA</em> is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. This database was created as the central core to a decision-support system for policy analysts, development practitioners, and researchers to explore the spatial relationships at the nexus of our climate, the environment, agriculture, nutrition, health, and poverty. All indicators are currently geo-referenced to a spatial resolution of <strong>5 arc-minute</strong> (equivalent to around 10 km<sup>2</sup> at the Equateur).</p>
+
+<h2>Data Retrieval</h2>
+
+<p>Several options are available to retrieve subsets of <em>HarvestChoice</em> indicators.</p>
+
+<ul>
+<li><strong>HarvestChoice Data Services v3.0</strong><br/>
+The preferred method of data retrieval is through HarvestChoice RESTful API published under <a href="http://harvestchoice.github.io/hc-api3/">HarvestChoice Data Services v3.0</a>. This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice 5-arc-minute spatial layers for sub-Saharan Africa.</li>
+</ul>
+
+<p>This data package was generated through this API. Here is the Curl commmand that was used to retrieve this archive:</p>
+
+<pre><code class="bash">curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
+ -d &#39;{&quot;var&quot;:[&quot;sorg_p&quot;]}&#39; \
+ -X POST -H &#39;Content-Type:application/json&#39;
+
+</code></pre>
+
+<p>Other data retrieval and data visualization options are listed below. </p>
+
+<ul>
+<li><p><strong>HarvestChoice MAPPR</strong><br/>
+An option to interactively explore and summarize HarvestChoice data layers is to use <a href="http://harvestchoice.org/mappr">HarvestChoice MAPPR</a> on-line platform. Individual indicators may be mapped and summarized across pre-defined spatial domains or across user-selected geographies. MAPPR also provides advanced query tools for marketshed analyses.</p></li>
+<li><p><strong>HarvestChoice TABLR</strong><br/>
+Another tool for quick data summaries is <a href="http://harvestchoice.org/tablr">HarvestChoice TABLR</a>. This is an on-line report generator to quickly retrieve and export subsets of CELL5M-SSA. Best for users who do not need to visualize results on a map.</p></li>
+<li><p>** HarvestChoice Data Catalog**<br/>
+For more information about the <em>International Food Policy Resaearch Institute (IFPRI)</em> and <em>HarvestChoice Program</em>, and to explore individual data layers, visit <a href="http://harvestchoice.org/">HarvestChoice website</a>.</p></li>
+</ul>
+
+<h2>Metadata</h2>
+
+<p>This package contains both a <code>META.csv</code> file with complete metadata records. A <code>datapackage.json</code> file compliant with the latest <strong>Tabular Data Package</strong> RFC specifications documented at <a href="http://dataprotocols.org/tabular-data-package/">http://dataprotocols.org/tabular-data-package/</a> is also included.</p>
+
+<h2>Use Terms</h2>
+
+<p>Please refer to the [terms.html](./terms.html) file included in the root of this data package.</p>
+
+<h2>Citation</h2>
+
+<p>Please cite and reference:</p>
+
+<blockquote>
+<p>HarvestChoice; International Food Policy Research Institute (IFPRI); University of Minnesota, 2016, <em>&ldquo;CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara&rdquo;</em>, <a href="http://dx.doi.org/10.7910/DVN/G4TBLF">http://dx.doi.org/10.7910/DVN/G4TBLF</a>, Harvard Dataverse.</p>
+</blockquote>
+
+
+    <h2>Help topics</h2>
+
+    <h3></h3>
+    
+    
+    <ul class="index">
+        
+      <li>
+        <code><a href="category.html">category</a></code><br />Return HarvestChoice indicator categories (3-level deep)</li>
+            
+      <li>
+        <code><a href="datapackage.html">datapackage</a></code><br />Write HarvestChoice auxiliary files to CSV and JSON per Tabular Data Package RFC
+</li>
+            
+      <li>
+        <code><a href="dominant.html">dominant</a></code><br />Return the dominant class (the mode of a classified variable)</li>
+            
+      <li>
+        <code><a href="genCartoCSS.html">genCartoCSS</a></code><br />Generate CartoCSS snippet to symbolize raster tiles</li>
+            
+      <li>
+        <code><a href="genFile.html">genFile</a></code><br />Download HarvestChoice indicators in raster and/or tabular formats</li>
+            
+      <li>
+        <code><a href="genPlot.html">genPlot</a></code><br />Plot HarvestChoice 5-arc-minute spatial indicators</li>
+            
+      <li>
+        <code><a href="genRank.html">genRank</a></code><br />Rank agricultural productions across geographies</li>
+            
+      <li>
+        <code><a href="getLayer.html">getLayer</a></code><br />Query, subset, and/or summarize HarvestChoice indicators</li>
+            
+      <li>
+        <code><a href="getLayerWKT.html">getLayerWKT</a></code><br />Summarize HarvestChoice indicators over WKT geometri(es)</li>
+            
+      <li>
+        <code><a href="hcapi.html">hcapi</a></code><br />Query, subset, summarize, and download HarvestChoice indicators</li>
+            
+      <li>
+        <code><a href="indicator.html">indicator</a></code><br />Return HarvestChoice indicator metadata</li>
+            
+      <li>
+        <code><a href="iso.html">iso</a></code><br />List of ISO3 country and/or region codes</li>
+            
+      <li>
+        <code><a href="similar.html">similar</a></code><br />Rank spatial units by similarity</li>
+            
+      <li>
+        <code><a href="stats.html">stats</a></code><br />Generate histogram and boxplot of HarvestChoice indicators</li>
+            
+      <li>
+        <code><a href="vi.html">vi</a></code><br />Catalog of HarvestChoice indicators</li>
+    
+    </ul>
+  </div>
+  
+  <div class="span3 offset1">
+    <h2>Vignettes</h2>
+    <ul>
+      <li><a href="vignettes/hcapi3.html">hcapi3</a></li>
+    </ul>
+        
+    <h2>Dependencies</h2>
+    <ul>
+      <li><strong>Depends</strong>: data.table</li>
+      <li><strong>Imports</strong>: RSclient, stringr</li>
+      <li><strong>Suggests</strong>: raster, sp, classInt, RColorBrewer, foreign, rgdal, rgeos</li>
+      
+    </ul>
+    <h2>Authors</h2>
+    <ul>
+      <li><a href="mailto:mel@mbacou.com">Melanie Bacou</a> [aut, cre]</li>
+      <li><a href="mailto:mery.comanescu@gmail.com">Maria Comanescu</a> [ctb]</li>
+      <li><a href="mailto:u.wood-sichra@cgiar.org">Ulrike Wood-Sichra</a> [ctb]</li>
+      <li><a href="mailto:j.koo@cgiar.org">Jawoo Koo</a> [ctb]</li>
+      <li><a href="mailto:c.azzarri@cgiar.org">Carlo Azzarri</a> [ctb]</li>
+      <li><a href="mailto:josephgreen@gmail.com">Joseph Green</a> [ctb]</li>
+      <li><a href="mailto:z.guo@cgiar.org">Zhe Guo</a> [ctb]</li>
+    </ul>
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

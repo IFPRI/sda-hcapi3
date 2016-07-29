@@ -11,7 +11,7 @@
 
 <meta name="author" content="Melanie Bacou" />
 
-<meta name="date" content="2016-07-28" />
+<meta name="date" content="2016-07-29" />
 
 <title>An Introduction to HarvestChoice Data Services v3</title>
 
@@ -123,6 +123,7 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
@@ -146,7 +147,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">An Introduction to HarvestChoice Data Services v3</h1>
 <h4 class="author"><em>Melanie Bacou</em></h4>
-<h4 class="date"><em>2016-07-28</em></h4>
+<h4 class="date"><em>2016-07-29</em></h4>
 
 </div>
 
@@ -164,7 +165,7 @@ $(document).ready(function () {
 </div>
 
 <p>In 2014 HarvestChoice released a new version of its data API<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> under the title <a href="http://harvestchoice.org/tools/harvestchoice-data-services">HarvestChoice Data Services v3.0</a>. We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and <a href="http://harvestchoice.org/tools/hcapi">HarvestChoice Data API</a>. The latter provides backend methods required to run two of our flagship reporting and visualization applications, <a href="http://apps.harvestchoice.org/mappr/">MAPPR</a> and <a href="http://apps.harvestchoice.org/tablr/">TABLR</a>. We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into <em>HC Data Services</em>.</p>
-<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice’s spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of 2016-07-28 over 750 indicators are available for sub-Saharan Africa.</p>
+<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice’s spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of 2016-07-29 over 750 indicators are available for sub-Saharan Africa.</p>
 <div id="warning" class="section level1">
 <h1>Warning</h1>
 <p>This R package cannot be installed locally. Instead we provide access to all methods through a RESTful API (credits to (<a href="http://github.com/jeroenooms/opencpu" class="uri">http://github.com/jeroenooms/opencpu</a>)[OpenCPU]). Method names are endpoints and function arguments must be converted from R syntax to simple JSON objects, <code>foo(arg1=c(&quot;val1&quot;, &quot;val2&quot;))</code> must be passed to endpoint <code>http://harvestchoice.org/tools/hcapi/R/foo</code> using <code>{&quot;arg1&quot; : [&quot;val1&quot;, &quot;val2&quot;]}</code>.</p>
@@ -190,8 +191,11 @@ $(document).ready(function () {
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    66    0    66    0     0    981      0 --:--:-- --:--:-- --:--:--  1692
-## Redirect to http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/</code></pre>
+106   106    0   106    0     0   1040      0 --:--:-- --:--:-- --:--:--  1218
+## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
+## 
+## In call:
+## FUN(X[[i]], ...)</code></pre>
 <p>The main data query method is <code>hcapi()</code> with a REST endpoint at (<a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi</a>)[/R/hcapi]. <code>category()</code> and <code>describe()</code> may be used to return indicator metadata. Other methods, like <code>classify()</code> (summarizing indicators across custom geographic domains) and <code>similar()</code> (ranking areas by similarity) are useful to conduct advanced analyses.</p>
 </div>
 <div id="example-2-method-documentation" class="section level3">
@@ -245,6 +249,36 @@ $(document).ready(function () {
 ##      ...: other optional arguments passed to getLayer, genFile, or to
 ##           genPlot, e.g. collapse, as.class, dir, pal.
 ## 
+## Details:
+## 
+##      # API call: mean body mass index and cassava yield across
+##      provinces and districts of Tanzania curl
+##      http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \ -d
+##      '{&quot;var&quot;:&quot;cass_y&quot;, &quot;iso3&quot;:&quot;CIV&quot;, &quot;format&quot;:&quot;tif&quot;}' \ -X POST -H
+##      'Content-Type:application/json'
+## 
+##      /ocpu/tmp/x0bc1ac9bdf/R/.val /ocpu/tmp/x0bc1ac9bdf/stdout
+##      /ocpu/tmp/x0bc1ac9bdf/warnings /ocpu/tmp/x0bc1ac9bdf/source
+##      /ocpu/tmp/x0bc1ac9bdf/console /ocpu/tmp/x0bc1ac9bdf/info
+##      /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
+##      /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
+##      /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
+##      /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
+##      /ocpu/tmp/x0bc1ac9bdf/files/README
+## 
+##      # GET all generated files in a ZIP archive wget
+##      http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+## 
+##      # API call: the method may be expanded to summarize classified
+##      (discrete) variables along continuous # variables. For example the
+##      call below returns the dominant agro-ecological zone and # average
+##      stunting in children under 5 over Ethiopia's provinces by
+##      elevation class curl
+##      http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+##      -d '{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;ETH&quot;,
+##      &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}' \ -X POST -H
+##      'Content-Type:application/json'
+## 
 ## Value:
 ## 
 ##      a data.table (or other formats) of var indicators summarized by by
@@ -272,44 +306,19 @@ $(document).ready(function () {
 ##      require(raster)
 ##      plot(raster(x[2]))
 ##      
-##      # Equivalent request at the command line
-##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-##      # -d '{&quot;var&quot;:&quot;cass_y&quot;, &quot;iso3&quot;:&quot;CIV&quot;, &quot;format&quot;:&quot;tif&quot;}' \
-##      # -X POST -H 'Content-Type:application/json'
-##      
-##      # /ocpu/tmp/x0bc1ac9bdf/R/.val
-##      # /ocpu/tmp/x0bc1ac9bdf/stdout
-##      # /ocpu/tmp/x0bc1ac9bdf/warnings
-##      # /ocpu/tmp/x0bc1ac9bdf/source
-##      # /ocpu/tmp/x0bc1ac9bdf/console
-##      # /ocpu/tmp/x0bc1ac9bdf/info
-##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tfw
-##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
-##      # /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
-##      # /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
-##      # /ocpu/tmp/x0bc1ac9bdf/files/README
-##      
-##      # Use wget (at the command line) to download all generated files in a ZIP archive
-##      # wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
-##      
 ##      # The method may be expanded to summarize classified (discrete) variables along continuous
 ##      # variables. For example the call below returns the dominant agro-ecological zone and
-##      # average stunting in children under 5 over Ethiopia's provinces by elevation class
+##      # average stunting in children under 5 over Ethiopia's pro
+102  4593    0  4593    0     0  76065      0 --:--:-- --:--:-- --:--:--  128k
+## vinces by elevation class
 ##      x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;ETH&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
-##      head(x)
+##      x
 ##      
-##      # An equivalent request at the command line
-##      # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
-##      # -d '{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;stunted_moderate&quot;], &quot;iso3&quot;:&quot;ETH&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}' \
-##      # -X POST -H 'Content-Type:application/json'
-##      
-##      # Mean harvested maize area summarized across a custom polyg
-102  4395    0  4395    0     0  71046      0 --:--:-- --:--:-- --:--:--  126k
-## on
+##      # Mean harvested maize area summarized across a custom polygon
 ##      x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 15.36599264077935345,
 ##      -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 ##      -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
-##      head(x)
+##      x
 ## </code></pre>
 <p>The documentation for each method provides a short description and a list of parameters and default parameter values, as well as an example. <code>getLayer()</code> is one of the API’s main methods allowing users to query and summarize indicators. The documentation above shows that <code>getLayer()</code> takes at minimum one parameter <code>var</code> indicating which indicator to query (e.g. <code>var='PD05_TOT'</code> to return 2005 population density). Other optional parameters include <code>iso3</code> limiting the results to one (or multiple) countri(es) (e.g. <code>iso3=['GHA', 'NGA']</code> for Ghana and Nigeria), and <code>by</code> summarizing the indicators over a geographic domain (e.g. 8-class agro-ecological zones <code>by='AEZ8_CLAS'</code>).</p>
 <p>You can test this query by manually forming the following <em>cURL</em> request. This returns a JSON array.</p>
@@ -321,34 +330,12 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   3006 --:--:-- --:--:-- --:--:--  3006
-143   389    0   389    0    40   1011    104 --:--:-- --:--:-- --:--:--   938
-143   389    0   389    0    40   1011    103 --:--:-- --:--:-- --:--:--   938
-## [
-##   {
-##     &quot;ISO3&quot;: &quot;GHA&quot;,
-##     &quot;ADM0_NAME&quot;: &quot;Ghana&quot;,
-##     &quot;PD05_TOT&quot;: 26.3
-##   },
-##   {
-##     &quot;ISO3&quot;: &quot;GHA&quot;,
-##     &quot;ADM0_NAME&quot;: &quot;Ghana&quot;,
-##     &quot;AEZ8_CLAS&quot;: &quot;Humid&quot;,
-##     &quot;PD05_TOT&quot;: 104.8
-##   },
-##   {
-##     &quot;ISO3&quot;: &quot;GHA&quot;,
-##     &quot;ADM0_NAME&quot;: &quot;Ghana&quot;,
-##     &quot;AEZ8_CLAS&quot;: &quot;Semi-Arid&quot;,
-##     &quot;PD05_TOT&quot;: 280
-##   },
-##   {
-##     &quot;ISO3&quot;: &quot;GHA&quot;,
-##     &quot;ADM0_NAME&quot;: &quot;Ghana&quot;,
-##     &quot;AEZ8_CLAS&quot;: &quot;Sub-Humid&quot;,
-##     &quot;PD05_TOT&quot;: 80.9
-##   }
-## ]</code></pre>
+  0     0    0     0    0    40      0   2988 --:--:-- --:--:-- --:--:--  2988
+146   106    0   106    0    40   1047    395 --:--:-- --:--:-- --:--:--   758
+## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
+## 
+## In call:
+## FUN(X[[i]], ...)</code></pre>
 <p>For users of STATA or R the same dataset may be returned in a native format by using the same method appending a <code>format</code> parameter at the end of the request, and appending <code>/zip</code> to the URL endpoint. This will return all generated files in a single ZIP file.</p>
 </div>
 <div id="example-4-request-ghana-2005-population-density-pd05_tot-summarized-across-agro-ecological-zones-aez8_clas-in-stata-format-dta" class="section level3">
@@ -358,19 +345,12 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   4093 --:--:-- --:--:-- --:--:--  4093
-  0     0    0     0    0    53      0     52 --:--:--  0:00:01 --:--:--     0
-  0     0    0     0    0    53      0     26 --:--:--  0:00:02 --:--:--     0
-  0     0    0     0    0    53      0     17 --:--:--  0:00:03 --:--:--     0
-  0     0    0     0    0    53      0     13 --:--:--  0:00:04 --:--:--     0
-141   229    0   229    0    53     50     11 --:--:--  0:00:04 --:--:--    39
-## /ocpu/tmp/x0de13a8989/R/.val
-## /ocpu/tmp/x0de13a8989/stdout
-## /ocpu/tmp/x0de13a8989/source
-## /ocpu/tmp/x0de13a8989/console
-## /ocpu/tmp/x0de13a8989/info
-## /ocpu/tmp/x0de13a8989/files/DESCRIPTION
-## /ocpu/tmp/x0de13a8989/files/PD05_TOT.GHA.png</code></pre>
+  0     0    0     0    0    53      0   1473 --:--:-- --:--:-- --:--:--  1473
+159   106    0   106    0    53    880    440 --:--:-- --:--:-- --:--:--   630
+## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
+## 
+## In call:
+## FUN(X[[i]], ...)</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3>Example #5: same request returning a file in RData format</h3>
@@ -379,20 +359,12 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   4023 --:--:-- --:--:-- --:--:--  4023
-  0     0    0     0    0    53      0     52 --:--:--  0:00:01 --:--:--     0
-  0     0    0     0    0    53      0     26 --:--:--  0:00:02 --:--:--     0
-  0     0    0     0    0    53      0     17 --:--:--  0:00:03 --:--:--     0
-  0     0    0     0    0    53      0     13 --:--:--  0:00:04 --:--:--     0
-141   229    0   229    0    53     49     11 --:--:--  0:00:04 --:--:--    37
-141   229    0   229    0    53     49     11 --:--:--  0:00:04 --:--:--    48
-## /ocpu/tmp/x0c776c1be0/R/.val
-## /ocpu/tmp/x0c776c1be0/stdout
-## /ocpu/tmp/x0c776c1be0/source
-## /ocpu/tmp/x0c776c1be0/console
-## /ocpu/tmp/x0c776c1be0/info
-## /ocpu/tmp/x0c776c1be0/files/DESCRIPTION
-## /ocpu/tmp/x0c776c1be0/files/PD05_TOT.GHA.png</code></pre>
+  0     0    0     0    0    53      0   3959 --:--:-- --:--:-- --:--:--  3959
+159   106    0   106    0    53   1017    508 --:--:-- --:--:-- --:--:--   588
+## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
+## 
+## In call:
+## FUN(X[[i]], ...)</code></pre>
 <p>Other possible formats include <code>csv</code>, <code>json</code> for GeoJSON, and raster formats <code>grd</code>, <code>tif</code> and <code>asc</code> for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add <code>/zip</code> to the session endpoint.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -403,9 +375,12 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   5442 --:--:-- --:--:-- --:--:--  5442
-  0    55    0    55    0    73   1024   1359 --:--:-- --:--:-- --:--:--     0
-## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
+  0     0    0     0    0    73      0   5640 --:--:-- --:--:-- --:--:--  5640
+179   106    0   106    0    73   1040    716 --:--:-- --:--:-- --:--:--   375
+## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
+## 
+## In call:
+## FUN(X[[i]], ...)</code></pre>
 <pre><code>--2015-02-03 04:10:38--
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
 Connecting to hcapi.harvestchoice.org (hcapi.harvestchoice.org)|206.190.150.74|:80...
@@ -429,12 +404,13 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    959 --:--:-- --:--:-- --:--:--   959
-  0    70    0    70    0    13    768    142 --:--:-- --:--:-- --:--:--   740
-## unused argument (cat = &quot;climate&quot;)
+  0     0    0     0    0    13      0    938 --:--:-- --:--:-- --:--:--   938
+119   106    0   106    0    13   1034    126 --:--:-- --:--:-- --:--:--  1044
+119   106    0   106    0    13   1034    126 --:--:-- --:--:-- --:--:--  1044
+## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
-## category(cat = &quot;climate&quot;)</code></pre>
+## FUN(X[[i]], ...)</code></pre>
 </div>
 <div id="example-8-retrieve-text-documentation-for-describe-method" class="section level3">
 <h3>Example #8: retrieve text documentation for /describe/ method</h3>
@@ -443,7 +419,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    96    0    96    0     0   2771      0 --:--:-- --:--:-- --:--:--  4571
+  0    96    0    96    0     0   2071      0 --:--:-- --:--:-- --:--:--  4571
 ## No documentation for 'describe' in specified packages and libraries:
 ## you could try '??describe'</code></pre>
 </div>
@@ -454,12 +430,12 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    365 --:--:-- --:--:-- --:--:--   365
-121   112    0   112    0     9   1772    142 --:--:-- --:--:-- --:--:--  2710
-## object 'describe' not found
+  0     0    0     0    0     9      0    680 --:--:-- --:--:-- --:--:--   680
+115   106    0   106    0     9   1027     87 --:--:-- --:--:-- --:--:--  1089
+## lazy-load database '/usr/lib/opencpu/library/hcapi3/data/Rdata.rdb' is corrupt
 ## 
 ## In call:
-## get(reqobject, paste(&quot;package&quot;, reqpackage, sep = &quot;:&quot;), inherits = FALSE)</code></pre>
+## FUN(X[[i]], ...)</code></pre>
 <p>Indicator metadata is only available in JSON format. However it is possible to download all metadata records in CSV format using <a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/data/vi/csv</a> (<code>vi</code> in the URL stands for <em>Variable Inventory</em>).</p>
 </div>
 </div>
@@ -488,6 +464,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

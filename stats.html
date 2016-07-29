@@ -66,7 +66,7 @@
       <h2>Value</h2>
 
       <p><dl>
-array of file names, one for each plot
+plot
 </dl></p>
   
     </div>
@@ -79,28 +79,35 @@ See examples below. Note that calling <code>stats(...)</code> is equivalent to c
 convenience method <code>hcapi(..., format="stats")</code>.</p>
   
     </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>
+# API call: generate 2 plots showing farming systems and 2012 population density in Ghana
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
+ -d '{"var":["bmi", "cass_y"]}' \
+ -X POST -H 'Content-Type:application/json'</p>
+  
+      <p>/ocpu/tmp/x09db409895/R/.val
+/ocpu/tmp/x09db409895/graphics/1
+/ocpu/tmp/x09db409895/graphics/2
+/ocpu/tmp/x09db409895/source
+/ocpu/tmp/x09db409895/console
+/ocpu/tmp/x09db409895/info
+/ocpu/tmp/x09db409895/files/DESCRIPTION</p>
+  
+      <p># Use wget (at the command line) to download the generated plot(s)
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
+</code></p>
+  
+    </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
+    <pre class="examples"><div class='input'># Plots of BMI and cassava yield distribution over sub-Saharan Africa
 stats(c(&quot;bmi&quot;, &quot;cass_y&quot;))
 
-#&#39; # This method may be called via HTTP POST request using e.g. cUrl at the command line
-# Return 2 plots showing farming systems and 2012 population density in Ghana
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
-# -d &#39;{&quot;var&quot;:[&quot;bmi&quot;, &quot;cass_y&quot;]}&#39; \
-# -X POST -H &#39;Content-Type:application/json&#39;
-
-# /ocpu/tmp/x09db409895/R/.val
-# /ocpu/tmp/x09db409895/graphics/1
-# /ocpu/tmp/x09db409895/graphics/2
-# /ocpu/tmp/x09db409895/source
-# /ocpu/tmp/x09db409895/console
-# /ocpu/tmp/x09db409895/info
-# /ocpu/tmp/x09db409895/files/DESCRIPTION
-
-# Use wget (at the command line) to download the generated plot(s)
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
 </div>
 <p><img src='stats-2.png' alt='' width='540' height='400' /></p></pre>
   </div>

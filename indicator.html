@@ -80,7 +80,24 @@ a data.table or hierarchical list of indicator metadata
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Return HarvestChoice indicator metadata</p>
+      <p>Return complete metadata records for selected HarvestChoice indicators.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>
+# API call: metadata records for all indicators matching 'cassava' or 'population'
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+ -d '{"q" : ["cassava", "population"]}' \
+ -X POST -H "Content-Type:application/json"</p>
+  
+      <p># API call: metadata records for all indicators matching 'population' in a list
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+ -d '{"q" : "population", "as.class" : "list"}' \
+ -X POST -H "Content-Type:application/json"
+</code></p>
   
     </div>
     
@@ -90,34 +107,47 @@ a data.table or hierarchical list of indicator metadata
 </div>
 <div class='output'>[1] &quot;population&quot;
 </div>
-<div class='input'>indicator(&quot;cassava&quot;)
+<div class='input'>indicator(c(&quot;cassava&quot;, &quot;population&quot;))
 </div>
-<div class='output'>                          label     code  unit       type period    category         subcategory    item
- 1:            Cassava area &#39;05   cass_h    ha continuous   2005 Agriculture      Harvested Area Cassava
- 2:       Irr. cassava area &#39;05 cass_i_h    ha continuous   2005 Agriculture      Harvested Area Cassava
- 3:       Rfd. cassava area &#39;05 cass_r_h    ha continuous   2005 Agriculture      Harvested Area Cassava
- 4:           Cassava prod. &#39;05   cass_p    mt continuous   2005 Agriculture          Production Cassava
- 5:      Irr. cassava prod. &#39;05 cass_i_p    mt continuous   2005 Agriculture          Production Cassava
- 6:      Rfd. cassava prod. &#39;05 cass_r_p    mt continuous   2005 Agriculture          Production Cassava
- 7:      Cassava val. prod. &#39;05   cass_v  Int$ continuous   2005 Agriculture Value of Production Cassava
- 8: Irr. cassava val. prod. &#39;05 cass_i_v  Int$ continuous   2005 Agriculture Value of Production Cassava
- 9: Rfd. cassava val. prod. &#39;05 cass_r_v  Int$ continuous   2005 Agriculture Value of Production Cassava
-10:           Cassava yield &#39;05   cass_y kg/ha continuous   2005 Agriculture               Yield Cassava
-11:      Irr. cassava yield &#39;05 cass_i_y kg/ha continuous   2005 Agriculture               Yield Cassava
-12:      Rfd. cassava yield &#39;05 cass_r_y kg/ha continuous   2005 Agriculture               Yield Cassava
-                                                                                                                       sources
- 1: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 2: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 3: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 4: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 5: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 6: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 7: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 8: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
- 9: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
-10: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
-11: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
-12: You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+<div class='output'>                          label     code            unit       type     period     category
+ 1:       Irr. cassava area &#39;05 cass_i_h              ha continuous       2005  Agriculture
+ 2:           Cassava prod. &#39;05   cass_p              mt continuous       2005  Agriculture
+ 3:      Rfd. cassava prod. &#39;05 cass_r_p              mt continuous       2005  Agriculture
+ 4: Irr. cassava val. prod. &#39;05 cass_i_v            Int$ continuous       2005  Agriculture
+ 5:           Cassava yield &#39;05   cass_y           kg/ha continuous       2005  Agriculture
+ 6:      Rfd. cassava yield &#39;05 cass_r_y           kg/ha continuous       2005  Agriculture
+ 7:              Rural Pop. &#39;00 PN00_RUR         persons continuous       2000 Demographics
+ 8:      Rural Pop. density &#39;05 PD05_RUR persons/sq. km. continuous circa 2005 Demographics
+ 9:              Total Pop. &#39;05 PN05_TOT         persons continuous circa 2005 Demographics
+10:              Total Pop. &#39;12 PN12_TOT         persons continuous       2012 Demographics
+11:              Urban Pop. &#39;00 PN00_URB         persons continuous       2000 Demographics
+12:      Urban Pop. density &#39;05 PD05_URB persons/sq. km. continuous circa 2005 Demographics
+            subcategory    item
+ 1:      Harvested Area Cassava
+ 2:          Production Cassava
+ 3:          Production Cassava
+ 4: Value of Production Cassava
+ 5:               Yield Cassava
+ 6:               Yield Cassava
+ 7:          Population   Rural
+ 8:          Population   Rural
+ 9:          Population   Total
+10:          Population   Total
+11:          Population   Urban
+12:          Population   Urban
+                                                                                                                                                                                                                                                                         sources
+ 1:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+ 2:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+ 3:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+ 4:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+ 5:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+ 6:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+ 7:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+ 8: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+ 9: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+10:                                                                                                 Bright, E. A. and Rose, A. N. (2012) &quot;LandScan Global Population Database 2012&quot;, Oak Ridge National Laboratory, July 2013. Retrieved from http://web.ornl.gov/sci/landscan/.
+11:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+12: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
                     contact
  1: u.wood-sichra@cgiar.org
  2: u.wood-sichra@cgiar.org
@@ -125,84 +155,81 @@ a data.table or hierarchical list of indicator metadata
  4: u.wood-sichra@cgiar.org
  5: u.wood-sichra@cgiar.org
  6: u.wood-sichra@cgiar.org
- 7: u.wood-sichra@cgiar.org
- 8: u.wood-sichra@cgiar.org
- 9: u.wood-sichra@cgiar.org
-10: u.wood-sichra@cgiar.org
-11: u.wood-sichra@cgiar.org
-12: u.wood-sichra@cgiar.org
-                                                                                                                                                                                                   description
- 1:               Cassava Harvested Area (ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 2:     Cassava Irrigated Harvested Area (ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 3:       Cassava Rainfed Harvested Area (ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 4:                   Cassava Production (mt, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 5:         Cassava Irrigated Production (mt, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 6:           Cassava Rainfed Production (mt, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 7:           Cassava Value Production (Int$, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 8: Cassava Irrigated Value Production (Int$, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
- 9:         Cassava Rainfed Production (Int$, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
-10:                     Cassava Yield (kg/ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
-11:           Cassava Irrigated Yield (kg/ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
-12:             Cassava Rainfed Yield (kg/ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
-                                                                                                                                                                                                                                         citation
- 1:                 HarvestChoice, 2015. &quot;Cassava Harvested Area (ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_h.
- 2:     HarvestChoice, 2015. &quot;Cassava Irrigated Harvested Area (ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_h.
- 3:       HarvestChoice, 2015. &quot;Cassava Rainfed Harvested Area (ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_h.
- 4:                     HarvestChoice, 2015. &quot;Cassava Production (mt, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_p.
- 5:         HarvestChoice, 2015. &quot;Cassava Irrigated Production (mt, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_p.
- 6:           HarvestChoice, 2015. &quot;Cassava Rainfed Production (mt, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_p.
- 7:             HarvestChoice, 2015. &quot;Cassava Value Production (Int$, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_v.
- 8: HarvestChoice, 2015. &quot;Cassava Irrigated Value Production (Int$, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_v.
- 9:         HarvestChoice, 2015. &quot;Cassava Rainfed Production (Int$, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_v.
-10:                       HarvestChoice, 2015. &quot;Cassava Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_y.
-11:           HarvestChoice, 2015. &quot;Cassava Irrigated Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_y.
-12:             HarvestChoice, 2015. &quot;Cassava Rainfed Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_y.
-       version                                               aggFormula isRaster
- 1: SChEF r2.5                                  sum(cass_h, na.rm=TRUE)     TRUE
- 2: SChEF r2.5                                sum(cass_i_h, na.rm=TRUE)     TRUE
- 3: SChEF r2.5                                sum(cass_r_h, na.rm=TRUE)     TRUE
- 4: SChEF r2.5                                  sum(cass_p, na.rm=TRUE)     TRUE
- 5: SChEF r2.5                                sum(cass_i_p, na.rm=TRUE)     TRUE
- 6: SChEF r2.5                                sum(cass_r_p, na.rm=TRUE)     TRUE
- 7: SChEF r2.5                                  sum(cass_v, na.rm=TRUE)     TRUE
- 8: SChEF r2.5                                sum(cass_i_v, na.rm=TRUE)     TRUE
- 9: SChEF r2.5                                sum(cass_r_v, na.rm=TRUE)     TRUE
-10: SChEF r2.5     sum(cass_p, na.rm=TRUE)/sum(cass_h, na.rm=TRUE)*1000     TRUE
-11: SChEF r2.5 sum(cass_i_p, na.rm=TRUE)/sum(cass_i_h, na.rm=TRUE)*1000     TRUE
-12: SChEF r2.5 sum(cass_r_p, na.rm=TRUE)/sum(cass_r_h, na.rm=TRUE)*1000     TRUE
+ 7:         z.guo@cgiar.org
+ 8:       m.bacou@cgiar.org
+ 9:       m.bacou@cgiar.org
+10:       m.bacou@cgiar.org
+11:         z.guo@cgiar.org
+12:       m.bacou@cgiar.org
+                                                                                                                                                                                                                                                                                  description
+ 1:                                                                                    Cassava Irrigated Harvested Area (ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+ 2:                                                                                                  Cassava Production (mt, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+ 3:                                                                                          Cassava Rainfed Production (mt, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+ 4:                                                                                Cassava Irrigated Value Production (Int$, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+ 5:                                                                                                    Cassava Yield (kg/ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+ 6:                                                                                            Cassava Rainfed Yield (kg/ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+ 7:                                                                                                                                                                      Population, rural (2000). Rural population calculated from rural population density in each gridcell (at year 2000).
+ 8:                                                                                                                                                                                              Population Density, rural (pers./sq. km., circa 2005). Number of rural people per area unit.
+ 9: Population, total (circa 2005). Total population in 2005 derived from 29 nationally representative household surveys and population census information conducted in various years (circa 2005). Other countries 2005 population estimates derived from World Development Indicators 2008.
+10:                                                                                                                                                   Population, Total (2012). Total population downscaled from LandScan 2012 population counts at 30 arc-second to 5 arc-minute resolution.
+11:                                                                                                                                                         Population, urban (2000). Urban population calculated as difference between total population and rural population (at year 2000).
+12:                                                                                                                                                                                              Population Density, urban (pers./sq. km., circa 2005). Number of urban people per area unit.
+                                                                                                                                                                                                                                               citation
+ 1:           HarvestChoice, 2015. &quot;Cassava Irrigated Harvested Area (ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_h.
+ 2:                           HarvestChoice, 2015. &quot;Cassava Production (mt, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_p.
+ 3:                 HarvestChoice, 2015. &quot;Cassava Rainfed Production (mt, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_p.
+ 4:       HarvestChoice, 2015. &quot;Cassava Irrigated Value Production (Int$, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_v.
+ 5:                             HarvestChoice, 2015. &quot;Cassava Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_y.
+ 6:                   HarvestChoice, 2015. &quot;Cassava Rainfed Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_y.
+ 7:                              HarvestChoice, 2015. &quot;Population, rural (2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN00_RUR.
+ 8: HarvestChoice, 2015. &quot;Population Density, rural (pers./sq. km., circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD05_RUR.
+ 9:                        HarvestChoice, 2015. &quot;Population, total (circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN05_TOT.
+10:                              HarvestChoice, 2015. &quot;Population, Total (2012)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN12_TOT.
+11:                              HarvestChoice, 2015. &quot;Population, urban (2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN00_URB.
+12: HarvestChoice, 2015. &quot;Population Density, urban (pers./sq. km., circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD05_URB.
+         version                                                aggFormula isRaster
+ 1:   SChEF r2.5                                 sum(cass_i_h, na.rm=TRUE)     TRUE
+ 2:   SChEF r2.5                                   sum(cass_p, na.rm=TRUE)     TRUE
+ 3:   SChEF r2.5                                 sum(cass_r_p, na.rm=TRUE)     TRUE
+ 4:   SChEF r2.5                                 sum(cass_i_v, na.rm=TRUE)     TRUE
+ 5:   SChEF r2.5      sum(cass_p, na.rm=TRUE)/sum(cass_h, na.rm=TRUE)*1000     TRUE
+ 6:   SChEF r2.5  sum(cass_r_p, na.rm=TRUE)/sum(cass_r_h, na.rm=TRUE)*1000     TRUE
+ 7: SChEF r12.05                                 sum(PN00_RUR, na.rm=TRUE)     TRUE
+ 8:   SChEF r2.2 (sum(PN05_RUR, na.rm=TRUE)/sum(AREA_RUR, na.rm=TRUE))*100     TRUE
+ 9:   SChEF r2.2                                 sum(PN05_TOT, na.rm=TRUE)     TRUE
+10:   SChEF r2.5                                 sum(PN12_TOT, na.rm=TRUE)     TRUE
+11: SChEF r12.05                                 sum(PN00_URB, na.rm=TRUE)     TRUE
+12:   SChEF r2.2 (sum(PN05_URB, na.rm=TRUE)/sum(AREA_URB, na.rm=TRUE))*100     TRUE
                                        url
- 1:   http://harvestchoice.org/data/cass_h
- 2: http://harvestchoice.org/data/cass_i_h
- 3: http://harvestchoice.org/data/cass_r_h
- 4:   http://harvestchoice.org/data/cass_p
- 5: http://harvestchoice.org/data/cass_i_p
- 6: http://harvestchoice.org/data/cass_r_p
- 7:   http://harvestchoice.org/data/cass_v
- 8: http://harvestchoice.org/data/cass_i_v
- 9: http://harvestchoice.org/data/cass_r_v
-10:   http://harvestchoice.org/data/cass_y
-11: http://harvestchoice.org/data/cass_i_y
-12: http://harvestchoice.org/data/cass_r_y
+ 1: http://harvestchoice.org/data/cass_i_h
+ 2:   http://harvestchoice.org/data/cass_p
+ 3: http://harvestchoice.org/data/cass_r_p
+ 4: http://harvestchoice.org/data/cass_i_v
+ 5:   http://harvestchoice.org/data/cass_y
+ 6: http://harvestchoice.org/data/cass_r_y
+ 7: http://harvestchoice.org/data/pn00_rur
+ 8: http://harvestchoice.org/data/pd05_rur
+ 9: http://harvestchoice.org/data/pn05_tot
+10: http://harvestchoice.org/data/pn12_tot
+11: http://harvestchoice.org/data/pn00_urb
+12: http://harvestchoice.org/data/pd05_urb
                                                                                        wms downloadedOn
  1: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer   2016-07-29
- 2: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer   2016-07-29
- 3: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer   2016-07-29
- 4: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-29
- 5: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-29
- 6: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-29
- 7: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-29
- 8: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-29
- 9: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-29
-10: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-29
-11: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-29
-12: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-29
+ 2: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-29
+ 3: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-29
+ 4: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-29
+ 5: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-29
+ 6: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-29
+ 7:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+ 8:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+ 9:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+10:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+11:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+12:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
 </div>
 <div class='input'>
-# Equivalent cURL request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
-# -d &#39;{&quot;q&quot; : &quot;cassava&quot;, &quot;as.class&quot; : &quot;list&quot;}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
-
+# Show complete metadata for all HarvestChoice indicators matching &#39;population&#39;
+# in a hierarchical list
 indicator(&quot;population&quot;, as.class=&quot;list&quot;)[1:2]
 </div>
 <div class='output'>$Demographics
@@ -339,12 +366,7 @@ $&lt;NA&gt;
 NULL
 
 </div>
-<div class='input'>
-# Equivalent cURL request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
-# -d &#39;{&quot;q&quot; : &quot;population&quot;, as.class&quot; : &quot;list&quot;}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
-</div></pre>
+<div class='input'></div></pre>
   </div>
   <div class="span4">
     <!-- <ul>

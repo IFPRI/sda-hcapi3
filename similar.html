@@ -90,18 +90,40 @@ aggregate distance score. The lower the score, the more similar the unit for the
 selected indicators.</p>
   
     </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>
+# API call: rank Ghana districts by similarity to district 16657  (Kpando) based on
+# length of growing period, irrigated area, and cassava value of production
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
+ -d '{"x" : 16657, "var" : ["LGP_AVG", "GMIA_V5", "cass_v"], "by" : 2, "iso3" : "GHA"}' \
+ -X POST -H "Content-Type:application/json"
+</code></p>
+  
+    </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Rank all districts in Ghana by similarity to district 16657 (Kpando)
-# based on the length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
+# based on length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
 # and cassava value of production (cass_v).
-x &lt;- similar(16657, c(&quot;LGP_AVG&quot;, &quot;GMIA_V5&quot;, &quot;cass_v&quot;), by=2, iso3=&quot;GHA&quot;)
-
-# Equivalent cUrl request at the command line
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
-# -d &#39;{&quot;x&quot; : 16657, &quot;var&quot; : [&quot;LGP_AVG&quot;, &quot;GMIA_V5&quot;, &quot;cass_v&quot;], &quot;by&quot; : 2, &quot;iso3&quot; : &quot;GHA&quot;}&#39; \
-# -X POST -H &quot;Content-Type:application/json&quot;
-</div></pre>
+similar(16657, c(&quot;LGP_AVG&quot;, &quot;GMIA_V5&quot;, &quot;cass_v&quot;), by=2, iso3=&quot;GHA&quot;)
+</div>
+<div class='output'>     ISO3 ADM0_NAME ADM2_CODE_ALT LGP_AVG GMIA_V5   cass_v     Score
+  1:  GHA     Ghana         16657     278       0  3021856 0.0000000
+  2:  GHA     Ghana         16575     287       0  3172796 0.2157802
+  3:  GHA     Ghana         16595     265      28  3176379 0.3335517
+  4:  GHA     Ghana         16651     273       0  5486071 0.3914655
+  5:  GHA     Ghana         16652     271      97  5449375 0.5322633
+ ---                                                                
+106:  GHA     Ghana         16636     181    3008  3471751 5.3190665
+107:  GHA     Ghana         16658     230       0 41057948 5.3987159
+108:  GHA     Ghana         16644     169    3096        0 5.9687622
+109:  GHA     Ghana         16618     283    4633 17700273 6.6024348
+110:  GHA     Ghana         16628     178     153 45721318 7.2371012
+</div>
+<div class='input'></div></pre>
   </div>
   <div class="span4">
     <!-- <ul>

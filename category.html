@@ -76,7 +76,27 @@ or a list of indicators grouped by category
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Return HarvestChoice indicator categories (3-level deep)</p>
+      <p>Return a compact list of indicator categories, codes and labels</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>
+# API call: list all HarvestChoice indicators matching category 'demographics'
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+ -d '{"q" : "demographics'</code> \
+ -X POST -H "Content-Type:application/json"</p>
+  
+      <p># API call: list all HarvestChoice indicators matching 'cassava' in a hierarchical list
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+ -d '"q" :" cassava", "as.class" : "list" \
+ -X POST -H "Content-Type:application/json"</p>
+  
+      <p># To return a complete list of published indicators omit 'q'
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+ -X POST -H "Content-Type:application/json"</p>
   
     </div>
     
@@ -98,7 +118,7 @@ category(&quot;demographics&quot;)
 138: Demographics           Population           Urban       PD05_URB      Urban Pop. density &#39;05
 </div>
 <div class='input'>
-# List all HarvestChoice indicators matching &#39;cassava&#39;, return a hierarchical list
+# List all HarvestChoice indicators matching &#39;cassava&#39; in a hierarchical list
 category(&quot;cassava&quot;, as.class=&quot;list&quot;)
 </div>
 <div class='output'>$Agriculture
@@ -127,21 +147,6 @@ $Agriculture$Yield
 3: Agriculture       Yield Cassava cass_r_y Rfd. cassava yield &#39;05
 
 
-</div>
-<div class='input'>
-# Equivalent request using cURL at the command line and passing well-formatted JSON
-# objects
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
-# -d &#39;{&quot;q&quot; : &quot;demographics&#39;} \
-# -X POST -H &quot;Content-Type:application/json&quot;
-
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
-# -d &#39;{&quot;q&quot; :&quot; cassava&quot;, &quot;as.class&quot; : &quot;list&quot;} \
-# -X POST -H &quot;Content-Type:application/json&quot;
-
-# To return a complete list of published indicators omit &#39;q&#39;
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
-# -X POST -H &quot;Content-Type:application/json&quot;
 </div></pre>
   </div>
   <div class="span4">

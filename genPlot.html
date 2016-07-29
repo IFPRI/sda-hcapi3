@@ -105,51 +105,56 @@ See examples below. Note that calling <code>genPlot(...)</code> is equivalent to
 the convenience function <code>hcapi(..., format="png")</code>.</p>
   
     </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>
+# API call: generate 2 plots showing farming systems and 2012 population density for Ghana
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+ -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
+ -X POST -H 'Content-Type:application/json'</p>
+  
+      <p>/ocpu/tmp/x03d5aa8e98/R/.val
+/ocpu/tmp/x03d5aa8e98/stdout
+/ocpu/tmp/x03d5aa8e98/source
+/ocpu/tmp/x03d5aa8e98/console
+/ocpu/tmp/x03d5aa8e98/info
+/ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
+/ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
+/ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png</p>
+  
+      <p># GET all generated plots in a ZIP archive
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+</code></p>
+  
+    </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Generate standard raster plot of 2012 population density for sub-Saharan Africa
 x &lt;- genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
-knitr::include_graphics(x)
+x
 </div>
 <div class='output'>[1] &quot;PD12_TOT.png&quot;
-attr(,&quot;class&quot;)
-[1] &quot;knit_image_paths&quot; &quot;knit_asis&quot;       
 </div>
 <div class='input'>
+
 # Generate 3 raster plots for Ghana with legend and title but not axes
-x &lt;- genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;whea_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
-knitr::include_graphics(x)
+x &lt;- genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;cass_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
+x
 </div>
-<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;whea_h.GHA.print.png&quot;    
-attr(,&quot;class&quot;)
-[1] &quot;knit_image_paths&quot; &quot;knit_asis&quot;       
+<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;cass_h.GHA.print.png&quot;    
 </div>
 <div class='input'>
+
 # Generate 3 raster plots for Nigeria with the specified dimensions
-genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), width=5, height=5,
+x &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), iso3=&quot;NGA&quot;, width=5, height=5,
 units=&quot;in&quot;, res=200, pointsize=8)
+x
 </div>
-<div class='output'>[1] &quot;FS_2012.png&quot;    &quot;yield_l_cv.png&quot; &quot;soc_d15.png&quot;   
+<div class='output'>[1] &quot;FS_2012.NGA.png&quot;    &quot;yield_l_cv.NGA.png&quot; &quot;soc_d15.NGA.png&quot;   
 </div>
-<div class='input'>
-# This method may be called via HTTP POST request using e.g. cUrl at the command line
-# Return 2 plots showing farming systems and 2012 population density in Ghana
-# curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-# -d &#39;{&quot;var&quot;:[&quot;FS_2012_TX&quot;, &quot;PD12_TOT&quot;], &quot;iso3&quot;:&quot;GHA&quot;, &quot;format&quot;:&quot;png&quot;}&#39; \
-# -X POST -H &#39;Content-Type:application/json&#39;
-
-# /ocpu/tmp/x03d5aa8e98/R/.val
-# /ocpu/tmp/x03d5aa8e98/stdout
-# /ocpu/tmp/x03d5aa8e98/source
-# /ocpu/tmp/x03d5aa8e98/console
-# /ocpu/tmp/x03d5aa8e98/info
-# /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
-# /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
-# /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
-
-# Use wget (at the command line) to download all generated plots
-# wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
-</div></pre>
+<div class='input'></div></pre>
   </div>
   <div class="span4">
     <!-- <ul>
@@ -159,6 +164,10 @@ units=&quot;in&quot;, res=200, pointsize=8)
       
     </ul> -->
       
+    <h2>See also</h2>
+    
+<code><a href='hcapi.html'>hcapi</a></code>
+
         
   </div>
 </div>
