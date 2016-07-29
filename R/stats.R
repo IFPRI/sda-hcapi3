@@ -4,30 +4,31 @@
 #' See examples below. Note that calling \code{stats(...)} is equivalent to calling the
 #' convenience method \code{hcapi(..., format="stats")}.
 #'
-#' @param var character array of variable codes to plot
-#' @param iso3 optional country or region filter (3-letter code)
-#' @return array of file names, one for each plot
-#' @examples
-#' # Plots of BMI and cassava yield distribution over sub-Saharan Africa 10km grid
-#' stats(c("bmi", "cass_y"))
+#' \code{
+#' # API call: generate 2 plots showing farming systems and 2012 population density in Ghana
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
+#'  -d '{"var":["bmi", "cass_y"]}' \
+#'  -X POST -H 'Content-Type:application/json'
 #'
-#' #' # This method may be called via HTTP POST request using e.g. cUrl at the command line
-#' # Return 2 plots showing farming systems and 2012 population density in Ghana
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
-#' # -d '{"var":["bmi", "cass_y"]}' \
-#' # -X POST -H 'Content-Type:application/json'
-#'
-#' # /ocpu/tmp/x09db409895/R/.val
-#' # /ocpu/tmp/x09db409895/graphics/1
-#' # /ocpu/tmp/x09db409895/graphics/2
-#' # /ocpu/tmp/x09db409895/source
-#' # /ocpu/tmp/x09db409895/console
-#' # /ocpu/tmp/x09db409895/info
-#' # /ocpu/tmp/x09db409895/files/DESCRIPTION
+#' /ocpu/tmp/x09db409895/R/.val
+#' /ocpu/tmp/x09db409895/graphics/1
+#' /ocpu/tmp/x09db409895/graphics/2
+#' /ocpu/tmp/x09db409895/source
+#' /ocpu/tmp/x09db409895/console
+#' /ocpu/tmp/x09db409895/info
+#' /ocpu/tmp/x09db409895/files/DESCRIPTION
 #'
 #' # Use wget (at the command line) to download the generated plot(s)
-#' # wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
-#' # wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
+#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
+#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
+#' }
+#'
+#' @param var character array of variable codes to plot
+#' @param iso3 optional country or region filter (3-letter code)
+#' @return plot
+#' @examples
+#' # Plots of BMI and cassava yield distribution over sub-Saharan Africa
+#' stats(c("bmi", "cass_y"))
 #'
 #' @export
 stats <- function(var, iso3="SSA", by=NULL) {

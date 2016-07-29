@@ -1,8 +1,22 @@
 
 #' Return HarvestChoice indicator metadata
 #'
-#' @param q search string to match against HarvestChoice indicator codes,
-#' labels, and categories. Will attempt a fuzzy match against these metadata elements.
+#' Return complete metadata records for selected HarvestChoice indicators.
+#'
+#' \code{
+#' # API call: metadata records for all indicators matching 'cassava' or 'population'
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+#'  -d '{"q" : ["cassava", "population"]}' \
+#'  -X POST -H "Content-Type:application/json"
+#'
+#' # API call: metadata records for all indicators matching 'population' in a list
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+#'  -d '{"q" : "population", "as.class" : "list"}' \
+#'  -X POST -H "Content-Type:application/json"
+#' }
+#'
+#' @param q character array of pattern(s) to search against HarvestChoice indicator codes,
+#' labels, and categories. Will attempt a fuzzy match.
 #' @param version optional version filter
 #' @param as.class "data.table" (default) or "list" for a list of indicators grouped
 #' by category
@@ -12,33 +26,27 @@
 #' @examples
 #' # Show complete metadata for all HarvestChoice indicators matching 'cassava' or
 #' 'population'
-#' indicator("cassava")
+#' indicator(c("cassava", "population"))
 #'
-#' # Equivalent cURL request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
-#' # -d '{"q" : "cassava", "as.class" : "list"}' \
-#' # -X POST -H "Content-Type:application/json"
-#'
+#' # Show complete metadata for all HarvestChoice indicators matching 'population'
+#' # in a hierarchical list
 #' indicator("population", as.class="list")[1:2]
-#'
-#' # Equivalent cURL request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
-#' # -d '{"q" : "population", as.class" : "list"}' \
-#' # -X POST -H "Content-Type:application/json"
 #'
 #' @export
 indicator <- function(q, version=NULL, as.class="data.table", cartoCSS=FALSE) {
 
-  if(missing(q)) stop("'q' is missing. Enter a search string to query HarvestChoice metadata records,
+  if(missing(q) | paste(q, collapse="")=="") stop(
+    "'q' is missing. Enter a search string to query HarvestChoice metadata records,
     or use 'category()' to return a complete catalog.")
+
   q <- tolower(q)
 
   out <- vi[published==TRUE & (
-    tolower(varCode) %like% q |
-      tolower(varLabel) %like% q |
-      tolower(cat1) %like% q |
-      tolower(cat2) %like% q |
-      tolower(cat3) %like% q
+    stringr::str_detect(tolower(varCode), q) |
+      stringr::str_detect(tolower(varLabel), q) |
+      stringr::str_detect(tolower(cat1), q) |
+      stringr::str_detect(tolower(cat2), q) |
+      stringr::str_detect(tolower(cat3), q)
   ), .(
     label=varLabel,
     code=varCode,
@@ -56,12 +64,12 @@ indicator <- function(q, version=NULL, as.class="data.table", cartoCSS=FALSE) {
     aggFormula=aggFunR,
     isRaster=genRaster,
     url=ifelse(genRaster, paste0("http://harvestchoice.org/data/", tolower(varCode)), NA),
-    wms=ifelse(genRaster, paste0("http://apps.harvestchoice.org/arcgis/services/", mxdName, "/MapServer/WMSServer"), NA),
+    wms=ifelse(genRaster, paste0("http://apps.harvestchoice.org/arcgis/rest/services/", mxdName, "/MapServer/WMSServer"), NA),
     downloadedOn=Sys.Date()
   )]
 
-  if(nrow(out)==0) stop("No matching record found. Enter a different search string, or use
-    'category()' to return a complete catalog.")
+  if(nrow(out)==0) stop("No matching record found. Enter a different search string,
+or use 'category()' to return a complete catalog.")
 
   # Optional filters
   if (!missing(version)) out <- out[version==paste0("SChEF r", version)]
@@ -88,7 +96,26 @@ indicator <- function(q, version=NULL, as.class="data.table", cartoCSS=FALSE) {
 
 #' Return HarvestChoice indicator categories (3-level deep)
 #'
-#' @param q optional fuzzy filter
+#' Return a compact list of indicator categories, codes and labels
+#'
+#' \code{
+#' # API call: list all HarvestChoice indicators matching category 'demographics'
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#'  -d '{"q" : "demographics'} \
+#'  -X POST -H "Content-Type:application/json"
+#'
+#' # API call: list all HarvestChoice indicators matching 'cassava' in a hierarchical list
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#'  -d '{"q" :" cassava", "as.class" : "list"} \
+#'  -X POST -H "Content-Type:application/json"
+#'
+#' # To return a complete list of published indicators omit 'q'
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#'  -X POST -H "Content-Type:application/json"
+#' }
+#'
+#' @param q character array of pattern(s) to search for. If omitted will return all
+#' available indicators.
 #' @param as.class "data.table" or "list" of indicator codes grouped by category
 #' @return a data.table showing the number of indicators in each category,
 #' or a list of indicators grouped by category
@@ -97,36 +124,27 @@ indicator <- function(q, version=NULL, as.class="data.table", cartoCSS=FALSE) {
 #' # List all HarvestChoice indicators matching category 'demographics'
 #' category("demographics")
 #'
-#' # List all HarvestChoice indicators matching 'cassava', return a hierarchical list
+#' # List all HarvestChoice indicators matching 'cassava' in a hierarchical list
 #' category("cassava", as.class="list")
-#'
-#' # Equivalent request using cURL at the command line and passing well-formatted JSON
-#' # objects
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
-#' # -d '{"q" : "demographics'} \
-#' # -X POST -H "Content-Type:application/json"
-#'
-#' #' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
-#' # -d '{"q" :" cassava", "as.class" : "list"} \
-#' # -X POST -H "Content-Type:application/json"
 #' @export
 category <- function(q=NULL, as.class="data.table") {
 
-  if (missing(q) | q=="") {
+  if (missing(q) | paste(q, collapse="")=="") {
     out <- vi[, .(code=varCode, label=varLabel),
       keyby=.(category=cat1, subcategory=cat2, item=cat3)]
   } else {
     q <- tolower(q)
     out <- vi[published==TRUE & (
-      tolower(cat1) %like% q |
-        tolower(cat2) %like% q |
-        tolower(cat3) %like% q
+      stringr::str_detect(tolower(varCode), q) |
+        stringr::str_detect(tolower(cat1), q) |
+        stringr::str_detect(tolower(cat2), q) |
+        stringr::str_detect(tolower(cat3), q)
     ), .(code=varCode, label=varLabel),
       keyby=.(category=cat1, subcategory=cat2, item=cat3)]
   }
 
-  if(nrow(out)==0) stop("No matching record found. Enter a different search string, or use
-    'category()' to return a complete catalog.")
+  if(nrow(out)==0) stop("No matching record found. Enter a different search string,
+or use 'category()' to return a complete catalog.")
 
   setkey(out, category, subcategory, item, label, code)
 
@@ -141,6 +159,8 @@ category <- function(q=NULL, as.class="data.table") {
 
 
 #' Generate CartoCSS snippet to symbolize raster tiles
+#'
+#' Helper function to generate CartoCSS rules for processing rasters using Mapnik
 #'
 #' @param var HarvestChoice variable code
 #' @param iso3 optional country or region filter (3-letter code)

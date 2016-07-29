@@ -7,6 +7,14 @@
 #' and in JSON (.json) format in conformity with Tabular Data Package RFC
 #' specifications documented at \url{http://dataprotocols.org/tabular-data-package/}.
 #'
+#' \code{
+#' # API call: Generate auxiliary files for soil organic carbon concentration and
+#' # 2012 total population
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
+#'  -d '{"var" : ["soc_d5", "PN12_TOT"]}' \
+#'  -X POST -H 'Content-Type:application/json'
+#' }
+#'
 #' @param var character array of HarvestChoice indicator code(s)
 #' @param format file extension corresponding to the data package output
 #' format. See \code{\link{genFile}}. If \code{NULL} no auxiliary file is produced
@@ -16,14 +24,9 @@
 #' @seealso \code{\link{indicator}} and \code{\link{category}} for other convenience
 #' methods to query HarvestChoice metadata.
 #' @examples
-#' # Generate auxiliary files for soil organic carbon concentration and 2012 total
-#' population
-#' datapackage(c("soc_d5", "PN12_TOT"))
-#'
-#' # Equivalent cUrl request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
-#' # -d '{"var" : ["soc_d5", "PN12_TOT"]}' \
-#' # -X POST -H 'Content-Type:application/json'
+#' # Generate auxiliary files for soil organic carbon concentration and 2012 total population
+#' x <- datapackage(c("soc_d5", "PN12_TOT"))
+#' x
 #'
 #' @export
 

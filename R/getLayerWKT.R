@@ -9,6 +9,7 @@
 #' multipoints, or polygons)
 #' @param ... other arguments passed to \code{\link{getLayer}} (e.g. \code{by},
 #' \code{collapse}, \code{format})
+#'
 #' @return a data.table (or other \code{format}) of \code{var} indicators summarized
 #' across \code{wkt} geometri(es)
 #' @examples
@@ -16,7 +17,8 @@
 #' x <- getLayerWKT("maiz_h", wkt="POLYGON((-16.35819663578485006 15.36599264077935345,
 #' -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 #' -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))")
-#' head(x)
+#' x
+#'
 #' @export
 getLayerWKT <- function(var, wkt, ...) {
 

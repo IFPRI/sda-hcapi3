@@ -44,4 +44,4 @@ BugReports: http://github.com/harvestchoice/hc-api3
 MailingList: support@harvestchoice.org
 Packaged: 2016-03-26 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1

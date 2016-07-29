@@ -1,0 +1,44 @@
+ @import url(http://fonts.googleapis.com/css?family=PT+Sans:300,400,600);
+ @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+
+.navbar-inner {
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, to(#3E3C30), from(#656253));
+}
+
+header {
+  height: 40px;
+  background: url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat;
+}
+
+body {
+  font-family: 'Pt Sans', Arial, Helvetica, sans-serif;
+  color: #444;
+}
+
+h1,h2,h3,h4,h5 {
+ font-family: 'Droid Serif', serif;
+ font-weight: normal;
+}
+
+h2 {
+  padding-top: 20px;
+}
+
+.icon img {
+  float: right;
+  border: 1px solid #ccc;
+}
+
+.index .internal {display: none;}
+ul.index li {margin-bottom: 0.5em; clear: both;}
+
+footer {
+  margin-top: 45px;
+  padding: 35px 0 36px;
+  border-top: 1px solid #e5e5e5;
+}
+
+footer p {
+  margin-bottom: 0;
+  color: #555;
+}

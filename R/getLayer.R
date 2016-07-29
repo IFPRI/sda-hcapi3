@@ -10,6 +10,13 @@
 #' gridcell IDs). Note that calling \code{getLayer(...)} is equivalent to using the
 #' convenience method \code{hcapi(...)} with the same arguments.
 #'
+#' \code{
+#' # API call: mean body mass index and maize yield across districts in Tanzania
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+#'  -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
+#'  -X POST -H 'Content-Type:application/json'
+#' }
+#'
 #' @param var character array of variable names (all types are accepted). Use e.g.
 #' \code{link{category("poverty")}} to search for valid variable codes).
 #' @param iso3 optional array of 3-letter country or regional code(s) to filter by.
@@ -21,25 +28,24 @@
 #' all pixel values (useful for plotting and to convert to spatial formats).
 #' @param as.class one of "data.table" (default) or "list". By default returns a simple
 #' data.table. If \code{as.class="list"} returns a list with variable metadata.
+#'
 #' @return a data.table (or json array) of \code{var} indicators aggregated by
 #' \code{by} domains
 #' @seealso \link{hcapi} and \link{getLayerWKT}
 #' @examples
 #' # Mean body mass index and maize yield across districts in Tanzania
-#' getLayer(c("bmi", "maiz_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+#' x <- getLayer(c("bmi", "maiz_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
+#' x
 #'
 #' # Plot results for Mara province
-#' lattice::barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT=="Mara"], col="grey90")
+#' require(lattice)
+#' barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT=="Mara"], col="grey90")
 #'
 #' # The method may be expanded to summarize classified (discrete) variables by continuous
 #' # variables. For example the call below returns the dominant agro-ecological zone and
 #' # banana harvested area over Ivory Coast's provinces and elevation zones
-#' hcapi(c("AEZ8_CLAS", "bana_h"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
-#'
-#' # An equivalent request at the command line
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
-#' # -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
-#' # -X POST -H 'Content-Type:application/json'
+#' x <- hcapi(c("AEZ8_CLAS", "bana_h"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
+#' x
 #'
 #' @export
 getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class="data.table") {

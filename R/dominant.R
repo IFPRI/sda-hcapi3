@@ -5,7 +5,7 @@
 #'
 #' @param x character array, can also be a factor
 #' @return a 1-length character of the dominant class
-#' @export
 #' @examples
 #' dominant(sample(letters, 100, replace=T))
+#' @export
 dominant <- function(x) names(which.max(table(x, useNA="no")))[1]

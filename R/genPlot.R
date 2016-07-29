@@ -4,6 +4,25 @@
 #' See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
 #' the convenience function \code{hcapi(..., format="png")}.
 #'
+#' \code{
+#' # API call: generate 2 plots showing farming systems and 2012 population density for Ghana
+#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+#'  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
+#'  -X POST -H 'Content-Type:application/json'
+#'
+#' /ocpu/tmp/x03d5aa8e98/R/.val
+#' /ocpu/tmp/x03d5aa8e98/stdout
+#' /ocpu/tmp/x03d5aa8e98/source
+#' /ocpu/tmp/x03d5aa8e98/console
+#' /ocpu/tmp/x03d5aa8e98/info
+#' /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
+#' /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
+#' /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+#'
+#' # GET all generated plots in a ZIP archive
+#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+#' }
+#'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional ISO3 country or region code(s)
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
@@ -20,35 +39,25 @@
 #' @param height plot height in pixel (unless \code{units} is specified)
 #' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize
 #'
+#' @inheritParams grDevices::png
+#' @seealso \code{\link{hcapi}}
 #' @return Array of generated file names, one for each plot
 #' @examples
 #' # Generate standard raster plot of 2012 population density for sub-Saharan Africa
-#' genPlot("PD12_TOT", pal="OrRd")
+#' x <- genPlot("PD12_TOT", pal="OrRd")
+#' x
+#' \dontshow{knitr::include_graphics(x)}
 #'
 #' # Generate 3 raster plots for Ghana with legend and title but not axes
-#' genPlot(c("AEZ16_CLAS", "whea_h"), iso3="GHA", layout="print")
+#' x <- genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="print")
+#' x
+#' \dontshow{knitr::include_graphics(x)}
 #'
 #' # Generate 3 raster plots for Nigeria with the specified dimensions
-#' genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), width=5, height=5,
+#' x <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=5,
 #' units="in", res=200, pointsize=8)
-#'
-#' # This method may be called via HTTP POST request using e.g. cUrl at the command line
-#' # Return 2 plots showing farming systems and 2012 population density in Ghana
-#' # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-#' # -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
-#' # -X POST -H 'Content-Type:application/json'
-#'
-#' # /ocpu/tmp/x03d5aa8e98/R/.val
-#' # /ocpu/tmp/x03d5aa8e98/stdout
-#' # /ocpu/tmp/x03d5aa8e98/source
-#' # /ocpu/tmp/x03d5aa8e98/console
-#' # /ocpu/tmp/x03d5aa8e98/info
-#' # /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
-#' # /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
-#' # /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
-#'
-#' # Use wget (at the command line) to download all generated plots
-#' # wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+#' x
+#' \dontshow{knitr::include_graphics(x)}
 #'
 #' @export
 genPlot <- function(var, iso3="SSA", pal=character(0),
