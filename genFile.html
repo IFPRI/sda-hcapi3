@@ -95,9 +95,10 @@ the convenience method <code>hcapi(var="bmi", iso3="TZA", format="dta")</code>.<
     <div class="Details">
       <h2>Details</h2>
 
+      <p>API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and
+Ethiopia in STATA format</p>
+  
       <p><code>
-# API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
-# in STATA format
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
  -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
  -X POST -H 'Content-Type:application/json'</p>
@@ -110,12 +111,18 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 /ocpu/tmp/x0e654538b7/info
 /ocpu/tmp/x0e654538b7/files/DESCRIPTION
 /ocpu/tmp/x0e654538b7/files/README
-/ocpu/tmp/x0e654538b7/files/whea_h-AEZ16_CLAS-NGA.dta</p>
+/ocpu/tmp/x0e654538b7/files/whea_h-AEZ16_CLAS-NGA.dta
+</code></p>
   
-      <p># GET all generated files in a ZIP archive
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip</p>
+      <p>GET all generated files in a ZIP archive</p>
   
-      <p># API call: sorghum production in Nigeria in ESRI ASCII raster format
+      <p><code>
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
+</code></p>
+  
+      <p>API call: sorghum production in Nigeria in ESRI ASCII raster format</p>
+  
+      <p><code>
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
  -d '{"var" : "sorg_p", "format" : "asc"}' \
  -X POST -H "Content-Type:application/json"</p>
@@ -130,12 +137,14 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 /ocpu/tmp/x02a7a044c7/files/README
 /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc
 /ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.asc.aux.xml
-/ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.prj</p>
+/ocpu/tmp/x02a7a044c7/files/sorg_p--SSA.prj
+</code></p>
   
-      <p># GET all generated files in a ZIP archive
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip</p>
+      <p>GET all generated files in a ZIP archive</p>
   
-      <p></code></p>
+      <p><code>
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
+</code></p>
   
     </div>
     

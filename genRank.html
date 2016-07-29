@@ -88,13 +88,17 @@ and/or value of production.</p>
     <div class="Details">
       <h2>Details</h2>
 
+      <p>API call: rank commodities in Angola and Mozambique by harvested area and production</p>
+  
       <p><code>
-# API call: rank commodities in Angola and Mozambique by harvested area and production
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
  -d '{"var" : ["h", "p"], "iso3" : ["AGO", "MOZ"]}' \
- -X POST -H 'Content-Type:application/json'</p>
+ -X POST -H 'Content-Type:application/json'
+</code></p>
   
-      <p># API call: rank commodities across Angola's agro-ecological zones by production
+      <p>API call: rank commodities across Angola's agro-ecological zones by production</p>
+  
+      <p><code>
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
  -d '{"var" : "p", "iso3" : "AGO", "by" : "AEZ5_CLAS"}' \
  -X POST -H 'Content-Type:application/json'

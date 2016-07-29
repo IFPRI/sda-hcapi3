@@ -109,8 +109,9 @@ the convenience function <code>hcapi(..., format="png")</code>.</p>
     <div class="Details">
       <h2>Details</h2>
 
+      <p>API call: generate 2 plots showing farming systems and 2012 population density for Ghana</p>
+  
       <p><code>
-# API call: generate 2 plots showing farming systems and 2012 population density for Ghana
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
  -X POST -H 'Content-Type:application/json'</p>
@@ -122,9 +123,12 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 /ocpu/tmp/x03d5aa8e98/info
 /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
 /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
-/ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png</p>
+/ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+</code></p>
   
-      <p># GET all generated plots in a ZIP archive
+      <p>GET all generated plots in a ZIP archive</p>
+  
+      <p><code>
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 </code></p>
   

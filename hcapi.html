@@ -91,7 +91,7 @@ a classified (categorical) raster, and <code>bmi</code> is a continuous raster, 
 request is valid. The dominant class of <code>AEZ16_CLAS</code> is returned along intervals
 of <code>bmi</code>. Default interval breaks are used but custom intervals may also be
 defined, e.g. <code>hcapi(var="AEZ16_CLAS", by=list(bmi=c(0,5,10,15,20,25)))</code>.
-The dominant class of a variable <code>var</code> is defined by <code>dominant(var)</code>.
+The dominant class of a variable <code>var</code> is defined by <code><a href='dominant.html'>dominant</a>(var)</code>.
 Layers may also be summarized over spatial points are areas (passed as WKT representations
 using argument <code>wkt</code>). Use the <code>format</code> argument to control the output
 format (see examples below).</p>
@@ -101,8 +101,10 @@ format (see examples below).</p>
     <div class="Details">
       <h2>Details</h2>
 
+      <p>API call: mean body mass index and cassava yield across provinces and districts of
+Tanzania</p>
+  
       <p><code>
-# API call: mean body mass index and cassava yield across provinces and districts of Tanzania
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":"cass_y", "iso3":"CIV", "format":"tif"}' \
  -X POST -H 'Content-Type:application/json'</p>
@@ -117,14 +119,20 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif
 /ocpu/tmp/x0bc1ac9bdf/files/bmi--TZA.tif.aux.xml
 /ocpu/tmp/x0bc1ac9bdf/files/DESCRIPTION
-/ocpu/tmp/x0bc1ac9bdf/files/README</p>
+/ocpu/tmp/x0bc1ac9bdf/files/README
+</code></p>
   
-      <p># GET all generated files in a ZIP archive
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip</p>
+      <p>GET all generated files in a ZIP archive</p>
   
-      <p># API call: the method may be expanded to summarize classified (discrete) variables along continuous
-# variables. For example the call below returns the dominant agro-ecological zone and
-# average stunting in children under 5 over Ethiopia's provinces by elevation class
+      <p><code>
+wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+</code></p>
+  
+      <p>API call: the method may be expanded to summarize classified (discrete) variables along continuous
+variables. For example the call below returns the dominant agro-ecological zone and
+average stunting in children under 5 over Ethiopia's provinces by elevation class</p>
+  
+      <p><code>
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
  -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
  -X POST -H 'Content-Type:application/json'

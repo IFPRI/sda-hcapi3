@@ -58,14 +58,14 @@
     <dl>
       <dt>var</dt>
       <dd>character array of variable names (all types are accepted). Use e.g.
-<code>link{category("poverty")}</code> to search for valid variable codes).</dd>
+<code><a href='category.html'>category</a>("poverty")</code> to search for valid variable codes).</dd>
       <dt>iso3</dt>
       <dd>optional array of 3-letter country or regional code(s) to filter by.
 Use <code>iso</code> to view all available codes.</dd>
       <dt>by</dt>
       <dd>optional character array of variables to summarize by (all types are accepted)</dd>
       <dt>ids</dt>
-      <dd>optional array of gridcell ids to filter by (if collapse=FALSE) or
+      <dd>optional array of gridcell ids to filter by (if <code>collapse=FALSE</code>) or
 summarize by (if collapse=TRUE).</dd>
       <dt>collapse</dt>
       <dd>if TRUE collapses over <code>by</code> variables. If FALSE always return
@@ -90,21 +90,22 @@ a data.table (or json array) of <code>var</code> indicators aggregated by
 
       <p>Workhorse method to query, subset and/or aggregate HarvestChoice layers.
 This method may also be used to summarize classified variables along continuous
-variables, e.g. <code>getLayer(var="AEZ16_CLAS", by="bmi")</code>.
+variables, e.g. <code><a href='getLayer.html'>getLayer</a>(var="AEZ16_CLAS", by="bmi")</code>.
 It does so by returning the dominant class of a classified variable within each <code>by</code>
 class, and by splitting any continuous variable passed to <code>by</code> using default value
 breaks. The dominant class of a variable <code>var</code> is defined as <code><a href='dominant.html'>dominant</a>(var)</code>.
 Variables may also be summarized over custom areas (passed as an integer array of
-gridcell IDs). Note that calling <code>getLayer(...)</code> is equivalent to using the
-convenience method <code>hcapi(...)</code> with the same arguments.</p>
+gridcell IDs). Note that calling <code><a href='getLayer.html'>getLayer</a></code> is equivalent to using the
+convenience method <code><a href='hcapi.html'>hcapi</a></code> with the same arguments.</p>
   
     </div>
 
     <div class="Details">
       <h2>Details</h2>
 
+      <p>API call: mean body mass index and maize yield across districts in Tanzania</p>
+  
       <p><code>
-# API call: mean body mass index and maize yield across districts in Tanzania
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
  -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
  -X POST -H 'Content-Type:application/json'
@@ -201,7 +202,7 @@ x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;
       
     <h2>See also</h2>
     
-<a href='hcapi.html'>hcapi</a> and <a href='getLayerWKT.html'>getLayerWKT</a>
+<code><a href='hcapi.html'>hcapi</a></code> and <code><a href='getLayerWKT.html'>getLayerWKT</a></code>
 
         
   </div>

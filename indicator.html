@@ -87,13 +87,17 @@ a data.table or hierarchical list of indicator metadata
     <div class="Details">
       <h2>Details</h2>
 
+      <p># API call: metadata records for all indicators matching 'cassava' or 'population'</p>
+  
       <p><code>
-# API call: metadata records for all indicators matching 'cassava' or 'population'
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : ["cassava", "population"]}' \
- -X POST -H "Content-Type:application/json"</p>
+ -X POST -H "Content-Type:application/json"
+</code></p>
   
-      <p># API call: metadata records for all indicators matching 'population' in a list
+      <p>API call: metadata records for all indicators matching 'population' in a list</p>
+  
+      <p><code>
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : "population", "as.class" : "list"}' \
  -X POST -H "Content-Type:application/json"
