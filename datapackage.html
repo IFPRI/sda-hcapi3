@@ -87,16 +87,13 @@ specifications documented at <a href = 'http://dataprotocols.org/tabular-data-pa
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Generate auxiliary files for soil organic carbon concentration and 2012 total
-population
-</div>
-<strong class='error'>Error in eval(expr, envir, enclos): object &#39;population&#39; not found</strong>
-<div class='input'>datapackage(c(&quot;soc_d5&quot;, &quot;PN12_TOT&quot;))
+    <pre class="examples"><div class='input'># Generate auxiliary files for soil organic carbon concentration and 2012 total population
+datapackage(c(&quot;soc_d5&quot;, &quot;PN12_TOT&quot;))
 </div>
 <div class='output'>[1] &quot;./meta.csv&quot;
 </div>
 <div class='input'>
-# Equivalent cUrl request at the command line
+# Equivalent POST request
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
 # -d &#39;{&quot;var&quot; : [&quot;soc_d5&quot;, &quot;PN12_TOT&quot;]}&#39; \
 # -X POST -H &#39;Content-Type:application/json&#39;

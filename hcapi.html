@@ -100,7 +100,8 @@ format (see examples below).</p>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean body mass index and cassava yield across provinces and districts of Tanzania
-hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+x &lt;- hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+x
 </div>
 <div class='output'>     ISO3                   ADM0_NAME     ADM1_NAME_ALT   ADM2_NAME_ALT  bmi cass_y
   1:  TZA United Republic of Tanzania            Arusha         Arumeru 21.2    NaN
@@ -118,20 +119,24 @@ hcapi(c(&quot;bmi&quot;, &quot;cass_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;A
 <div class='input'>
 # Plot results for Mara province
 require(lattice)
-barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
 </div>
-<strong class='error'>Error in barchart.formula(ADM2_NAME_ALT ~ bmi, data = x[ADM1_NAME_ALT == : object &#39;x&#39; not found</strong>
-<div class='input'>
+<strong class='message'>Loading required package: lattice</strong>
+<div class='input'>barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+
 # Mean cassava yield in Ivory Coast in GeoTIFF raster format
-hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
+x &lt;- hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
+</div>
+<p><img src='hcapi-6.png' alt='' width='540' height='400' /></p>
+<div class='input'>x
 </div>
 <div class='output'>[1] &quot;cass_y.CIV.png&quot;
 </div>
 <div class='input'>
 # Plot the generated TIF raster (one band only)
+require(raster)
 plot(raster(x[2]))
 </div>
-<strong class='error'>Error in plot(raster(x[2])): could not find function &quot;raster&quot;</strong>
+<strong class='error'>Error in .rasterObjectFromFile(x, band = band, objecttype = &quot;RasterLayer&quot;, : Cannot create a RasterLayer object from this file. (file does not exist)</strong>
 <div class='input'>
 # Equivalent request at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \

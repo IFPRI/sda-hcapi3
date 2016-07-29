@@ -102,7 +102,8 @@ convenience method <code>hcapi(...)</code> with the same arguments.</p>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Mean body mass index and maize yield across districts in Tanzania
-getLayer(c(&quot;bmi&quot;, &quot;maiz_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+x &lt;- getLayer(c(&quot;bmi&quot;, &quot;maiz_y&quot;), iso3=&quot;TZA&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ADM2_NAME_ALT&quot;))
+x
 </div>
 <div class='output'>     ISO3                   ADM0_NAME     ADM1_NAME_ALT   ADM2_NAME_ALT  bmi maiz_y
   1:  TZA United Republic of Tanzania            Arusha         Arumeru 21.2   2767
@@ -120,14 +121,13 @@ getLayer(c(&quot;bmi&quot;, &quot;maiz_y&quot;), iso3=&quot;TZA&quot;, by=c(&quo
 <div class='input'>
 # Plot results for Mara province
 lattice::barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
-</div>
-<strong class='error'>Error in barchart.formula(ADM2_NAME_ALT ~ bmi, x[ADM1_NAME_ALT == &quot;Mara&quot;], : object &#39;x&#39; not found</strong>
-<div class='input'>
+
 # The method may be expanded to summarize classified (discrete) variables by continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
 # banana harvested area over Ivory Coast&#39;s provinces and elevation zones
 hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
 </div>
+<p><img src='getLayer-4.png' alt='' width='540' height='400' /></p>
 <div class='output'>    ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h
  1:  CIV Ivory Coast      18 Montagnes            NA     Humid     66
  2:  CIV Ivory Coast      18 Montagnes (3e+02,5e+02]     Humid    456
@@ -173,7 +173,7 @@ hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;, by=c(&
     ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h
 </div>
 <div class='input'>
-# An equivalent request at the command line
+# An equivalent POST request
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 # -d &#39;{&quot;var&quot;:[&quot;AEZ8_CLAS&quot;,&quot;bana_h&quot;], &quot;iso3&quot;:&quot;CIV&quot;, &quot;by&quot;:[&quot;ADM1_NAME_ALT&quot;,&quot;ELEVATION&quot;]}&#39; \
 # -X POST -H &#39;Content-Type:application/json&#39;

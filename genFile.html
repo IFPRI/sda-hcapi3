@@ -99,7 +99,9 @@ x &lt;- genFile(&quot;whea_h&quot;, iso3=c(&quot;NGA&quot;, &quot;ETH&quot;), by
 
 # Load generated STATA file
 require(foreign)
-x &lt;- read.dta(x[1])
+</div>
+<strong class='message'>Loading required package: foreign</strong>
+<div class='input'>x &lt;- read.dta(x[1])
 
 # Plot histogram with full layer title
 hist(x$whea_h, xlab=vi[&quot;whea_h&quot;, varLabel])
@@ -107,19 +109,28 @@ hist(x$whea_h, xlab=vi[&quot;whea_h&quot;, varLabel])
 # Sorghum production in Nigeria in ESRI ASCII raster format
 x &lt;- genFile(&quot;sorg_p&quot;, iso3=&quot;NGA&quot;, format=&quot;asc&quot;)
 </div>
-<p><img src='genFile-2.png' alt='' width='540' height='400' /></p>
+<p><img src='genFile-4.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # Load and plot generated raster
-x &lt;- raster(x[1])
+require(raster)
 </div>
-<strong class='error'>Error in eval(expr, envir, enclos): could not find function &quot;raster&quot;</strong>
-<div class='input'>plot(x, main=vi[&quot;sorg_p&quot;, varLabel])
+<strong class='message'>Loading required package: raster</strong>
+<strong class='message'>Loading required package: sp</strong>
+<strong class='message'>
+Attaching package: ‘raster’
+</strong>
+<strong class='message'>The following object is masked from ‘package:data.table’:
+
+    shift
+</strong>
+<div class='input'>x &lt;- raster(x[1])
+plot(x, main=vi[&quot;sorg_p&quot;, varLabel])
 </div>
-<strong class='error'>Error in plot.window(...): need finite &#39;ylim&#39; values</strong>
-<p><img src='genFile-7.png' alt='' width='540' height='400' /></p>
+<p><img src='genFile-11.png' alt='' width='540' height='400' /></p>
 <div class='input'>cellStats(x, &quot;mean&quot;)
 </div>
-<strong class='error'>Error in eval(expr, envir, enclos): could not find function &quot;cellStats&quot;</strong>
+<div class='output'>[1] 897.064
+</div>
 <div class='input'>
 # Equivalent cUrl requests at the command line
 # curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
