@@ -7,7 +7,7 @@
 
 header {
   height: 40px;
-  background-image: url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat;
+  background: url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat;
 }
 
 body {
