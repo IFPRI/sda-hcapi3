@@ -6,8 +6,8 @@
 }
 
 header {
-  height: 30px;
-  background-image: url('http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png') no-repeat;
+  height: 40px;
+  background-image: url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat;
 }
 
 body {
@@ -19,7 +19,9 @@ h1,h2,h3,h4,h5 {
  font-family: 'Droid Serif', serif;
 }
 
-h2 {padding-top: 20px}
+h2 {
+  padding-top: 20px;
+}
 
 .icon img {
   float: right;
