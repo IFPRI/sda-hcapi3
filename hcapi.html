@@ -119,14 +119,12 @@ x
 <div class='input'>
 # Plot results for Mara province
 require(lattice)
-</div>
-<strong class='message'>Loading required package: lattice</strong>
-<div class='input'>barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
+barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
 
 # Mean cassava yield in Ivory Coast in GeoTIFF raster format
 x &lt;- hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
 </div>
-<p><img src='hcapi-6.png' alt='' width='540' height='400' /></p>
+<p><img src='hcapi-4.png' alt='' width='540' height='400' /></p>
 <div class='input'>x
 </div>
 <div class='output'>[1] &quot;cass_y.CIV.png&quot;
