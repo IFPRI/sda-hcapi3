@@ -2,8 +2,7 @@
  @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
 .navbar-inner {
-  height: 60px;
-  background: #3E3C30 url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat top right;
+  background: #3E3C30 url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat 10px 90%;
 }
 
 body {
