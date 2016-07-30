@@ -2,7 +2,7 @@
 #'
 #' Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 #' See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
-#' the convenience function \code{hcapi(..., format="png")}.
+#' the convenience function \code{\link{hcapi}(..., format="png")}.
 #'
 #' API call: generate 2 plots showing farming systems and 2012 population density for Ghana
 #'
@@ -30,13 +30,13 @@
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
 #' @param layout one of "default", "print", or "thumbnail" to control legend and axes
 #' @param style one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
-#' @param units one of "px" (default), "in", "cm" or "mm".
-#'   Passed to \code{\link[grDevices:png]{png}}
-#' @param resolution in ppi, by default set to 300ppi for print layout.
-#'   Passed to \code{\link[grDevices:png]{png}}
-#'   options (e.g. "kmeans" or "pretty") or "default" to use default breaks
+#' options (e.g. "kmeans" or "pretty") or "default" to use default breaks
 #' @param n \code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
 #'   to control the number of breaks
+#' @param units one of "px" (default), "in", "cm" or "mm".
+#'   Passed to \code{\link[grDevices:png]{png}}
+#' @param res in ppi, by default set to 300ppi for print layout.
+#'   Passed to \code{\link[grDevices:png]{png}}
 #' @param width plot width in pixel (unless \code{units} is specified)
 #' @param height plot height in pixel (unless \code{units} is specified)
 #' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize

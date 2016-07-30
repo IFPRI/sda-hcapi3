@@ -94,7 +94,7 @@ hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format=NULL, ...) {
   if (missing(var)) {
     stop("Argument 'var' is missing. Please enter a valid indicator code.")
   } else if (!missing(wkt)) {
-    return(getLayerWKT(var, iso3=iso3, by=by, wkt=wkt, ...))
+    return(getLayerWKT(var, iso3=iso3, wkt=wkt, ...))
   } else if (missing(format)) {
     return(getLayer(var, iso3=iso3, by=by, ...))
   } else if (format == "png") {

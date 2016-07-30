@@ -19,7 +19,8 @@ genPlot(var, iso3 = "SSA", pal = character(0), layout = "default",
 
 \item{layout}{one of "default", "print", or "thumbnail" to control legend and axes}
 
-\item{style}{one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}}
+\item{style}{one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
+options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
 
 \item{n}{\code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
 to control the number of breaks}
@@ -31,11 +32,10 @@ to control the number of breaks}
 \item{units}{one of "px" (default), "in", "cm" or "mm".
 Passed to \code{\link[grDevices:png]{png}}}
 
-\item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize}
+\item{res}{in ppi, by default set to 300ppi for print layout.
+Passed to \code{\link[grDevices:png]{png}}}
 
-\item{resolution}{in ppi, by default set to 300ppi for print layout.
-Passed to \code{\link[grDevices:png]{png}}
-options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
+\item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize}
 }
 \value{
 Array of generated file names, one for each plot
@@ -43,7 +43,7 @@ Array of generated file names, one for each plot
 \description{
 Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
-the convenience function \code{hcapi(..., format="png")}.
+the convenience function \code{\link{hcapi}(..., format="png")}.
 }
 \details{
 API call: generate 2 plots showing farming systems and 2012 population density for Ghana
