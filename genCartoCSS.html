@@ -57,13 +57,14 @@
     <h2>Arguments</h2>
     <dl>
       <dt>var</dt>
-      <dd>HarvestChoice variable code</dd>
+      <dd>character arry of HarvestChoice indicator code(s)</dd>
       <dt>pal</dt>
       <dd>optional Brewer color palette name used for plotting</dd>
       <dt>legend</dt>
       <dd>if TRUE returns HarvestChoice legend, otherwise returns default legend</dd>
       <dt>...</dt>
-      <dd>any argument passed to <code><a href='getLayer.html'>getLayer</a></code>, e.g. <code>by="FS_2012", iso3="GHA"</code></dd>
+      <dd>any argument passed to <code><a href='getLayer.html'>getLayer</a></code>, e.g.
+<code>by="FS_2012"</code></dd>
       <dt>iso3</dt>
       <dd>optional country or region filter (3-letter code)</dd>
     </dl>
@@ -72,7 +73,7 @@
       <h2>Value</h2>
 
       <p><dl>
-character, CartoCSS snippet for variable <code>var</code>
+character array of CartoCSS snippet for indicator(s) <code>var</code>
 </dl></p>
   
     </div>
@@ -85,9 +86,13 @@ character, CartoCSS snippet for variable <code>var</code>
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>genCartoCSS(&quot;soc_d5&quot;)
+    <pre class="examples"><div class='input'># CartoCSS for soil organic carbon and cassava value of production
+genCartoCSS(c(&quot;soc_d5&quot;, &quot;cass_v&quot;))
 </div>
-<div class='output'>[1] &quot;#soc_d5tif { raster-scaling: bilinear;    raster-colorizer-default-mode: linear;    raster-colorizer-default-color: transparent;    raster-colorizer-stops:    stop(-9999, transparent, linear)stop(2, #FFE0B3FF) stop(4, #FFDB86FF) stop(6, #FFDE59FF) stop(8, #FFEA2DFF) stop(11, #FFFF00FF) stop(14, #E6FF00FF) stop(18, #99FF00FF) stop(21, #4DFF00FF) stop(25, #00FF00FF) stop(32, #00FF4DFF) stop(40, #00E5FFFF) stop(54, #00A8FFFF) stop(70, #006BFFFF) stop(88, #002EFFFF) stop(100, #0F00FFFF) stop(140, #4C00FFFF) stop(132, #FFE0B3FF) }&quot;
+<div class='output'>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               soc_d5 
+                                                                                                                                                                                                                  &quot;#soc_d5 {       raster-scaling: bilinear;       raster-colorizer-default-mode: linear;       raster-colorizer-default-color: transparent;       raster-colorizer-stops:       stop(-9999, transparent, linear)       stop(2, #FFE0B3FF)          stop(4, #FFDB86FF)          stop(6, #FFDE59FF)          stop(8, #FFEA2DFF)          stop(11, #FFFF00FF)          stop(14, #E6FF00FF)          stop(18, #99FF00FF)          stop(21, #4DFF00FF)          stop(25, #00FF00FF)          stop(32, #00FF4DFF)          stop(40, #00E5FFFF)          stop(54, #00A8FFFF)          stop(70, #006BFFFF)          stop(88, #002EFFFF)          stop(100, #0F00FFFF)          stop(140, #4C00FFFF)          stop(132, #FFE0B3FF)         }&quot; 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               cass_v 
+&quot;#cass_v {       raster-scaling: bilinear;       raster-colorizer-default-mode: linear;       raster-colorizer-default-color: transparent;       raster-colorizer-stops:       stop(-9999, transparent, linear)       stop(0, #ffffffff)          stop(10565.7, #FEE6CE)          stop(32158.15, #FDDDBC)          stop(57938.15, #FDD4AB)          stop(91611.05, #FDCA98)          stop(140492.9, #FDBD83)          stop(211386.7, #FDAF6E)          stop(310980, #FDA35B)          stop(433534.1, #FD9649)          stop(588350.25, #FB8937)          stop(794888.05, #F77A27)          stop(1057965.35, #F26C17)          stop(1399460.6, #EA5F0E)          stop(1854088.1, #E15206)          stop(2488831.85, #D64601)          stop(3293385.85, #C24001)          stop(4392954.25, #AE3902)          stop(5787223.15, #9D3203)          stop(8030803.6, #8E2C03)          stop(12017582, #7F2704)          stop(12017582, #ffffffff)         }&quot; 
 </div></pre>
   </div>
   <div class="span4">

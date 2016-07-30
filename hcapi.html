@@ -128,9 +128,10 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 </code></p>
   
-      <p>API call: the method may be expanded to summarize classified (discrete) variables along continuous
-variables. For example the call below returns the dominant agro-ecological zone and
-average stunting in children under 5 over Ethiopia's provinces by elevation class</p>
+      <p>API call: the method may be expanded to summarize classified (discrete) variables
+along continuous variables. For example the call below returns the dominant
+agro-ecological zone and average stunting in children under 5 over Ethiopia's
+provinces and generic elevation zones</p>
   
       <p><code>
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
@@ -169,14 +170,16 @@ x &lt;- hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
 <p><img src='hcapi-4.png' alt='' width='540' height='400' /></p>
 <div class='input'>x
 </div>
-<div class='output'>[1] &quot;cass_y.CIV.png&quot;
+<div class='output'>[1] &quot;./hcapi-civ-cass_y.tfw&quot;         &quot;./hcapi-civ-cass_y.tif&quot;        
+[3] &quot;./hcapi-civ-cass_y.tif.aux.xml&quot; &quot;./meta.csv&quot;                    
+[5] &quot;./README.md&quot;                    &quot;./datapackage.json&quot;            
 </div>
 <div class='input'>
 # Plot the generated TIF raster (one band only)
 require(raster)
 plot(raster(x[2]))
 </div>
-<strong class='error'>Error in .rasterObjectFromFile(x, band = band, objecttype = &quot;RasterLayer&quot;, : Cannot create a RasterLayer object from this file. (file does not exist)</strong>
+<p><img src='hcapi-8.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # The method may be expanded to summarize classified (discrete) variables along continuous
 # variables. For example the call below returns the dominant agro-ecological zone and
@@ -237,7 +240,7 @@ x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 1
 -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
 -16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))&quot;)
 </div>
-<strong class='error'>Error in if (length(by) &gt; 0 | (length(ids) &gt; 0 &amp; collapse == T)) {: argument is of length zero</strong>
+<strong class='error'>Error in getLayer(var = var, ids = out, by = &quot;ISO3&quot;, ...): formal argument &quot;by&quot; matched by multiple actual arguments</strong>
 <div class='input'>x
 </div>
 <div class='output'>    ISO3 ADM0_NAME     ADM1_NAME_ALT     ELEVATION           AEZ8_CLAS stunted_moderate

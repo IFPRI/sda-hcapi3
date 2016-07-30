@@ -217,19 +217,32 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
 10: http://harvestchoice.org/data/pn12_tot
 11: http://harvestchoice.org/data/pn00_urb
 12: http://harvestchoice.org/data/pd05_urb
-                                                                                       wms downloadedOn
- 1: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer   2016-07-29
- 2: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-29
- 3: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer   2016-07-29
- 4: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer   2016-07-29
- 5: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-29
- 6: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer   2016-07-29
- 7:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
- 8:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
- 9:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-10:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-11:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-12:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+                                                                                       wms
+ 1: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer
+ 2: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer
+ 3: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer
+ 4: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer
+ 5: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer
+ 6: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer
+ 7:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+ 8:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+ 9:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+10:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+11:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+12:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+    downloadedOn
+ 1:   2016-07-30
+ 2:   2016-07-30
+ 3:   2016-07-30
+ 4:   2016-07-30
+ 5:   2016-07-30
+ 6:   2016-07-30
+ 7:   2016-07-30
+ 8:   2016-07-30
+ 9:   2016-07-30
+10:   2016-07-30
+11:   2016-07-30
+12:   2016-07-30
 </div>
 <div class='input'>
 # Show complete metadata for all HarvestChoice indicators matching &#39;population&#39;
@@ -239,11 +252,16 @@ indicator(&quot;population&quot;, as.class=&quot;list&quot;)[1:2]
 <div class='output'>$Demographics
 $Demographics$Population
 $Demographics$Population$Rural
-                    label     code            unit       type     period     category subcategory  item
-1:         Rural Pop. &#39;00 PN00_RUR         persons continuous       2000 Demographics  Population Rural
-2:         Rural Pop. &#39;05 PN05_RUR         persons continuous circa 2005 Demographics  Population Rural
-3: Rural Pop. density &#39;00 PD00_RUR  persons/sq. km continuous       2000 Demographics  Population Rural
-4: Rural Pop. density &#39;05 PD05_RUR persons/sq. km. continuous circa 2005 Demographics  Population Rural
+                    label     code            unit       type     period     category subcategory
+1:         Rural Pop. &#39;00 PN00_RUR         persons continuous       2000 Demographics  Population
+2:         Rural Pop. &#39;05 PN05_RUR         persons continuous circa 2005 Demographics  Population
+3: Rural Pop. density &#39;00 PD00_RUR  persons/sq. km continuous       2000 Demographics  Population
+4: Rural Pop. density &#39;05 PD05_RUR persons/sq. km. continuous circa 2005 Demographics  Population
+    item
+1: Rural
+2: Rural
+3: Rural
+4: Rural
                                                                                                                                                                                                                                                                         sources
 1:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
 2: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
@@ -274,19 +292,30 @@ $Demographics$Population$Rural
 2: http://harvestchoice.org/data/pn05_rur
 3: http://harvestchoice.org/data/pd00_rur
 4: http://harvestchoice.org/data/pd05_rur
-                                                                                   wms downloadedOn
-1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+                                                                                   wms
+1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+   downloadedOn
+1:   2016-07-30
+2:   2016-07-30
+3:   2016-07-30
+4:   2016-07-30
 
 $Demographics$Population$Total
-                  label     code            unit       type     period     category subcategory  item
-1:     Pop. density &#39;05 PD05_TOT persons/sq. km. continuous circa 2005 Demographics  Population Total
-2:       Total Pop. &#39;00 PN00_TOT         persons continuous       2000 Demographics  Population Total
-3:       Total Pop. &#39;05 PN05_TOT         persons continuous circa 2005 Demographics  Population Total
-4:       Total Pop. &#39;12 PN12_TOT         persons continuous       2012 Demographics  Population Total
-5: Total Pop. Dens. &#39;12 PD12_TOT persons/sq. km. continuous       2012 Demographics  Population Total
+                  label     code            unit       type     period     category subcategory
+1:     Pop. density &#39;05 PD05_TOT persons/sq. km. continuous circa 2005 Demographics  Population
+2:       Total Pop. &#39;00 PN00_TOT         persons continuous       2000 Demographics  Population
+3:       Total Pop. &#39;05 PN05_TOT         persons continuous circa 2005 Demographics  Population
+4:       Total Pop. &#39;12 PN12_TOT         persons continuous       2012 Demographics  Population
+5: Total Pop. Dens. &#39;12 PD12_TOT persons/sq. km. continuous       2012 Demographics  Population
+    item
+1: Total
+2: Total
+3: Total
+4: Total
+5: Total
                                                                                                                                                                                                                                                                         sources
 1: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
 2:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
@@ -323,18 +352,28 @@ $Demographics$Population$Total
 3: http://harvestchoice.org/data/pn05_tot
 4: http://harvestchoice.org/data/pn12_tot
 5: http://harvestchoice.org/data/pd12_tot
-                                                                                   wms downloadedOn
-1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-5: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+                                                                                   wms
+1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+5: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+   downloadedOn
+1:   2016-07-30
+2:   2016-07-30
+3:   2016-07-30
+4:   2016-07-30
+5:   2016-07-30
 
 $Demographics$Population$Urban
-                    label     code            unit       type     period     category subcategory  item
-1:         Urban Pop. &#39;00 PN00_URB         persons continuous       2000 Demographics  Population Urban
-2:         Urban Pop. &#39;05 PN05_URB         persons continuous circa 2005 Demographics  Population Urban
-3: Urban Pop. density &#39;05 PD05_URB persons/sq. km. continuous circa 2005 Demographics  Population Urban
+                    label     code            unit       type     period     category subcategory
+1:         Urban Pop. &#39;00 PN00_URB         persons continuous       2000 Demographics  Population
+2:         Urban Pop. &#39;05 PN05_URB         persons continuous circa 2005 Demographics  Population
+3: Urban Pop. density &#39;05 PD05_URB persons/sq. km. continuous circa 2005 Demographics  Population
+    item
+1: Urban
+2: Urban
+3: Urban
                                                                                                                                                                                                                                                                         sources
 1:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
 2: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
@@ -359,10 +398,14 @@ $Demographics$Population$Urban
 1: http://harvestchoice.org/data/pn00_urb
 2: http://harvestchoice.org/data/pn05_urb
 3: http://harvestchoice.org/data/pd05_urb
-                                                                                   wms downloadedOn
-1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
-3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer   2016-07-29
+                                                                                   wms
+1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+   downloadedOn
+1:   2016-07-30
+2:   2016-07-30
+3:   2016-07-30
 
 
 
