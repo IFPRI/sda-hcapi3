@@ -5,7 +5,7 @@
   background-color: #3E3C30;
 }
 
-body {
+body, p, li {
   font-family: 'Pt Sans', Arial, Helvetica, sans-serif;
   color: #444;
   font-size: 14px;
@@ -32,8 +32,8 @@ h1 {
 }
 
 ul.index li {
-  margin-bottom: 0.5em;
   clear: both;
+  margin-top: 1em;
 }
 
 .Details code {
