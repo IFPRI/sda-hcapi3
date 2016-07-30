@@ -60,7 +60,6 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
   iso3 <- match.arg(iso3, iso, several.ok=TRUE)
   as.class <- match.arg(as.class, c("data.table", "list"))
 
-  setkey(vi, varCode)
   # If pixel ids are passed ignore any country filter
   if (length(ids)>0) iso3 <- "SSA"
   # If "SSA" in iso3 then limit to SSA
@@ -69,7 +68,7 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
   if (length(by)>0 | (length(ids)>0 & collapse==T)) {
     # Construct generic aggregation formula
     setkey(vi, varCode)
-    agg <- vi[var][, aggFunR]
+    agg <- vi[var, aggFunR]
     agg <- paste(var, agg, sep="=")
     agg <- paste(agg, collapse=", ")
 
@@ -134,16 +133,14 @@ getLayer <- function(var, iso3="SSA", by=NULL, ids=NULL, collapse=TRUE, as.class
       if (!is.na(bynum)) ", keyby=.(", bynum, ")", "]")
 
     # Eval in Rserve (through socket instead of DB connection)
-    # Uncomment to connect from remote host
-    # rc <- RS.connect(getOption("hcapi3.host"), getOption("hcapi3.port"), proxy.wait=F)
     rc <- RS.connect(port=getOption("hcapi3.port"), proxy.wait=F)
     eval(parse(text=paste0("data <- RS.eval(rc, ", data, ")")))
     RS.close(rc)
 
   } else {
     # No aggregation, return pixel values
-    # Don't duplicate any variable
     vars <- c(g, var, by)
+    # Don't duplicate any variable
     vars <- unique(vars)
     vars <- vars[!is.na(vars)]
 

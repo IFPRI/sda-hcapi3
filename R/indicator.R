@@ -166,54 +166,62 @@ or use 'category()' to return a complete catalog.")
 #'
 #' Helper function to generate CartoCSS rules for processing rasters using Mapnik
 #'
-#' @param var HarvestChoice variable code
+#' @param var character arry of HarvestChoice indicator code(s)
 #' @param iso3 optional country or region filter (3-letter code)
 #' @param pal optional Brewer color palette name used for plotting
 #' @param legend if TRUE returns HarvestChoice legend, otherwise returns default legend
-#' @param ... any argument passed to \code{\link{getLayer}}, e.g. \code{by="FS_2012", iso3="GHA"}
-#' @return character, CartoCSS snippet for variable \code{var}
+#' @param ... any argument passed to \code{\link{getLayer}}, e.g.
+#' \code{by="FS_2012"}
+#' @return character array of CartoCSS snippet for indicator(s) \code{var}
 #' @examples
-#' genCartoCSS("soc_d5")
+#' # CartoCSS for soil organic carbon and cassava value of production
+#' genCartoCSS(c("soc_d5", "cass_v"))
 #' @export
 genCartoCSS <- function(var, pal="BuGn", legend=TRUE, ...) {
 
   setkey(vi, varCode)
-  var <- var[1]
-  d <- getLayer(var, collapse=TRUE, ...)
+  var <- match.arg(var, vi$varCode, several.ok=TRUE)
+  out <- sapply(var, function(x) {
 
-  # With fixed symbology
-  cc <- unlist(vi[var][, strsplit(classColors, "|", fixed=T)])
-  cv <- as.numeric(unlist(vi[var][, strsplit(classBreaks, "|", fixed=T)]))
-  if ( vi[var][, type]=="continuous" ) cv <- c(cv, ceiling(max(d[[var]], na.rm=T)))
-  cl <- unlist(vi[var][, strsplit(classLabels, "|", fixed=T)])
+    d <- getLayer(x, collapse=TRUE, ...)
 
-  if (is.na(cv) | legend==F) {
+    # With fixed symbology
+    cc <- unlist(vi[x, strsplit(classColors, "|", fixed=T)])
+    cv <- as.numeric(unlist(vi[x, strsplit(classBreaks, "|", fixed=T)]))
+    if (vi[x, type]=="continuous") cv <- c(cv, ceiling(max(d[[x]], na.rm=T)))
+    cl <- unlist(vi[x, strsplit(classLabels, "|", fixed=T)])
+
     # Symbology is missing or use default symbology
+    if (length(cv)==0 | legend==FALSE) {
 
-    if (vi[var][, type]=="class") {
-      # Categorical raster
-      cl <- levels(factor(d[[var]]))
-      cv <- 1:length(cl)-1
+      if (vi[x, type]=="class") {
+        # Categorical raster
+        cl <- levels(factor(d[[x]]))
+        cv <- 1:length(cl)-1
 
-    } else {
-      # Continuous raster, and we need the max value
-      require(classInt)
-      cv <- cl <- classIntervals(d[[var]], n=8, style="pretty")$brks
-      cv <- c(cv[-1], ceiling(max(d[[var]], na.rm=T)))
+      } else {
+        # Continuous raster, and we need the max value
+        require(classInt)
+        cv <- cl <- classIntervals(d[[x]], n=8, style="pretty")$brks
+        cv <- c(cv[-1], ceiling(max(d[[x]], na.rm=T)))
+      }
+      cc <- colorRampPalette(brewer.pal(length(cv), pal))(length(cv))
     }
-    cc <- colorRampPalette(brewer.pal(length(cv), pal))(length(cv))
-  }
 
-  # Raster symbology
-  out <- paste0("#", tolower(var), "tif",
-    " { raster-scaling: bilinear;
-    raster-colorizer-default-mode: linear;
-    raster-colorizer-default-color: transparent;
-    raster-colorizer-stops:
-    stop(-9999, transparent, linear)",
-    paste0("stop(", cv, ", ", cc, ")", collapse=" "),
-    " }")
+    # Raster symbology
+    y <- paste0("#", tolower(x), " {
+      raster-scaling: bilinear;
+      raster-colorizer-default-mode: linear;
+      raster-colorizer-default-color: transparent;
+      raster-colorizer-stops:
+      stop(-9999, transparent, linear)
+      ",
+      paste0("stop(", cv, ", ", cc, ")
+        ", collapse=" "),
+      "}")
 
-  out <- gsub("\n", "", out, fixed=T)
+    y <- gsub("\n", " ", y, fixed=T)
+  })
+
   return(out)
 }

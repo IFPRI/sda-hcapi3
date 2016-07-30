@@ -1,0 +1,34 @@
+{
+  "name": "IFPRI-CELL5M-SSA",
+  "datapackage_version": "1.0-beta-2",
+  "title": "CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara",
+  "description": "HarvestChoice CELL5M-SSA is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. All indicators are currently geo-referenced to a spatial resolution of 5-arc-minute (equivalent to around 10 sq. km. at the Equateur).",
+  "version": "3.7",
+  "last_updated": "2016-07-30",
+  "homepage": "http://harvestchoice.org/",
+  "image": "http://harvestchoice.github.io/hc-api3/img/hc-logo-white.png",
+  "sources": {
+    "name": "IFPRI/HarvestChoice",
+    "web": "http://harvestchoice.org/",
+    "email": "info@harvestchoice.org"
+  },
+  "keywords": ["climate", "agriculture", "poverty", "market access", "nutrition", "Africa South of the Sahara", "climate adaptation", "farming", "soils", "livestock"],
+  "license": "ODC-BY-1.0",
+  "publishers": "International Food Policy Research Institute (IFPRI)",
+  "resources": {
+    "name": "CELL5M-SSA Data Extracts",
+    "path": "hcapi-civ-cass_y.tif",
+    "format": "GeoTIFF",
+    "mediatype": "image/tiff",
+    "schema": {
+      "fields": [
+        {
+          "name": "cass_y",
+          "type": "numeric",
+          "description": "Cassava yield '05 - Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.",
+          "unit": "kg/ha"
+        }
+      ]
+    }
+  }
+}

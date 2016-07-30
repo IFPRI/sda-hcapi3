@@ -1,11 +1,11 @@
 #' Download HarvestChoice indicators in raster and/or tabular formats
 #'
-#' Package result from \code{\link{getLayer}} into any user-specified tabular or
-#' spatial raster format. Also includes README and Tabular Data Package specifications.
+#' Package results from \code{\link{getLayer}} into tabular or spatial raster format.
+#' Also includes README and Tabular Data Package specifications.
 #' Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (geojson),
 #' GeoTIFF (tif), R raster (grd), RData (rda), ESRI ASCII raster (asc), and netCDF (nc).
 #' Calling \code{genFile(var="bmi", iso3="TZA", format="dta")} is equivalent to calling
-#' the convenience method \code{hcapi(var="bmi", iso3="TZA", format="dta")}.
+#' the convenience method \code{\link{hcapi}(var="bmi", iso3="TZA", format="dta")}.
 #'
 #' API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and
 #' Ethiopia in STATA format
@@ -67,7 +67,6 @@
 #'   e.g. \code{as.class}, \code{collapse}.
 #'
 #' @return character, array of generated file names included in the data package
-#' @inheritParams getLayer
 #' @seealso \code{\link{datapackage}} to generate associated metadata records
 #' @examples
 #' # Total wheat harvested area across 16 agro-ecological zones in Nigeria and Ethiopia
@@ -94,8 +93,6 @@
 #' @export
 genFile <- function(var, iso3="SSA", by=NULL,
   format=c("csv", "geojson", "tif", "dta", "asc", "rds", "grd"), dir=".", ...) {
-
-  setkey(vi, varCode)
 
   # Validate format
   format <- tolower(format)

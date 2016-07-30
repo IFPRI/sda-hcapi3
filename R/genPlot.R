@@ -71,9 +71,7 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
   units=switch(layout, default="px", print="in", thumbnail="px"),
   res=switch(layout, print=300, NA), ...) {
 
-  iso3 <- iso3[1]
   fPath <- character(0)
-  setkey(vi, varCode)
 
   layout <- match.arg(layout, c("default", "print", "thumbnail"))
   style <- match.arg(style, c("default",
@@ -87,15 +85,15 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
   for (i in var) for (ii in iso3) {
 
     # Get HC symbology
-    cv <- as.integer(unlist(strsplit(vi[i][, classBreaks], "|", fixed=T)))
-    cl <- as.character(unlist(strsplit(vi[i][, classLabels], "|", fixed=T)))
-    cc <- tolower(as.character(unlist(strsplit(vi[i][, classColors], "|", fixed=T))))
+    cv <- as.integer(unlist(strsplit(vi[i, classBreaks], "|", fixed=T)))
+    cl <- as.character(unlist(strsplit(vi[i, classLabels], "|", fixed=T)))
+    cc <- tolower(as.character(unlist(strsplit(vi[i, classColors], "|", fixed=T))))
 
     # Get data
     r <- getLayer(i, iso3=ii, collapse=F)
     setnames(r, i, "var")
 
-    switch(vi[i][, type],
+    switch(vi[i, type],
       class = {
         # Convert categorical rasters to 1-based integer
         r[, var := as.integer(factor(var, levels=cl, ordered=T))]

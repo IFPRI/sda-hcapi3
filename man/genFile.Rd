@@ -25,12 +25,12 @@ e.g. \code{as.class}, \code{collapse}.}
 character, array of generated file names included in the data package
 }
 \description{
-Package result from \code{\link{getLayer}} into any user-specified tabular or
-spatial raster format. Also includes README and Tabular Data Package specifications.
+Package results from \code{\link{getLayer}} into tabular or spatial raster format.
+Also includes README and Tabular Data Package specifications.
 Currently supported export formats include CSV (csv), STATA (dta), GeoJSON (geojson),
 GeoTIFF (tif), R raster (grd), RData (rda), ESRI ASCII raster (asc), and netCDF (nc).
 Calling \code{genFile(var="bmi", iso3="TZA", format="dta")} is equivalent to calling
-the convenience method \code{hcapi(var="bmi", iso3="TZA", format="dta")}.
+the convenience method \code{\link{hcapi}(var="bmi", iso3="TZA", format="dta")}.
 }
 \details{
 API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and

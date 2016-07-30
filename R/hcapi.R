@@ -39,9 +39,10 @@
 #' wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 #' }
 #'
-#' API call: the method may be expanded to summarize classified (discrete) variables along continuous
-#' variables. For example the call below returns the dominant agro-ecological zone and
-#' average stunting in children under 5 over Ethiopia's provinces by elevation class
+#' API call: the method may be expanded to summarize classified (discrete) variables
+#' along continuous variables. For example the call below returns the dominant
+#' agro-ecological zone and average stunting in children under 5 over Ethiopia's
+#' provinces and generic elevation zones
 #'
 #' \code{
 #' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
@@ -93,12 +94,17 @@
 hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format=NULL, ...) {
 
   # Dispatch
-  if (missing(var)) stop("Argument 'var' is missing. Please enter a valid indicator code.")
-  if (!missing(wkt)) return(getLayerWKT(var, iso3, by, wkt=wkt, ...))
-  if (missing(format)) return(getLayer(var, iso3, by, ...))
-  if (format == "png") format <- NULL; return(genPlot(var, iso3, by, ...))
-  if (format == "hist") format <- NULL; return(stats(var, iso3))
-  return(genFile(var, iso3, by, format, ...))
+  if (missing(var)) {
+    stop("Argument 'var' is missing. Please enter a valid indicator code.")
+  } else if (!missing(wkt)) {
+    return(getLayerWKT(var, iso3=iso3, by=by, wkt=wkt, ...))
+  } else if (missing(format)) {
+    return(getLayer(var, iso3=iso3, by=by, ...))
+  } else if (format == "png") {
+    return(genPlot(var, iso3=iso3, ...))
+  } else if (format == "hist") {
+    return(stats(var, iso3=iso3))
+  } else return(genFile(var, iso3=iso3, by=by, format=format, ...))
 
 }
 

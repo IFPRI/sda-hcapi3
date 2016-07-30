@@ -2,8 +2,7 @@
 % Please edit documentation in R/datapackage.R
 \name{datapackage}
 \alias{datapackage}
-\title{Write HarvestChoice auxiliary files to CSV and JSON per Tabular Data Package RFC
-specifications}
+\title{Write auxiliary files to CSV and JSON (Tabular Data Package RFC specifications)}
 \usage{
 datapackage(var, format = NULL, dir = ".")
 }
@@ -20,10 +19,10 @@ aside from metadata records in \code{meta.csv}.}
 character array of generated auxiliary file names
 }
 \description{
-This information is appended to all data downloads, but may also be queried
-separately. Variable metadata is made available in tabular (.csv)
+Auxiliary files and metadata are appended to all data packages, but may also be
+generated separately. Variable metadata is made available in tabular (.csv)
 and in JSON (.json) format in conformity with Tabular Data Package RFC
-specifications documented at \url{http://dataprotocols.org/tabular-data-package/}.
+specifications at \url{http://dataprotocols.org/tabular-data-package/}.
 }
 \details{
 API call: Generate auxiliary files for soil organic carbon concentration and
@@ -38,6 +37,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
 \examples{
 # Generate auxiliary files for soil organic carbon concentration and 2012 total population
 x <- datapackage(c("soc_d5", "PN12_TOT"))
+x <- fread(x[1])
 x
 
 }

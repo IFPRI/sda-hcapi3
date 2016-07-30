@@ -65,9 +65,10 @@ GET all generated files in a ZIP archive
 wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 }
 
-API call: the method may be expanded to summarize classified (discrete) variables along continuous
-variables. For example the call below returns the dominant agro-ecological zone and
-average stunting in children under 5 over Ethiopia's provinces by elevation class
+API call: the method may be expanded to summarize classified (discrete) variables
+along continuous variables. For example the call below returns the dominant
+agro-ecological zone and average stunting in children under 5 over Ethiopia's
+provinces and generic elevation zones
 
 \code{
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \

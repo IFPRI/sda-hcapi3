@@ -2,12 +2,9 @@
  @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
 .navbar-inner {
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, to(#3E3C30), from(#656253));
-}
-
-header {
   height: 60px;
-  background: url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat;
+  background-color: #3E3C30;
+  background-image: url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat;
 }
 
 body {
@@ -31,6 +28,11 @@ h2 {
 
 .index .internal {display: none;}
 ul.index li {margin-bottom: 0.5em; clear: both;}
+
+.Details code {
+  color: #333333;
+  border: none;
+}
 
 footer {
   margin-top: 45px;

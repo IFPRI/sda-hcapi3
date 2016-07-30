@@ -1,11 +1,10 @@
 
-#' Write HarvestChoice auxiliary files to CSV and JSON per Tabular Data Package RFC
-#' specifications
+#' Write auxiliary files to CSV and JSON (Tabular Data Package RFC specifications)
 #'
-#' This information is appended to all data downloads, but may also be queried
-#' separately. Variable metadata is made available in tabular (.csv)
+#' Auxiliary files and metadata are appended to all data packages, but may also be
+#' generated separately. Variable metadata is made available in tabular (.csv)
 #' and in JSON (.json) format in conformity with Tabular Data Package RFC
-#' specifications documented at \url{http://dataprotocols.org/tabular-data-package/}.
+#' specifications at \url{http://dataprotocols.org/tabular-data-package/}.
 #'
 #' API call: Generate auxiliary files for soil organic carbon concentration and
 #' 2012 total population
@@ -27,6 +26,7 @@
 #' @examples
 #' # Generate auxiliary files for soil organic carbon concentration and 2012 total population
 #' x <- datapackage(c("soc_d5", "PN12_TOT"))
+#' x <- fread(x[1])
 #' x
 #'
 #' @export

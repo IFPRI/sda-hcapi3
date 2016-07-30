@@ -1,7 +1,7 @@
 ---
-title:  "CELL5M-SSA DATA PACKAGE"
+title: "CELL5M-SSA DATA PACKAGE"
 author: "IFPRI/HarvestChoice"
-date:   "2016-07-28"
+date: "2016-07-30"
 ---
 
 
@@ -15,33 +15,31 @@ date:   "2016-07-28"
 
 ## Data Retrieval
 
-### HarvestChoice Data Services v3.0
+Several options are available to retrieve subsets of *HarvestChoice* indicators.
 
+* **HarvestChoice Data Services v3.0**  
 The preferred method of data retrieval is through HarvestChoice RESTful API published under [HarvestChoice Data Services v3.0](http://harvestchoice.github.io/hc-api3/). This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice 5-arc-minute spatial layers for sub-Saharan Africa.
 
-This data package was generated through the API. Here is the Curl commmand that was used to retrieve this archive:
+This data package was generated through this API. Here is the Curl commmand that was used to retrieve this archive:
 
 
-```
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/meta \
- -d '{"var":["CELL5M","ISO3","ADM0_NAME","ADM1_NAME_ALT","ADM2_NAME_ALT","X","Y","whea_h"]}' \
+```bash
+curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
+ -d '{"var":["cass_y"]}' \
  -X POST -H 'Content-Type:application/json'
 
 ```
 
 Other data retrieval and data visualization options are listed below. 
 
-### HarvestChoice MAPPR
-
+* **HarvestChoice MAPPR**  
 An option to interactively explore and summarize HarvestChoice data layers is to use [HarvestChoice MAPPR](http://harvestchoice.org/mappr) on-line platform. Individual indicators may be mapped and summarized across pre-defined spatial domains or across user-selected geographies. MAPPR also provides advanced query tools for marketshed analyses.
 
 
-### HarvestChoice TABLR
-
+* **HarvestChoice TABLR**  
 Another tool for quick data summaries is [HarvestChoice TABLR](http://harvestchoice.org/tablr). This is an on-line report generator to quickly retrieve and export subsets of CELL5M-SSA. Best for users who do not need to visualize results on a map.
 
-### HarvestChoice Data Catalog
-
+* ** HarvestChoice Data Catalog**  
 For more information about the *International Food Policy Resaearch Institute (IFPRI)* and *HarvestChoice Program*, and to explore individual data layers, visit [HarvestChoice website](http://harvestchoice.org/).
 
 

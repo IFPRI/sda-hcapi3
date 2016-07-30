@@ -7,23 +7,25 @@
 genCartoCSS(var, pal = "BuGn", legend = TRUE, ...)
 }
 \arguments{
-\item{var}{HarvestChoice variable code}
+\item{var}{character arry of HarvestChoice indicator code(s)}
 
 \item{pal}{optional Brewer color palette name used for plotting}
 
 \item{legend}{if TRUE returns HarvestChoice legend, otherwise returns default legend}
 
-\item{...}{any argument passed to \code{\link{getLayer}}, e.g. \code{by="FS_2012", iso3="GHA"}}
+\item{...}{any argument passed to \code{\link{getLayer}}, e.g.
+\code{by="FS_2012"}}
 
 \item{iso3}{optional country or region filter (3-letter code)}
 }
 \value{
-character, CartoCSS snippet for variable \code{var}
+character array of CartoCSS snippet for indicator(s) \code{var}
 }
 \description{
 Helper function to generate CartoCSS rules for processing rasters using Mapnik
 }
 \examples{
-genCartoCSS("soc_d5")
+# CartoCSS for soil organic carbon and cassava value of production
+genCartoCSS(c("soc_d5", "cass_v"))
 }
 
