@@ -83,19 +83,18 @@ or a list of indicators grouped by category
     <div class="Details">
       <h2>Details</h2>
 
-      <p><code>
-# API call: list all HarvestChoice indicators matching category 'demographics'
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+      <p><code># API call: list all HarvestChoice indicators matching category 'demographics'
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
  -d '{"q" : "demographics'</code> \
  -X POST -H "Content-Type:application/json"</p>
   
       <p># API call: list all HarvestChoice indicators matching 'cassava' in a hierarchical list
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
  -d '"q" :" cassava", "as.class" : "list" \
  -X POST -H "Content-Type:application/json"</p>
   
       <p># To return a complete list of published indicators omit 'q'
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
  -X POST -H "Content-Type:application/json"</p>
   
     </div>
@@ -159,7 +158,7 @@ $Agriculture$Yield
       
     <h2>See also</h2>
     
-<code><a href='indicator.html'>indicator</a></code> to view complete indicator metadata records
+<a href='indicator.html'>indicator</a> to view complete indicator metadata records
 
         
   </div>

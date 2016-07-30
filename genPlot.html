@@ -76,10 +76,6 @@ to control the number of breaks</dd>
       <dt>units</dt>
       <dd>one of "px" (default), "in", "cm" or "mm".
 Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code></dd>
-      <dt>res</dt>
-      <dd>The nominal resolution in ppi which will be recorded in the
-    bitmap file, if a positive integer.  Also used for <code>units</code>
-    other than the default, and to convert points to pixels.</dd>
       <dt>...</dt>
       <dd>any argument passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>, e.g. pointsize</dd>
       <dt>resolution</dt>
@@ -111,12 +107,11 @@ the convenience function <code>hcapi(..., format="png")</code>.</p>
 
       <p>API call: generate 2 plots showing farming systems and 2012 population density for Ghana</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
- -X POST -H 'Content-Type:application/json'</p>
-  
-      <p>/ocpu/tmp/x03d5aa8e98/R/.val
+ -X POST -H 'Content-Type:application/json'
+--
+/ocpu/tmp/x03d5aa8e98/R/.val
 /ocpu/tmp/x03d5aa8e98/stdout
 /ocpu/tmp/x03d5aa8e98/source
 /ocpu/tmp/x03d5aa8e98/console
@@ -128,8 +123,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
   
       <p>GET all generated plots in a ZIP archive</p>
   
-      <p><code>
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+      <p><code>$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 </code></p>
   
     </div>
@@ -170,7 +164,7 @@ x
       
     <h2>See also</h2>
     
-<code><a href='hcapi.html'>hcapi</a></code>
+<a href='hcapi.html'>hcapi</a>
 
         
   </div>

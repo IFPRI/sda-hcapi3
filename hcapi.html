@@ -104,12 +104,11 @@ format (see examples below).</p>
       <p>API call: mean body mass index and cassava yield across provinces and districts of
 Tanzania</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":"cass_y", "iso3":"CIV", "format":"tif"}' \
- -X POST -H 'Content-Type:application/json'</p>
-  
-      <p>/ocpu/tmp/x0bc1ac9bdf/R/.val
+ -X POST -H 'Content-Type:application/json'
+--
+/ocpu/tmp/x0bc1ac9bdf/R/.val
 /ocpu/tmp/x0bc1ac9bdf/stdout
 /ocpu/tmp/x0bc1ac9bdf/warnings
 /ocpu/tmp/x0bc1ac9bdf/source
@@ -124,8 +123,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
   
       <p>GET all generated files in a ZIP archive</p>
   
-      <p><code>
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+      <p><code>$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 </code></p>
   
       <p>API call: the method may be expanded to summarize classified (discrete) variables
@@ -133,8 +131,7 @@ along continuous variables. For example the call below returns the dominant
 agro-ecological zone and average stunting in children under 5 over Ethiopia's
 provinces and generic elevation zones</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
  -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
  -X POST -H 'Content-Type:application/json'
 </code></p>
@@ -302,7 +299,7 @@ x &lt;- hcapi(var=&quot;maiz_h&quot;, wkt=&quot;POLYGON((-16.35819663578485006 1
       
     <h2>See also</h2>
     
-<code><a href='getLayer.html'>getLayer</a></code>, <code><a href='getLayerWKT.html'>getLayerWKT</a></code>, <code><a href='genFile.html'>genFile</a></code>
+<a href='getLayer.html'>getLayer</a> <a href='getLayerWKT.html'>getLayerWKT</a> <a href='genFile.html'>genFile</a>
 
         
   </div>

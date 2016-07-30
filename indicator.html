@@ -89,16 +89,14 @@ a data.table or hierarchical list of indicator metadata
 
       <p># API call: metadata records for all indicators matching 'cassava' or 'population'</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : ["cassava", "population"]}' \
  -X POST -H "Content-Type:application/json"
 </code></p>
   
       <p>API call: metadata records for all indicators matching 'population' in a list</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : "population", "as.class" : "list"}' \
  -X POST -H "Content-Type:application/json"
 </code></p>
@@ -425,7 +423,7 @@ NULL
       
     <h2>See also</h2>
     
-<code><a href='category.html'>category</a></code> to view HarvestChoice indicator categories
+<a href='category.html'>category</a> to view HarvestChoice indicator categories
 
         
   </div>

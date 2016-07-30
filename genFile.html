@@ -98,8 +98,7 @@ the convenience method <code><a href='hcapi.html'>hcapi</a>(var="bmi", iso3="TZA
       <p>API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and
 Ethiopia in STATA format</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
  -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
  -X POST -H 'Content-Type:application/json'</p>
   
@@ -116,18 +115,16 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
   
       <p>GET all generated files in a ZIP archive</p>
   
-      <p><code>
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
+      <p><code>$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
 </code></p>
   
       <p>API call: sorghum production in Nigeria in ESRI ASCII raster format</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
  -d '{"var" : "sorg_p", "format" : "asc"}' \
- -X POST -H "Content-Type:application/json"</p>
-  
-      <p>/ocpu/tmp/x02a7a044c7/R/.val
+ -X POST -H "Content-Type:application/json"
+--
+/ocpu/tmp/x02a7a044c7/R/.val
 /ocpu/tmp/x02a7a044c7/stdout
 /ocpu/tmp/x02a7a044c7/warnings
 /ocpu/tmp/x02a7a044c7/source
@@ -142,8 +139,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
   
       <p>GET all generated files in a ZIP archive</p>
   
-      <p><code>
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
+      <p><code>$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
 </code></p>
   
     </div>
@@ -205,7 +201,7 @@ plot(x, main=vi[&quot;sorg_p&quot;, varLabel])
       
     <h2>See also</h2>
     
-<code><a href='datapackage.html'>datapackage</a></code> to generate associated metadata records
+<a href='datapackage.html'>datapackage</a> to generate associated metadata records
 
         
   </div>

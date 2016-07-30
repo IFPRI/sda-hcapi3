@@ -105,8 +105,7 @@ convenience method <code><a href='hcapi.html'>hcapi</a></code> with the same arg
 
       <p>API call: mean body mass index and maize yield across districts in Tanzania</p>
   
-      <p><code>
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
  -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
  -X POST -H 'Content-Type:application/json'
 </code></p>
@@ -202,7 +201,7 @@ x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;bana_h&quot;), iso3=&quot;CIV&quot;
       
     <h2>See also</h2>
     
-<code><a href='hcapi.html'>hcapi</a></code> and <code><a href='getLayerWKT.html'>getLayerWKT</a></code>
+<a href='hcapi.html'>hcapi</a> and <a href='getLayerWKT.html'>getLayerWKT</a>
 
         
   </div>
