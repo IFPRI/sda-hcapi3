@@ -12,8 +12,7 @@
 #'
 #' API call: mean body mass index and maize yield across districts in Tanzania
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 #'  -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
 #'  -X POST -H 'Content-Type:application/json'
 #' }
@@ -32,7 +31,7 @@
 #'
 #' @return a data.table (or json array) of \code{var} indicators aggregated by
 #' \code{by} domains
-#' @seealso \code{\link{hcapi}} and \code{\link{getLayerWKT}}
+#' @seealso \link{hcapi} and \link{getLayerWKT}
 #' @examples
 #' # Mean body mass index and maize yield across districts in Tanzania
 #' x <- getLayer(c("bmi", "maiz_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))

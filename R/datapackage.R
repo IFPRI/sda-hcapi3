@@ -9,8 +9,7 @@
 #' API call: Generate auxiliary files for soil organic carbon concentration and
 #' 2012 total population
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
 #'  -d '{"var" : ["soc_d5", "PN12_TOT"]}' \
 #'  -X POST -H 'Content-Type:application/json'
 #' }
@@ -21,7 +20,7 @@
 #' aside from metadata records in \code{meta.csv}.
 #' @param dir character, optional output directory. Default to current working directory.
 #' @return character array of generated auxiliary file names
-#' @seealso \code{\link{indicator}} and \code{\link{category}} for other convenience
+#' @seealso \link{indicator} and \link{category} for other convenience
 #' methods to query HarvestChoice metadata.
 #' @examples
 #' # Generate auxiliary files for soil organic carbon concentration and 2012 total population

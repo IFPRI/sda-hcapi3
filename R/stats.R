@@ -6,11 +6,10 @@
 #'
 #' # API call: generate 2 plots showing farming systems and 2012 population density in Ghana
 
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/stats \
 #'  -d '{"var":["bmi", "cass_y"]}' \
 #'  -X POST -H 'Content-Type:application/json'
-#'
+#'  --
 #' /ocpu/tmp/x09db409895/R/.val
 #' /ocpu/tmp/x09db409895/graphics/1
 #' /ocpu/tmp/x09db409895/graphics/2
@@ -22,9 +21,8 @@
 #'
 #' Use wget (at the command line) to download the generated plot(s)
 #'
-#' \code{
-#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
-#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
+#' \code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/1/png
+#' $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
 #' }
 #'
 #' @param var character array of variable codes to plot

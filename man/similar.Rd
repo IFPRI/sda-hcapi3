@@ -34,8 +34,7 @@ selected indicators.
 API call: rank Ghana districts by similarity to district 16657  (Kpando) based on
 length of growing period, irrigated area, and cassava value of production
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
  -d '{"x" : 16657, "var" : ["LGP_AVG", "GMIA_V5", "cass_v"], "by" : 2, "iso3" : "GHA"}' \
  -X POST -H "Content-Type:application/json"
 }

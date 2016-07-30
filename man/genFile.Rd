@@ -36,8 +36,7 @@ the convenience method \code{\link{hcapi}(var="bmi", iso3="TZA", format="dta")}.
 API call: total wheat harvested area across 16 agro-ecological zones in Nigeria and
 Ethiopia in STATA format
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
  -d '{"var" : "whea_h", "iso3" : ["NGA", "ETH"], "by" : "AEZ16_CLAS", "format" : "dta"}' \
  -X POST -H 'Content-Type:application/json'
 
@@ -54,17 +53,15 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 
 GET all generated files in a ZIP archive
 
-\code{
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
+\code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0e654538b7/zip
 }
 
 API call: sorghum production in Nigeria in ESRI ASCII raster format
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
  -d '{"var" : "sorg_p", "format" : "asc"}' \
  -X POST -H "Content-Type:application/json"
-
+--
 /ocpu/tmp/x02a7a044c7/R/.val
 /ocpu/tmp/x02a7a044c7/stdout
 /ocpu/tmp/x02a7a044c7/warnings
@@ -80,8 +77,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genFile \
 
 GET all generated files in a ZIP archive
 
-\code{
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
+\code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x02a7a044c7/zip
 }
 }
 \examples{
@@ -108,6 +104,6 @@ cellStats(x, "mean")
 
 }
 \seealso{
-\code{\link{datapackage}} to generate associated metadata records
+\link{datapackage} to generate associated metadata records
 }
 

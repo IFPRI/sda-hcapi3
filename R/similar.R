@@ -11,8 +11,7 @@
 #' API call: rank Ghana districts by similarity to district 16657  (Kpando) based on
 #' length of growing period, irrigated area, and cassava value of production
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/similar/json \
 #'  -d '{"x" : 16657, "var" : ["LGP_AVG", "GMIA_V5", "cass_v"], "by" : 2, "iso3" : "GHA"}' \
 #'  -X POST -H "Content-Type:application/json"
 #' }
@@ -23,14 +22,15 @@
 #' @param by single integer indicating the type of reference geography (0-gridcell,
 #' 1-region, 2-district)
 #' @param iso3 optional country or region filter (3-letter code)
+#'
+#' @return a data.table of regions, districts, or pixels ranked by similarity to
+#' a reference geography \code{x}
 #' @examples
 #' # Rank all districts in Ghana by similarity to district 16657 (Kpando)
 #' # based on length of growing period (LGP_AVG), irrigated cropland (GMIA_V5),
 #' # and cassava value of production (cass_v).
 #' similar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 #'
-#' @return a data.table of regions, districts, or pixels ranked by similarity to
-#' a reference geography \code{x}
 #' @export
 similar <- function(x, var, by=0, iso3="SSA") {
 

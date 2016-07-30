@@ -43,8 +43,7 @@ convenience method \code{\link{hcapi}} with the same arguments.
 \details{
 API call: mean body mass index and maize yield across districts in Tanzania
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
  -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
  -X POST -H 'Content-Type:application/json'
 }
@@ -66,6 +65,6 @@ x
 
 }
 \seealso{
-\code{\link{hcapi}} and \code{\link{getLayerWKT}}
+\link{hcapi} and \link{getLayerWKT}
 }
 

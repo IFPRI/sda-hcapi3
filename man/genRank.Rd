@@ -27,16 +27,14 @@ and/or value of production.
 \details{
 API call: rank commodities in Angola and Mozambique by harvested area and production
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
  -d '{"var" : ["h", "p"], "iso3" : ["AGO", "MOZ"]}' \
  -X POST -H 'Content-Type:application/json'
 }
 
 API call: rank commodities across Angola's agro-ecological zones by production
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
  -d '{"var" : "p", "iso3" : "AGO", "by" : "AEZ5_CLAS"}' \
  -X POST -H 'Content-Type:application/json'
 }

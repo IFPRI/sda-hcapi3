@@ -9,8 +9,6 @@ date: "$date$"
 
 ## About
 
-> CELL5M: A Multidisciplinary Geospatial Database for Africa South of the Sahara
-
 *HarvestChoice CELL5M-SSA* is an on-line database of over 750 biophysical and socio-economic indicators for Africa south of the Sahara. This database was created as the central core to a decision-support system for policy analysts, development practitioners, and researchers to explore the spatial relationships at the nexus of our climate, the environment, agriculture, nutrition, health, and poverty. All indicators are currently geo-referenced to a spatial resolution of **5 arc-minute** (equivalent to around 10 km^2 at the Equateur).
 
 ## Data Retrieval
@@ -39,7 +37,7 @@ An option to interactively explore and summarize HarvestChoice data layers is to
 * **HarvestChoice TABLR**  
 Another tool for quick data summaries is [HarvestChoice TABLR](http://harvestchoice.org/tablr). This is an on-line report generator to quickly retrieve and export subsets of CELL5M-SSA. Best for users who do not need to visualize results on a map.
 
-* ** HarvestChoice Data Catalog**  
+* **HarvestChoice Data Catalog**  
 For more information about the *International Food Policy Resaearch Institute (IFPRI)* and *HarvestChoice Program*, and to explore individual data layers, visit [HarvestChoice website](http://harvestchoice.org/).
 
 

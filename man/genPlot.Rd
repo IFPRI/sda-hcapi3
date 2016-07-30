@@ -31,10 +31,6 @@ to control the number of breaks}
 \item{units}{one of "px" (default), "in", "cm" or "mm".
 Passed to \code{\link[grDevices:png]{png}}}
 
-\item{res}{The nominal resolution in ppi which will be recorded in the
-    bitmap file, if a positive integer.  Also used for \code{units}
-    other than the default, and to convert points to pixels.}
-
 \item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize}
 
 \item{resolution}{in ppi, by default set to 300ppi for print layout.
@@ -52,11 +48,10 @@ the convenience function \code{hcapi(..., format="png")}.
 \details{
 API call: generate 2 plots showing farming systems and 2012 population density for Ghana
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
  -X POST -H 'Content-Type:application/json'
-
+--
 /ocpu/tmp/x03d5aa8e98/R/.val
 /ocpu/tmp/x03d5aa8e98/stdout
 /ocpu/tmp/x03d5aa8e98/source
@@ -69,8 +64,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 
 GET all generated plots in a ZIP archive
 
-\code{
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+\code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 }
 }
 \examples{
@@ -92,6 +86,6 @@ x
 
 }
 \seealso{
-\code{\link{hcapi}}
+\link{hcapi}
 }
 

@@ -20,19 +20,18 @@ or a list of indicators grouped by category
 Return a compact list of indicator categories, codes and labels
 }
 \details{
-\code{
-# API call: list all HarvestChoice indicators matching category 'demographics'
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+\code{# API call: list all HarvestChoice indicators matching category 'demographics'
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
  -d '{"q" : "demographics'} \
  -X POST -H "Content-Type:application/json"
 
 # API call: list all HarvestChoice indicators matching 'cassava' in a hierarchical list
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
  -d '{"q" :" cassava", "as.class" : "list"} \
  -X POST -H "Content-Type:application/json"
 
 # To return a complete list of published indicators omit 'q'
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
  -X POST -H "Content-Type:application/json"
 }
 }
@@ -44,6 +43,6 @@ category("demographics")
 category("cassava", as.class="list")
 }
 \seealso{
-\code{\link{indicator}} to view complete indicator metadata records
+\link{indicator} to view complete indicator metadata records
 }
 

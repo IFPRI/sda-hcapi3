@@ -6,16 +6,14 @@
 #'
 #' API call: rank commodities in Angola and Mozambique by harvested area and production
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
 #'  -d '{"var" : ["h", "p"], "iso3" : ["AGO", "MOZ"]}' \
 #'  -X POST -H 'Content-Type:application/json'
 #' }
 #'
 #' API call: rank commodities across Angola's agro-ecological zones by production
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/genRank/json \
 #'  -d '{"var" : "p", "iso3" : "AGO", "by" : "AEZ5_CLAS"}' \
 #'  -X POST -H 'Content-Type:application/json'
 #' }
@@ -27,6 +25,7 @@
 #' \code{by} may be specified to return aggregates across sub-zones (e.g. across provinces,
 #' districts, agro-ecological zones, etc.), see examples.
 #' @param ... optional arguments passed to \code{\link{hcapi}}, e.g. \code{iso3} and \code{wkt}
+#'
 #' @return data.table(s) of commodities ranked from top to bottom
 #' @seealso \link{hcapi}
 #' @examples

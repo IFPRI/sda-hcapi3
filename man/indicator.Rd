@@ -26,16 +26,14 @@ Return complete metadata records for selected HarvestChoice indicators.
 \details{
 # API call: metadata records for all indicators matching 'cassava' or 'population'
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : ["cassava", "population"]}' \
  -X POST -H "Content-Type:application/json"
 }
 
 API call: metadata records for all indicators matching 'population' in a list
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
  -d '{"q" : "population", "as.class" : "list"}' \
  -X POST -H "Content-Type:application/json"
 }
@@ -51,6 +49,6 @@ indicator("population", as.class="list")[1:2]
 
 }
 \seealso{
-\code{\link{category}} to view HarvestChoice indicator categories
+\link{category} to view HarvestChoice indicator categories
 }
 

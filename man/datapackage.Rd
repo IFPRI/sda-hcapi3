@@ -28,8 +28,7 @@ specifications at \url{http://dataprotocols.org/tabular-data-package/}.
 API call: Generate auxiliary files for soil organic carbon concentration and
 2012 total population
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
  -d '{"var" : ["soc_d5", "PN12_TOT"]}' \
  -X POST -H 'Content-Type:application/json'
 }
@@ -42,7 +41,7 @@ x
 
 }
 \seealso{
-\code{\link{indicator}} and \code{\link{category}} for other convenience
+\link{indicator} and \link{category} for other convenience
 methods to query HarvestChoice metadata.
 }
 

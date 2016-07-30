@@ -15,11 +15,10 @@
 #' API call: mean body mass index and cassava yield across provinces and districts of
 #' Tanzania
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 #'  -d '{"var":"cass_y", "iso3":"CIV", "format":"tif"}' \
 #'  -X POST -H 'Content-Type:application/json'
-#'
+#' --
 #' /ocpu/tmp/x0bc1ac9bdf/R/.val
 #' /ocpu/tmp/x0bc1ac9bdf/stdout
 #' /ocpu/tmp/x0bc1ac9bdf/warnings
@@ -35,8 +34,7 @@
 #'
 #' GET all generated files in a ZIP archive
 #'
-#' \code{
-#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+#' \code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 #' }
 #'
 #' API call: the method may be expanded to summarize classified (discrete) variables
@@ -44,8 +42,7 @@
 #' agro-ecological zone and average stunting in children under 5 over Ethiopia's
 #' provinces and generic elevation zones
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
 #'  -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
 #'  -X POST -H 'Content-Type:application/json'
 #' }
@@ -60,7 +57,7 @@
 #' or to \code{\link{genPlot}}, e.g. \code{collapse}, \code{as.class}, \code{dir}, \code{pal}.
 #'
 #' @return a data.table (or other formats) of \code{var} indicators summarized by \code{by} domains
-#' @seealso \code{\link{getLayer}}, \code{\link{getLayerWKT}}, \code{\link{genFile}}
+#' @seealso \link{getLayer} \link{getLayerWKT} \link{genFile}
 #' @examples
 #' # Mean body mass index and cassava yield across provinces and districts of Tanzania
 #' x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))

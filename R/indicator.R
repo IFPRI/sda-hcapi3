@@ -5,16 +5,14 @@
 #'
 #' # API call: metadata records for all indicators matching 'cassava' or 'population'
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
 #'  -d '{"q" : ["cassava", "population"]}' \
 #'  -X POST -H "Content-Type:application/json"
 #' }
 #'
 #' API call: metadata records for all indicators matching 'population' in a list
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
 #'  -d '{"q" : "population", "as.class" : "list"}' \
 #'  -X POST -H "Content-Type:application/json"
 #' }
@@ -25,8 +23,9 @@
 #' @param as.class "data.table" (default) or "list" for a list of indicators grouped
 #' by category
 #' @param cartoCSS also include formatted CartoCSS rules
+#'
 #' @return a data.table or hierarchical list of indicator metadata
-#' @seealso \code{\link{category}} to view HarvestChoice indicator categories
+#' @seealso \link{category} to view HarvestChoice indicator categories
 #' @examples
 #' # Show complete metadata for all HarvestChoice indicators matching 'cassava' or
 #' 'population'
@@ -102,28 +101,28 @@ or use 'category()' to return a complete catalog.")
 #'
 #' Return a compact list of indicator categories, codes and labels
 #'
-#' \code{
-#' # API call: list all HarvestChoice indicators matching category 'demographics'
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#' \code{# API call: list all HarvestChoice indicators matching category 'demographics'
+#' $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 #'  -d '{"q" : "demographics'} \
 #'  -X POST -H "Content-Type:application/json"
 #'
 #' # API call: list all HarvestChoice indicators matching 'cassava' in a hierarchical list
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#' $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 #'  -d '{"q" :" cassava", "as.class" : "list"} \
 #'  -X POST -H "Content-Type:application/json"
 #'
 #' # To return a complete list of published indicators omit 'q'
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
+#' $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 #'  -X POST -H "Content-Type:application/json"
 #' }
 #'
 #' @param q character array of pattern(s) to search for. If omitted will return all
 #' available indicators.
 #' @param as.class "data.table" or "list" of indicator codes grouped by category
+#'
 #' @return a data.table showing the number of indicators in each category,
 #' or a list of indicators grouped by category
-#' @seealso \code{\link{indicator}} to view complete indicator metadata records
+#' @seealso \link{indicator} to view complete indicator metadata records
 #' @examples
 #' # List all HarvestChoice indicators matching category 'demographics'
 #' category("demographics")

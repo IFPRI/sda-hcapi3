@@ -6,11 +6,10 @@
 #'
 #' API call: generate 2 plots showing farming systems and 2012 population density for Ghana
 #'
-#' \code{
-#' curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 #'  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
 #'  -X POST -H 'Content-Type:application/json'
-#'
+#' --
 #' /ocpu/tmp/x03d5aa8e98/R/.val
 #' /ocpu/tmp/x03d5aa8e98/stdout
 #' /ocpu/tmp/x03d5aa8e98/source
@@ -23,8 +22,7 @@
 #'
 #' GET all generated plots in a ZIP archive
 #'
-#' \code{
-#' wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+#' \code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 #' }
 #'
 #' @param var character array of variable codes to plot
@@ -43,8 +41,7 @@
 #' @param height plot height in pixel (unless \code{units} is specified)
 #' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize
 #'
-#' @inheritParams grDevices::png
-#' @seealso \code{\link{hcapi}}
+#' @seealso \link{hcapi}
 #' @return Array of generated file names, one for each plot
 #' @examples
 #' # Generate standard raster plot of 2012 population density for sub-Saharan Africa

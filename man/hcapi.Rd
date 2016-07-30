@@ -41,11 +41,10 @@ format (see examples below).
 API call: mean body mass index and cassava yield across provinces and districts of
 Tanzania
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var":"cass_y", "iso3":"CIV", "format":"tif"}' \
  -X POST -H 'Content-Type:application/json'
-
+--
 /ocpu/tmp/x0bc1ac9bdf/R/.val
 /ocpu/tmp/x0bc1ac9bdf/stdout
 /ocpu/tmp/x0bc1ac9bdf/warnings
@@ -61,8 +60,7 @@ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
 
 GET all generated files in a ZIP archive
 
-\code{
-wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
+\code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 }
 
 API call: the method may be expanded to summarize classified (discrete) variables
@@ -70,8 +68,7 @@ along continuous variables. For example the call below returns the dominant
 agro-ecological zone and average stunting in children under 5 over Ethiopia's
 provinces and generic elevation zones
 
-\code{
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
  -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
  -X POST -H 'Content-Type:application/json'
 }
@@ -107,6 +104,6 @@ x
 
 }
 \seealso{
-\code{\link{getLayer}}, \code{\link{getLayerWKT}}, \code{\link{genFile}}
+\link{getLayer} \link{getLayerWKT} \link{genFile}
 }
 
