@@ -8,6 +8,8 @@
 body {
   font-family: 'Pt Sans', Arial, Helvetica, sans-serif;
   color: #444;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 h1,h2,h3,h4,h5 {
