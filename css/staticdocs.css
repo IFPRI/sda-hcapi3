@@ -3,8 +3,7 @@
 
 .navbar-inner {
   height: 60px;
-  background-color: #3E3C30;
-  background-image: url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat;
+  background: #3E3C30 url("http://tools.harvestchoice.org/assets/wordmark-HarvestChoice.png") no-repeat top right;
 }
 
 body {
@@ -17,17 +16,20 @@ h1,h2,h3,h4,h5 {
  font-weight: normal;
 }
 
-h2 {
-  padding-top: 20px;
-}
-
 .icon img {
   float: right;
   border: 1px solid #ccc;
 }
 
-.index .internal {display: none;}
-ul.index li {margin-bottom: 0.5em; clear: both;}
+.index .internal {
+  display: none;
+
+}
+
+ul.index li {
+  margin-bottom: 0.5em;
+  clear: both;
+}
 
 .Details code {
   color: #333333;
