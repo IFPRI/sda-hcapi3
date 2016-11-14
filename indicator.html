@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>indicator. hcapi3 3.7</title>
+<title>indicator. hcapi3 3.8</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.7</a>
+      <a class="brand" href="#">hcapi3 3.8</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -229,18 +229,18 @@ a data.table or hierarchical list of indicator metadata
 11:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
 12:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
     downloadedOn
- 1:   2016-07-30
- 2:   2016-07-30
- 3:   2016-07-30
- 4:   2016-07-30
- 5:   2016-07-30
- 6:   2016-07-30
- 7:   2016-07-30
- 8:   2016-07-30
- 9:   2016-07-30
-10:   2016-07-30
-11:   2016-07-30
-12:   2016-07-30
+ 1:   2016-11-14
+ 2:   2016-11-14
+ 3:   2016-11-14
+ 4:   2016-11-14
+ 5:   2016-11-14
+ 6:   2016-11-14
+ 7:   2016-11-14
+ 8:   2016-11-14
+ 9:   2016-11-14
+10:   2016-11-14
+11:   2016-11-14
+12:   2016-11-14
 </div>
 <div class='input'>
 # Show complete metadata for all HarvestChoice indicators matching &#39;population&#39;
@@ -250,16 +250,16 @@ indicator(&quot;population&quot;, as.class=&quot;list&quot;)[1:2]
 <div class='output'>$Demographics
 $Demographics$Population
 $Demographics$Population$Rural
-                    label     code            unit       type     period     category subcategory
-1:         Rural Pop. &#39;00 PN00_RUR         persons continuous       2000 Demographics  Population
-2:         Rural Pop. &#39;05 PN05_RUR         persons continuous circa 2005 Demographics  Population
-3: Rural Pop. density &#39;00 PD00_RUR  persons/sq. km continuous       2000 Demographics  Population
-4: Rural Pop. density &#39;05 PD05_RUR persons/sq. km. continuous circa 2005 Demographics  Population
-    item
-1: Rural
-2: Rural
-3: Rural
-4: Rural
+                    label     code            unit       type     period     category
+1:         Rural Pop. &#39;00 PN00_RUR         persons continuous       2000 Demographics
+2:         Rural Pop. &#39;05 PN05_RUR         persons continuous circa 2005 Demographics
+3: Rural Pop. density &#39;00 PD00_RUR  persons/sq. km continuous       2000 Demographics
+4: Rural Pop. density &#39;05 PD05_RUR persons/sq. km. continuous circa 2005 Demographics
+   subcategory  item
+1:  Population Rural
+2:  Population Rural
+3:  Population Rural
+4:  Population Rural
                                                                                                                                                                                                                                                                         sources
 1:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
 2: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
@@ -296,24 +296,24 @@ $Demographics$Population$Rural
 3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
 4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
    downloadedOn
-1:   2016-07-30
-2:   2016-07-30
-3:   2016-07-30
-4:   2016-07-30
+1:   2016-11-14
+2:   2016-11-14
+3:   2016-11-14
+4:   2016-11-14
 
 $Demographics$Population$Total
-                  label     code            unit       type     period     category subcategory
-1:     Pop. density &#39;05 PD05_TOT persons/sq. km. continuous circa 2005 Demographics  Population
-2:       Total Pop. &#39;00 PN00_TOT         persons continuous       2000 Demographics  Population
-3:       Total Pop. &#39;05 PN05_TOT         persons continuous circa 2005 Demographics  Population
-4:       Total Pop. &#39;12 PN12_TOT         persons continuous       2012 Demographics  Population
-5: Total Pop. Dens. &#39;12 PD12_TOT persons/sq. km. continuous       2012 Demographics  Population
-    item
-1: Total
-2: Total
-3: Total
-4: Total
-5: Total
+                  label     code            unit       type     period     category
+1:     Pop. density &#39;05 PD05_TOT persons/sq. km. continuous circa 2005 Demographics
+2:       Total Pop. &#39;00 PN00_TOT         persons continuous       2000 Demographics
+3:       Total Pop. &#39;05 PN05_TOT         persons continuous circa 2005 Demographics
+4:       Total Pop. &#39;12 PN12_TOT         persons continuous       2012 Demographics
+5: Total Pop. Dens. &#39;12 PD12_TOT persons/sq. km. continuous       2012 Demographics
+   subcategory  item
+1:  Population Total
+2:  Population Total
+3:  Population Total
+4:  Population Total
+5:  Population Total
                                                                                                                                                                                                                                                                         sources
 1: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
 2:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
@@ -357,21 +357,21 @@ $Demographics$Population$Total
 4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
 5: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
    downloadedOn
-1:   2016-07-30
-2:   2016-07-30
-3:   2016-07-30
-4:   2016-07-30
-5:   2016-07-30
+1:   2016-11-14
+2:   2016-11-14
+3:   2016-11-14
+4:   2016-11-14
+5:   2016-11-14
 
 $Demographics$Population$Urban
-                    label     code            unit       type     period     category subcategory
-1:         Urban Pop. &#39;00 PN00_URB         persons continuous       2000 Demographics  Population
-2:         Urban Pop. &#39;05 PN05_URB         persons continuous circa 2005 Demographics  Population
-3: Urban Pop. density &#39;05 PD05_URB persons/sq. km. continuous circa 2005 Demographics  Population
-    item
-1: Urban
-2: Urban
-3: Urban
+                    label     code            unit       type     period     category
+1:         Urban Pop. &#39;00 PN00_URB         persons continuous       2000 Demographics
+2:         Urban Pop. &#39;05 PN05_URB         persons continuous circa 2005 Demographics
+3: Urban Pop. density &#39;05 PD05_URB persons/sq. km. continuous circa 2005 Demographics
+   subcategory  item
+1:  Population Urban
+2:  Population Urban
+3:  Population Urban
                                                                                                                                                                                                                                                                         sources
 1:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
 2: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
@@ -401,9 +401,9 @@ $Demographics$Population$Urban
 2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
 3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
    downloadedOn
-1:   2016-07-30
-2:   2016-07-30
-3:   2016-07-30
+1:   2016-11-14
+2:   2016-11-14
+3:   2016-11-14
 
 
 

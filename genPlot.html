@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>genPlot. hcapi3 3.7</title>
+<title>genPlot. hcapi3 3.8</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.7</a>
+      <a class="brand" href="#">hcapi3 3.8</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -65,7 +65,8 @@
       <dt>layout</dt>
       <dd>one of "default", "print", or "thumbnail" to control legend and axes</dd>
       <dt>style</dt>
-      <dd>one of <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>style</code></dd>
+      <dd>one of <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>style</code>
+options (e.g. "kmeans" or "pretty") or "default" to use default breaks</dd>
       <dt>n</dt>
       <dd><code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>n</code> argument
 to control the number of breaks</dd>
@@ -76,12 +77,11 @@ to control the number of breaks</dd>
       <dt>units</dt>
       <dd>one of "px" (default), "in", "cm" or "mm".
 Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code></dd>
+      <dt>res</dt>
+      <dd>in ppi, by default set to 300ppi for print layout.
+Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code></dd>
       <dt>...</dt>
       <dd>any argument passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>, e.g. pointsize</dd>
-      <dt>resolution</dt>
-      <dd>in ppi, by default set to 300ppi for print layout.
-Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>
-options (e.g. "kmeans" or "pretty") or "default" to use default breaks</dd>
     </dl>
     
     <div class="Value">
@@ -98,7 +98,7 @@ Array of generated file names, one for each plot
 
       <p>Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 See examples below. Note that calling <code>genPlot(...)</code> is equivalent to calling
-the convenience function <code>hcapi(..., format="png")</code>.</p>
+the convenience function <code><a href='hcapi.html'>hcapi</a>(..., format="png")</code>.</p>
   
     </div>
 
@@ -133,24 +133,31 @@ the convenience function <code>hcapi(..., format="png")</code>.</p>
 x &lt;- genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
 x
 </div>
-<div class='output'>[1] &quot;PD12_TOT.png&quot;
+<p><img src='genPlot-2.png' alt='' width='540' height='400' /></p>
+<div class='output'>NULL
 </div>
 <div class='input'>
 
 # Generate 3 raster plots for Ghana with legend and title but not axes
 x &lt;- genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;cass_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
-x
 </div>
-<div class='output'>[1] &quot;AEZ16_CLAS.GHA.print.png&quot; &quot;cass_h.GHA.print.png&quot;    
+<strong class='error'>Error in match.arg(layout, c(&quot;default&quot;, &quot;thumbnail&quot;)): &#39;arg&#39; should be one of “default”, “thumbnail”</strong>
+<div class='input'>x
+</div>
+<div class='output'>NULL
 </div>
 <div class='input'>
 
 # Generate 3 raster plots for Nigeria with the specified dimensions
 x &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), iso3=&quot;NGA&quot;, width=5, height=5,
 units=&quot;in&quot;, res=200, pointsize=8)
-x
 </div>
-<div class='output'>[1] &quot;FS_2012.NGA.png&quot;    &quot;yield_l_cv.NGA.png&quot; &quot;soc_d15.NGA.png&quot;   
+<p><img src='genPlot-9.png' alt='' width='540' height='400' /></p>
+<p><img src='genPlot-10.png' alt='' width='540' height='400' /></p>
+<p><img src='genPlot-11.png' alt='' width='540' height='400' /></p>
+<div class='input'>x
+</div>
+<div class='output'>NULL
 </div>
 <div class='input'></div></pre>
   </div>

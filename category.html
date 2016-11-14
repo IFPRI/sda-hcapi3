@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>category. hcapi3 3.7</title>
+<title>category. hcapi3 3.8</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -32,7 +32,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#">hcapi3 3.7</a>
+      <a class="brand" href="#">hcapi3 3.8</a>
       <div class="nav">
         <ul class="nav">
           <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -103,18 +103,30 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
     <pre class="examples"><div class='input'># List all HarvestChoice indicators matching category &#39;demographics&#39;
 category(&quot;demographics&quot;)
 </div>
-<div class='output'>         category          subcategory            item           code                       label
-  1: Demographics Health and Nutrition Anthropometrics         weight         DHS sampling weight
-  2: Demographics Health and Nutrition Anthropometrics     weight_rur DHS sampling weight - rural
-  3: Demographics Health and Nutrition Anthropometrics     weight_urb DHS sampling weight - urban
-  4: Demographics Health and Nutrition Anthropometrics     mother_age                Mother&#39;s age
-  5: Demographics Health and Nutrition Anthropometrics mother_age_rur        Mother&#39;s age - rural
- ---                                                                                             
-134: Demographics           Population           Total       PN12_TOT              Total Pop. &#39;12
-135: Demographics           Population           Total       PD12_TOT        Total Pop. Dens. &#39;12
-136: Demographics           Population           Urban       PN00_URB              Urban Pop. &#39;00
-137: Demographics           Population           Urban       PN05_URB              Urban Pop. &#39;05
-138: Demographics           Population           Urban       PD05_URB      Urban Pop. density &#39;05
+<div class='output'>         category          subcategory            item           code
+  1: Demographics Health and Nutrition Anthropometrics         weight
+  2: Demographics Health and Nutrition Anthropometrics     weight_rur
+  3: Demographics Health and Nutrition Anthropometrics     weight_urb
+  4: Demographics Health and Nutrition Anthropometrics     mother_age
+  5: Demographics Health and Nutrition Anthropometrics mother_age_rur
+ ---                                                                 
+134: Demographics           Population           Total       PN12_TOT
+135: Demographics           Population           Total       PD12_TOT
+136: Demographics           Population           Urban       PN00_URB
+137: Demographics           Population           Urban       PN05_URB
+138: Demographics           Population           Urban       PD05_URB
+                           label
+  1:         DHS sampling weight
+  2: DHS sampling weight - rural
+  3: DHS sampling weight - urban
+  4:                Mother&#39;s age
+  5:        Mother&#39;s age - rural
+ ---                            
+134:              Total Pop. &#39;12
+135:        Total Pop. Dens. &#39;12
+136:              Urban Pop. &#39;00
+137:              Urban Pop. &#39;05
+138:      Urban Pop. density &#39;05
 </div>
 <div class='input'>
 # List all HarvestChoice indicators matching &#39;cassava&#39; in a hierarchical list
