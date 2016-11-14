@@ -1,7 +1,7 @@
 Package: hcapi3
 Type: Package
-Version: 3.7
-Date: 2016-02-28
+Version: 3.8
+Date: 2016-11-12
 Title: HarvestChoice Data Services v3
 Authors@R: c(
     person("Melanie", "Bacou", role=c("aut", "cre"), email="mel@mbacou.com"),
@@ -42,6 +42,6 @@ License: GPL (>= 3)
 URL: http://harvestchoice.github.io/hc-api3/, http://harvestchoice.org/
 BugReports: http://github.com/harvestchoice/hc-api3
 MailingList: support@harvestchoice.org
-Packaged: 2016-03-26 11:20:02 UTC; mbacou
+Packaged: 2016-11-12 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1

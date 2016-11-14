@@ -53,7 +53,7 @@
 #' @param format output format, one of "data.table", "csv", "tif", "dta", "asc", "grd", "rds",
 #' else "png" to plot the rasters, or "hist" to plot histogram and univariate statistics
 #' @param wkt WKT representation of a spatial object (points, multipoints, or polygons, multipolygons)
-#' @param ... other optional arguments passed to \code{\link{getLayer}}, \code{\link{genFile}},
+#' @param ... other optional arguments passed to \code{\link{getLayer}}, \code{\link{genFile},
 #' or to \code{\link{genPlot}}, e.g. \code{collapse}, \code{as.class}, \code{dir}, \code{pal}.
 #'
 #' @return a data.table (or other formats) of \code{var} indicators summarized by \code{by} domains
@@ -68,12 +68,11 @@
 #' barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"], col="grey90")
 #'
 #' # Mean cassava yield in Ivory Coast in GeoTIFF raster format
-#' x <- hcapi("cass_y", iso3="CIV", format="tif")
-#' x
+#' r <- hcapi("cass_y", iso3="CIV", format="tif")
 #'
 #' # Plot the generated TIF raster (one band only)
 #' require(raster)
-#' plot(raster(x[2]))
+#' plot(raster(r[2]))
 #'
 #' # The method may be expanded to summarize classified (discrete) variables along continuous
 #' # variables. For example the call below returns the dominant agro-ecological zone and
@@ -90,14 +89,14 @@
 #' @export
 hcapi <- function(var, iso3="SSA", by=NULL, wkt=NULL, format=NULL, ...) {
 
-  # Dispatch
+  # Dispatch method
   if (missing(var)) {
     stop("Argument 'var' is missing. Please enter a valid indicator code.")
   } else if (!missing(wkt)) {
     return(getLayerWKT(var, iso3=iso3, wkt=wkt, ...))
   } else if (missing(format)) {
     return(getLayer(var, iso3=iso3, by=by, ...))
-  } else if (format == "png") {
+  } else if (format == "plot") {
     return(genPlot(var, iso3=iso3, ...))
   } else if (format == "hist") {
     return(stats(var, iso3=iso3))

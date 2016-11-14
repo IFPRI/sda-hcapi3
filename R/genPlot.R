@@ -2,12 +2,12 @@
 #'
 #' Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 #' See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
-#' the convenience function \code{\link{hcapi}(..., format="png")}.
+#' the convenience function \code{\link{hcapi}(..., format="plot")}.
 #'
 #' API call: generate 2 plots showing farming systems and 2012 population density for Ghana
 #'
 #' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-#'  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
+#'  -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"plot"}' \
 #'  -X POST -H 'Content-Type:application/json'
 #' --
 #' /ocpu/tmp/x03d5aa8e98/R/.val
@@ -16,64 +16,42 @@
 #' /ocpu/tmp/x03d5aa8e98/console
 #' /ocpu/tmp/x03d5aa8e98/info
 #' /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
-#' /ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
-#' /ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+#' /ocpu/tmp/x03d5aa8e98/graphics/1
+#' /ocpu/tmp/x03d5aa8e98/graphics/2
 #' }
 #'
 #' GET all generated plots in a ZIP archive
 #'
-#' \code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+#' \code{
+#' $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/png?width=640
+#' $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/svg
 #' }
 #'
 #' @param var character array of variable codes to plot
 #' @param iso3 optional ISO3 country or region code(s)
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
-#' @param layout one of "default", "print", or "thumbnail" to control legend and axes
-#' @param style one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
-#' options (e.g. "kmeans" or "pretty") or "default" to use default breaks
-#' @param n \code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
-#'   to control the number of breaks
-#' @param units one of "px" (default), "in", "cm" or "mm".
-#'   Passed to \code{\link[grDevices:png]{png}}
-#' @param res in ppi, by default set to 300ppi for print layout.
-#'   Passed to \code{\link[grDevices:png]{png}}
-#' @param width plot width in pixel (unless \code{units} is specified)
-#' @param height plot height in pixel (unless \code{units} is specified)
-#' @param ... any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize
+#' @param layout one of "default" or "thumbnail" to control legend and axes
+#' @param style passed to \code{\link[classInt:classIntervals]{classIntervals}}
+#' @param ... any argument passed to \code{\link[classInt:classIntervals]{classIntervals}},
+#' e.g. \code{n=9} and \code{dataPrecision=0}.
 #'
-#' @seealso \link{hcapi}
-#' @return Array of generated file names, one for each plot
+#' @seealso \link{hcapi} link\[classInt:classIntervals]{classIntervals}
+#' @return Plot
 #' @examples
 #' # Generate standard raster plot of 2012 population density for sub-Saharan Africa
-#' x <- genPlot("PD12_TOT", pal="OrRd")
-#' x
-#' \dontshow{knitr::include_graphics(x)}
+#' genPlot("PD12_TOT", pal="YlOrRd", style="pretty", n=8)
 #'
 #' # Generate 3 raster plots for Ghana with legend and title but not axes
-#' x <- genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="print")
-#' x
-#' \dontshow{knitr::include_graphics(x)}
+#' genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="print")
 #'
 #' # Generate 3 raster plots for Nigeria with the specified dimensions
-#' x <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=5,
-#' units="in", res=200, pointsize=8)
-#' x
-#' \dontshow{knitr::include_graphics(x)}
+#' hcapi(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", format="plot")
 #'
 #' @export
-genPlot <- function(var, iso3="SSA", pal=character(0),
-  layout="default", style="default", n=integer(0),
-  width=switch(layout, default=640, print=5, thumbnail=120),
-  height=switch(layout, default=640, print=5, thumbnail=120),
-  units=switch(layout, default="px", print="in", thumbnail="px"),
-  res=switch(layout, print=300, NA), ...) {
+genPlot <- function(var, iso3="SSA", pal=character(0), layout="default", style=NULL, ...) {
 
   fPath <- character(0)
-
-  layout <- match.arg(layout, c("default", "print", "thumbnail"))
-  style <- match.arg(style, c("default",
-    "fixed", "sd", "equal", "pretty", "quantile", "kmeans",
-    "hclust", "bclust", "fisher", "jenks"))
+  layout <- match.arg(layout, c("default", "thumbnail"))
 
   # Get GAUL country boundaries
   rc <- RS.connect(port=getOption("hcapi3.port"), proxy.wait=F)
@@ -97,10 +75,10 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
       },
 
       continuous = {
-        if (style!="default") {
+        if (!missing(style)) {
           # Re-classify using classIntervals()
           require(classInt)
-          cv <- classIntervals(r$var, style=style, if(!missing(n)) n=n)$brks
+          cv <- classIntervals(r$var, ...)$brks
         }
 
         # Classify to 1-based integer using `cv`
@@ -114,9 +92,9 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
 
         # Plot with HC symbology
         if (length(pal)>0) {
-          cc <- colorRampPalette(brewer.pal(9, pal))(length(cl))
+          cc <- colorRampPalette(brewer.pal(9, pal))(255)
         } else {
-          cc <- colorRampPalette(cc)(length(cl))
+          cc <- colorRampPalette(cc)(255)
         }
       })
 
@@ -125,84 +103,53 @@ genPlot <- function(var, iso3="SSA", pal=character(0),
       tolerance=0.00564023, proj4string=CRS("+init=epsg:4326"))
     r <- raster(r)
 
-    # Crop to SSA (the grid was buffered)
-    if (ii=="SSA") r <- crop(r, g0)
-
-    # Open plot device
-    j <- c(i, if(ii!="SSA") ii, if(layout!="default") layout, "png")
-    j <- paste(j, collapse=".")
-    png(j, width=width, height=height, units=units, res=res, ...)
+    # Annotations
+    txt1 <- str_wrap(paste0(vi[i, varTitle], " (", vi[i, unit], ")  - ", names(iso)[iso==ii]), 60)
+    txt2 <- str_wrap(paste0(vi[i, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90)
 
     # Set global graphic parameters
-    par(family="Helvetica-Narrow", bty="n", cex.axis=.6, col.axis="grey50", fg="grey50")
+    par(bty="n", cex.main=.9, cex.sub=.7, cex.axis=.6, col.axis="grey50", fg="grey50")
 
     switch(layout,
       default = {
 
-        # Set margins
-        par(mar=c(6,3,4,1), oma=c(0,0,0,7))
-
         # Plot with axes (default)
-        plot(r, legend=F, col=cc)
+        plot(r, legend=F, col=cc, axes=F)
 
         # Add gridlines
         axis(1, tck=1, lty=3, lwd=.5, col="grey80")
         axis(2, tck=1, lty=3, lwd=.5, col="grey80")
 
         # Add legend
-        plot(r, legend.only=T, legend.width=1.5, col=cc,
+        plot(r,
+          legend.only=T, legend.shrink=1, legend.width=1, col=cc,
+          legend.args=list(NA, side=4, font=2, line=2.3),
           axis.args=list(at=1:length(cl), labels=cl, col.axis="grey10"))
 
         # Add annotations
-        title(col.main="grey10", adj=0, font.main=1, line=1,
-          main=str_wrap(paste0(
-            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==ii]), 50))
-        title(cex.sub=ifelse(width<10, .7, .8), col.sub="grey10", adj=0, line=5, font.sub=1,
-          sub=str_wrap(paste0("Source: ", vi[i][, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90))
-      },
-
-      print = {
-        # Set margins
-        par(mar=c(6,1,3,1), oma=c(0,0,0,7), xaxs="i", yaxs="i")
-
-        # Remove axes
-        plot(r, legend=F, col=cc, axes=F)
-
-        # Add legend
-        plot(r, legend.only=T, legend.width=1.5, col=cc,
-          axis.args=list(at=1:length(cl), labels=cl, col.axis="grey10"))
-
-        # Add annotations
-        title(col.main="grey10", adj=0, font.main=1, line=0,
-          main=str_wrap(paste0(
-            vi[i][, varTitle], " (", vi[i][, unit], ") - ", names(iso)[iso==ii]), 50))
-        title(cex.sub=ifelse(width<10, .7, .8), col.sub="grey10", adj=0, line=2, font.sub=1,
-          sub=str_wrap(paste0("Source: ", vi[i][, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90))
+        title(main=txt1, col.main="grey10", adj=0, font.main=1, line=1)
+        title(sub=txt2, col.sub="grey10", adj=0, line=(nchar(txt2) %/% 100)+2, font.sub=1)
       },
 
       thumbnail = {
         # Set margins
-        par(mar=c(0,0,0,0), oma=c(0,0,0,0), xpd=T, xaxs="i", yaxs="i")
-
+        par(xpd=T, xaxs="i", yaxs="i")
         # Remove axes and legend (need to use image() instead of plot())
         image(r, col=cc, asp=1, axes=F)
       }
     )
 
-    # Always add country boundaries
-    plot(g0, col=NA, border="gray50", lwd=.1, add=T)
-
     if (ii!="SSA") {
       # Also add province boundaries
       g1 <- RS.eval(rc, g1)
-      plot(g1[g1$ADM0_NAME==names(iso)[iso==ii],], col=NA, border="gray", lwd=.1, add=T)
+      plot(g1[g1$ADM0_NAME==names(iso)[iso==ii],], col=NA, border="gray40", lwd=.1, add=T)
     }
 
-    dev.off()
-    fPath <- c(fPath, j)
+    # Always add country boundaries
+    plot(g0, col=NA, border="gray30", lwd=.2, add=T)
+
   }
 
   RS.close(rc)
-  return(fPath)
 }
 

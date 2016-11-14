@@ -45,11 +45,11 @@ indicator <- function(q, version=NULL, as.class="data.table", cartoCSS=FALSE) {
   q <- tolower(q)
 
   out <- vi[published==TRUE & (
-    stringr::str_detect(tolower(varCode), q) |
-      stringr::str_detect(tolower(varLabel), q) |
-      stringr::str_detect(tolower(cat1), q) |
-      stringr::str_detect(tolower(cat2), q) |
-      stringr::str_detect(tolower(cat3), q)
+    str_detect(tolower(varCode), q) |
+      str_detect(tolower(varLabel), q) |
+      str_detect(tolower(cat1), q) |
+      str_detect(tolower(cat2), q) |
+      str_detect(tolower(cat3), q)
   ), .(
     label=varLabel,
     code=varCode,
@@ -138,10 +138,10 @@ category <- function(q=NULL, as.class="data.table") {
   } else {
     q <- tolower(q)
     out <- vi[published==TRUE & (
-      stringr::str_detect(tolower(varCode), q) |
-        stringr::str_detect(tolower(cat1), q) |
-        stringr::str_detect(tolower(cat2), q) |
-        stringr::str_detect(tolower(cat3), q)
+      str_detect(tolower(varCode), q) |
+        str_detect(tolower(cat1), q) |
+        str_detect(tolower(cat2), q) |
+        str_detect(tolower(cat3), q)
     ), .(code=varCode, label=varLabel),
       keyby=.(category=cat1, subcategory=cat2, item=cat3)]
   }

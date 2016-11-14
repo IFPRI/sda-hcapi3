@@ -20,6 +20,7 @@ import(data.table)
 import(sp)
 import(raster, except=c(shift))
 import(stringr)
+import(tmap)
 
 importFrom(jsonlite, toJSON)
 importFrom(foreign, write.dta)

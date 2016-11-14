@@ -1,7 +1,7 @@
 ---
-title: "CELL5M-SSA DATA PACKAGE"
+title:  "CELL5M-SSA DATA PACKAGE"
 author: "IFPRI/HarvestChoice"
-date: "$date$"
+date:   "$date$"
 ---
 
 
@@ -22,6 +22,7 @@ This data package was generated through this API. Here is the Curl commmand that
 
 
 ```bash
+
 curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
  -d '$json$' \
  -X POST -H 'Content-Type:application/json'
