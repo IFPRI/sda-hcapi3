@@ -5,10 +5,7 @@
 \title{Plot HarvestChoice 5-arc-minute spatial indicators}
 \usage{
 genPlot(var, iso3 = "SSA", pal = character(0), layout = "default",
-  style = "default", n = integer(0), width = switch(layout, default = 640,
-  print = 5, thumbnail = 120), height = switch(layout, default = 640, print =
-  5, thumbnail = 120), units = switch(layout, default = "px", print = "in",
-  thumbnail = "px"), res = switch(layout, print = 300, NA), ...)
+  style = NULL, ...)
 }
 \arguments{
 \item{var}{character array of variable codes to plot}
@@ -17,39 +14,26 @@ genPlot(var, iso3 = "SSA", pal = character(0), layout = "default",
 
 \item{pal}{optional Brewer color palette used for plotting, e.g. "Blues"}
 
-\item{layout}{one of "default", "print", or "thumbnail" to control legend and axes}
+\item{layout}{one of "default" or "thumbnail" to control legend and axes}
 
-\item{style}{one of \code{\link[classInt:classIntervals]{classIntervals}} \code{style}
-options (e.g. "kmeans" or "pretty") or "default" to use default breaks}
+\item{style}{passed to \code{\link[classInt:classIntervals]{classIntervals}}}
 
-\item{n}{\code{\link[classInt:classIntervals]{classIntervals}} \code{n} argument
-to control the number of breaks}
-
-\item{width}{plot width in pixel (unless \code{units} is specified)}
-
-\item{height}{plot height in pixel (unless \code{units} is specified)}
-
-\item{units}{one of "px" (default), "in", "cm" or "mm".
-Passed to \code{\link[grDevices:png]{png}}}
-
-\item{res}{in ppi, by default set to 300ppi for print layout.
-Passed to \code{\link[grDevices:png]{png}}}
-
-\item{...}{any argument passed to \code{\link[grDevices:png]{png}}, e.g. pointsize}
+\item{...}{any argument passed to \code{\link[classInt:classIntervals]{classIntervals}},
+e.g. \code{n=9} and \code{dataPrecision=0}.}
 }
 \value{
-Array of generated file names, one for each plot
+raster plot
 }
 \description{
 Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
-the convenience function \code{\link{hcapi}(..., format="png")}.
+the convenience function \code{\link{hcapi}(..., format="plot")}.
 }
 \details{
 API call: generate 2 plots showing farming systems and 2012 population density for Ghana
 
 \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
- -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
+ -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"plot"}' \
  -X POST -H 'Content-Type:application/json'
 --
 /ocpu/tmp/x03d5aa8e98/R/.val
@@ -58,34 +42,29 @@ API call: generate 2 plots showing farming systems and 2012 population density f
 /ocpu/tmp/x03d5aa8e98/console
 /ocpu/tmp/x03d5aa8e98/info
 /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
-/ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
-/ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+/ocpu/tmp/x03d5aa8e98/graphics/1
+/ocpu/tmp/x03d5aa8e98/graphics/2
 }
 
 GET all generated plots in a ZIP archive
 
-\code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+\code{
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/png?width=640
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/svg
 }
 }
 \examples{
 # Generate standard raster plot of 2012 population density for sub-Saharan Africa
-x <- genPlot("PD12_TOT", pal="OrRd")
-x
-\dontshow{knitr::include_graphics(x)}
+genPlot("PD12_TOT", pal="YlOrRd", style="pretty", n=8)
 
 # Generate 3 raster plots for Ghana with legend and title but not axes
-x <- genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="print")
-x
-\dontshow{knitr::include_graphics(x)}
+genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="thumbnail")
 
 # Generate 3 raster plots for Nigeria with the specified dimensions
-x <- genPlot(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", width=5, height=5,
-units="in", res=200, pointsize=8)
-x
-\dontshow{knitr::include_graphics(x)}
+hcapi(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", format="plot")
 
 }
 \seealso{
-\link{hcapi}
+\link{hcapi} link\[classInt:classIntervals]{classIntervals}
 }
 

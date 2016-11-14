@@ -51,7 +51,7 @@
 #' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
 #' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
 #' @param format output format, one of "data.table", "csv", "tif", "dta", "asc", "grd", "rds",
-#' else "png" to plot the rasters, or "hist" to plot histogram and univariate statistics
+#' else "plot" to plot the rasters, or "hist" to plot histogram and univariate statistics
 #' @param wkt WKT representation of a spatial object (points, multipoints, or polygons, multipolygons)
 #' @param ... other optional arguments passed to \code{\link{getLayer}}, \code{\link{genFile},
 #' or to \code{\link{genPlot}}, e.g. \code{collapse}, \code{as.class}, \code{dir}, \code{pal}.

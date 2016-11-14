@@ -36,13 +36,13 @@
 #' e.g. \code{n=9} and \code{dataPrecision=0}.
 #'
 #' @seealso \link{hcapi} link\[classInt:classIntervals]{classIntervals}
-#' @return Plot
+#' @return raster plot
 #' @examples
 #' # Generate standard raster plot of 2012 population density for sub-Saharan Africa
 #' genPlot("PD12_TOT", pal="YlOrRd", style="pretty", n=8)
 #'
 #' # Generate 3 raster plots for Ghana with legend and title but not axes
-#' genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="print")
+#' genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="thumbnail")
 #'
 #' # Generate 3 raster plots for Nigeria with the specified dimensions
 #' hcapi(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", format="plot")
