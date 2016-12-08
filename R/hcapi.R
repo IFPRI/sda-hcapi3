@@ -1,24 +1,25 @@
 #' Query, subset, summarize, and download HarvestChoice indicators
 #'
-#' Wrapper method to query, subset and/or aggregate HarvestChoice layers.
-#' This method may also be used to summarize classified variables along continuous
+#' Wrapper method to query, subset and/or aggregate HarvestChoice layers. This method
+#' may also be used to summarize classified variables along intervals of continuous
 #' variables, e.g. \code{hcapi(var="AEZ16_CLAS", by="bmi")}. Here \code{AEZ16_CLAS} is
 #' a classified (categorical) raster, and \code{bmi} is a continuous raster, but the
-#' request is valid. The dominant class of \code{AEZ16_CLAS} is returned along intervals
-#' of \code{bmi}. Default interval breaks are used but custom intervals may also be
-#' defined, e.g. \code{hcapi(var="AEZ16_CLAS", by=list(bmi=c(0,5,10,15,20,25)))}.
-#' The dominant class of a variable \code{var} is defined by \code{\link{dominant}(var)}.
-#' Layers may also be summarized over spatial points are areas (passed as WKT representations
-#' using argument \code{wkt}). Use the \code{format} argument to control the output
-#' format (see examples below).
+#' request is valid. The dominant class of \code{AEZ16_CLAS} is returned along
+#' intervals of \code{bmi}. Default interval breaks are used but custom intervals may
+#' also be defined, e.g. \code{hcapi(var="AEZ16_CLAS", by=list(bmi=c(0, 5, 10, 15, 20,
+#' 25)))}. The dominant class of a variable \code{var} is defined by
+#' \code{\link{dominant}(var)}. Layers may also be summarized over spatial points are
+#' areas (passed as WKT representations using argument \code{wkt}). Use the
+#' \code{format} argument to control the output format (see examples below).
 #'
-#' API call: mean body mass index and cassava yield across provinces and districts of
-#' Tanzania
+#' Sample API call: mean body mass index and cassava yield across provinces and
+#' districts of Tanzania
 #'
-#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
-#'  -d '{"var":"cass_y", "iso3":"CIV", "format":"tif"}' \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi
+#'  -d '{"var" : "cass_y", "iso3" : "CIV", "format" : "tif"}'
 #'  -X POST -H 'Content-Type:application/json'
-#' --
+#'
+#'
 #' /ocpu/tmp/x0bc1ac9bdf/R/.val
 #' /ocpu/tmp/x0bc1ac9bdf/stdout
 #' /ocpu/tmp/x0bc1ac9bdf/warnings
@@ -37,45 +38,58 @@
 #' \code{$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 #' }
 #'
-#' API call: the method may be expanded to summarize classified (discrete) variables
-#' along continuous variables. For example the call below returns the dominant
-#' agro-ecological zone and average stunting in children under 5 over Ethiopia's
-#' provinces and generic elevation zones
+#' Sample API call: the method may be expanded to summarize classified (discrete)
+#' variables along continuous variables. For example the call below returns the
+#' dominant agro-ecological zone and average stunting in children under 5 over
+#' Ethiopia's provinces and generic elevation zones
 #'
-#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
-#'  -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
+#' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json
+#'  -d '{
+#'    "var" : ["AEZ8_CLAS","stunted_moderate"],
+#'    "iso3" : "ETH",
+#'    "by" : ["ADM1_NAME_ALT","ELEVATION"]
+#'    }'
 #'  -X POST -H 'Content-Type:application/json'
 #' }
 #'
 #' @param var character array of variable codes, passed to \code{\link{getLayer}}
-#' @param iso3 character array of ISO3 country or region codes, passed to \code{\link{getLayer}}
-#' @param by character array of variable codes to summarize by, passed to \code{\link{getLayer}}
-#' @param format output format, one of "data.table", "csv", "tif", "dta", "asc", "grd", "rds",
-#' else "plot" to plot the rasters, or "hist" to plot histogram and univariate statistics
-#' @param wkt WKT representation of a spatial object (points, multipoints, or polygons, multipolygons)
-#' @param ... other optional arguments passed to \code{\link{getLayer}}, \code{\link{genFile},
-#' or to \code{\link{genPlot}}, e.g. \code{collapse}, \code{as.class}, \code{dir}, \code{pal}.
+#' @param iso3 character array of ISO3 country or region codes, passed to
+#'   \code{\link{getLayer}}
+#' @param by character array of variable codes to summarize by, passed to
+#'   \code{\link{getLayer}}
+#' @param format output format, one of "data.table", "csv", "tif", "dta", "asc",
+#'   "grd", "rds", else "plot" to plot the rasters, or "hist" to plot histogram and
+#'   univariate statistics
+#' @param wkt WKT representation of a spatial object (points, multipoints, or
+#'   polygons, multipolygons)
+#' @param ... other optional arguments passed to \code{\link{getLayer}},
+#'   \code{\link{genFile}}, or to \code{\link{genPlot}}, e.g. \code{collapse=TRUE},
+#'   \code{as.list=TRUE}, \code{dir}, \code{pal}.
 #'
-#' @return a data.table (or other formats) of \code{var} indicators summarized by \code{by} domains
+#' @return a data.table (or other formats) of HarvestChoice indicators optionally
+#' summarized over \code{by} domains
 #' @seealso \link{getLayer} \link{getLayerWKT} \link{genFile}
 #' @examples
 #' # Mean body mass index and cassava yield across provinces and districts of Tanzania
 #' x <- hcapi(c("bmi", "cass_y"), iso3="TZA", by=c("ADM1_NAME_ALT", "ADM2_NAME_ALT"))
 #' x
 #'
+#' # To identify HarvestChoice indicator codes, query the entire catalog using category()
+#' category("poverty")
+#'
 #' # Plot results for Mara province
 #' require(lattice)
 #' barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT=="Mara"], col="grey90")
 #'
-#' # Mean cassava yield in Ivory Coast in GeoTIFF raster format
+#' # Return mean cassava yield in Ivory Coast in GeoTIFF format
 #' r <- hcapi("cass_y", iso3="CIV", format="tif")
 #'
-#' # Plot the generated TIF raster (one band only)
+#' # Plot the generated GeoTIFF raster (one band only)
 #' require(raster)
 #' plot(raster(r[2]))
 #'
 #' # The method may be expanded to summarize classified (discrete) variables along continuous
-#' # variables. For example the call below returns the dominant agro-ecological zone and
+#' # variables. For example the call below returns dominant agro-ecological zone and
 #' # average stunting in children under 5 over Ethiopia's provinces by elevation class
 #' x <- hcapi(c("AEZ8_CLAS", "stunted_moderate"), iso3="ETH", by=c("ADM1_NAME_ALT", "ELEVATION"))
 #' x

@@ -4,7 +4,7 @@
 \alias{indicator}
 \title{Return HarvestChoice indicator metadata}
 \usage{
-indicator(q, version = NULL, as.class = "data.table", cartoCSS = FALSE)
+indicator(q, version = NULL, as.list = FALSE, cartoCSS = FALSE)
 }
 \arguments{
 \item{q}{character array of pattern(s) to search against HarvestChoice indicator codes,
@@ -12,8 +12,7 @@ labels, and categories. Will attempt a fuzzy match.}
 
 \item{version}{optional version filter}
 
-\item{as.class}{"data.table" (default) or "list" for a list of indicators grouped
-by category}
+\item{as.list}{if TRUE return a list of indicators grouped by category}
 
 \item{cartoCSS}{also include formatted CartoCSS rules}
 }
@@ -34,7 +33,7 @@ Return complete metadata records for selected HarvestChoice indicators.
 API call: metadata records for all indicators matching 'population' in a list
 
 \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
- -d '{"q" : "population", "as.class" : "list"}' \
+ -d '{"q" : "population", "as.list" : "true"}' \
  -X POST -H "Content-Type:application/json"
 }
 }

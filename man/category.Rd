@@ -4,13 +4,13 @@
 \alias{category}
 \title{Return HarvestChoice indicator categories (3-level deep)}
 \usage{
-category(q = NULL, as.class = "data.table")
+category(q = NULL, as.list = FALSE)
 }
 \arguments{
 \item{q}{character array of pattern(s) to search for. If omitted will return all
 available indicators.}
 
-\item{as.class}{"data.table" or "list" of indicator codes grouped by category}
+\item{as.list}{if TRUE returns a list of indicator codes grouped by category}
 }
 \value{
 a data.table showing the number of indicators in each category,
@@ -27,7 +27,7 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 
 # API call: list all HarvestChoice indicators matching 'cassava' in a hierarchical list
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
- -d '{"q" :" cassava", "as.class" : "list"} \
+ -d '{"q" :" cassava", "as.list" : "true"} \
  -X POST -H "Content-Type:application/json"
 
 # To return a complete list of published indicators omit 'q'

@@ -13,15 +13,14 @@
 #' API call: metadata records for all indicators matching 'population' in a list
 #'
 #' \code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/indicator/json \
-#'  -d '{"q" : "population", "as.class" : "list"}' \
+#'  -d '{"q" : "population", "as.list" : "true"}' \
 #'  -X POST -H "Content-Type:application/json"
 #' }
 #'
 #' @param q character array of pattern(s) to search against HarvestChoice indicator codes,
 #' labels, and categories. Will attempt a fuzzy match.
 #' @param version optional version filter
-#' @param as.class "data.table" (default) or "list" for a list of indicators grouped
-#' by category
+#' @param as.list if TRUE return a list of indicators grouped by category
 #' @param cartoCSS also include formatted CartoCSS rules
 #'
 #' @return a data.table or hierarchical list of indicator metadata
@@ -36,7 +35,7 @@
 #' indicator("population", as.class="list")[1:2]
 #'
 #' @export
-indicator <- function(q, version=NULL, as.class="data.table", cartoCSS=FALSE) {
+indicator <- function(q, version=NULL, as.list=FALSE, cartoCSS=FALSE) {
 
   if(missing(q) | paste(q, collapse="")=="") stop(
     "'q' is missing. Enter a search string to query HarvestChoice metadata records,
@@ -86,7 +85,7 @@ or use 'category()' to return a complete catalog.")
 
   setkey(out, category, subcategory, item, label, code)
 
-  if (as.class=="list") {
+  if (as.list==TRUE) {
     # Group by category
     out <- split(out, out$category)
     out <- lapply(out, function(x) split(x, x$subcategory))
@@ -108,7 +107,7 @@ or use 'category()' to return a complete catalog.")
 #'
 #' # API call: list all HarvestChoice indicators matching 'cassava' in a hierarchical list
 #' $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
-#'  -d '{"q" :" cassava", "as.class" : "list"} \
+#'  -d '{"q" :" cassava", "as.list" : "true"} \
 #'  -X POST -H "Content-Type:application/json"
 #'
 #' # To return a complete list of published indicators omit 'q'
@@ -118,7 +117,7 @@ or use 'category()' to return a complete catalog.")
 #'
 #' @param q character array of pattern(s) to search for. If omitted will return all
 #' available indicators.
-#' @param as.class "data.table" or "list" of indicator codes grouped by category
+#' @param as.list if TRUE returns a list of indicator codes grouped by category
 #'
 #' @return a data.table showing the number of indicators in each category,
 #' or a list of indicators grouped by category
@@ -130,7 +129,7 @@ or use 'category()' to return a complete catalog.")
 #' # List all HarvestChoice indicators matching 'cassava' in a hierarchical list
 #' category("cassava", as.class="list")
 #' @export
-category <- function(q=NULL, as.class="data.table") {
+category <- function(q=NULL, as.list=FALSE) {
 
   if (missing(q) | paste(q, collapse="")=="") {
     out <- vi[, .(code=varCode, label=varLabel),
@@ -151,7 +150,7 @@ or use 'category()' to return a complete catalog.")
 
   setkey(out, category, subcategory, item, label, code)
 
-  if (as.class=="list") {
+  if (as.list==TRUE) {
     out <- split(out, out$category)
     out <- lapply(out, function(i) split(i, i$subcategory))
   }

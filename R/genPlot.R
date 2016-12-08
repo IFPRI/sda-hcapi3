@@ -105,7 +105,7 @@ genPlot <- function(var, iso3="SSA", pal=character(0), layout="default", style=N
 
     # Annotations
     txt1 <- str_wrap(paste0(vi[i, varTitle], " (", vi[i, unit], ")  - ", names(iso)[iso==ii]), 60)
-    txt2 <- str_wrap(paste0(vi[i, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 90)
+    txt2 <- str_wrap(paste0(vi[i, sources], " \u00a9HarvestChoice/IFPRI, 2015."), 70)
 
     # Set global graphic parameters
     par(bty="n", cex.main=.9, cex.sub=.7, cex.axis=.6, col.axis="grey50", fg="grey50")
@@ -128,7 +128,7 @@ genPlot <- function(var, iso3="SSA", pal=character(0), layout="default", style=N
 
         # Add annotations
         title(main=txt1, col.main="grey10", adj=0, font.main=1, line=1)
-        title(sub=txt2, col.sub="grey10", adj=0, line=(nchar(txt2) %/% 100)+2, font.sub=1)
+        title(sub=txt2, col.sub="grey10", adj=0, line=(nchar(txt2) %/% 100)+3, font.sub=1)
       },
 
       thumbnail = {

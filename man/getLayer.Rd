@@ -5,7 +5,7 @@
 \title{Query, subset, and/or summarize HarvestChoice indicators}
 \usage{
 getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
-  as.class = "data.table")
+  as.list = FALSE)
 }
 \arguments{
 \item{var}{character array of variable names (all types are accepted). Use e.g.
@@ -14,37 +14,37 @@ getLayer(var, iso3 = "SSA", by = NULL, ids = NULL, collapse = TRUE,
 \item{iso3}{optional array of 3-letter country or regional code(s) to filter by.
 Use \code{iso} to view all available codes.}
 
-\item{by}{optional character array of variables to summarize by (all types are accepted)}
+\item{by}{optional character array of variables to summarize by (all types are
+accepted)}
 
-\item{ids}{optional array of gridcell ids to filter by (if \code{collapse=FALSE}) or
-summarize by (if collapse=TRUE).}
+\item{ids}{optional array of gridcell ids to filter by (if \code{collapse=FALSE})
+or summarize by (if collapse=TRUE).}
 
-\item{collapse}{if TRUE collapses over \code{by} variables. If FALSE always return
-all pixel values (useful for plotting and to convert to spatial formats).}
+\item{collapse}{if TRUE results are collapsed (summarized) over \code{by}
+variables. If FALSE always return all pixel values (useful for plotting and to
+convert the resulting table to spatial formats)}
 
-\item{as.class}{one of "data.table" (default) or "list". By default returns a simple
-data.table. If \code{as.class="list"} returns a list with variable metadata.}
+\item{as.list}{if TRUE returns a list with variable metadata instead of a simple
+data.table}
 }
 \value{
-a data.table (or json array) of \code{var} indicators aggregated by
-\code{by} domains
+a data.table or list of \code{var} indicators aggregated by \code{by}
+  domains
 }
 \description{
-Workhorse method to query, subset and/or aggregate HarvestChoice layers.
-This method may also be used to summarize classified variables along continuous
-variables, e.g. \code{\link{getLayer}(var="AEZ16_CLAS", by="bmi")}.
-It does so by returning the dominant class of a classified variable within each \code{by}
-class, and by splitting any continuous variable passed to \code{by} using default value
-breaks. The dominant class of a variable \code{var} is defined as \code{\link{dominant}(var)}.
-Variables may also be summarized over custom areas (passed as an integer array of
-gridcell IDs). Note that calling \code{\link{getLayer}} is equivalent to using the
-convenience method \code{\link{hcapi}} with the same arguments.
+Workhorse method to query, subset and/or aggregate HarvestChoice layers. This
+method may also be used to summarize classified variables along intervals of
+continuous variables, e.g. \code{getLayer(var="AEZ16_CLAS", by="bmi")}. The
+dominant class of a variable \code{var} is defined as \code{\link{dominant}(var)}.
+Variables may also be summarized over custom geographic areas (passed as an integer
+array of gridcell IDs). Note that calling \code{\link{getLayer}} is equivalent to
+using the convenience method \code{\link{hcapi}} with the same arguments.
 }
 \details{
-API call: mean body mass index and maize yield across districts in Tanzania
+Sample API call: mean body mass index and maize yield across districts in Tanzania
 
-\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
- -d '{"var":["AEZ8_CLAS","bana_h"], "iso3":"CIV", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json
+ -d '{"var" : ["AEZ8_CLAS","bana_h"], "iso3" : "CIV", "by" : ["ADM1_NAME_ALT","ELEVATION"]}'
  -X POST -H 'Content-Type:application/json'
 }
 }
@@ -57,9 +57,10 @@ x
 require(lattice)
 barchart(ADM2_NAME_ALT~bmi, x[ADM1_NAME_ALT=="Mara"], col="grey90")
 
-# The method may be expanded to summarize classified (discrete) variables by continuous
-# variables. For example the call below returns the dominant agro-ecological zone and
-# banana harvested area over Ivory Coast's provinces and elevation zones
+# The method may be expanded to summarize classified (discrete) variables along
+# intervals of continuous variables. For example the call below returns the dominant
+# agro-ecological zone and total banana harvested area over Ivory Coast's provinces
+# and elevation zones
 x <- hcapi(c("AEZ8_CLAS", "bana_h"), iso3="CIV", by=c("ADM1_NAME_ALT", "ELEVATION"))
 x
 
