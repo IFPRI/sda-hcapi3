@@ -191,7 +191,7 @@ $(document).ready(function () {
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    66    0    66    0     0    849      0 --:--:-- --:--:-- --:--:--  1466
+  0    66    0    66    0     0    822      0 --:--:-- --:--:-- --:--:--  1375
 ## Redirect to http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/</code></pre>
 <p>The main data query method is <code>hcapi()</code> with a REST endpoint at (<a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi</a>)[/R/hcapi]. <code>category()</code> and <code>describe()</code> may be used to return indicator metadata. Other methods, like <code>classify()</code> (summarizing indicators across custom geographic domains) and <code>similar()</code> (ranking areas by similarity) are useful to conduct advanced analyses.</p>
 </div>
@@ -310,7 +310,7 @@ $(document).ready(function () {
 ##      plot(raster(r[2]))
 ##      
 ##      # The method may be expanded to summarize c
-101  4791    0  4791    0     0  65188      0 --:--:-- --:--:-- --:--:-- 95820
+101  4791    0  4791    0     0  77231      0 --:--:-- --:--:-- --:--:--  123k
 ## lassified (discrete) variables along continuous
 ##      # variables. For example the call below returns dominant agro-ecological zone and
 ##      # average stunting in children under 5 over Ethiopia's provinces by elevation class
@@ -333,8 +333,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0   1723 --:--:-- --:--:-- --:--:--  1723
-143   389    0   389    0    40   1486    152 --:--:-- --:--:-- --:--:--  1466
+  0     0    0     0    0    40      0   1733 --:--:-- --:--:-- --:--:--  1733
+143   389    0   389    0    40   1457    149 --:--:-- --:--:-- --:--:--  1436
 ## [
 ##   {
 ##     &quot;ISO3&quot;: &quot;GHA&quot;,
@@ -369,19 +369,20 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   2275 --:--:-- --:--:-- --:--:--  2275
-114   404    0   404    0    53   1521    199 --:--:-- --:--:-- --:--:--  1450
-## /ocpu/tmp/x0b32b21912/R/.val
-## /ocpu/tmp/x0b32b21912/stdout
-## /ocpu/tmp/x0b32b21912/source
-## /ocpu/tmp/x0b32b21912/console
-## /ocpu/tmp/x0b32b21912/info
-## /ocpu/tmp/x0b32b21912/files/datapackage.json
-## /ocpu/tmp/x0b32b21912/files/DESCRIPTION
-## /ocpu/tmp/x0b32b21912/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
-## /ocpu/tmp/x0b32b21912/files/meta.csv
-## /ocpu/tmp/x0b32b21912/files/README.md
-## /ocpu/tmp/x0b32b21912/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   2293 --:--:-- --:--:-- --:--:--  2293
+114   404    0   404    0    53   1492    195 --:--:-- --:--:-- --:--:--  1415
+114   404    0   404    0    53   1492    195 --:--:-- --:--:-- --:--:--  1415
+## /ocpu/tmp/x0b8fc1e2fc/R/.val
+## /ocpu/tmp/x0b8fc1e2fc/stdout
+## /ocpu/tmp/x0b8fc1e2fc/source
+## /ocpu/tmp/x0b8fc1e2fc/console
+## /ocpu/tmp/x0b8fc1e2fc/info
+## /ocpu/tmp/x0b8fc1e2fc/files/datapackage.json
+## /ocpu/tmp/x0b8fc1e2fc/files/DESCRIPTION
+## /ocpu/tmp/x0b8fc1e2fc/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
+## /ocpu/tmp/x0b8fc1e2fc/files/meta.csv
+## /ocpu/tmp/x0b8fc1e2fc/files/README.md
+## /ocpu/tmp/x0b8fc1e2fc/files/terms.html</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3>Example #5: same request returning a file in RData format</h3>
@@ -390,20 +391,19 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   2288 --:--:-- --:--:-- --:--:--  2288
-114   404    0   404    0    53   1570    206 --:--:-- --:--:-- --:--:--  1493
-114   404    0   404    0    53   1570    206 --:--:-- --:--:-- --:--:--  1493
-## /ocpu/tmp/x0201d4330f/R/.val
-## /ocpu/tmp/x0201d4330f/stdout
-## /ocpu/tmp/x0201d4330f/source
-## /ocpu/tmp/x0201d4330f/console
-## /ocpu/tmp/x0201d4330f/info
-## /ocpu/tmp/x0201d4330f/files/datapackage.json
-## /ocpu/tmp/x0201d4330f/files/DESCRIPTION
-## /ocpu/tmp/x0201d4330f/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
-## /ocpu/tmp/x0201d4330f/files/meta.csv
-## /ocpu/tmp/x0201d4330f/files/README.md
-## /ocpu/tmp/x0201d4330f/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   1287 --:--:-- --:--:-- --:--:--  1287
+114   404    0   404    0    53   1386    181 --:--:-- --:--:-- --:--:--  1404
+## /ocpu/tmp/x08d4b78fe5/R/.val
+## /ocpu/tmp/x08d4b78fe5/stdout
+## /ocpu/tmp/x08d4b78fe5/source
+## /ocpu/tmp/x08d4b78fe5/console
+## /ocpu/tmp/x08d4b78fe5/info
+## /ocpu/tmp/x08d4b78fe5/files/datapackage.json
+## /ocpu/tmp/x08d4b78fe5/files/DESCRIPTION
+## /ocpu/tmp/x08d4b78fe5/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
+## /ocpu/tmp/x08d4b78fe5/files/meta.csv
+## /ocpu/tmp/x08d4b78fe5/files/README.md
+## /ocpu/tmp/x08d4b78fe5/files/terms.html</code></pre>
 <p>Other possible formats include <code>csv</code>, <code>json</code> for GeoJSON, and raster formats <code>grd</code>, <code>tif</code> and <code>asc</code> for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add <code>/zip</code> to the session endpoint.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -414,8 +414,8 @@ $(document).ready(function () {
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   3153 --:--:-- --:--:-- --:--:--  3153
-  0    55    0    55    0    73    670    889 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0    73      0   3160 --:--:-- --:--:-- --:--:--  3160
+  0    55    0    55    0    73    745    989 --:--:-- --:--:-- --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code>--2015-02-03 04:10:38--
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
@@ -440,8 +440,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    573 --:--:-- --:--:-- --:--:--   573
-  0    70    0    70    0    13    582    108 --:--:-- --:--:-- --:--:--   587
+  0     0    0     0    0    13      0    572 --:--:-- --:--:-- --:--:--   572
+  0    70    0    70    0    13    616    114 --:--:-- --:--:-- --:--:--   633
 ## unused argument (cat = &quot;climate&quot;)
 ## 
 ## In call:
@@ -454,7 +454,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    96    0    96    0     0   1762      0 --:--:-- --:--:-- --:--:--  3096
+  0    96    0    96    0     0   1656      0 --:--:-- --:--:-- --:--:--  6000
 ## No documentation for 'describe' in specified packages and libraries:
 ## you could try '??describe'</code></pre>
 </div>
@@ -465,8 +465,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    390 --:--:-- --:--:-- --:--:--   390
-121   112    0   112    0     9   1643    132 --:--:-- --:--:-- --:--:--  2288
+  0     0    0     0    0     9      0    392 --:--:-- --:--:-- --:--:--   392
+121   112    0   112    0     9   1537    123 --:--:-- --:--:-- --:--:--  2102
 ## object 'describe' not found
 ## 
 ## In call:

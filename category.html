@@ -130,9 +130,35 @@ category(&quot;demographics&quot;)
 </div>
 <div class='input'>
 # List all HarvestChoice indicators matching &#39;cassava&#39; in a hierarchical list
-category(&quot;cassava&quot;, as.class=&quot;list&quot;)
+category(&quot;cassava&quot;, as.list=TRUE)
 </div>
-<strong class='error'>Error in category(&quot;cassava&quot;, as.class = &quot;list&quot;): unused argument (as.class = &quot;list&quot;)</strong></pre>
+<div class='output'>$Agriculture
+$Agriculture$`Harvested Area`
+      category    subcategory    item     code                 label
+1: Agriculture Harvested Area Cassava   cass_h      Cassava area &#39;05
+2: Agriculture Harvested Area Cassava cass_i_h Irr. cassava area &#39;05
+3: Agriculture Harvested Area Cassava cass_r_h Rfd. cassava area &#39;05
+
+$Agriculture$Production
+      category subcategory    item     code                  label
+1: Agriculture  Production Cassava   cass_p      Cassava prod. &#39;05
+2: Agriculture  Production Cassava cass_i_p Irr. cassava prod. &#39;05
+3: Agriculture  Production Cassava cass_r_p Rfd. cassava prod. &#39;05
+
+$Agriculture$`Value of Production`
+      category         subcategory    item     code                       label
+1: Agriculture Value of Production Cassava   cass_v      Cassava val. prod. &#39;05
+2: Agriculture Value of Production Cassava cass_i_v Irr. cassava val. prod. &#39;05
+3: Agriculture Value of Production Cassava cass_r_v Rfd. cassava val. prod. &#39;05
+
+$Agriculture$Yield
+      category subcategory    item     code                  label
+1: Agriculture       Yield Cassava   cass_y      Cassava yield &#39;05
+2: Agriculture       Yield Cassava cass_i_y Irr. cassava yield &#39;05
+3: Agriculture       Yield Cassava cass_r_y Rfd. cassava yield &#39;05
+
+
+</div></pre>
   </div>
   <div class="span4">
     <!-- <ul>
