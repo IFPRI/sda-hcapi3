@@ -44,9 +44,9 @@
 
     <div class="container">
       <header>
-        
+
       </header>
-      
+
       <div class="row">
   <div class="span8">
     <hr/>
@@ -64,15 +64,6 @@
 The preferred method of data retrieval is through HarvestChoice RESTful API published under <a href="http://harvestchoice.github.io/hc-api3/">HarvestChoice Data Services v3.0</a>. This API provides a full range of methods to retrieve, summarize, aggregate, graph and map HarvestChoice 5-arc-minute spatial layers for sub-Saharan Africa.</li>
 </ul>
 
-<p>This data package was generated through this API. Here is the Curl commmand that was used to retrieve this archive:</p>
-
-<pre><code class="bash">
-curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
- -d &#39;{&quot;var&quot;:[&quot;cass_y&quot;]}&#39; \
- -X POST -H &#39;Content-Type:application/json&#39;
-
-</code></pre>
-
 <p>Other data retrieval and data visualization options are listed below. </p>
 
 <ul>
@@ -83,10 +74,6 @@ Another tool for quick data summaries is <a href="http://harvestchoice.org/tablr
 <li><p><strong>HarvestChoice Data Catalog</strong><br/>
 For more information about the <em>International Food Policy Resaearch Institute (IFPRI)</em> and <em>HarvestChoice Program</em>, and to explore individual data layers, visit <a href="http://harvestchoice.org/">HarvestChoice website</a>.</p></li>
 </ul>
-
-<h2>Metadata</h2>
-
-<p>This package contains both a <code>META.csv</code> file with complete metadata records. A <code>datapackage.json</code> file compliant with the latest <strong>Tabular Data Package</strong> RFC specifications documented at <a href="http://dataprotocols.org/tabular-data-package/">http://dataprotocols.org/tabular-data-package/</a> is also included.</p>
 
 <h2>Use Terms</h2>
 
@@ -104,70 +91,70 @@ For more information about the <em>International Food Policy Resaearch Institute
     <h2>Help topics</h2>
 
     <h3></h3>
-    
-    
+
+
     <ul class="index">
-        
+
       <li>
         <code><a href="category.html">category</a></code><br />Return HarvestChoice indicator categories (3-level deep)</li>
-            
+
       <li>
         <code><a href="datapackage.html">datapackage</a></code><br />Write auxiliary files to CSV and JSON (Tabular Data Package RFC specifications)</li>
-            
+
       <li>
         <code><a href="dominant.html">dominant</a></code><br />Return the dominant class (the mode of a classified variable)</li>
-            
+
       <li>
         <code><a href="genCartoCSS.html">genCartoCSS</a></code><br />Generate CartoCSS snippet to symbolize raster tiles</li>
-            
+
       <li>
         <code><a href="genFile.html">genFile</a></code><br />Download HarvestChoice indicators in raster and/or tabular formats</li>
-            
+
       <li>
         <code><a href="genPlot.html">genPlot</a></code><br />Plot HarvestChoice 5-arc-minute spatial indicators</li>
-            
+
       <li>
         <code><a href="genRank.html">genRank</a></code><br />Rank agricultural productions across geographies</li>
-            
+
       <li>
         <code><a href="getLayer.html">getLayer</a></code><br />Query, subset, and/or summarize HarvestChoice indicators</li>
-            
+
       <li>
         <code><a href="getLayerWKT.html">getLayerWKT</a></code><br />Summarize HarvestChoice indicators over WKT geometri(es)</li>
-            
+
       <li>
         <code><a href="hcapi.html">hcapi</a></code><br />Query, subset, summarize, and download HarvestChoice indicators</li>
-            
+
       <li>
         <code><a href="indicator.html">indicator</a></code><br />Return HarvestChoice indicator metadata</li>
-            
+
       <li>
         <code><a href="iso.html">iso</a></code><br />List of ISO3 country and/or region codes</li>
-            
+
       <li>
         <code><a href="similar.html">similar</a></code><br />Rank spatial units by similarity</li>
-            
+
       <li>
         <code><a href="stats.html">stats</a></code><br />Generate histogram and boxplot of HarvestChoice indicators</li>
-            
+
       <li>
         <code><a href="vi.html">vi</a></code><br />Catalog of HarvestChoice indicators</li>
-    
+
     </ul>
   </div>
-  
+
   <div class="span3 offset1">
     <h2>Vignettes</h2>
     <ul>
       <li><a href="vignettes/hcapi3.html">hcapi3</a></li>
     </ul>
-        
+
     <h2>Dependencies</h2>
     <ul>
       <li><strong>Depends</strong>: data.table</li>
       <li><strong>Imports</strong>: RSclient, stringr</li>
       <li><strong>Suggests</strong>: raster, sp, classInt, RColorBrewer, foreign, rgdal, rgeos</li>
-      
+
     </ul>
     <h2>Authors</h2>
     <ul>
@@ -182,7 +169,7 @@ For more information about the <em>International Food Policy Resaearch Institute
 
   </div>
 </div>
-      
+
       <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
 <p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>

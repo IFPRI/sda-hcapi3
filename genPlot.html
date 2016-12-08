@@ -52,7 +52,7 @@
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>genPlot(var, iso3&nbsp;=&nbsp;"SSA", pal&nbsp;=&nbsp;character(0), layout&nbsp;=&nbsp;"default", style&nbsp;=&nbsp;"default", n&nbsp;=&nbsp;integer(0), width&nbsp;=&nbsp;switch(layout, default&nbsp;=&nbsp;640, print&nbsp;=&nbsp;5, thumbnail&nbsp;=&nbsp;120), height&nbsp;=&nbsp;switch(layout, default&nbsp;=&nbsp;640, print = 5, thumbnail&nbsp;=&nbsp;120), units&nbsp;=&nbsp;switch(layout, default&nbsp;=&nbsp;"px", print&nbsp;=&nbsp;"in", thumbnail&nbsp;=&nbsp;"px"), res&nbsp;=&nbsp;switch(layout, print&nbsp;=&nbsp;300, NA), ...)</div></pre>
+    <pre><div>genPlot(var, iso3&nbsp;=&nbsp;"SSA", pal&nbsp;=&nbsp;character(0), layout&nbsp;=&nbsp;"default", style&nbsp;=&nbsp;NULL, ...)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
@@ -63,32 +63,19 @@
       <dt>pal</dt>
       <dd>optional Brewer color palette used for plotting, e.g. "Blues"</dd>
       <dt>layout</dt>
-      <dd>one of "default", "print", or "thumbnail" to control legend and axes</dd>
+      <dd>one of "default" or "thumbnail" to control legend and axes</dd>
       <dt>style</dt>
-      <dd>one of <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>style</code>
-options (e.g. "kmeans" or "pretty") or "default" to use default breaks</dd>
-      <dt>n</dt>
-      <dd><code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code> <code>n</code> argument
-to control the number of breaks</dd>
-      <dt>width</dt>
-      <dd>plot width in pixel (unless <code>units</code> is specified)</dd>
-      <dt>height</dt>
-      <dd>plot height in pixel (unless <code>units</code> is specified)</dd>
-      <dt>units</dt>
-      <dd>one of "px" (default), "in", "cm" or "mm".
-Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code></dd>
-      <dt>res</dt>
-      <dd>in ppi, by default set to 300ppi for print layout.
-Passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code></dd>
+      <dd>passed to <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code></dd>
       <dt>...</dt>
-      <dd>any argument passed to <code><a href='http://www.inside-r.org/r-doc/grDevices/png'>png</a></code>, e.g. pointsize</dd>
+      <dd>any argument passed to <code><a href='http://www.inside-r.org/packages/cran/classInt/docs/classIntervals'>classIntervals</a></code>,
+e.g. <code>n=9</code> and <code>dataPrecision=0</code>.</dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-Array of generated file names, one for each plot
+raster plot
 </dl></p>
   
     </div>
@@ -98,7 +85,7 @@ Array of generated file names, one for each plot
 
       <p>Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 See examples below. Note that calling <code>genPlot(...)</code> is equivalent to calling
-the convenience function <code><a href='hcapi.html'>hcapi</a>(..., format="png")</code>.</p>
+the convenience function <code><a href='hcapi.html'>hcapi</a>(..., format="plot")</code>.</p>
   
     </div>
 
@@ -108,7 +95,7 @@ the convenience function <code><a href='hcapi.html'>hcapi</a>(..., format="png")
       <p>API call: generate 2 plots showing farming systems and 2012 population density for Ghana</p>
   
       <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
- -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"png"}' \
+ -d '{"var":["FS_2012_TX", "PD12_TOT"], "iso3":"GHA", "format":"plot"}' \
  -X POST -H 'Content-Type:application/json'
 --
 /ocpu/tmp/x03d5aa8e98/R/.val
@@ -117,46 +104,42 @@ the convenience function <code><a href='hcapi.html'>hcapi</a>(..., format="png")
 /ocpu/tmp/x03d5aa8e98/console
 /ocpu/tmp/x03d5aa8e98/info
 /ocpu/tmp/x03d5aa8e98/files/DESCRIPTION
-/ocpu/tmp/x03d5aa8e98/files/FS_2012_TX.GHA.png
-/ocpu/tmp/x03d5aa8e98/files/PD12_TOT.GHA.png
+/ocpu/tmp/x03d5aa8e98/graphics/1
+/ocpu/tmp/x03d5aa8e98/graphics/2
 </code></p>
   
       <p>GET all generated plots in a ZIP archive</p>
   
-      <p><code>$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
+      <p><code>
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/png?width=640
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/svg
 </code></p>
   
     </div>
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'># Generate standard raster plot of 2012 population density for sub-Saharan Africa
-x &lt;- genPlot(&quot;PD12_TOT&quot;, pal=&quot;OrRd&quot;)
-x
+genPlot(&quot;PD12_TOT&quot;, pal=&quot;YlOrRd&quot;, style=&quot;pretty&quot;, n=8)
 </div>
-<p><img src='genPlot-2.png' alt='' width='540' height='400' /></p>
+<strong class='message'>Loading required package: classInt</strong>
 <div class='output'>NULL
 </div>
 <div class='input'>
-
 # Generate 3 raster plots for Ghana with legend and title but not axes
-x &lt;- genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;cass_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;print&quot;)
+genPlot(c(&quot;AEZ16_CLAS&quot;, &quot;cass_h&quot;), iso3=&quot;GHA&quot;, layout=&quot;thumbnail&quot;)
 </div>
-<strong class='error'>Error in match.arg(layout, c(&quot;default&quot;, &quot;thumbnail&quot;)): &#39;arg&#39; should be one of “default”, “thumbnail”</strong>
-<div class='input'>x
-</div>
+<p><img src='genPlot-5.png' alt='' width='540' height='400' /></p>
+<p><img src='genPlot-6.png' alt='' width='540' height='400' /></p>
+<p><img src='genPlot-7.png' alt='' width='540' height='400' /></p>
 <div class='output'>NULL
 </div>
 <div class='input'>
-
 # Generate 3 raster plots for Nigeria with the specified dimensions
-x &lt;- genPlot(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), iso3=&quot;NGA&quot;, width=5, height=5,
-units=&quot;in&quot;, res=200, pointsize=8)
+hcapi(c(&quot;FS_2012&quot;, &quot;yield_l_cv&quot;, &quot;soc_d15&quot;), iso3=&quot;NGA&quot;, format=&quot;plot&quot;)
 </div>
-<p><img src='genPlot-9.png' alt='' width='540' height='400' /></p>
 <p><img src='genPlot-10.png' alt='' width='540' height='400' /></p>
 <p><img src='genPlot-11.png' alt='' width='540' height='400' /></p>
-<div class='input'>x
-</div>
+<p><img src='genPlot-12.png' alt='' width='540' height='400' /></p>
 <div class='output'>NULL
 </div>
 <div class='input'></div></pre>
@@ -171,7 +154,7 @@ units=&quot;in&quot;, res=200, pointsize=8)
       
     <h2>See also</h2>
     
-<a href='hcapi.html'>hcapi</a>
+<a href='hcapi.html'>hcapi</a> link\[classInt:classIntervals]classIntervals
 
         
   </div>

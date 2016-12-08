@@ -59,24 +59,30 @@
       <dt>var</dt>
       <dd>character array of variable codes, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>iso3</dt>
-      <dd>character array of ISO3 country or region codes, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
+      <dd>character array of ISO3 country or region codes, passed to
+<code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>by</dt>
-      <dd>character array of variable codes to summarize by, passed to <code><a href='getLayer.html'>getLayer</a></code></dd>
+      <dd>character array of variable codes to summarize by, passed to
+<code><a href='getLayer.html'>getLayer</a></code></dd>
       <dt>wkt</dt>
-      <dd>WKT representation of a spatial object (points, multipoints, or polygons, multipolygons)</dd>
+      <dd>WKT representation of a spatial object (points, multipoints, or
+polygons, multipolygons)</dd>
       <dt>format</dt>
-      <dd>output format, one of "data.table", "csv", "tif", "dta", "asc", "grd", "rds",
-else "png" to plot the rasters, or "hist" to plot histogram and univariate statistics</dd>
+      <dd>output format, one of "data.table", "csv", "tif", "dta", "asc",
+"grd", "rds", else "plot" to plot the rasters, or "hist" to plot histogram and
+univariate statistics</dd>
       <dt>...</dt>
-      <dd>other optional arguments passed to <code><a href='getLayer.html'>getLayer</a></code>, <code><a href='genFile.html'>genFile</a></code>,
-or to <code><a href='genPlot.html'>genPlot</a></code>, e.g. <code>collapse</code>, <code>as.class</code>, <code>dir</code>, <code>pal</code>.</dd>
+      <dd>other optional arguments passed to <code><a href='getLayer.html'>getLayer</a></code>,
+<code><a href='genFile.html'>genFile</a></code>, or to <code><a href='genPlot.html'>genPlot</a></code>, e.g. <code>collapse=TRUE</code>,
+<code>as.list=TRUE</code>, <code>dir</code>, <code>pal</code>.</dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-a data.table (or other formats) of <code>var</code> indicators summarized by <code>by</code> domains
+a data.table (or other formats) of HarvestChoice indicators optionally
+summarized over <code>by</code> domains
 </dl></p>
   
     </div>
@@ -84,31 +90,31 @@ a data.table (or other formats) of <code>var</code> indicators summarized by <co
     <div class="Description">
       <h2>Description</h2>
 
-      <p>Wrapper method to query, subset and/or aggregate HarvestChoice layers.
-This method may also be used to summarize classified variables along continuous
+      <p>Wrapper method to query, subset and/or aggregate HarvestChoice layers. This method
+may also be used to summarize classified variables along intervals of continuous
 variables, e.g. <code>hcapi(var="AEZ16_CLAS", by="bmi")</code>. Here <code>AEZ16_CLAS</code> is
 a classified (categorical) raster, and <code>bmi</code> is a continuous raster, but the
-request is valid. The dominant class of <code>AEZ16_CLAS</code> is returned along intervals
-of <code>bmi</code>. Default interval breaks are used but custom intervals may also be
-defined, e.g. <code>hcapi(var="AEZ16_CLAS", by=list(bmi=c(0,5,10,15,20,25)))</code>.
-The dominant class of a variable <code>var</code> is defined by <code><a href='dominant.html'>dominant</a>(var)</code>.
-Layers may also be summarized over spatial points are areas (passed as WKT representations
-using argument <code>wkt</code>). Use the <code>format</code> argument to control the output
-format (see examples below).</p>
+request is valid. The dominant class of <code>AEZ16_CLAS</code> is returned along
+intervals of <code>bmi</code>. Default interval breaks are used but custom intervals may
+also be defined, e.g. <code>hcapi(var="AEZ16_CLAS", by=list(bmi=c(0, 5, 10, 15, 20,
+25)))</code>. The dominant class of a variable <code>var</code> is defined by
+<code><a href='dominant.html'>dominant</a>(var)</code>. Layers may also be summarized over spatial points are
+areas (passed as WKT representations using argument <code>wkt</code>). Use the
+<code>format</code> argument to control the output format (see examples below).</p>
   
     </div>
 
     <div class="Details">
       <h2>Details</h2>
 
-      <p>API call: mean body mass index and cassava yield across provinces and districts of
-Tanzania</p>
+      <p>Sample API call: mean body mass index and cassava yield across provinces and
+districts of Tanzania</p>
   
-      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
- -d '{"var":"cass_y", "iso3":"CIV", "format":"tif"}' \
- -X POST -H 'Content-Type:application/json'
---
-/ocpu/tmp/x0bc1ac9bdf/R/.val
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi
+ -d '{"var" : "cass_y", "iso3" : "CIV", "format" : "tif"}'
+ -X POST -H 'Content-Type:application/json'</p>
+  
+      <p>/ocpu/tmp/x0bc1ac9bdf/R/.val
 /ocpu/tmp/x0bc1ac9bdf/stdout
 /ocpu/tmp/x0bc1ac9bdf/warnings
 /ocpu/tmp/x0bc1ac9bdf/source
@@ -126,13 +132,17 @@ Tanzania</p>
       <p><code>$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x0bc1ac9bdf/zip
 </code></p>
   
-      <p>API call: the method may be expanded to summarize classified (discrete) variables
-along continuous variables. For example the call below returns the dominant
-agro-ecological zone and average stunting in children under 5 over Ethiopia's
-provinces and generic elevation zones</p>
+      <p>Sample API call: the method may be expanded to summarize classified (discrete)
+variables along continuous variables. For example the call below returns the
+dominant agro-ecological zone and average stunting in children under 5 over
+Ethiopia's provinces and generic elevation zones</p>
   
-      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json \
- -d '{"var":["AEZ8_CLAS","stunted_moderate"], "iso3":"ETH", "by":["ADM1_NAME_ALT","ELEVATION"]}' \
+      <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi/json
+ -d '{
+   "var" : ["AEZ8_CLAS","stunted_moderate"],
+   "iso3" : "ETH",
+   "by" : ["ADM1_NAME_ALT","ELEVATION"]
+   }'
  -X POST -H 'Content-Type:application/json'
 </code></p>
   
@@ -157,29 +167,66 @@ x
 128:  TZA United Republic of Tanzania   buffer gridcell buffer gridcell  NaN    NaN
 </div>
 <div class='input'>
+# To identify HarvestChoice indicator codes, query the entire catalog using category()
+category(&quot;poverty&quot;)
+</div>
+<div class='output'>        category        subcategory  item        code                             label
+ 1: Demographics Income and Poverty Rural   RPOV_GINI                    Rural Gini &#39;05
+ 2: Demographics Income and Poverty Rural RPOV_GAP125       Rural Poverty Gap $1.25 &#39;05
+ 3: Demographics Income and Poverty Rural RPOV_GAP200          Rural Poverty Gap $2 &#39;05
+ 4: Demographics Income and Poverty Rural  RPOV_PCEXP   Rural Poverty Per Cap. Exp. &#39;05
+ 5: Demographics Income and Poverty Rural RPOV_SEV125  Rural Poverty Severity $1.25 &#39;05
+ 6: Demographics Income and Poverty Rural RPOV_SEV200     Rural Poverty Severity $2 &#39;05
+ 7: Demographics Income and Poverty Rural  RPOV_SD125  Rural Poverty Std. Dev $1.25 &#39;05
+ 8: Demographics Income and Poverty Rural  RPOV_SD200     Rural Poverty Std. Dev $2 &#39;05
+ 9: Demographics Income and Poverty Rural  RPOV_PD125   Rural Poverty density $1.25 &#39;05
+10: Demographics Income and Poverty Rural  RPOV_PD200      Rural Poverty density $2 &#39;05
+11: Demographics Income and Poverty Rural  RPOV_PT125      Rural Poverty hcr. $1.25 &#39;05
+12: Demographics Income and Poverty Rural  RPOV_PT200         Rural Poverty hcr. $2 &#39;05
+13: Demographics Income and Poverty Total   TPOV_GINI                          Gini &#39;05
+14: Demographics Income and Poverty Total TPOV_GAP125             Poverty Gap $1.25 &#39;05
+15: Demographics Income and Poverty Total TPOV_GAP200                Poverty Gap $2 &#39;05
+16: Demographics Income and Poverty Total  TPOV_PCEXP         Poverty Per Cap. Exp. &#39;05
+17: Demographics Income and Poverty Total TPOV_SEV125        Poverty Severity $1.25 &#39;05
+18: Demographics Income and Poverty Total TPOV_SEV200           Poverty Severity $2 &#39;05
+19: Demographics Income and Poverty Total  TPOV_SD125        Poverty Std. Dev $1.25 &#39;05
+20: Demographics Income and Poverty Total  TPOV_SD200           Poverty Std. Dev $2 &#39;05
+21: Demographics Income and Poverty Total  TPOV_PD125         Poverty density $1.25 &#39;05
+22: Demographics Income and Poverty Total  TPOV_PD200            Poverty density $2 &#39;05
+23: Demographics Income and Poverty Total  TPOV_PT125            Poverty hcr. $1.25 &#39;05
+24: Demographics Income and Poverty Total  TPOV_PT200               Poverty hcr. $2 &#39;05
+25: Demographics Income and Poverty Urban   UPOV_GINI                    Urban Gini &#39;05
+26: Demographics Income and Poverty Urban UPOV_GAP125       Urban Poverty Gap $1.25 &#39;05
+27: Demographics Income and Poverty Urban UPOV_GAP200          Urban Poverty Gap $2 &#39;05
+28: Demographics Income and Poverty Urban  UPOV_PCEXP   Urban Poverty Per Cap. Exp. &#39;05
+29: Demographics Income and Poverty Urban UPOV_SEV125  Urban Poverty Severity $1.25 &#39;05
+30: Demographics Income and Poverty Urban UPOV_SEV200     Urban Poverty Severity $2 &#39;05
+31: Demographics Income and Poverty Urban  UPOV_SD125 Urban Poverty Std. Dev. $1.25 &#39;05
+32: Demographics Income and Poverty Urban  UPOV_SD200    Urban Poverty Std. Dev. $2 &#39;05
+33: Demographics Income and Poverty Urban  UPOV_PD125   Urban Poverty density $1.25 &#39;05
+34: Demographics Income and Poverty Urban  UPOV_PD200      Urban Poverty density $2 &#39;05
+35: Demographics Income and Poverty Urban  UPOV_PT125      Urban Poverty hcr. $1.25 &#39;05
+36: Demographics Income and Poverty Urban  UPOV_PT200         Urban Poverty hcr. $2 &#39;05
+        category        subcategory  item        code                             label
+</div>
+<div class='input'>
 # Plot results for Mara province
 require(lattice)
 barchart(ADM2_NAME_ALT~bmi, data=x[ADM1_NAME_ALT==&quot;Mara&quot;], col=&quot;grey90&quot;)
 
-# Mean cassava yield in Ivory Coast in GeoTIFF raster format
-x &lt;- hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
+# Return mean cassava yield in Ivory Coast in GeoTIFF format
+r &lt;- hcapi(&quot;cass_y&quot;, iso3=&quot;CIV&quot;, format=&quot;tif&quot;)
 </div>
-<p><img src='hcapi-4.png' alt='' width='540' height='400' /></p>
-<div class='input'>x
-</div>
-<div class='output'>[1] &quot;./hcapi-civ-cass_y.tfw&quot;         &quot;./hcapi-civ-cass_y.tif&quot;        
-[3] &quot;./hcapi-civ-cass_y.tif.aux.xml&quot; &quot;./meta.csv&quot;                    
-[5] &quot;./README.md&quot;                    &quot;./datapackage.json&quot;            
-</div>
+<p><img src='hcapi-6.png' alt='' width='540' height='400' /></p>
 <div class='input'>
-# Plot the generated TIF raster (one band only)
+# Plot the generated GeoTIFF raster (one band only)
 require(raster)
-plot(raster(x[2]))
+plot(raster(r[2]))
 </div>
 <p><img src='hcapi-8.png' alt='' width='540' height='400' /></p>
 <div class='input'>
 # The method may be expanded to summarize classified (discrete) variables along continuous
-# variables. For example the call below returns the dominant agro-ecological zone and
+# variables. For example the call below returns dominant agro-ecological zone and
 # average stunting in children under 5 over Ethiopia&#39;s provinces by elevation class
 x &lt;- hcapi(c(&quot;AEZ8_CLAS&quot;, &quot;stunted_moderate&quot;), iso3=&quot;ETH&quot;, by=c(&quot;ADM1_NAME_ALT&quot;, &quot;ELEVATION&quot;))
 x
