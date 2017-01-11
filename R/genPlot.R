@@ -78,7 +78,7 @@ genPlot <- function(var, iso3="SSA", pal=character(0), layout="default", style=N
         if (!missing(style)) {
           # Re-classify using classIntervals()
           require(classInt)
-          cv <- classIntervals(r$var, ...)$brks
+          cv <- classIntervals(r$var, style=style, ...)$brks
         }
 
         # Classify to 1-based integer using `cv`

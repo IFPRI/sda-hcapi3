@@ -53,7 +53,7 @@ genRank <- function(var="h", by="ISO3", ...) {
     var <- switch(x, h=var.h, p=var.p, v=var.v)
     val <- switch(x, h="Havested Area (ha)", p="Production (mt)", v="Value of Production (intl. $)")
     # Do not support summarizing across lower admin units (yet)
-    dt <- hcapi(var, ..., by=by, as.class="data.table")
+    dt <- hcapi(var, ..., by=by)
     dt[, ISO3 := NULL]
     dt <- melt(dt, measure.vars=var)
     dt <- dt[!is.na(value)]

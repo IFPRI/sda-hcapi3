@@ -44,7 +44,7 @@ indicator(c("cassava", "population"))
 
 # Show complete metadata for all HarvestChoice indicators matching 'population'
 # in a hierarchical list
-indicator("population", as.class="list")[1:2]
+indicator("population", as.list=TRUE)[1:2]
 
 }
 \seealso{

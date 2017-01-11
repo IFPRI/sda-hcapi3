@@ -32,7 +32,7 @@
 #'
 #' # Show complete metadata for all HarvestChoice indicators matching 'population'
 #' # in a hierarchical list
-#' indicator("population", as.class="list")[1:2]
+#' indicator("population", as.list=TRUE)[1:2]
 #'
 #' @export
 indicator <- function(q, version=NULL, as.list=FALSE, cartoCSS=FALSE) {
@@ -127,7 +127,7 @@ or use 'category()' to return a complete catalog.")
 #' category("demographics")
 #'
 #' # List all HarvestChoice indicators matching 'cassava' in a hierarchical list
-#' category("cassava", as.class="list")
+#' category("cassava", as.list=TRUE)
 #' @export
 category <- function(q=NULL, as.list=FALSE) {
 
