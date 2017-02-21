@@ -1,7 +1,7 @@
 Package: hcapi3
 Type: Package
-Version: 3.8
-Date: 2016-11-12
+Version: 3.9
+Date: 2017-02-20
 Title: HarvestChoice Data Services v3
 Authors@R: c(
     person("Melanie", "Bacou", role=c("aut", "cre"), email="mel@mbacou.com"),
@@ -42,6 +42,6 @@ License: GPL (>= 3)
 URL: http://ifpri.github.com/sda-hcapi3/, http://harvestchoice.org/
 BugReports: http://github.com/ifpri/sda-hcapi3/issues/
 MailingList: support@harvestchoice.org
-Packaged: 2016-11-12 11:20:02 UTC; mbacou
+Packaged: 2017-02-20 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

@@ -16,6 +16,10 @@
 
 # NEWS
 
+## 2017.02.20
+
+Modified `genPlot()` to use the latest `sp::plot()` methods.
+
 ## 2016.12.22
 
 Added slope and most recent market access variables to variable inventory in SQL Server.

@@ -33,7 +33,7 @@
 #' @param pal optional Brewer color palette used for plotting, e.g. "Blues"
 #' @param layout one of "default" or "thumbnail" to control legend and axes
 #'
-#' @seealso \link{hcapi} link\[classInt:classIntervals]{classIntervals}
+#' @seealso \link{hcapi}
 #' @return raster plot
 #' @examples
 #' # Generate standard raster plot of 2012 population density for Ethiopia

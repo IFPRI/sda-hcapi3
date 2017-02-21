@@ -61,5 +61,5 @@ hcapi("yield_l_cv", format="plot")
 
 }
 \seealso{
-\link{hcapi} link\[classInt:classIntervals]{classIntervals}
+\link{hcapi}
 }

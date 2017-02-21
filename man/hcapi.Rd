@@ -47,7 +47,7 @@ areas (passed as WKT representations using argument \code{wkt}). Use the
 Sample API call: mean body mass index and cassava yield across provinces and
 districts of Tanzania
 
-\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi
+\code{$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi \
  -d '{"var" : "cass_y", "iso3" : "CIV", "format" : "tif"}'
  -X POST -H 'Content-Type:application/json'
 
