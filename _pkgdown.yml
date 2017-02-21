@@ -3,24 +3,24 @@ templates:
     bootswatch: cosmo
 
 reference:
-  - title: "Primary data retrieval methods"
-    desc: "Convenience methods"
+  - title: "Primary data retrieval method"
+    desc: "Convenience methods."
     contents:
       - hcapi
   - title: "Advanced methods"
-    desc: "More advanced data summary techniques"
+    desc: "More advanced data summary techniques."
     contents:
       - similar
       - genRank
   - title: "Metadata retrieval"
-    desc: "Methods to query HarvestChoice data catalog"
+    desc: "Methods to query HarvestChoice data catalog."
     contents:
       - category
       - indicator
       - vi
       - iso
   - title: "Other methods"
-    desc: "Other utility functions"
+    desc: "Other utility functions."
     contents:
       - genFile
       - genPlot
