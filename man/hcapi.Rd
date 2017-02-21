@@ -118,4 +118,3 @@ x
 \seealso{
 \link{getLayer} \link{getLayerWKT} \link{genFile}
 }
-

@@ -32,7 +32,8 @@ $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
 
 # To return a complete list of published indicators omit 'q'
 $ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/category/json \
- -X POST -H "Content-Type:application/json"}
+ -X POST -H "Content-Type:application/json"
+}
 }
 \examples{
 # List all HarvestChoice indicators matching category 'demographics'
@@ -44,4 +45,3 @@ category("cassava", as.list=TRUE)
 \seealso{
 \link{indicator} to view complete indicator metadata records
 }
-

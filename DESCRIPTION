@@ -39,9 +39,9 @@ Description: Methods to retrieve, summarize, and plot HarvestChoice 5-arc-
     indicators are available for sub-Saharan Africa. More about HarvestChoice at
     \url{http://harvestchoice.org/}.
 License: GPL (>= 3)
-URL: http://harvestchoice.github.io/hc-api3/, http://harvestchoice.org/
-BugReports: http://github.com/harvestchoice/hc-api3
+URL: http://ifpri.github.io/sda-hcapi3/, http://harvestchoice.org/
+BugReports: http://github.com/ifpri/sda-hcapi3
 MailingList: support@harvestchoice.org
 Packaged: 2016-11-12 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

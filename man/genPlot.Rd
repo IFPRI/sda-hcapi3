@@ -67,4 +67,3 @@ hcapi(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", format="plot")
 \seealso{
 \link{hcapi} link\[classInt:classIntervals]{classIntervals}
 }
-

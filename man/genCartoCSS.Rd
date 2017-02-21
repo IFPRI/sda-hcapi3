@@ -28,4 +28,3 @@ Helper function to generate CartoCSS rules for processing rasters using Mapnik
 # CartoCSS for soil organic carbon and cassava value of production
 genCartoCSS(c("soc_d5", "cass_v"))
 }
-

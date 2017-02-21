@@ -25,4 +25,3 @@ vi["cass_y", .(varTitle, unit)]
 vi[, .N, by=.(cat1, cat2)]
 }
 \keyword{datasets}
-

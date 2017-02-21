@@ -46,4 +46,3 @@ length of growing period, irrigated area, and cassava value of production
 similar(16657, c("LGP_AVG", "GMIA_V5", "cass_v"), by=2, iso3="GHA")
 
 }
-

@@ -50,4 +50,3 @@ indicator("population", as.list=TRUE)[1:2]
 \seealso{
 \link{category} to view HarvestChoice indicator categories
 }
-

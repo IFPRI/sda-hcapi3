@@ -19,4 +19,3 @@ This is equivalent to median for a numeric variable.
 \examples{
 dominant(sample(letters, 100, replace=T))
 }
-

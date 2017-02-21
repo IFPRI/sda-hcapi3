@@ -45,4 +45,3 @@ $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x09db409895/graphics/2/png
 stats(c("bmi", "cass_y"))
 
 }
-

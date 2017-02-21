@@ -106,4 +106,3 @@ cellStats(x, "mean")
 \seealso{
 \link{datapackage} to generate associated metadata records
 }
-

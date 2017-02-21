@@ -68,4 +68,3 @@ x
 \seealso{
 \link{hcapi} and \link{getLayerWKT}
 }
-

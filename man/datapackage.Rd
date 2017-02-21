@@ -44,4 +44,3 @@ x
 \link{indicator} and \link{category} for other convenience
 methods to query HarvestChoice metadata.
 }
-
