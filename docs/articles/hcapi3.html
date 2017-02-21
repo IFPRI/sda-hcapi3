@@ -53,14 +53,14 @@
       <h1>An Introduction to HarvestChoice Data Services v3</h1>
                         <h4 class="author">Melanie Bacou</h4>
             
-            <h4 class="date">2017-02-20</h4>
+            <h4 class="date">2017-02-21</h4>
           </div>
 
     
     
 <div class="contents">
 <p>In 2014 HarvestChoice released a new version of its data API<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> under the title <a href="http://harvestchoice.org/tools/harvestchoice-data-services">HarvestChoice Data Services v3.0</a>. We currently maintain two APIs, HarvestChoice Data Services (v3.0 as of writing) and <a href="http://harvestchoice.org/tools/hcapi">HarvestChoice Data API</a>. The latter provides backend methods required to run two of our flagship reporting and visualization applications, <a href="http://apps.harvestchoice.org/mappr/">MAPPR</a> and <a href="http://apps.harvestchoice.org/tablr/">TABLR</a>. We envision merging these two APIs in the near future, but currently focus our efforts on building new and faster data access methods into <em>HC Data Services</em>.</p>
-<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice’s spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of 2017-02-20 over 750 indicators are available for sub-Saharan Africa.</p>
+<p>Through transparent data services our aim is to facilitate the re-use and integration of HarvestChoice’s spatially-consistent biophysical and socio-economic indicators into 3rd-party tools and models. As of 2017-02-21 over 750 indicators are available for sub-Saharan Africa.</p>
 <div id="warning" class="section level1">
 <h1 class="hasAnchor">
 <html><body><a href="#warning" class="anchor"> </a></body></html>Warning</h1>
@@ -91,7 +91,7 @@
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    66    0    66    0     0    534      0 --:--:-- --:--:-- --:--:--   880
+  0    66    0    66    0     0    650      0 --:--:-- --:--:-- --:--:--  1692
 ## Redirect to http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/</code></pre>
 <p>The main data query method is <code><a href="../reference/hcapi.html">hcapi()</a></code> with a REST endpoint at (<a href="http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi" class="uri">http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/hcapi</a>)[/R/hcapi]. <code><a href="../reference/category.html">category()</a></code> and <code>describe()</code> may be used to return indicator metadata. Other methods, like <code>classify()</code> (summarizing indicators across custom geographic domains) and <code><a href="../reference/similar.html">similar()</a></code> (ranking areas by similarity) are useful to conduct advanced analyses.</p>
 </div>
@@ -211,7 +211,7 @@
 ##      plot(raster(r[2]))
 ##      
 ##      # The method may be expanded to summarize c
-101  4791    0  4791    0     0  57180      0 --:--:-- --:--:-- --:--:--  129k
+101  4791    0  4791    0     0  52576      0 --:--:-- --:--:-- --:--:--  111k
 ## lassified (discrete) variables along continuous
 ##      # variables. For example the call below returns dominant agro-ecological zone and
 ##      # average stunting in children under 5 over Ethiopia's provinces by elevation class
@@ -235,8 +235,9 @@
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    40      0    835 --:--:-- --:--:-- --:--:--   835
-143   389    0   389    0    40    779     80 --:--:-- --:--:-- --:--:--   775
+  0     0    0     0    0    40      0    837 --:--:-- --:--:-- --:--:--   837
+143   389    0   389    0    40   1472    151 --:--:-- --:--:-- --:--:--  1608
+143   389    0   389    0    40   1471    151 --:--:-- --:--:-- --:--:--  1608
 ## [
 ##   {
 ##     "ISO3": "GHA",
@@ -272,20 +273,19 @@
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   1072 --:--:-- --:--:-- --:--:--  1072
-114   404    0   404    0    53    775    101 --:--:-- --:--:-- --:--:--   743
-114   404    0   404    0    53    775    101 --:--:-- --:--:-- --:--:--   743
-## /ocpu/tmp/x0cb43e5efa/R/.val
-## /ocpu/tmp/x0cb43e5efa/stdout
-## /ocpu/tmp/x0cb43e5efa/source
-## /ocpu/tmp/x0cb43e5efa/console
-## /ocpu/tmp/x0cb43e5efa/info
-## /ocpu/tmp/x0cb43e5efa/files/datapackage.json
-## /ocpu/tmp/x0cb43e5efa/files/DESCRIPTION
-## /ocpu/tmp/x0cb43e5efa/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
-## /ocpu/tmp/x0cb43e5efa/files/meta.csv
-## /ocpu/tmp/x0cb43e5efa/files/README.md
-## /ocpu/tmp/x0cb43e5efa/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   1098 --:--:-- --:--:-- --:--:--  1098
+114   404    0   404    0    53   1464    192 --:--:-- --:--:-- --:--:--  1546
+## /ocpu/tmp/x0168bbf850/R/.val
+## /ocpu/tmp/x0168bbf850/stdout
+## /ocpu/tmp/x0168bbf850/source
+## /ocpu/tmp/x0168bbf850/console
+## /ocpu/tmp/x0168bbf850/info
+## /ocpu/tmp/x0168bbf850/files/datapackage.json
+## /ocpu/tmp/x0168bbf850/files/DESCRIPTION
+## /ocpu/tmp/x0168bbf850/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.dta
+## /ocpu/tmp/x0168bbf850/files/meta.csv
+## /ocpu/tmp/x0168bbf850/files/README.md
+## /ocpu/tmp/x0168bbf850/files/terms.html</code></pre>
 </div>
 <div id="example-5-same-request-returning-a-file-in-rdata-format" class="section level3">
 <h3 class="hasAnchor">
@@ -295,19 +295,19 @@
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    53      0   1094 --:--:-- --:--:-- --:--:--  1094
-114   404    0   404    0    53    793    104 --:--:-- --:--:-- --:--:--   763
-## /ocpu/tmp/x03746d11a2/R/.val
-## /ocpu/tmp/x03746d11a2/stdout
-## /ocpu/tmp/x03746d11a2/source
-## /ocpu/tmp/x03746d11a2/console
-## /ocpu/tmp/x03746d11a2/info
-## /ocpu/tmp/x03746d11a2/files/datapackage.json
-## /ocpu/tmp/x03746d11a2/files/DESCRIPTION
-## /ocpu/tmp/x03746d11a2/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
-## /ocpu/tmp/x03746d11a2/files/meta.csv
-## /ocpu/tmp/x03746d11a2/files/README.md
-## /ocpu/tmp/x03746d11a2/files/terms.html</code></pre>
+  0     0    0     0    0    53      0   1132 --:--:-- --:--:-- --:--:--  1132
+114   404    0   404    0    53   1452    190 --:--:-- --:--:-- --:--:--  1519
+## /ocpu/tmp/x0734a6c1e1/R/.val
+## /ocpu/tmp/x0734a6c1e1/stdout
+## /ocpu/tmp/x0734a6c1e1/source
+## /ocpu/tmp/x0734a6c1e1/console
+## /ocpu/tmp/x0734a6c1e1/info
+## /ocpu/tmp/x0734a6c1e1/files/datapackage.json
+## /ocpu/tmp/x0734a6c1e1/files/DESCRIPTION
+## /ocpu/tmp/x0734a6c1e1/files/hcapi-PD05_TOT-AEZ8_CLAS-gha.rds
+## /ocpu/tmp/x0734a6c1e1/files/meta.csv
+## /ocpu/tmp/x0734a6c1e1/files/README.md
+## /ocpu/tmp/x0734a6c1e1/files/terms.html</code></pre>
 <p>Other possible formats include <code>csv</code>, <code>json</code> for GeoJSON, and raster formats <code>grd</code>, <code>tif</code> and <code>asc</code> for R raster, GeoTiff, and ESRI ASCII raster respectively. Note that as-is these requests do not return any file, only a JSON response with (if the response is succesful) pointers to the generated files. To download all generated files, add <code>/zip</code> to the session endpoint.</p>
 </div>
 <div id="example-6-ghana-wheat-production-in-csv-format-aggregated-over-districts" class="section level3">
@@ -319,9 +319,8 @@
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    73      0   1497 --:--:-- --:--:-- --:--:--  1497
-  0    55    0    55    0    73    421    560 --:--:-- --:--:-- --:--:--     0
-  0    55    0    55    0    73    421    559 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0    73      0   1485 --:--:-- --:--:-- --:--:--  1485
+  0    55    0    55    0    73    627    832 --:--:-- --:--:-- --:--:--     0
 ## Unparsable argument: ['ADM2_CODE_ALT','ADM2_NAME_ALT']</code></pre>
 <pre><code>--2015-02-03 04:10:38--
 Resolving hcapi.harvestchoice.org (hcapi.harvestchoice.org)... 206.190.150.74
@@ -348,8 +347,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0    13      0    265 --:--:-- --:--:-- --:--:--   265
-  0    70    0    70    0    13    421     78 --:--:-- --:--:-- --:--:--   487
+  0     0    0     0    0    13      0    270 --:--:-- --:--:-- --:--:--   270
+  0    70    0    70    0    13    564    104 --:--:-- --:--:-- --:--:--   760
 ## unused argument (cat = "climate")
 ## 
 ## In call:
@@ -363,7 +362,7 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0    96    0    96    0     0   1522      0 --:--:-- --:--:-- --:--:--  6857
+  0    96    0    96    0     0   1439      0 --:--:-- --:--:-- --:--:--  5052
 ## No documentation for 'describe' in specified packages and libraries:
 ## you could try '??describe'</code></pre>
 </div>
@@ -375,8 +374,8 @@ PD05_TOT-AEZ8_CLAS-GH     [ &lt;=&gt;                      ]   2.38K  --.-KB/s  
 <pre><code>##   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 ##                                  Dload  Upload   Total   Spent    Left  Speed
 ## 
-  0     0    0     0    0     9      0    187 --:--:-- --:--:-- --:--:--   187
-121   112    0   112    0     9    901     72 --:--:-- --:--:-- --:--:--  1355
+  0     0    0     0    0     9      0    184 --:--:-- --:--:-- --:--:--   184
+121   112    0   112    0     9   1310    105 --:--:-- --:--:-- --:--:--  2861
 ## object 'describe' not found
 ## 
 ## In call:

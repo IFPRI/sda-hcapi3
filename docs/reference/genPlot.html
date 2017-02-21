@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot HarvestChoice 5-arc-minute spatial indicators — genPlot • hcapi3</title>
+<title>Generate generic plots of HarvestChoice 5-arc-minute spatial indicators — genPlot • hcapi3</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -72,17 +72,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot HarvestChoice 5-arc-minute spatial indicators</h1>
+    <h1>Generate generic plots of HarvestChoice 5-arc-minute spatial indicators</h1>
     </div>
 
     
     <p>Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 See examples below. Note that calling <code>genPlot(...)</code> is equivalent to calling
-the convenience function <code><a href='hcapi.html'>hcapi</a>(..., format=&quot;plot&quot;)</code>.</p>
+the convenience method <code><a href='hcapi.html'>hcapi</a>(..., format=&quot;plot&quot;)</code>.</p>
     
 
-    <pre><span class='fu'>genPlot</span>(<span class='no'>var</span>, <span class='kw'>iso3</span> <span class='kw'>=</span> <span class='st'>"SSA"</span>, <span class='kw'>pal</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0</span>), <span class='kw'>layout</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre><span class='fu'>genPlot</span>(<span class='no'>var</span>, <span class='kw'>iso3</span> <span class='kw'>=</span> <span class='st'>"SSA"</span>, <span class='kw'>pal</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0</span>), <span class='kw'>layout</span> <span class='kw'>=</span> <span class='st'>"default"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -94,11 +93,6 @@ the convenience function <code><a href='hcapi.html'>hcapi</a>(..., format=&quot;
       <dd>optional Brewer color palette used for plotting, e.g. &quot;Blues&quot;</dd>
       <dt>layout</dt>
       <dd>one of &quot;default&quot; or &quot;thumbnail&quot; to control legend and axes</dd>
-      <dt>style</dt>
-      <dd>passed to <code><a href='http://www.rdocumentation.org/packages/classInt/topics/classIntervals'>classIntervals</a></code></dd>
-      <dt>...</dt>
-      <dd>any argument passed to <code><a href='http://www.rdocumentation.org/packages/classInt/topics/classIntervals'>classIntervals</a></code>,
-e.g. <code>n=9</code> and <code>dataPrecision=0</code>.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -121,10 +115,11 @@ e.g. <code>n=9</code> and <code>dataPrecision=0</code>.</dd>
 /ocpu/tmp/x03d5aa8e98/graphics/1
 /ocpu/tmp/x03d5aa8e98/graphics/2
 </code></p>
-    <p>GET all generated plots in a ZIP archive</p>
+    <p>GET individual plots or all generated plots in a ZIP archive</p>
     <p><code>
-$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/png?width=640
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/1/png?width=640
 $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/svg
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 </code></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -133,12 +128,12 @@ $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/svg
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate standard raster plot of 2012 population density for sub-Saharan Africa</span>
-<span class='fu'>genPlot</span>(<span class='st'>"PD12_TOT"</span>, <span class='kw'>pal</span><span class='kw'>=</span><span class='st'>"YlOrRd"</span>, <span class='kw'>style</span><span class='kw'>=</span><span class='st'>"pretty"</span>, <span class='kw'>n</span><span class='kw'>=</span><span class='fl'>8</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: classInt</span></div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 2</span></div><img src='genPlot-5.png' alt='' width='540' height='400' /><div class='output co'>#&gt; NULL</div><div class='input'>
-<span class='co'># Generate 3 raster plots for Ghana with legend and title but not axes</span>
-<span class='fu'>genPlot</span>(<span class='fu'>c</span>(<span class='st'>"AEZ16_CLAS"</span>, <span class='st'>"cass_h"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"GHA"</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='st'>"thumbnail"</span>)</div><img src='genPlot-8.png' alt='' width='540' height='400' /><img src='genPlot-9.png' alt='' width='540' height='400' /><div class='output co'>#&gt; NULL</div><div class='input'>
-<span class='co'># Generate 3 raster plots for Nigeria with the specified dimensions</span>
-<span class='fu'><a href='hcapi.html'>hcapi</a></span>(<span class='fu'>c</span>(<span class='st'>"FS_2012"</span>, <span class='st'>"yield_l_cv"</span>, <span class='st'>"soc_d15"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"NGA"</span>, <span class='kw'>format</span><span class='kw'>=</span><span class='st'>"plot"</span>)</div><img src='genPlot-12.png' alt='' width='540' height='400' /><img src='genPlot-13.png' alt='' width='540' height='400' /><img src='genPlot-14.png' alt='' width='540' height='400' /><div class='output co'>#&gt; NULL</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># Generate standard raster plot of 2012 population density for Ethiopia</span>
+<span class='fu'>genPlot</span>(<span class='st'>"PD12_TOT"</span>, <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"ETH"</span>, <span class='kw'>pal</span><span class='kw'>=</span><span class='st'>"YlOrRd"</span>)</div><img src='genPlot-2.png' alt='' width='540' height='400' /><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'># Generate 2 raster plots for Ghana (thumbnail format with no legend)</span>
+<span class='fu'>genPlot</span>(<span class='fu'>c</span>(<span class='st'>"AEZ16_CLAS"</span>, <span class='st'>"cass_h"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"GHA"</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='st'>"thumbnail"</span>)</div><img src='genPlot-5.png' alt='' width='540' height='400' /><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'># Plot farming systems and yield variability across SSA</span>
+<span class='fu'><a href='hcapi.html'>hcapi</a></span>(<span class='st'>"FS_2012_TX"</span>, <span class='kw'>format</span><span class='kw'>=</span><span class='st'>"plot"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 2</span></div><img src='genPlot-10.png' alt='' width='540' height='400' /><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'><a href='hcapi.html'>hcapi</a></span>(<span class='st'>"yield_l_cv"</span>, <span class='kw'>format</span><span class='kw'>=</span><span class='st'>"plot"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 2</span></div><img src='genPlot-15.png' alt='' width='540' height='400' /><div class='output co'>#&gt; NULL</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

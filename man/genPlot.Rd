@@ -2,10 +2,9 @@
 % Please edit documentation in R/genPlot.R
 \name{genPlot}
 \alias{genPlot}
-\title{Plot HarvestChoice 5-arc-minute spatial indicators}
+\title{Generate generic plots of HarvestChoice 5-arc-minute spatial indicators}
 \usage{
-genPlot(var, iso3 = "SSA", pal = character(0), layout = "default",
-  style = NULL, ...)
+genPlot(var, iso3 = "SSA", pal = character(0), layout = "default")
 }
 \arguments{
 \item{var}{character array of variable codes to plot}
@@ -15,11 +14,6 @@ genPlot(var, iso3 = "SSA", pal = character(0), layout = "default",
 \item{pal}{optional Brewer color palette used for plotting, e.g. "Blues"}
 
 \item{layout}{one of "default" or "thumbnail" to control legend and axes}
-
-\item{style}{passed to \code{\link[classInt:classIntervals]{classIntervals}}}
-
-\item{...}{any argument passed to \code{\link[classInt:classIntervals]{classIntervals}},
-e.g. \code{n=9} and \code{dataPrecision=0}.}
 }
 \value{
 raster plot
@@ -27,7 +21,7 @@ raster plot
 \description{
 Method to plot HarvestChoice rasters with mutiple layout and symbology options.
 See examples below. Note that calling \code{genPlot(...)} is equivalent to calling
-the convenience function \code{\link{hcapi}(..., format="plot")}.
+the convenience method \code{\link{hcapi}(..., format="plot")}.
 }
 \details{
 API call: generate 2 plots showing farming systems and 2012 population density for Ghana
@@ -46,22 +40,24 @@ API call: generate 2 plots showing farming systems and 2012 population density f
 /ocpu/tmp/x03d5aa8e98/graphics/2
 }
 
-GET all generated plots in a ZIP archive
+GET individual plots or all generated plots in a ZIP archive
 
 \code{
-$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/png?width=640
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/1/png?width=640
 $ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/graphics/last/svg
+$ wget http://hcapi.harvestchoice.org/ocpu/tmp/x03d5aa8e98/zip
 }
 }
 \examples{
-# Generate standard raster plot of 2012 population density for sub-Saharan Africa
-genPlot("PD12_TOT", pal="YlOrRd", style="pretty", n=8)
+# Generate standard raster plot of 2012 population density for Ethiopia
+genPlot("PD12_TOT", iso3="ETH", pal="YlOrRd")
 
-# Generate 3 raster plots for Ghana with legend and title but not axes
+# Generate 2 raster plots for Ghana (thumbnail format with no legend)
 genPlot(c("AEZ16_CLAS", "cass_h"), iso3="GHA", layout="thumbnail")
 
-# Generate 3 raster plots for Nigeria with the specified dimensions
-hcapi(c("FS_2012", "yield_l_cv", "soc_d15"), iso3="NGA", format="plot")
+# Plot farming systems and yield variability across SSA
+hcapi("FS_2012_TX", format="plot")
+hcapi("yield_l_cv", format="plot")
 
 }
 \seealso{

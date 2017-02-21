@@ -157,8 +157,7 @@ data.table</dd>
 #&gt; 127:    NaN
 #&gt; 128:    NaN</div><div class='input'>
 <span class='co'># Plot results for Mara province</span>
-<span class='fu'>require</span>(<span class='no'>lattice</span>)
-<span class='fu'>barchart</span>(<span class='no'>ADM2_NAME_ALT</span>~<span class='no'>bmi</span>, <span class='no'>x</span>[<span class='no'>ADM1_NAME_ALT</span><span class='kw'>==</span><span class='st'>"Mara"</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"grey90"</span>)</div><img src='getLayer-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>require</span>(<span class='no'>lattice</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='input'><span class='fu'>barchart</span>(<span class='no'>ADM2_NAME_ALT</span>~<span class='no'>bmi</span>, <span class='no'>x</span>[<span class='no'>ADM1_NAME_ALT</span><span class='kw'>==</span><span class='st'>"Mara"</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"grey90"</span>)</div><img src='getLayer-6.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'># The method may be expanded to summarize classified (discrete) variables along</span>
 <span class='co'># intervals of continuous variables. For example the call below returns the dominant</span>
 <span class='co'># agro-ecological zone and total banana harvested area over Ivory Coast's provinces</span>

@@ -120,55 +120,9 @@ districts, agro-ecological zones, etc.), see examples.</dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Rank commodities in Angola and Mozambique by harvested area and production</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>genRank</span>(<span class='fu'>c</span>(<span class='st'>"h"</span>, <span class='st'>"p"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"AGO"</span>, <span class='st'>"MOZ"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: To be consistent with reshape2&#39;s melt, id.vars and measure.vars are internally guessed when both are &#39;NULL&#39;. All non-numeric/integer/logical type columns are conisdered id.vars, which in this case are columns [ADM0_NAME, ISO3.1]. Consider providing at least one of &#39;id&#39; or &#39;measure&#39; vars in future.</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;value&#39; not found</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt;         CELL5M ISO3                   ADM0_NAME   ADM1_NAME_ALT   ADM2_NAME_ALT
-#&gt;     1: 4823722  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     2: 4828040  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     3: 4828041  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     4: 4828042  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     5: 4832358  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;    ---                                                                         
-#&gt; 11393: 5190965  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11394: 5195285  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11395: 5195286  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11396: 5199606  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11397: 5203926  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt;               X          Y maiz_h
-#&gt;     1: 36.87500  -3.041667     NA
-#&gt;     2: 36.70833  -3.125000   1019
-#&gt;     3: 36.79167  -3.125000    955
-#&gt;     4: 36.87500  -3.125000     NA
-#&gt;     5: 36.54167  -3.208333     NA
-#&gt;    ---                           
-#&gt; 11393: 40.45833 -10.125000     NA
-#&gt; 11394: 40.45833 -10.208333     NA
-#&gt; 11395: 40.54167 -10.208333     NA
-#&gt; 11396: 40.54167 -10.291667     NA
-#&gt; 11397: 40.54167 -10.375000     NA</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>genRank</span>(<span class='fu'>c</span>(<span class='st'>"h"</span>, <span class='st'>"p"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"AGO"</span>, <span class='st'>"MOZ"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: To be consistent with reshape2&#39;s melt, id.vars and measure.vars are internally guessed when both are &#39;NULL&#39;. All non-numeric/integer/logical type columns are conisdered id.vars, which in this case are columns [ADM0_NAME, ISO3.1]. Consider providing at least one of &#39;id&#39; or &#39;measure&#39; vars in future.</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;value&#39; not found</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
 <span class='co'># Rank commodities across Angola's agro-ecological zones by production</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>genRank</span>(<span class='st'>"p"</span>, <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"AGO"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='st'>"AEZ5_CLAS"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: To be consistent with reshape2&#39;s melt, id.vars and measure.vars are internally guessed when both are &#39;NULL&#39;. All non-numeric/integer/logical type columns are conisdered id.vars, which in this case are columns [ADM0_NAME, AEZ5_CLAS]. Consider providing at least one of &#39;id&#39; or &#39;measure&#39; vars in future.</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;value&#39; not found</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt;         CELL5M ISO3                   ADM0_NAME   ADM1_NAME_ALT   ADM2_NAME_ALT
-#&gt;     1: 4823722  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     2: 4828040  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     3: 4828041  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     4: 4828042  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;     5: 4832358  TZA United Republic of Tanzania          Arusha         Arumeru
-#&gt;    ---                                                                         
-#&gt; 11393: 5190965  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11394: 5195285  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11395: 5195286  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11396: 5199606  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt; 11397: 5203926  TZA United Republic of Tanzania buffer gridcell buffer gridcell
-#&gt;               X          Y maiz_h
-#&gt;     1: 36.87500  -3.041667     NA
-#&gt;     2: 36.70833  -3.125000   1019
-#&gt;     3: 36.79167  -3.125000    955
-#&gt;     4: 36.87500  -3.125000     NA
-#&gt;     5: 36.54167  -3.208333     NA
-#&gt;    ---                           
-#&gt; 11393: 40.45833 -10.125000     NA
-#&gt; 11394: 40.45833 -10.208333     NA
-#&gt; 11395: 40.54167 -10.208333     NA
-#&gt; 11396: 40.54167 -10.291667     NA
-#&gt; 11397: 40.54167 -10.375000     NA</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>genRank</span>(<span class='st'>"p"</span>, <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"AGO"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='st'>"AEZ5_CLAS"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: To be consistent with reshape2&#39;s melt, id.vars and measure.vars are internally guessed when both are &#39;NULL&#39;. All non-numeric/integer/logical type columns are conisdered id.vars, which in this case are columns [ADM0_NAME, AEZ5_CLAS]. Consider providing at least one of &#39;id&#39; or &#39;measure&#39; vars in future.</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;value&#39; not found</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
