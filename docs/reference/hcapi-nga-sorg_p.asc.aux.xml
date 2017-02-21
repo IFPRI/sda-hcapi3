@@ -1,0 +1,27 @@
+<PAMDataset>
+  <PAMRasterBand band="1">
+    <ColorInterp>Gray</ColorInterp>
+    <CategoryNames>
+      <Category>none</Category>
+      <Category>under 20</Category>
+      <Category>20 - 60</Category>
+      <Category>60 - 115</Category>
+      <Category>115 - 183</Category>
+      <Category>183 - 261</Category>
+      <Category>261 - 351</Category>
+      <Category>351 - 449</Category>
+      <Category>449 - 558</Category>
+      <Category>558 - 682</Category>
+      <Category>682 - 815</Category>
+      <Category>815 - 956</Category>
+      <Category>956 - 1114</Category>
+      <Category>1114 - 1290</Category>
+      <Category>1290 - 1485</Category>
+      <Category>1485 - 1706</Category>
+      <Category>1706 - 2020</Category>
+      <Category>2020 - 3200</Category>
+      <Category>3200 - 5311</Category>
+      <Category>over 5311</Category>
+    </CategoryNames>
+  </PAMRasterBand>
+</PAMDataset>

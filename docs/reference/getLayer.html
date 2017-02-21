@@ -131,15 +131,82 @@ data.table</dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Mean body mass index and maize yield across districts in Tanzania</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>getLayer</span>(<span class='fu'>c</span>(<span class='st'>"bmi"</span>, <span class='st'>"maiz_y"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"TZA"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ADM2_NAME_ALT"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i): undefined columns selected</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>getLayer</span>(<span class='fu'>c</span>(<span class='st'>"bmi"</span>, <span class='st'>"maiz_y"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"TZA"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ADM2_NAME_ALT"</span>))
+<span class='no'>x</span></div><div class='output co'>#&gt;      ISO3                   ADM0_NAME     ADM1_NAME_ALT   ADM2_NAME_ALT  bmi
+#&gt;   1:  TZA United Republic of Tanzania            Arusha         Arumeru 21.2
+#&gt;   2:  TZA United Republic of Tanzania            Arusha          Arusha 22.2
+#&gt;   3:  TZA United Republic of Tanzania            Arusha          Karatu 21.2
+#&gt;   4:  TZA United Republic of Tanzania            Arusha         Monduli 21.2
+#&gt;   5:  TZA United Republic of Tanzania            Arusha      Ngorongoro 21.2
+#&gt;  ---                                                                        
+#&gt; 124:  TZA United Republic of Tanzania      Unguja North         North B 21.7
+#&gt; 125:  TZA United Republic of Tanzania      Unguja South         Central 22.9
+#&gt; 126:  TZA United Republic of Tanzania      Unguja South           South 23.2
+#&gt; 127:  TZA United Republic of Tanzania Unguja Urban West            West 23.2
+#&gt; 128:  TZA United Republic of Tanzania   buffer gridcell buffer gridcell  NaN
+#&gt;      maiz_y
+#&gt;   1:   2767
+#&gt;   2:    NaN
+#&gt;   3:   2074
+#&gt;   4:   1816
+#&gt;   5:   1159
+#&gt;  ---       
+#&gt; 124:    NaN
+#&gt; 125:    NaN
+#&gt; 126:    NaN
+#&gt; 127:    NaN
+#&gt; 128:    NaN</div><div class='input'>
 <span class='co'># Plot results for Mara province</span>
 <span class='fu'>require</span>(<span class='no'>lattice</span>)
-<span class='fu'>barchart</span>(<span class='no'>ADM2_NAME_ALT</span>~<span class='no'>bmi</span>, <span class='no'>x</span>[<span class='no'>ADM1_NAME_ALT</span><span class='kw'>==</span><span class='st'>"Mara"</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"grey90"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in barchart.formula(ADM2_NAME_ALT ~ bmi, x[ADM1_NAME_ALT == &quot;Mara&quot;],     col = &quot;grey90&quot;): object &#39;x&#39; not found</span></div><div class='input'>
+<span class='fu'>barchart</span>(<span class='no'>ADM2_NAME_ALT</span>~<span class='no'>bmi</span>, <span class='no'>x</span>[<span class='no'>ADM1_NAME_ALT</span><span class='kw'>==</span><span class='st'>"Mara"</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"grey90"</span>)</div><img src='getLayer-4.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'># The method may be expanded to summarize classified (discrete) variables along</span>
 <span class='co'># intervals of continuous variables. For example the call below returns the dominant</span>
 <span class='co'># agro-ecological zone and total banana harvested area over Ivory Coast's provinces</span>
 <span class='co'># and elevation zones</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='hcapi.html'>hcapi</a></span>(<span class='fu'>c</span>(<span class='st'>"AEZ8_CLAS"</span>, <span class='st'>"bana_h"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"CIV"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ELEVATION"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i): undefined columns selected</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='hcapi.html'>hcapi</a></span>(<span class='fu'>c</span>(<span class='st'>"AEZ8_CLAS"</span>, <span class='st'>"bana_h"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"CIV"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ELEVATION"</span>))
+<span class='no'>x</span></div><div class='output co'>#&gt;     ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h
+#&gt;  1:  CIV Ivory Coast      18 Montagnes            NA     Humid     66
+#&gt;  2:  CIV Ivory Coast      18 Montagnes (3e+02,5e+02]     Humid    456
+#&gt;  3:  CIV Ivory Coast      18 Montagnes (5e+02,9e+02] Sub-Humid     86
+#&gt;  4:  CIV Ivory Coast      18 Montagnes (9e+02,1e+03]     Humid     23
+#&gt;  5:  CIV Ivory Coast            Agneby            NA     Humid    322
+#&gt;  6:  CIV Ivory Coast            Bafing            NA Sub-Humid      0
+#&gt;  7:  CIV Ivory Coast            Bafing (3e+02,5e+02] Sub-Humid     86
+#&gt;  8:  CIV Ivory Coast            Bafing (5e+02,9e+02] Sub-Humid     15
+#&gt;  9:  CIV Ivory Coast     Bas Sassandra            NA     Humid    874
+#&gt; 10:  CIV Ivory Coast     Bas Sassandra (3e+02,5e+02]     Humid     78
+#&gt; 11:  CIV Ivory Coast          Denguele (3e+02,5e+02] Sub-Humid     78
+#&gt; 12:  CIV Ivory Coast          Denguele (5e+02,9e+02] Sub-Humid      4
+#&gt; 13:  CIV Ivory Coast          Fromager            NA     Humid    287
+#&gt; 14:  CIV Ivory Coast          Fromager (3e+02,5e+02]     Humid      8
+#&gt; 15:  CIV Ivory Coast    Haut-sassandra            NA     Humid    304
+#&gt; 16:  CIV Ivory Coast    Haut-sassandra (3e+02,5e+02]     Humid    404
+#&gt; 17:  CIV Ivory Coast              Lacs            NA Sub-Humid    236
+#&gt; 18:  CIV Ivory Coast           Lagunes            NA Sub-Humid    460
+#&gt; 19:  CIV Ivory Coast          Marahoue            NA     Humid    318
+#&gt; 20:  CIV Ivory Coast          Marahoue (3e+02,5e+02]     Humid     58
+#&gt; 21:  CIV Ivory Coast       Moyen Comoe            NA     Humid    231
+#&gt; 22:  CIV Ivory Coast       Moyen Comoe (3e+02,5e+02]     Humid      6
+#&gt; 23:  CIV Ivory Coast     Moyen-Cavally            NA     Humid    177
+#&gt; 24:  CIV Ivory Coast     Moyen-Cavally (3e+02,5e+02]     Humid    247
+#&gt; 25:  CIV Ivory Coast        N&#39;zi Comoe            NA Sub-Humid    428
+#&gt; 26:  CIV Ivory Coast        N&#39;zi Comoe (3e+02,5e+02] Sub-Humid      6
+#&gt; 27:  CIV Ivory Coast           Savanes            NA Sub-Humid      3
+#&gt; 28:  CIV Ivory Coast           Savanes (3e+02,5e+02] Sub-Humid    158
+#&gt; 29:  CIV Ivory Coast           Savanes (5e+02,9e+02] Sub-Humid      0
+#&gt; 30:  CIV Ivory Coast       Sud Bandama            NA Sub-Humid    457
+#&gt; 31:  CIV Ivory Coast       Sud Bandama (3e+02,5e+02]     Humid     13
+#&gt; 32:  CIV Ivory Coast         Sud Comoe            NA     Humid    299
+#&gt; 33:  CIV Ivory Coast Vallee Du Bandama            NA Sub-Humid    238
+#&gt; 34:  CIV Ivory Coast Vallee Du Bandama (3e+02,5e+02] Sub-Humid    140
+#&gt; 35:  CIV Ivory Coast        Worodougou            NA Sub-Humid     28
+#&gt; 36:  CIV Ivory Coast        Worodougou (3e+02,5e+02] Sub-Humid    258
+#&gt; 37:  CIV Ivory Coast        Worodougou (5e+02,9e+02] Sub-Humid      2
+#&gt; 38:  CIV Ivory Coast            Zanzan            NA Sub-Humid    224
+#&gt; 39:  CIV Ivory Coast            Zanzan (3e+02,5e+02] Sub-Humid    200
+#&gt; 40:  CIV Ivory Coast            Zanzan (5e+02,9e+02] Sub-Humid      9
+#&gt; 41:  CIV Ivory Coast   buffer gridcell            NA        NA      0
+#&gt;     ISO3   ADM0_NAME     ADM1_NAME_ALT     ELEVATION AEZ8_CLAS bana_h</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

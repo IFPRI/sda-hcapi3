@@ -118,10 +118,301 @@ labels, and categories. Will attempt a fuzzy match.</dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Show complete metadata for all HarvestChoice indicators matching 'cassava' or</span>
-<span class='st'>'population'</span></div><div class='output co'>#&gt; [1] &quot;population&quot;</div><div class='input'><span class='fu'>indicator</span>(<span class='fu'>c</span>(<span class='st'>"cassava"</span>, <span class='st'>"population"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i, j): could not find function &quot;.&quot;</span></div><div class='input'>
+<span class='st'>'population'</span></div><div class='output co'>#&gt; [1] &quot;population&quot;</div><div class='input'><span class='fu'>indicator</span>(<span class='fu'>c</span>(<span class='st'>"cassava"</span>, <span class='st'>"population"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt;                           label     code            unit       type     period
+#&gt;  1:       Irr. cassava area &#39;05 cass_i_h              ha continuous       2005
+#&gt;  2:           Cassava prod. &#39;05   cass_p              mt continuous       2005
+#&gt;  3:      Rfd. cassava prod. &#39;05 cass_r_p              mt continuous       2005
+#&gt;  4: Irr. cassava val. prod. &#39;05 cass_i_v            Int$ continuous       2005
+#&gt;  5:           Cassava yield &#39;05   cass_y           kg/ha continuous       2005
+#&gt;  6:      Rfd. cassava yield &#39;05 cass_r_y           kg/ha continuous       2005
+#&gt;  7:              Rural Pop. &#39;00 PN00_RUR         persons continuous       2000
+#&gt;  8:      Rural Pop. density &#39;05 PD05_RUR persons/sq. km. continuous circa 2005
+#&gt;  9:              Total Pop. &#39;05 PN05_TOT         persons continuous circa 2005
+#&gt; 10:              Total Pop. &#39;12 PN12_TOT         persons continuous       2012
+#&gt; 11:              Urban Pop. &#39;00 PN00_URB         persons continuous       2000
+#&gt; 12:      Urban Pop. density &#39;05 PD05_URB persons/sq. km. continuous circa 2005
+#&gt;         category         subcategory    item
+#&gt;  1:  Agriculture      Harvested Area Cassava
+#&gt;  2:  Agriculture          Production Cassava
+#&gt;  3:  Agriculture          Production Cassava
+#&gt;  4:  Agriculture Value of Production Cassava
+#&gt;  5:  Agriculture               Yield Cassava
+#&gt;  6:  Agriculture               Yield Cassava
+#&gt;  7: Demographics          Population   Rural
+#&gt;  8: Demographics          Population   Rural
+#&gt;  9: Demographics          Population   Total
+#&gt; 10: Demographics          Population   Total
+#&gt; 11: Demographics          Population   Urban
+#&gt; 12: Demographics          Population   Urban
+#&gt;                                                                                                                                                                                                                                                                          sources
+#&gt;  1:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+#&gt;  2:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+#&gt;  3:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+#&gt;  4:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+#&gt;  5:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+#&gt;  6:                                                                                                                                                   You, L., U. Wood-Sichra, S. Fritz, Z. Guo, L. See, and J. Koo. 2014. Spatial Production Allocation Model (SPAM) 2005 v2.0.
+#&gt;  7:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt;  8: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt;  9: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 10:                                                                                                 Bright, E. A. and Rose, A. N. (2012) &quot;LandScan Global Population Database 2012&quot;, Oak Ridge National Laboratory, July 2013. Retrieved from http://web.ornl.gov/sci/landscan/.
+#&gt; 11:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 12: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt;                     contact
+#&gt;  1: u.wood-sichra@cgiar.org
+#&gt;  2: u.wood-sichra@cgiar.org
+#&gt;  3: u.wood-sichra@cgiar.org
+#&gt;  4: u.wood-sichra@cgiar.org
+#&gt;  5: u.wood-sichra@cgiar.org
+#&gt;  6: u.wood-sichra@cgiar.org
+#&gt;  7:         z.guo@cgiar.org
+#&gt;  8:       m.bacou@cgiar.org
+#&gt;  9:       m.bacou@cgiar.org
+#&gt; 10:       m.bacou@cgiar.org
+#&gt; 11:         z.guo@cgiar.org
+#&gt; 12:       m.bacou@cgiar.org
+#&gt;                                                                                                                                                                                                                                                                                   description
+#&gt;  1:                                                                                    Cassava Irrigated Harvested Area (ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+#&gt;  2:                                                                                                  Cassava Production (mt, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+#&gt;  3:                                                                                          Cassava Rainfed Production (mt, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+#&gt;  4:                                                                                Cassava Irrigated Value Production (Int$, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+#&gt;  5:                                                                                                    Cassava Yield (kg/ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+#&gt;  6:                                                                                            Cassava Rainfed Yield (kg/ha, 2005). Spatially disaggregated production statistics of circa 2005 using the Spatial Production Allocation Model (SPAM). Values are for 5 arc-minute grid cells.
+#&gt;  7:                                                                                                                                                                      Population, rural (2000). Rural population calculated from rural population density in each gridcell (at year 2000).
+#&gt;  8:                                                                                                                                                                                              Population Density, rural (pers./sq. km., circa 2005). Number of rural people per area unit.
+#&gt;  9: Population, total (circa 2005). Total population in 2005 derived from 29 nationally representative household surveys and population census information conducted in various years (circa 2005). Other countries 2005 population estimates derived from World Development Indicators 2008.
+#&gt; 10:                                                                                                                                                   Population, Total (2012). Total population downscaled from LandScan 2012 population counts at 30 arc-second to 5 arc-minute resolution.
+#&gt; 11:                                                                                                                                                         Population, urban (2000). Urban population calculated as difference between total population and rural population (at year 2000).
+#&gt; 12:                                                                                                                                                                                              Population Density, urban (pers./sq. km., circa 2005). Number of urban people per area unit.
+#&gt;                                                                                                                                                                                                                                                citation
+#&gt;  1:           HarvestChoice, 2015. &quot;Cassava Irrigated Harvested Area (ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_h.
+#&gt;  2:                           HarvestChoice, 2015. &quot;Cassava Production (mt, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_p.
+#&gt;  3:                 HarvestChoice, 2015. &quot;Cassava Rainfed Production (mt, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_p.
+#&gt;  4:       HarvestChoice, 2015. &quot;Cassava Irrigated Value Production (Int$, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_i_v.
+#&gt;  5:                             HarvestChoice, 2015. &quot;Cassava Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_y.
+#&gt;  6:                   HarvestChoice, 2015. &quot;Cassava Rainfed Yield (kg/ha, 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/cass_r_y.
+#&gt;  7:                              HarvestChoice, 2015. &quot;Population, rural (2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN00_RUR.
+#&gt;  8: HarvestChoice, 2015. &quot;Population Density, rural (pers./sq. km., circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD05_RUR.
+#&gt;  9:                        HarvestChoice, 2015. &quot;Population, total (circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN05_TOT.
+#&gt; 10:                              HarvestChoice, 2015. &quot;Population, Total (2012)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN12_TOT.
+#&gt; 11:                              HarvestChoice, 2015. &quot;Population, urban (2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN00_URB.
+#&gt; 12: HarvestChoice, 2015. &quot;Population Density, urban (pers./sq. km., circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD05_URB.
+#&gt;          version                                                aggFormula
+#&gt;  1:   SChEF r2.5                                 sum(cass_i_h, na.rm=TRUE)
+#&gt;  2:   SChEF r2.5                                   sum(cass_p, na.rm=TRUE)
+#&gt;  3:   SChEF r2.5                                 sum(cass_r_p, na.rm=TRUE)
+#&gt;  4:   SChEF r2.5                                 sum(cass_i_v, na.rm=TRUE)
+#&gt;  5:   SChEF r2.5      sum(cass_p, na.rm=TRUE)/sum(cass_h, na.rm=TRUE)*1000
+#&gt;  6:   SChEF r2.5  sum(cass_r_p, na.rm=TRUE)/sum(cass_r_h, na.rm=TRUE)*1000
+#&gt;  7: SChEF r12.05                                 sum(PN00_RUR, na.rm=TRUE)
+#&gt;  8:   SChEF r2.2 (sum(PN05_RUR, na.rm=TRUE)/sum(AREA_RUR, na.rm=TRUE))*100
+#&gt;  9:   SChEF r2.2                                 sum(PN05_TOT, na.rm=TRUE)
+#&gt; 10:   SChEF r2.5                                 sum(PN12_TOT, na.rm=TRUE)
+#&gt; 11: SChEF r12.05                                 sum(PN00_URB, na.rm=TRUE)
+#&gt; 12:   SChEF r2.2 (sum(PN05_URB, na.rm=TRUE)/sum(AREA_URB, na.rm=TRUE))*100
+#&gt;     isRaster                                    url
+#&gt;  1:     TRUE http://harvestchoice.org/data/cass_i_h
+#&gt;  2:     TRUE   http://harvestchoice.org/data/cass_p
+#&gt;  3:     TRUE http://harvestchoice.org/data/cass_r_p
+#&gt;  4:     TRUE http://harvestchoice.org/data/cass_i_v
+#&gt;  5:     TRUE   http://harvestchoice.org/data/cass_y
+#&gt;  6:     TRUE http://harvestchoice.org/data/cass_r_y
+#&gt;  7:     TRUE http://harvestchoice.org/data/pn00_rur
+#&gt;  8:     TRUE http://harvestchoice.org/data/pd05_rur
+#&gt;  9:     TRUE http://harvestchoice.org/data/pn05_tot
+#&gt; 10:     TRUE http://harvestchoice.org/data/pn12_tot
+#&gt; 11:     TRUE http://harvestchoice.org/data/pn00_urb
+#&gt; 12:     TRUE http://harvestchoice.org/data/pd05_urb
+#&gt;                                                                                        wms
+#&gt;  1: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_h/MapServer/WMSServer
+#&gt;  2: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer
+#&gt;  3: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_p/MapServer/WMSServer
+#&gt;  4: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_v/MapServer/WMSServer
+#&gt;  5: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer
+#&gt;  6: http://apps.harvestchoice.org/arcgis/rest/services/spam05_cell5m_y/MapServer/WMSServer
+#&gt;  7:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt;  8:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt;  9:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 10:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 11:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 12:    http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt;     downloadedOn
+#&gt;  1:   2017-02-20
+#&gt;  2:   2017-02-20
+#&gt;  3:   2017-02-20
+#&gt;  4:   2017-02-20
+#&gt;  5:   2017-02-20
+#&gt;  6:   2017-02-20
+#&gt;  7:   2017-02-20
+#&gt;  8:   2017-02-20
+#&gt;  9:   2017-02-20
+#&gt; 10:   2017-02-20
+#&gt; 11:   2017-02-20
+#&gt; 12:   2017-02-20</div><div class='input'>
 <span class='co'># Show complete metadata for all HarvestChoice indicators matching 'population'</span>
 <span class='co'># in a hierarchical list</span>
-<span class='fu'>indicator</span>(<span class='st'>"population"</span>, <span class='kw'>as.list</span><span class='kw'>=</span><span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>2</span>]</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i, j): could not find function &quot;.&quot;</span></div><div class='input'>
+<span class='fu'>indicator</span>(<span class='st'>"population"</span>, <span class='kw'>as.list</span><span class='kw'>=</span><span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>2</span>]</div><div class='output co'>#&gt; $Demographics
+#&gt; $Demographics$Population
+#&gt; $Demographics$Population$Rural
+#&gt;                     label     code            unit       type     period
+#&gt; 1:         Rural Pop. &#39;00 PN00_RUR         persons continuous       2000
+#&gt; 2:         Rural Pop. &#39;05 PN05_RUR         persons continuous circa 2005
+#&gt; 3: Rural Pop. density &#39;00 PD00_RUR  persons/sq. km continuous       2000
+#&gt; 4: Rural Pop. density &#39;05 PD05_RUR persons/sq. km. continuous circa 2005
+#&gt;        category subcategory  item
+#&gt; 1: Demographics  Population Rural
+#&gt; 2: Demographics  Population Rural
+#&gt; 3: Demographics  Population Rural
+#&gt; 4: Demographics  Population Rural
+#&gt;                                                                                                                                                                                                                                                                         sources
+#&gt; 1:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 2: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 3:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 4: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt;                    contact
+#&gt; 1:         z.guo@cgiar.org
+#&gt; 2:       m.bacou@cgiar.org
+#&gt; 3: u.wood-sichra@cgiar.org
+#&gt; 4:       m.bacou@cgiar.org
+#&gt;                                                                                                                                                                                                                                                                                        description
+#&gt; 1:                                                                                                                                                                            Population, rural (2000). Rural population calculated from rural population density in each gridcell (at year 2000).
+#&gt; 2: Population, rural (circa 2005). Rural population in 2005 derived from 29 nationally representative household surveys and population census information conducted in various years (circa 2005). Other countries 2005 Rural population estimates derived from World Development Indicators 2008.
+#&gt; 3:                                                                                                                                                                                                           Population Density, rural (pers./sq. km, 2000). Number of Rural people per area unit.
+#&gt; 4:                                                                                                                                                                                                    Population Density, rural (pers./sq. km., circa 2005). Number of rural people per area unit.
+#&gt;                                                                                                                                                                                                                                               citation
+#&gt; 1:                              HarvestChoice, 2015. &quot;Population, rural (2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN00_RUR.
+#&gt; 2:                        HarvestChoice, 2015. &quot;Population, rural (circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN05_RUR.
+#&gt; 3:        HarvestChoice, 2015. &quot;Population Density, rural (pers./sq. km, 2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD00_RUR.
+#&gt; 4: HarvestChoice, 2015. &quot;Population Density, rural (pers./sq. km., circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD05_RUR.
+#&gt;         version                                                aggFormula
+#&gt; 1: SChEF r12.05                                 sum(PN00_RUR, na.rm=TRUE)
+#&gt; 2:   SChEF r2.2                                 sum(PN05_RUR, na.rm=TRUE)
+#&gt; 3: SChEF r12.05   sum(PN00_RUR, na.rm=TRUE)/sum(AREA_RUR, na.rm=TRUE)*100
+#&gt; 4:   SChEF r2.2 (sum(PN05_RUR, na.rm=TRUE)/sum(AREA_RUR, na.rm=TRUE))*100
+#&gt;    isRaster                                    url
+#&gt; 1:     TRUE http://harvestchoice.org/data/pn00_rur
+#&gt; 2:     TRUE http://harvestchoice.org/data/pn05_rur
+#&gt; 3:     TRUE http://harvestchoice.org/data/pd00_rur
+#&gt; 4:     TRUE http://harvestchoice.org/data/pd05_rur
+#&gt;                                                                                    wms
+#&gt; 1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt;    downloadedOn
+#&gt; 1:   2017-02-20
+#&gt; 2:   2017-02-20
+#&gt; 3:   2017-02-20
+#&gt; 4:   2017-02-20
+#&gt; 
+#&gt; $Demographics$Population$Total
+#&gt;                   label     code            unit       type     period
+#&gt; 1:     Pop. density &#39;05 PD05_TOT persons/sq. km. continuous circa 2005
+#&gt; 2:       Total Pop. &#39;00 PN00_TOT         persons continuous       2000
+#&gt; 3:       Total Pop. &#39;05 PN05_TOT         persons continuous circa 2005
+#&gt; 4:       Total Pop. &#39;12 PN12_TOT         persons continuous       2012
+#&gt; 5: Total Pop. Dens. &#39;12 PD12_TOT persons/sq. km. continuous       2012
+#&gt;        category subcategory  item
+#&gt; 1: Demographics  Population Total
+#&gt; 2: Demographics  Population Total
+#&gt; 3: Demographics  Population Total
+#&gt; 4: Demographics  Population Total
+#&gt; 5: Demographics  Population Total
+#&gt;                                                                                                                                                                                                                                                                         sources
+#&gt; 1: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 2:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 3: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 4:                                                                                                 Bright, E. A. and Rose, A. N. (2012) &quot;LandScan Global Population Database 2012&quot;, Oak Ridge National Laboratory, July 2013. Retrieved from http://web.ornl.gov/sci/landscan/.
+#&gt; 5:                                                                                                 Bright, E. A. and Rose, A. N. (2012) &quot;LandScan Global Population Database 2012&quot;, Oak Ridge National Laboratory, July 2013. Retrieved from http://web.ornl.gov/sci/landscan/.
+#&gt;              contact
+#&gt; 1: m.bacou@cgiar.org
+#&gt; 2:   z.guo@cgiar.org
+#&gt; 3: m.bacou@cgiar.org
+#&gt; 4: m.bacou@cgiar.org
+#&gt; 5: m.bacou@cgiar.org
+#&gt;                                                                                                                                                                                                                                                                                  description
+#&gt; 1:                                                                                                                                                                                                    Population Density, total (pers./sq. km., circa 2005). Number of people per area unit.
+#&gt; 2:                                                                                                                                                                            Population, total (2000). Total population calculated from population density in each gridcell (at year 2000).
+#&gt; 3: Population, total (circa 2005). Total population in 2005 derived from 29 nationally representative household surveys and population census information conducted in various years (circa 2005). Other countries 2005 population estimates derived from World Development Indicators 2008.
+#&gt; 4:                                                                                                                                                   Population, Total (2012). Total population downscaled from LandScan 2012 population counts at 30 arc-second to 5 arc-minute resolution.
+#&gt; 5:                                                                                                                                  Population Density, Total (2012). Total population density downscaled from LandScan 2012 population density at 30 arc-second to 5 arc-minute resolution.
+#&gt;                                                                                                                                                                                                                                               citation
+#&gt; 1: HarvestChoice, 2015. &quot;Population Density, total (pers./sq. km., circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD05_TOT.
+#&gt; 2:                              HarvestChoice, 2015. &quot;Population, total (2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN00_TOT.
+#&gt; 3:                        HarvestChoice, 2015. &quot;Population, total (circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN05_TOT.
+#&gt; 4:                              HarvestChoice, 2015. &quot;Population, Total (2012)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN12_TOT.
+#&gt; 5:                      HarvestChoice, 2015. &quot;Population Density, Total (2012)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD12_TOT.
+#&gt;         version                                                  aggFormula
+#&gt; 1:   SChEF r2.2 (sum(PN05_TOT, na.rm=TRUE)/sum(AREA_TOTAL, na.rm=TRUE))*100
+#&gt; 2: SChEF r12.05                                   sum(PN00_TOT, na.rm=TRUE)
+#&gt; 3:   SChEF r2.2                                   sum(PN05_TOT, na.rm=TRUE)
+#&gt; 4:   SChEF r2.5                                   sum(PN12_TOT, na.rm=TRUE)
+#&gt; 5:   SChEF r2.5       sum(PN12_TOT, na.rm=TRUE)/sum(AREA_TOTAL, na.rm=TRUE)
+#&gt;    isRaster                                    url
+#&gt; 1:     TRUE http://harvestchoice.org/data/pd05_tot
+#&gt; 2:     TRUE http://harvestchoice.org/data/pn00_tot
+#&gt; 3:     TRUE http://harvestchoice.org/data/pn05_tot
+#&gt; 4:     TRUE http://harvestchoice.org/data/pn12_tot
+#&gt; 5:     TRUE http://harvestchoice.org/data/pd12_tot
+#&gt;                                                                                    wms
+#&gt; 1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 4: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 5: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt;    downloadedOn
+#&gt; 1:   2017-02-20
+#&gt; 2:   2017-02-20
+#&gt; 3:   2017-02-20
+#&gt; 4:   2017-02-20
+#&gt; 5:   2017-02-20
+#&gt; 
+#&gt; $Demographics$Population$Urban
+#&gt;                     label     code            unit       type     period
+#&gt; 1:         Urban Pop. &#39;00 PN00_URB         persons continuous       2000
+#&gt; 2:         Urban Pop. &#39;05 PN05_URB         persons continuous circa 2005
+#&gt; 3: Urban Pop. density &#39;05 PD05_URB persons/sq. km. continuous circa 2005
+#&gt;        category subcategory  item
+#&gt; 1: Demographics  Population Urban
+#&gt; 2: Demographics  Population Urban
+#&gt; 3: Demographics  Population Urban
+#&gt;                                                                                                                                                                                                                                                                         sources
+#&gt; 1:                                  Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 2: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt; 3: Calculations based on data from: Center for International Earth Science Information Network (CIESIN), Columbia University Earth Center; International Food Policy Research Institute (IFPRI); The World Bank; and Centro Internacional de Agricultura Tropical (CIAT), 2004.
+#&gt;              contact
+#&gt; 1:   z.guo@cgiar.org
+#&gt; 2: m.bacou@cgiar.org
+#&gt; 3: m.bacou@cgiar.org
+#&gt;                                                                                                                                                                                                                                                                                        description
+#&gt; 1:                                                                                                                                                               Population, urban (2000). Urban population calculated as difference between total population and rural population (at year 2000).
+#&gt; 2: Population, urban (circa 2005). Urban population in 2005 derived from 29 nationally representative household surveys and population census information conducted in various years (circa 2005). Other countries 2005 urban population estimates derived from World Development Indicators 2008.
+#&gt; 3:                                                                                                                                                                                                    Population Density, urban (pers./sq. km., circa 2005). Number of urban people per area unit.
+#&gt;                                                                                                                                                                                                                                               citation
+#&gt; 1:                              HarvestChoice, 2015. &quot;Population, urban (2000)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN00_URB.
+#&gt; 2:                        HarvestChoice, 2015. &quot;Population, urban (circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN05_URB.
+#&gt; 3: HarvestChoice, 2015. &quot;Population Density, urban (pers./sq. km., circa 2005)&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PD05_URB.
+#&gt;         version                                                aggFormula
+#&gt; 1: SChEF r12.05                                 sum(PN00_URB, na.rm=TRUE)
+#&gt; 2:   SChEF r2.2                                 sum(PN05_URB, na.rm=TRUE)
+#&gt; 3:   SChEF r2.2 (sum(PN05_URB, na.rm=TRUE)/sum(AREA_URB, na.rm=TRUE))*100
+#&gt;    isRaster                                    url
+#&gt; 1:     TRUE http://harvestchoice.org/data/pn00_urb
+#&gt; 2:     TRUE http://harvestchoice.org/data/pn05_urb
+#&gt; 3:     TRUE http://harvestchoice.org/data/pd05_urb
+#&gt;                                                                                    wms
+#&gt; 1: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 2: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt; 3: http://apps.harvestchoice.org/arcgis/rest/services/cell5m_socio/MapServer/WMSServer
+#&gt;    downloadedOn
+#&gt; 1:   2017-02-20
+#&gt; 2:   2017-02-20
+#&gt; 3:   2017-02-20
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $&lt;NA&gt;
+#&gt; NULL
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

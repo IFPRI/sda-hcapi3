@@ -117,7 +117,29 @@ methods to query HarvestChoice metadata.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate auxiliary files for soil organic carbon concentration and 2012 total population</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>datapackage</span>(<span class='fu'>c</span>(<span class='st'>"soc_d5"</span>, <span class='st'>"PN12_TOT"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i): undefined columns selected</span></div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>fread</span>(<span class='no'>x</span>[<span class='fl'>1</span>])</div><div class='output co'>#&gt; <span class='error'>Error in fread(x[1]): object &#39;x&#39; not found</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>datapackage</span>(<span class='fu'>c</span>(<span class='st'>"soc_d5"</span>, <span class='st'>"PN12_TOT"</span>))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>fread</span>(<span class='no'>x</span>[<span class='fl'>1</span>])
+<span class='no'>x</span></div><div class='output co'>#&gt;        code                    label
+#&gt; 1:   soc_d5 Soil org. carbon (0-5cm)
+#&gt; 2: PN12_TOT           Total Pop. &#39;12
+#&gt;                                                                                                      description
+#&gt; 1:                                             Soil organic carbon content (fine earth fraction) at 0-5cm depth.
+#&gt; 2: Total population downscaled from LandScan 2012 population counts at 30 arc-second to 5 arc-minute resolution.
+#&gt;          type      unit    version                aggFormula      period
+#&gt; 1: continuous permilles SChEF r2.5  mean(soc_d5, na.rm=TRUE) 1950 - 2012
+#&gt; 2: continuous   persons SChEF r2.5 sum(PN12_TOT, na.rm=TRUE)        2012
+#&gt;        category    subcategory           item
+#&gt; 1:  Agroecology Soil Resources Soil Fertility
+#&gt; 2: Demographics     Population          Total
+#&gt;                                                                                                                                                                                                     source
+#&gt; 1: ISRIC (2014) &quot;&quot;World Soil Information&quot;&quot;, in collaboration with The Earth Institute, Columbia University World Agroforestry Centre, Nairobi and the International Center for Tropical Agriculture (CIAT)
+#&gt; 2:                          Bright, E. A. and Rose, A. N. (2012) &quot;&quot;LandScan Global Population Database 2012&quot;&quot;, Oak Ridge National Laboratory, July 2013. Retrieved from http://web.ornl.gov/sci/landscan/.
+#&gt;              contact downloadedOn
+#&gt; 1:   j.koo@cgiar.org   02/20/2017
+#&gt; 2: m.bacou@cgiar.org   02/20/2017
+#&gt;                                                                                                                                                                                                                                   citation
+#&gt; 1: HarvestChoice, 2015. &quot;&quot;Soil Organic Carbon Content (depth 0-5cm)&quot;&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/soc_d5.
+#&gt; 2:                HarvestChoice, 2015. &quot;&quot;Population, Total (2012)&quot;&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN12_TOT.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

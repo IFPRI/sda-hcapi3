@@ -161,25 +161,217 @@ Ethiopia&#39;s provinces and generic elevation zones</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Mean body mass index and cassava yield across provinces and districts of Tanzania</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>hcapi</span>(<span class='fu'>c</span>(<span class='st'>"bmi"</span>, <span class='st'>"cass_y"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"TZA"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ADM2_NAME_ALT"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i): undefined columns selected</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>hcapi</span>(<span class='fu'>c</span>(<span class='st'>"bmi"</span>, <span class='st'>"cass_y"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"TZA"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ADM2_NAME_ALT"</span>))
+<span class='no'>x</span></div><div class='output co'>#&gt;      ISO3                   ADM0_NAME     ADM1_NAME_ALT   ADM2_NAME_ALT  bmi
+#&gt;   1:  TZA United Republic of Tanzania            Arusha         Arumeru 21.2
+#&gt;   2:  TZA United Republic of Tanzania            Arusha          Arusha 22.2
+#&gt;   3:  TZA United Republic of Tanzania            Arusha          Karatu 21.2
+#&gt;   4:  TZA United Republic of Tanzania            Arusha         Monduli 21.2
+#&gt;   5:  TZA United Republic of Tanzania            Arusha      Ngorongoro 21.2
+#&gt;  ---                                                                        
+#&gt; 124:  TZA United Republic of Tanzania      Unguja North         North B 21.7
+#&gt; 125:  TZA United Republic of Tanzania      Unguja South         Central 22.9
+#&gt; 126:  TZA United Republic of Tanzania      Unguja South           South 23.2
+#&gt; 127:  TZA United Republic of Tanzania Unguja Urban West            West 23.2
+#&gt; 128:  TZA United Republic of Tanzania   buffer gridcell buffer gridcell  NaN
+#&gt;      cass_y
+#&gt;   1:    NaN
+#&gt;   2:    NaN
+#&gt;   3:    NaN
+#&gt;   4:    NaN
+#&gt;   5:    NaN
+#&gt;  ---       
+#&gt; 124:    NaN
+#&gt; 125:    NaN
+#&gt; 126:    NaN
+#&gt; 127:    NaN
+#&gt; 128:    NaN</div><div class='input'>
 <span class='co'># To identify HarvestChoice indicator codes, query the entire catalog using category()</span>
-<span class='fu'><a href='category.html'>category</a></span>(<span class='st'>"poverty"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i, j): could not find function &quot;.&quot;</span></div><div class='input'>
+<span class='fu'><a href='category.html'>category</a></span>(<span class='st'>"poverty"</span>)</div><div class='output co'>#&gt;         category        subcategory  item        code
+#&gt;  1: Demographics Income and Poverty Rural   RPOV_GINI
+#&gt;  2: Demographics Income and Poverty Rural RPOV_GAP125
+#&gt;  3: Demographics Income and Poverty Rural RPOV_GAP200
+#&gt;  4: Demographics Income and Poverty Rural  RPOV_PCEXP
+#&gt;  5: Demographics Income and Poverty Rural RPOV_SEV125
+#&gt;  6: Demographics Income and Poverty Rural RPOV_SEV200
+#&gt;  7: Demographics Income and Poverty Rural  RPOV_SD125
+#&gt;  8: Demographics Income and Poverty Rural  RPOV_SD200
+#&gt;  9: Demographics Income and Poverty Rural  RPOV_PD125
+#&gt; 10: Demographics Income and Poverty Rural  RPOV_PD200
+#&gt; 11: Demographics Income and Poverty Rural  RPOV_PT125
+#&gt; 12: Demographics Income and Poverty Rural  RPOV_PT200
+#&gt; 13: Demographics Income and Poverty Total   TPOV_GINI
+#&gt; 14: Demographics Income and Poverty Total TPOV_GAP125
+#&gt; 15: Demographics Income and Poverty Total TPOV_GAP200
+#&gt; 16: Demographics Income and Poverty Total  TPOV_PCEXP
+#&gt; 17: Demographics Income and Poverty Total TPOV_SEV125
+#&gt; 18: Demographics Income and Poverty Total TPOV_SEV200
+#&gt; 19: Demographics Income and Poverty Total  TPOV_SD125
+#&gt; 20: Demographics Income and Poverty Total  TPOV_SD200
+#&gt; 21: Demographics Income and Poverty Total  TPOV_PD125
+#&gt; 22: Demographics Income and Poverty Total  TPOV_PD200
+#&gt; 23: Demographics Income and Poverty Total  TPOV_PT125
+#&gt; 24: Demographics Income and Poverty Total  TPOV_PT200
+#&gt; 25: Demographics Income and Poverty Urban   UPOV_GINI
+#&gt; 26: Demographics Income and Poverty Urban UPOV_GAP125
+#&gt; 27: Demographics Income and Poverty Urban UPOV_GAP200
+#&gt; 28: Demographics Income and Poverty Urban  UPOV_PCEXP
+#&gt; 29: Demographics Income and Poverty Urban UPOV_SEV125
+#&gt; 30: Demographics Income and Poverty Urban UPOV_SEV200
+#&gt; 31: Demographics Income and Poverty Urban  UPOV_SD125
+#&gt; 32: Demographics Income and Poverty Urban  UPOV_SD200
+#&gt; 33: Demographics Income and Poverty Urban  UPOV_PD125
+#&gt; 34: Demographics Income and Poverty Urban  UPOV_PD200
+#&gt; 35: Demographics Income and Poverty Urban  UPOV_PT125
+#&gt; 36: Demographics Income and Poverty Urban  UPOV_PT200
+#&gt;         category        subcategory  item        code
+#&gt;                                 label
+#&gt;  1:                    Rural Gini &#39;05
+#&gt;  2:       Rural Poverty Gap $1.25 &#39;05
+#&gt;  3:          Rural Poverty Gap $2 &#39;05
+#&gt;  4:   Rural Poverty Per Cap. Exp. &#39;05
+#&gt;  5:  Rural Poverty Severity $1.25 &#39;05
+#&gt;  6:     Rural Poverty Severity $2 &#39;05
+#&gt;  7:  Rural Poverty Std. Dev $1.25 &#39;05
+#&gt;  8:     Rural Poverty Std. Dev $2 &#39;05
+#&gt;  9:   Rural Poverty density $1.25 &#39;05
+#&gt; 10:      Rural Poverty density $2 &#39;05
+#&gt; 11:      Rural Poverty hcr. $1.25 &#39;05
+#&gt; 12:         Rural Poverty hcr. $2 &#39;05
+#&gt; 13:                          Gini &#39;05
+#&gt; 14:             Poverty Gap $1.25 &#39;05
+#&gt; 15:                Poverty Gap $2 &#39;05
+#&gt; 16:         Poverty Per Cap. Exp. &#39;05
+#&gt; 17:        Poverty Severity $1.25 &#39;05
+#&gt; 18:           Poverty Severity $2 &#39;05
+#&gt; 19:        Poverty Std. Dev $1.25 &#39;05
+#&gt; 20:           Poverty Std. Dev $2 &#39;05
+#&gt; 21:         Poverty density $1.25 &#39;05
+#&gt; 22:            Poverty density $2 &#39;05
+#&gt; 23:            Poverty hcr. $1.25 &#39;05
+#&gt; 24:               Poverty hcr. $2 &#39;05
+#&gt; 25:                    Urban Gini &#39;05
+#&gt; 26:       Urban Poverty Gap $1.25 &#39;05
+#&gt; 27:          Urban Poverty Gap $2 &#39;05
+#&gt; 28:   Urban Poverty Per Cap. Exp. &#39;05
+#&gt; 29:  Urban Poverty Severity $1.25 &#39;05
+#&gt; 30:     Urban Poverty Severity $2 &#39;05
+#&gt; 31: Urban Poverty Std. Dev. $1.25 &#39;05
+#&gt; 32:    Urban Poverty Std. Dev. $2 &#39;05
+#&gt; 33:   Urban Poverty density $1.25 &#39;05
+#&gt; 34:      Urban Poverty density $2 &#39;05
+#&gt; 35:      Urban Poverty hcr. $1.25 &#39;05
+#&gt; 36:         Urban Poverty hcr. $2 &#39;05
+#&gt;                                 label</div><div class='input'>
 <span class='co'># Plot results for Mara province</span>
 <span class='fu'>require</span>(<span class='no'>lattice</span>)
-<span class='fu'>barchart</span>(<span class='no'>ADM2_NAME_ALT</span>~<span class='no'>bmi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>x</span>[<span class='no'>ADM1_NAME_ALT</span><span class='kw'>==</span><span class='st'>"Mara"</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"grey90"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in barchart.formula(ADM2_NAME_ALT ~ bmi, data = x[ADM1_NAME_ALT ==     &quot;Mara&quot;], col = &quot;grey90&quot;): object &#39;x&#39; not found</span></div><div class='input'>
+<span class='fu'>barchart</span>(<span class='no'>ADM2_NAME_ALT</span>~<span class='no'>bmi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>x</span>[<span class='no'>ADM1_NAME_ALT</span><span class='kw'>==</span><span class='st'>"Mara"</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"grey90"</span>)</div><img src='hcapi-6.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'># Return mean cassava yield in Ivory Coast in GeoTIFF format</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>hcapi</span>(<span class='st'>"cass_y"</span>, <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"CIV"</span>, <span class='kw'>format</span><span class='kw'>=</span><span class='st'>"tif"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i): undefined columns selected</span></div><div class='input'>
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>hcapi</span>(<span class='st'>"cass_y"</span>, <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"CIV"</span>, <span class='kw'>format</span><span class='kw'>=</span><span class='st'>"tif"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: colorTables valid for Byte type only in some drivers</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unable to set color table</span></div><div class='input'>
 <span class='co'># Plot the generated GeoTIFF raster (one band only)</span>
 <span class='fu'>require</span>(<span class='no'>raster</span>)
-<span class='fu'>plot</span>(<span class='fu'>raster</span>(<span class='no'>r</span>[<span class='fl'>2</span>]))</div><div class='output co'>#&gt; <span class='error'>Error in raster(r[2]): object &#39;r&#39; not found</span></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'>raster</span>(<span class='no'>r</span>[<span class='fl'>2</span>]))</div><img src='hcapi-11.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'># The method may be expanded to summarize classified (discrete) variables along continuous</span>
 <span class='co'># variables. For example the call below returns dominant agro-ecological zone and</span>
 <span class='co'># average stunting in children under 5 over Ethiopia's provinces by elevation class</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>hcapi</span>(<span class='fu'>c</span>(<span class='st'>"AEZ8_CLAS"</span>, <span class='st'>"stunted_moderate"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"ETH"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ELEVATION"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(x, i): undefined columns selected</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>hcapi</span>(<span class='fu'>c</span>(<span class='st'>"AEZ8_CLAS"</span>, <span class='st'>"stunted_moderate"</span>), <span class='kw'>iso3</span><span class='kw'>=</span><span class='st'>"ETH"</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"ADM1_NAME_ALT"</span>, <span class='st'>"ELEVATION"</span>))
+<span class='no'>x</span></div><div class='output co'>#&gt;     ISO3 ADM0_NAME     ADM1_NAME_ALT     ELEVATION           AEZ8_CLAS
+#&gt;  1:  ETH  Ethiopia       Addis Ababa (2e+03,5e+03] Trp. Hld. Sub-Humid
+#&gt;  2:  ETH  Ethiopia              Afar            NA                Arid
+#&gt;  3:  ETH  Ethiopia              Afar (3e+02,5e+02]                Arid
+#&gt;  4:  ETH  Ethiopia              Afar (5e+02,9e+02]           Semi-Arid
+#&gt;  5:  ETH  Ethiopia              Afar (9e+02,1e+03]           Semi-Arid
+#&gt;  6:  ETH  Ethiopia              Afar (1e+03,2e+03] Trp. Hld. Semi-Arid
+#&gt;  7:  ETH  Ethiopia              Afar (2e+03,5e+03] Trp. Hld. Semi-Arid
+#&gt;  8:  ETH  Ethiopia            Amhara (5e+02,9e+02]           Semi-Arid
+#&gt;  9:  ETH  Ethiopia            Amhara (9e+02,1e+03]           Semi-Arid
+#&gt; 10:  ETH  Ethiopia            Amhara (1e+03,2e+03] Trp. Hld. Semi-Arid
+#&gt; 11:  ETH  Ethiopia            Amhara (2e+03,5e+03] Trp. Hld. Sub-Humid
+#&gt; 12:  ETH  Ethiopia Benishangul Gumuz (5e+02,9e+02]           Sub-Humid
+#&gt; 13:  ETH  Ethiopia Benishangul Gumuz (9e+02,1e+03]           Sub-Humid
+#&gt; 14:  ETH  Ethiopia Benishangul Gumuz (1e+03,2e+03] Trp. Hld. Sub-Humid
+#&gt; 15:  ETH  Ethiopia Benishangul Gumuz (2e+03,5e+03] Trp. Hld. Sub-Humid
+#&gt; 16:  ETH  Ethiopia         Dire Dawa (9e+02,1e+03]           Semi-Arid
+#&gt; 17:  ETH  Ethiopia         Dire Dawa (1e+03,2e+03] Trp. Hld. Semi-Arid
+#&gt; 18:  ETH  Ethiopia         Dire Dawa (2e+03,5e+03] Trp. Hld. Semi-Arid
+#&gt; 19:  ETH  Ethiopia          Gambella (3e+02,5e+02]           Sub-Humid
+#&gt; 20:  ETH  Ethiopia          Gambella (5e+02,9e+02]           Sub-Humid
+#&gt; 21:  ETH  Ethiopia          Gambella (9e+02,1e+03]           Sub-Humid
+#&gt; 22:  ETH  Ethiopia          Gambella (1e+03,2e+03]           Sub-Humid
+#&gt; 23:  ETH  Ethiopia            Harari (9e+02,1e+03] Trp. Hld. Semi-Arid
+#&gt; 24:  ETH  Ethiopia            Harari (1e+03,2e+03] Trp. Hld. Semi-Arid
+#&gt; 25:  ETH  Ethiopia            Oromia (3e+02,5e+02]           Semi-Arid
+#&gt; 26:  ETH  Ethiopia            Oromia (5e+02,9e+02]           Semi-Arid
+#&gt; 27:  ETH  Ethiopia            Oromia (9e+02,1e+03]           Semi-Arid
+#&gt; 28:  ETH  Ethiopia            Oromia (1e+03,2e+03] Trp. Hld. Sub-Humid
+#&gt; 29:  ETH  Ethiopia            Oromia (2e+03,5e+03] Trp. Hld. Sub-Humid
+#&gt; 30:  ETH  Ethiopia              SNNP (3e+02,5e+02]           Sub-Humid
+#&gt; 31:  ETH  Ethiopia              SNNP (5e+02,9e+02]           Sub-Humid
+#&gt; 32:  ETH  Ethiopia              SNNP (9e+02,1e+03]           Sub-Humid
+#&gt; 33:  ETH  Ethiopia              SNNP (1e+03,2e+03] Trp. Hld. Sub-Humid
+#&gt; 34:  ETH  Ethiopia              SNNP (2e+03,5e+03]     Trp. Hld. Humid
+#&gt; 35:  ETH  Ethiopia            Somali            NA                Arid
+#&gt; 36:  ETH  Ethiopia            Somali (3e+02,5e+02]                Arid
+#&gt; 37:  ETH  Ethiopia            Somali (5e+02,9e+02]                Arid
+#&gt; 38:  ETH  Ethiopia            Somali (9e+02,1e+03]           Semi-Arid
+#&gt; 39:  ETH  Ethiopia            Somali (1e+03,2e+03] Trp. Hld. Semi-Arid
+#&gt; 40:  ETH  Ethiopia            Somali (2e+03,5e+03] Trp. Hld. Semi-Arid
+#&gt; 41:  ETH  Ethiopia            Tigray (5e+02,9e+02]           Semi-Arid
+#&gt; 42:  ETH  Ethiopia            Tigray (9e+02,1e+03]           Semi-Arid
+#&gt; 43:  ETH  Ethiopia            Tigray (1e+03,2e+03] Trp. Hld. Semi-Arid
+#&gt; 44:  ETH  Ethiopia            Tigray (2e+03,5e+03] Trp. Hld. Semi-Arid
+#&gt;     ISO3 ADM0_NAME     ADM1_NAME_ALT     ELEVATION           AEZ8_CLAS
+#&gt;     stunted_moderate
+#&gt;  1:              0.0
+#&gt;  2:             39.4
+#&gt;  3:             39.4
+#&gt;  4:             39.4
+#&gt;  5:             40.3
+#&gt;  6:             39.4
+#&gt;  7:             39.4
+#&gt;  8:             42.3
+#&gt;  9:             42.3
+#&gt; 10:             42.2
+#&gt; 11:             42.2
+#&gt; 12:             41.1
+#&gt; 13:             40.2
+#&gt; 14:             40.3
+#&gt; 15:             37.4
+#&gt; 16:             12.9
+#&gt; 17:             11.8
+#&gt; 18:             12.3
+#&gt; 19:             20.7
+#&gt; 20:             20.7
+#&gt; 21:             20.7
+#&gt; 22:             20.7
+#&gt; 23:             36.9
+#&gt; 24:             10.9
+#&gt; 25:             36.9
+#&gt; 26:             36.9
+#&gt; 27:             36.8
+#&gt; 28:             36.7
+#&gt; 29:             36.7
+#&gt; 30:             38.4
+#&gt; 31:             38.4
+#&gt; 32:             38.4
+#&gt; 33:             38.3
+#&gt; 34:             38.2
+#&gt; 35:             19.7
+#&gt; 36:             19.7
+#&gt; 37:             20.4
+#&gt; 38:             20.1
+#&gt; 39:             22.1
+#&gt; 40:             19.8
+#&gt; 41:             40.0
+#&gt; 42:             40.1
+#&gt; 43:             40.0
+#&gt; 44:             39.8
+#&gt;     stunted_moderate</div><div class='input'>
 <span class='co'># Mean harvested maize area summarized across a custom polygon</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>hcapi</span>(<span class='kw'>var</span><span class='kw'>=</span><span class='st'>"maiz_h"</span>, <span class='kw'>wkt</span><span class='kw'>=</span><span class='st'>"POLYGON((-16.35819663578485006 15.36599264077935345,
 -15.42501860768386379 15.69472580976947462, -15.11749403024149174 14.83577785208561117,
--16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in getLayerWKT(var, iso3 = iso3, wkt = wkt, ...): could not find function &quot;RS.connect&quot;</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object &#39;x&#39; not found</span></div><div class='input'>
+-16.13550642453347805 14.68731771125136376, -16.35819663578485006 15.36599264077935345))"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: grid has empty column/rows in dimension 2</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt;    ISO3 maiz_h
+#&gt; 1:  SEN    330</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
