@@ -44,4 +44,4 @@ BugReports: http://github.com/ifpri/sda-hcapi3/issues/
 MailingList: support@harvestchoice.org
 Packaged: 2017-02-20 11:20:02 UTC; mbacou
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000

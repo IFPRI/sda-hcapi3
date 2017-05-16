@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -60,7 +62,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/IFPRI/sda-hcapi3/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -82,19 +89,26 @@ and in JSON (.json) format in conformity with Tabular Data Package RFC
 specifications at <a href = 'http://dataprotocols.org/tabular-data-package/'>http://dataprotocols.org/tabular-data-package/</a>.</p>
     
 
-    <pre><span class='fu'>datapackage</span>(<span class='no'>var</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
+    <pre class="usage"><span class='fu'>datapackage</span>(<span class='no'>var</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>var</dt>
-      <dd>character array of HarvestChoice indicator code(s)</dd>
-      <dt>format</dt>
-      <dd>file extension corresponding to the data package output
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>var</th>
+      <td><p>character array of HarvestChoice indicator code(s)</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>file extension corresponding to the data package output
 format. See <code><a href='genFile.html'>genFile</a></code>. If <code>NULL</code> no auxiliary file is produced
-aside from metadata records in <code>meta.csv</code>.</dd>
-      <dt>dir</dt>
-      <dd>character, optional output directory. Default to current working directory.</dd>
-    </dl>
+aside from metadata records in <code>meta.csv</code>.</p></td>
+    </tr>
+    <tr>
+      <th>dir</th>
+      <td><p>character, optional output directory. Default to current working directory.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -103,10 +117,10 @@ aside from metadata records in <code>meta.csv</code>.</dd>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>API call: Generate auxiliary files for soil organic carbon concentration and
-2012 total population</p>
-    <p><code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
- -d &#39;{&quot;var&quot; : [&quot;soc_d5&quot;, &quot;PN12_TOT&quot;]}&#39; \
- -X POST -H &#39;Content-Type:application/json&#39;
+2012 total population
+    <code>$ curl http://hcapi.harvestchoice.org/ocpu/library/hcapi3/R/datapackage \
+ -d '{"var" : ["soc_d5", "PN12_TOT"]}' \
+ -X POST -H 'Content-Type:application/json'
 </code></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -121,7 +135,7 @@ methods to query HarvestChoice metadata.</p>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>fread</span>(<span class='no'>x</span>[<span class='fl'>1</span>])
 <span class='no'>x</span></div><div class='output co'>#&gt;        code                    label
 #&gt; 1:   soc_d5 Soil org. carbon (0-5cm)
-#&gt; 2: PN12_TOT           Total Pop. &#39;12
+#&gt; 2: PN12_TOT           Total Pop. '12
 #&gt;                                                                                                      description
 #&gt; 1:                                             Soil organic carbon content (fine earth fraction) at 0-5cm depth.
 #&gt; 2: Total population downscaled from LandScan 2012 population counts at 30 arc-second to 5 arc-minute resolution.
@@ -132,14 +146,14 @@ methods to query HarvestChoice metadata.</p>
 #&gt; 1:  Agroecology Soil Resources Soil Fertility
 #&gt; 2: Demographics     Population          Total
 #&gt;                                                                                                                                                                                                     source
-#&gt; 1: ISRIC (2014) &quot;&quot;World Soil Information&quot;&quot;, in collaboration with The Earth Institute, Columbia University World Agroforestry Centre, Nairobi and the International Center for Tropical Agriculture (CIAT)
-#&gt; 2:                          Bright, E. A. and Rose, A. N. (2012) &quot;&quot;LandScan Global Population Database 2012&quot;&quot;, Oak Ridge National Laboratory, July 2013. Retrieved from http://web.ornl.gov/sci/landscan/.
+#&gt; 1: ISRIC (2014) ""World Soil Information"", in collaboration with The Earth Institute, Columbia University World Agroforestry Centre, Nairobi and the International Center for Tropical Agriculture (CIAT)
+#&gt; 2:                          Bright, E. A. and Rose, A. N. (2012) ""LandScan Global Population Database 2012"", Oak Ridge National Laboratory, July 2013. Retrieved from http://web.ornl.gov/sci/landscan/.
 #&gt;              contact downloadedOn
-#&gt; 1:   j.koo@cgiar.org   02/21/2017
-#&gt; 2: m.bacou@cgiar.org   02/21/2017
+#&gt; 1:   j.koo@cgiar.org   05/16/2017
+#&gt; 2: m.bacou@cgiar.org   05/16/2017
 #&gt;                                                                                                                                                                                                                                   citation
-#&gt; 1: HarvestChoice, 2015. &quot;&quot;Soil Organic Carbon Content (depth 0-5cm)&quot;&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/soc_d5.
-#&gt; 2:                HarvestChoice, 2015. &quot;&quot;Population, Total (2012)&quot;&quot;, International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN12_TOT.</div><div class='input'>
+#&gt; 1: HarvestChoice, 2015. ""Soil Organic Carbon Content (depth 0-5cm)"", International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/soc_d5.
+#&gt; 2:                HarvestChoice, 2015. ""Population, Total (2012)"", International Food Policy Research Institute, Washington, DC., and University of Minnesota, St. Paul, MN. Available online at http://harvestchoice.org/data/PN12_TOT.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
